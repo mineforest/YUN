@@ -1,0 +1,56 @@
+import math
+
+def EEA(aa, bb):
+    r1, r2 = abs(aa), abs(bb)
+    t1, t2, s1, s2 = 0, 1, 1, 0
+    while r2:
+        r1, (quotient, r2) = r2, divmod(r1, r2)
+        t1, t2 = t2 - quotient*t1, t1
+        s1, s2 = s2 - quotient*s1, s1
+    return r1, t2 * (-1 if aa < 0 else 1), s2 * (-1 if bb < 0 else 1)
+
+def modinv(a, m):
+   g, x, y = EEA(a, m)
+   if g != 1:
+       raise ValueError
+   return x % m
+
+def dband(pt, p) :
+    [x,y] = pt
+    if y == 0:
+        return None
+    lamda = 3*(x**2) * modinv(2*y, p)
+    calx = (lamda**2 - (2*x))
+    caly = (lamda*(x-calx)-y)
+    return [calx%p, caly%p]
+
+def andadd (p1, p2, p) :
+    [x1, y1] = p1
+    [x2, y2] = p2
+    if x1 == x2 :
+        return dband(p1, p)
+    lamda = (y1-y2) * modinv(x1-x2, p)
+    calx = (lamda**2 - x1 - x2)
+    caly = (lamda*(x1-calx)-y1)
+    return [calx%p, caly%p]
+
+inputa = input('input : ')
+h = int(inputa, 16)
+
+bits = bin(h)
+bits = list(bits[3:])
+
+p = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F
+Gx = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798
+Gy = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8
+g = [Gx,Gy]
+k = g
+
+for bit in bits:
+    k = dband(k, p)
+    if bit == '1':
+        k = andadd(k,g,p)
+
+print(k)
+print('x : {:#x}'.format(k[0]))
+print('y : {:#x}'.format(k[1]))
