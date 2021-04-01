@@ -14,8 +14,6 @@ def toCSV(recipe_list):
         for row in recipe_list:
             csvfile.writerow(row)
 
-# 'by 만개의 레시피'로 작성된 레시피 주소 크롤링(page 1~165)
-# /recipe/xxxxxxx
 def url_func(n, m):
     num_range = range(n,m)
     url = "https://www.10000recipe.com/recipe/list.html?order=date&page="
@@ -27,9 +25,10 @@ def url_func(n, m):
         soup = bs(code, "html.parser")
 
         try:
-            res = soup.find(class_='cont_list st3')
-            for i in res.find_all('a'):
+            res = soup.find(class_='common_sp_list_ul')
+            for i in res.find_all('a', {'href':re.compile('^/recipe/[0-9]*')}):
                 url_tmp = i.get('href')
+                print(url_tmp)
                 url_list.append(url_tmp)
         except(AttributeError):
             pass
@@ -124,7 +123,9 @@ for url_str in url_lists:
     res = soup.find('div','view_step')
     for n in res.find_all('div','view_step_cont'):
         recipe_step_txt = n.get_text().replace('\n',' ')         
-        tmp = n.find('img')      
+        tmp = n.find('img')
+        if tmp == None:
+            continue
         recipe_step_img = tmp.get('src')
 
         # recipe_list
