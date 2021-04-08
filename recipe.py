@@ -81,25 +81,29 @@ for url_str in url_lists:
 
     # menu_summary
     res = soup.find('div', 'view2_summary_in')
-    if res!=None:
+    if res==None:
+        menu_summary="?"
+    else:
         menu_summary = res.get_text().replace('\n','').strip()
-    menu_summary="?"
 
     # menu_info
     res = soup.find('span', 'view2_summary_info1') # menu_info_1
-    if res!=None:
+    if res==None:
+        menu_info_1="?"
+    else:
         menu_info_1 = res.get_text()
-    menu_info_1="?"
    
     res = soup.find('span', 'view2_summary_info2') # menu_info_2
-    if res!=None:
+    if res==None:
+        menu_info_2="?"   
+    else:
         menu_info_2 = res.get_text()
-    menu_info_2="?"   
     
     res = soup.find('span', 'view2_summary_info3') # menu_info_3
-    if res!=None:
+    if res==None:
+        menu_info_3="?"
+    else:
         menu_info_3 = res.get_text()
-    menu_info_3="?"
     
     # info dict
     info_dict = {"info1":menu_info_1,
