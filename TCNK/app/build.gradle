@@ -38,10 +38,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-database:19.7.0'
     implementation 'com.google.mlkit:barcode-scanning:16.1.1'
-    //implementation 'com.google.firebase:firebase-ml-vision:24.0.3'
-    implementation 'com.google.firebase:firebase-ml-vision-barcode-model:16.0.1'
 
-    testImplementation 'junit:junit:4.12'
+    //바코드 스캐너
+    //implementation 'com.google.firebase:firebase-ml-vision:24.0.3'
+    //implementation 'com.google.firebase:firebase-ml-vision-barcode-model:16.0.1'
+
+    testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
