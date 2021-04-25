@@ -6,7 +6,10 @@
     </shared>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be4787f1-9b0d-4d10-9ea6-95ae209199ac" name="Default Changelist" comment="" />
+    <list default="true" id="be4787f1-9b0d-4d10-9ea6-95ae209199ac" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../ASFB/TCNK/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../ASFB/TCNK/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/google-services.json" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -141,10 +144,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="349" y="167" key="AndroidCreateResourceFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1618029946698" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1619166723988">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1619324258257">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1619166723988" />
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1619324258257" />
+    <state x="549" y="130" key="RollbackChangesDialog" timestamp="1619324195073">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="130" key="RollbackChangesDialog/0.0.1536.824@0.0.1536.824" timestamp="1619324195073" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1618032997808">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
