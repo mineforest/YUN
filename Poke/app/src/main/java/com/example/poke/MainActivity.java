@@ -1,117 +1,43 @@
 package com.example.poke;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatEditText;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.HashMap;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-//    TextInputLayout TIL;
-//    AppCompatEditText TIE;
-
-    EditText et_user_name, et_user_email;
-    Button btn;
-    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        et_user_name = findViewById(R.id.et_user_name);
-        et_user_email = findViewById(R.id.et_user_email);
-        btn = findViewById(R.id.btn);
+        //로그인 되어 있지 않으면 로그인 화면으로
+        if( FirebaseAuth.getInstance().getCurrentUser() == null) {
+            startLoginActivity();
+        }
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        readUser();
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String getUserName = et_user_name.getText().toString();
-                String getUserEmail = et_user_email.getText().toString();
-
-                HashMap result = new HashMap<>();
-                result.put("name", getUserName);
-                result.put("email", getUserEmail);
-
-                writeNewUser("1", getUserName, getUserEmail);
-            }
-        });
-
-//        TIL =(TextInputLayout) findViewById(R.id.TIL);
-//        TIE = (AppCompatEditText) findViewById(R.id.TIE);
-//
-//        TIL.setCounterEnabled(true);
-//        TIL.setCounterMaxLength(100);
-
-        //storage
-//        FirebaseStorage storage = FirebaseStorage.getInstance();
-//        StorageReference storageRef = storage.getReference();
-//        StorageReference pathReference = storageRef.child("gs://tcnk-e50ef.appspot.com/img/다운로드.jpg");
-
+        findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
     }
 
-    private void writeNewUser(String userId, String name, String email){
-        User user = new User(name,email);
-
-        mDatabase.child("users").child(userId).setValue(user)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(MainActivity.this,
-                                "저장 완료", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this,
-                                "저장 실패", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-    }
-
-    private void readUser(){
-        mDatabase.child("users").child("1").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(User.class) != null){
-                    User post = snapshot.getValue(User.class);
-                    Log.w("FireBaseData", "getData"+ post.toString());
-                } else{
-                    Toast.makeText(MainActivity.this,
-                            "데이터없음",Toast.LENGTH_SHORT).show();
-                }
+    View.OnClickListener onClickListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.logoutButton:
+                    FirebaseAuth.getInstance().signOut();
+                    startLoginActivity();
+                    break;
             }
+        }
+    };
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w("FireBaseData", "loadPost:OnCancelled",error.toException());
-            }
-        });
+    private void startLoginActivity() {
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.poke;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -27,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         findViewById(R.id.loginButton).setOnClickListener(onClickListener);
+        findViewById(R.id.gotoSignUpButton).setOnClickListener(onClickListener);
     }
 
     @Override
@@ -34,7 +36,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener(){
@@ -43,6 +52,9 @@ public class LoginActivity extends AppCompatActivity {
             switch (v.getId()){
                 case R.id.loginButton:
                     signUp();
+                    break;
+                case R.id.gotoSignUpButton:
+                    startSignUpActivity();
                     break;
             }
         }
@@ -61,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startToast("로그인에 성공하였습니다.");
+                                startMainActivity();
                             } else {
                                 if (task.getException() != null)
                                     startToast(task.getException().toString());
@@ -70,12 +83,20 @@ public class LoginActivity extends AppCompatActivity {
         } else{
             startToast("이메일 또는 비밀번호를 입력하세요.");
         }
-
-
     }
 
     private void startToast(String msg){
         Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
     }
 
+    private void startMainActivity(){
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    private void startSignUpActivity(){
+        Intent intent = new Intent(this,SignUpActivity.class);
+        startActivity(intent);
+    }
 }
