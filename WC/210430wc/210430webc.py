@@ -88,7 +88,6 @@ def wcring(url_lists):
             continue
         try :
             for n in res.find_all('ul'):
-                ingre_cat = n.find('b').get_text()
                 for tmp in n.find_all('li'):
                     try:
                         ingredient_name = tmp.get_text().replace('\n','').replace(' ','')
@@ -136,20 +135,20 @@ def wcring(url_lists):
             recipe_list.append(recipe_step_txt)
         with open(path+"/" + str(num_id) + ".csv",'w', newline='',encoding='utf-8') as f:
             wr = csv.writer(f)
-            wr.writerow([recipe_id, menu_name, menu_info_1, menu_info_2, menu_info_3, ingre_name_list, ingre_count_list, ingre_unit_list, recipe_list])
+            wr.writerow([recipe_id, menu_name, menu_info_1, menu_info_2, menu_info_3, ingre_list_count, ingre_name_list, ingre_count_list, ingre_unit_list, recipe_list])
         
         if not os.path.exists('recipe.csv'):
             with open("recipe.csv",'w', newline='',encoding='utf-8') as f2:
                 wr2 = csv.writer(f2)
-                wr2.writerow([recipe_id, menu_name, menu_info_1, menu_info_2, menu_info_3, ingre_name_list, ingre_count_list, ingre_unit_list, recipe_list])
+                wr2.writerow([recipe_id, menu_name, menu_info_1, menu_info_2, menu_info_3, ingre_list_count, ingre_name_list, ingre_count_list, ingre_unit_list, recipe_list])
         else:
             with open("recipe.csv",'a', newline='',encoding='utf-8') as f2:
                 wr2 = csv.writer(f2)
-                wr2.writerow([recipe_id, menu_name, menu_info_1, menu_info_2, menu_info_3, ingre_name_list, ingre_count_list, ingre_unit_list, recipe_list])
+                wr2.writerow([recipe_id, menu_name, menu_info_1, menu_info_2, menu_info_3, ingre_list_count, ingre_name_list, ingre_count_list, ingre_unit_list, recipe_list])
         print('{0} Success........{1}/{2}'.format(recipe_id,num_id,len(url_lists)))
         num_id = num_id + 1
 if __name__ == '__main__':
     start_time = time.time()
     pool = Pool(processes=2)
     pool.map(wcring,range_list)
-    rint("--- %s seconds ---" % (time.time() - start_time))
+    print("--- %s seconds ---" % (time.time() - start_time))
