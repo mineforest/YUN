@@ -3,15 +3,24 @@ package com.example.poke;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
+    private DatabaseReference mDatabase;
+    private static final String Tag = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +33,32 @@ public class MainActivity extends AppCompatActivity {
         if(user == null) {
             myStartActivity(LoginActivity.class);
         }
+
+        //회원정보가 없으면 회원등록 화면 나옴
         else {
-            myStartActivity(MemberInitActivity.class);
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+            String uid = user.getUid();
+            mDatabase.child("users").child(uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DataSnapshot dataSnapshot = task.getResult();
+                        if(dataSnapshot != null){
+                            if(dataSnapshot.exists()){
+                                Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                            }
+                            else{
+                                myStartActivity(MemberInitActivity.class);
+                            }
+                        }
+                    }
+                    else {
+                        Log.e("firebase", "Error getting data", task.getException());
+
+                    }
+                }
+            });
+
         }
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);

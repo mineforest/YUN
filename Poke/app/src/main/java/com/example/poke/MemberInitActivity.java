@@ -29,6 +29,15 @@ public class MemberInitActivity extends AppCompatActivity {
         findViewById(R.id.checkButton).setOnClickListener(onClickListener);
     }
 
+    //뒤로가기 시 종료
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
+        finish();
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
     View.OnClickListener onClickListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
@@ -57,6 +66,7 @@ public class MemberInitActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 startToast("회원정보 등록을 성공하였습니다.");
+                                finish();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -77,6 +87,7 @@ public class MemberInitActivity extends AppCompatActivity {
     private void startToast(String msg){
         Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
     }
+
 
 
 }
