@@ -10,23 +10,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private static final String Tag = "MainActivity";
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         //로그인 되어 있지 않으면 로그인 화면으로
@@ -58,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-
         }
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
         findViewById(R.id.gotoPasswordResetButton).setOnClickListener(onClickListener);
+        findViewById(R.id.revokeButton).setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener(){
@@ -76,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.gotoPasswordResetButton:
                     myStartActivity(PasswordResetActivity.class);
                     break;
+                case R.id.revokeButton:
+                    revokeAccess();
+                    myStartActivity(LoginActivity.class);
+                    break;
             }
         }
     };
@@ -84,5 +92,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,c);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    private void revokeAccess() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(uid).removeValue();
+
+        mAuth.getCurrentUser().delete();
     }
 }

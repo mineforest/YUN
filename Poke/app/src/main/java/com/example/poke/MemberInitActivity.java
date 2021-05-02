@@ -16,7 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MemberInitActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
     private static final String Tag = "UserInitActivity";
@@ -61,6 +60,7 @@ public class MemberInitActivity extends AppCompatActivity {
             String uid = user.getUid();
             UserInfo userInfo = new UserInfo(name, age, birthDay, gender);
             if(user != null){
+                //mDatabase.child("users").child(uid).push();
                 mDatabase.child("users").child(uid).setValue(userInfo)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
