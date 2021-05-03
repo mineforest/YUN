@@ -9,6 +9,7 @@ import csv
 
 def in_cat_url(url, lower_cat, fpage, lpage):
     page_range = range(fpage, lpage)
+    print(lower_cat + " start")
     for num in page_range:
         code = urllib.request.urlopen(url + '&order=reco&page=' + str(num))
         soup = bs(code, "html.parser", from_encoding='utf-8')
@@ -19,9 +20,7 @@ def in_cat_url(url, lower_cat, fpage, lpage):
                 url_tmp = i.get('href')
                 url_tmp = re.sub('/recipe/','',url_tmp)
                 tocsv(lower_cat+'.csv', url_tmp, lower_cat)
-                print(url_tmp + ", " + lower_cat + " DF 추가완료")
         except(AttributeError):
-            print("pass")
             pass
 
 def cat_scrap_id(url, infolist, fpage, lpage):
@@ -37,28 +36,33 @@ def cat_scrap_id(url, infolist, fpage, lpage):
     code = urllib.request.urlopen(cat_url)
     soup = bs(code, "html.parser", from_encoding='utf-8')
     res = soup.find(class_='tag_cont')
+    
     for i in res.find_all('a'):
         lower_cat = i.get_text()
         lower_url = 'https://www.10000recipe.com/recipe/list.html?q=' + parse.quote(lower_cat)
-        in_cat_url(lower_url, lower_cat, fpage, lpage)
-
-
-    for num in page_range:
-        code = urllib.request.urlopen(cat_url+str(num))
-        soup = bs(code, "html.parser", from_encoding='utf-8')
-        
-        try:
-            res = soup.find(class_='common_sp_list_ul')
-            for i in res.find_all('a', {'href':re.compile('^/recipe/[0-9]*')}):
-                url_tmp = i.get('href')
-                url_tmp = re.sub('/recipe/','',url_tmp)
-                if '/' in catstr:
-                    catstr = catstr.replace("/","+")
-                tocsv(catstr+'.csv', url_tmp, catstr)
-                print(url_tmp + ", " + catstr + " DF 추가완료")
-        except(AttributeError):
-            print("pass")
-            pass
+        if not os.path.exists('./cate/' + lower_cat + '.csv'):
+            in_cat_url(lower_url, lower_cat, fpage, lpage)
+        else:
+            print(lower_cat + " 지나갈게요")
+    if '/' in catstr:
+        catstr = catstr.replace("/","+")
+    if not os.path.exists('./cate/' + catstr + '.csv'):
+        print(catstr + " start")
+        for num in page_range:
+            code = urllib.request.urlopen(cat_url+str(num))
+            soup = bs(code, "html.parser", from_encoding='utf-8')
+            
+            try:
+                res = soup.find(class_='common_sp_list_ul')
+                for i in res.find_all('a', {'href':re.compile('^/recipe/[0-9]*')}):
+                    url_tmp = i.get('href')
+                    url_tmp = re.sub('/recipe/','',url_tmp)
+                    tocsv(catstr+'.csv', url_tmp, catstr)
+    #               print(url_tmp + ", " + catstr + " DF 추가완료")
+            except(AttributeError):
+                pass
+    else:
+        print(catstr + " 지나갈게요")
 
 def tocsv(title, str1, str2):
     if not os.path.exists('./cate/' + title):
