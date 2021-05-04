@@ -43,11 +43,23 @@
             android:textColor="#000000"
             android:textColorHint="#000000" />
 
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/googleSignInButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" />
+
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="로그인" />
+
+        <Button
+            android:id="@+id/gotoSignUpButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="회원가입" />
 
     </LinearLayout>
 

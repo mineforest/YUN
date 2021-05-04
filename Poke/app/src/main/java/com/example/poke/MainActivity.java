@@ -1,117 +1,105 @@
 package com.example.poke;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatEditText;
-
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-//    TextInputLayout TIL;
-//    AppCompatEditText TIE;
-
-    EditText et_user_name, et_user_email;
-    Button btn;
     private DatabaseReference mDatabase;
+    private static final String Tag = "MainActivity";
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        et_user_name = findViewById(R.id.et_user_name);
-        et_user_email = findViewById(R.id.et_user_email);
-        btn = findViewById(R.id.btn);
+        //로그인 되어 있지 않으면 로그인 화면으로
+        if(user == null) {
+            myStartActivity(LoginActivity.class);
+        }
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        readUser();
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String getUserName = et_user_name.getText().toString();
-                String getUserEmail = et_user_email.getText().toString();
-
-                HashMap result = new HashMap<>();
-                result.put("name", getUserName);
-                result.put("email", getUserEmail);
-
-                writeNewUser("1", getUserName, getUserEmail);
-            }
-        });
-
-//        TIL =(TextInputLayout) findViewById(R.id.TIL);
-//        TIE = (AppCompatEditText) findViewById(R.id.TIE);
-//
-//        TIL.setCounterEnabled(true);
-//        TIL.setCounterMaxLength(100);
-
-        //storage
-//        FirebaseStorage storage = FirebaseStorage.getInstance();
-//        StorageReference storageRef = storage.getReference();
-//        StorageReference pathReference = storageRef.child("gs://tcnk-e50ef.appspot.com/img/다운로드.jpg");
-
-    }
-
-    private void writeNewUser(String userId, String name, String email){
-        User user = new User(name,email);
-
-        mDatabase.child("users").child(userId).setValue(user)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(MainActivity.this,
-                                "저장 완료", Toast.LENGTH_SHORT).show();
+        //회원정보가 없으면 회원등록 화면 나옴
+        else {
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+            String uid = user.getUid();
+            mDatabase.child("users").child(uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DataSnapshot dataSnapshot = task.getResult();
+                        if(dataSnapshot != null){
+                            if(dataSnapshot.exists()){
+                                Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                            }
+                            else{
+                                myStartActivity(MemberInitActivity.class);
+                            }
+                        }
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this,
-                                "저장 실패", Toast.LENGTH_SHORT).show();
+                    else {
+                        Log.e("firebase", "Error getting data", task.getException());
+
                     }
-                });
-
-    }
-
-    private void readUser(){
-        mDatabase.child("users").child("1").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(User.class) != null){
-                    User post = snapshot.getValue(User.class);
-                    Log.w("FireBaseData", "getData"+ post.toString());
-                } else{
-                    Toast.makeText(MainActivity.this,
-                            "데이터없음",Toast.LENGTH_SHORT).show();
                 }
-            }
+            });
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w("FireBaseData", "loadPost:OnCancelled",error.toException());
-            }
-        });
+        findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
+        findViewById(R.id.gotoPasswordResetButton).setOnClickListener(onClickListener);
+        findViewById(R.id.revokeButton).setOnClickListener(onClickListener);
     }
 
+    View.OnClickListener onClickListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.logoutButton:
+                    FirebaseAuth.getInstance().signOut();
+                    myStartActivity(LoginActivity.class);
+                    break;
+                case R.id.gotoPasswordResetButton:
+                    myStartActivity(PasswordResetActivity.class);
+                    break;
+                case R.id.revokeButton:
+                    revokeAccess();
+                    myStartActivity(LoginActivity.class);
+                    break;
+            }
+        }
+    };
+
+    private void myStartActivity(Class c){
+        Intent intent = new Intent(this,c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    private void revokeAccess() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(uid).removeValue();
+
+        mAuth.getCurrentUser().delete();
+    }
 }

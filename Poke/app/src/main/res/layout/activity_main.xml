@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,44 +8,23 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <!--    <com.google.android.material.textfield.TextInputLayout-->
-    <!--        android:id="@+id/TIL"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        tools:layout_editor_absoluteX="141dp"-->
-    <!--        tools:layout_editor_absoluteY="180dp">-->
-
-    <!--        <com.google.android.material.textfield.TextInputEditText-->
-    <!--            android:id="@+id/TIE"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:hint="id 입력" />-->
-    <!--    </com.google.android.material.textfield.TextInputLayout>-->
 
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/logoutButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"
-        android:layout_marginTop="32dp" />
+        android:text="로그아웃" />
 
-    <EditText
-        android:id="@+id/et_user_name"
+    <Button
+        android:id="@+id/gotoPasswordResetButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="Name"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="148dp" />
+        android:text="비밀번호 재설정" />
 
-    <EditText
-        android:id="@+id/et_user_email"
+    <Button
+        android:id="@+id/revokeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="Email"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="243dp" />
-
+        android:text="회원탈퇴" />
 </LinearLayout>
 
