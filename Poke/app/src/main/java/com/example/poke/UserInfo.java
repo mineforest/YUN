@@ -10,8 +10,23 @@ public class UserInfo {
     String name;
     String age;
     String gender;
+    String preference;
+    String allergy;
+    String recipeHistory;
 
-    public UserInfo(String name, String age, String birthDay,String gender){
+    public UserInfo() {
+    }
+
+    public UserInfo(String preference, String allergy) {
+        this.preference = preference;
+        this.allergy = allergy;
+    }
+
+    public UserInfo(String recipeHistory) {
+        this.recipeHistory = recipeHistory;
+    }
+
+    public UserInfo(String name, String age, String birthDay, String gender){
         this.name = name;
         this.age = age;
         this.birthDay = birthDay;
@@ -44,6 +59,30 @@ public class UserInfo {
     }
     public void setGender(String gender){
         this.gender = gender;
+    }
+
+    public String getPreference() {
+        return preference;
+    }
+
+    public String getAllergy() {
+        return allergy;
+    }
+
+    public String getRecipeHistory() {
+        return recipeHistory;
+    }
+
+    public void setPreference(String preference) {
+        this.preference = preference;
+    }
+
+    public void setAllergy(String allergy) {
+        this.allergy = allergy;
+    }
+
+    public void setRecipeHistory(String recipeHistory) {
+        this.recipeHistory = recipeHistory;
     }
 
     @Exclude
