@@ -49,16 +49,16 @@ public class MemberInitActivity extends AppCompatActivity {
     };
 
     private void profileUpdate(){
-        String name=((EditText)findViewById(R.id.nameEditText)).getText().toString();
+        String nickName=((EditText)findViewById(R.id.nameEditText)).getText().toString();
         String age=((EditText)findViewById(R.id.ageEditText)).getText().toString();
         String birthDay=((EditText)findViewById(R.id.birthDayEditText)).getText().toString();
         String gender=((EditText)findViewById(R.id.genderEditText)).getText().toString();
 
-        if(name.length() > 0 && age.length() > 0 && birthDay.length() > 5 && gender.length() > 0) {
+        if(nickName.length() > 1 && age.length() > 0 && birthDay.length() > 5 && gender.length() > 0) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             mDatabase = FirebaseDatabase.getInstance().getReference();
             String uid = user.getUid();
-            UserInfo userInfo = new UserInfo(name, age, birthDay, gender);
+            UserInfo userInfo = new UserInfo(nickName, age, birthDay, gender);
             if(user != null){
                 //mDatabase.child("users").child(uid).push();
                 mDatabase.child("users").child(uid).setValue(userInfo)

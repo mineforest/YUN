@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class UserInfo {
     String birthDay;
-    String name;
+    String nickName;
     String age;
     String gender;
     String preference;
@@ -27,7 +27,7 @@ public class UserInfo {
     }
 
     public UserInfo(String name, String age, String birthDay, String gender){
-        this.name = name;
+        this.nickName = nickName;
         this.age = age;
         this.birthDay = birthDay;
         this.gender = gender;
@@ -40,11 +40,11 @@ public class UserInfo {
         this.birthDay = birthDay;
     }
 
-    public String getName(){
-        return name;
+    public String getNickName(){
+        return nickName;
     }
-    public void setName(String name){
-        this.name = name;
+    public void setNickName(String nickName){
+        this.nickName = nickName;
     }
 
     public String getAge(){
@@ -88,11 +88,12 @@ public class UserInfo {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("name", name);
+        result.put("name", nickName);
         result.put("age", age);
         result.put("birthDay", birthDay);
         result.put("gender", gender);
         return result;
     }
+
 
 }
