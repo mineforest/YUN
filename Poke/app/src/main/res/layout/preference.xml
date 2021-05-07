@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="선호도 조사"
+        android:textSize="36sp" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterButton
+        android:id="@+id/imageFilterButton"
+        android:layout_width="161dp"
+        android:layout_height="100dp"
+        android:clickable="false"
+        android:longClickable="false"
+        android:scaleType="fitStart"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterButton
+        android:id="@+id/imageFilterButton2"
+        android:layout_width="164dp"
+        android:layout_height="71dp"
+        android:scaleType="fitStart"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterButton
+        android:id="@+id/imageFilterButton3"
+        android:layout_width="162dp"
+        android:layout_height="98dp"
+        android:scaleType="fitStart"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterButton
+        android:id="@+id/imageFilterButton4"
+        android:layout_width="164dp"
+        android:layout_height="108dp"
+        android:scaleType="fitStart"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterButton
+        android:id="@+id/imageFilterButton5"
+        android:layout_width="164dp"
+        android:layout_height="125dp"
+        android:scaleType="fitStart"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterButton
+        android:id="@+id/imageFilterButton6"
+        android:layout_width="164dp"
+        android:layout_height="60dp"
+        android:scaleType="fitStart"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterButton
+        android:id="@+id/imageFilterButton7"
+        android:layout_width="166dp"
+        android:layout_height="70dp"
+        android:scaleType="fitStart"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterButton
+        android:id="@+id/imageFilterButton8"
+        android:layout_width="164dp"
+        android:layout_height="79dp"
+        android:scaleType="fitStart"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+</LinearLayout>
