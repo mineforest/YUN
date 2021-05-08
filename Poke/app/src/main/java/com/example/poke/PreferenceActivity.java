@@ -33,27 +33,26 @@ public class PreferenceActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.menuButton1:
-                    addPreference();
-
+                    addPreference(R.id.menuButton1);
                     break;
                 case R.id.menuButton2:
-                    String b = ((Button)findViewById(R.id.menuButton3)).getContext().toString();
+                    addPreference(R.id.menuButton2);
                     break;
                 case R.id.menuButton3:
-                    String c = ((Button)findViewById(R.id.menuButton3)).getContext().toString();
-                    startToast(c);
+                    addPreference(R.id.menuButton3);
+                    break;
             }
         }
     };
 
-        public void addPreference(){
-            String preference = ((Button)findViewById(R.id.menuButton3)).getContext().toString();
+        public void addPreference(int btn){
+            String preference = ((Button)findViewById(btn)).getText().toString();
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             mDatabase = FirebaseDatabase.getInstance().getReference();
             String uid = user.getUid();
-            UserInfo userInfo = new UserInfo(preference);
+            UserAllergy userAllergy = new UserAllergy(preference);
 
-            mDatabase.child("users").child(uid).push().setValue(userInfo)
+            mDatabase.child("preference").child(uid).push().setValue(userAllergy)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

@@ -42,26 +42,10 @@ public class MainActivity extends AppCompatActivity {
         else {
             mDatabase = FirebaseDatabase.getInstance().getReference();
             String uid = user.getUid();
-            mDatabase.child("users").child(uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DataSnapshot dataSnapshot = task.getResult();
-                        if(dataSnapshot != null){
-                            if(dataSnapshot.exists()){
-                                Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                            }
-                            else{
-                                myStartActivity(MemberInitActivity.class);
-                            }
-                        }
-                    }
-                    else {
-                        Log.e("firebase", "Error getting data", task.getException());
 
-                    }
-                }
-            });
+           nullStartActivity(uid,"preference");
+           nullStartActivity(uid,"users");
+
         }
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
@@ -87,6 +71,33 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+    private void nullStartActivity(String uid, String child){
+        mDatabase.child(child).child(uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DataSnapshot dataSnapshot = task.getResult();
+                    if(dataSnapshot != null) {
+                        if (dataSnapshot.exists()) {
+                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                        } else {
+                           if(child.equals("preference")){
+                               myStartActivity(PreferenceActivity.class);
+                           }
+                           else if(child.equals("users")){
+                               myStartActivity(MemberInitActivity.class);
+                           }
+                        }
+                    }
+                }
+                else {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+            }
+        });
+
+    }
 
     private void myStartActivity(Class c){
         Intent intent = new Intent(this,c);
