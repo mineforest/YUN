@@ -15,7 +15,7 @@
         android:ellipsize="none"
         android:text="Poke"
         android:textSize="72sp" />
-
+<!--
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/spin_kit"
         style="@style/SpinKitView.Large.CubeGrid"
@@ -23,6 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:SpinKit_Color="#8BC34A" />
-
+-->
 
 </LinearLayout>

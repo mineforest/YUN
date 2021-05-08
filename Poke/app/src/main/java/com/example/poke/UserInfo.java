@@ -17,13 +17,13 @@ public class UserInfo {
     public UserInfo() {
     }
 
+    public UserInfo(String preference){
+        this.preference = preference;
+    }
+
     public UserInfo(String preference, String allergy) {
         this.preference = preference;
         this.allergy = allergy;
-    }
-
-    public UserInfo(String recipeHistory) {
-        this.recipeHistory = recipeHistory;
     }
 
     public UserInfo(String name, String age, String birthDay, String gender){
