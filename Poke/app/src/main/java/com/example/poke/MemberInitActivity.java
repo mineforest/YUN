@@ -49,7 +49,7 @@ public class MemberInitActivity extends AppCompatActivity {
     };
 
     private void profileUpdate(){
-        String nickName=((EditText)findViewById(R.id.nameEditText)).getText().toString();
+        String nickName=((EditText)findViewById(R.id.nickNameEditText)).getText().toString();
         String age=((EditText)findViewById(R.id.ageEditText)).getText().toString();
         String birthDay=((EditText)findViewById(R.id.birthDayEditText)).getText().toString();
         String gender=((EditText)findViewById(R.id.genderEditText)).getText().toString();
