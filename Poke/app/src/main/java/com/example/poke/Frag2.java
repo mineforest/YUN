@@ -1,4 +1,4 @@
-package com.example.test;
+package com.example.poke;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -40,6 +40,7 @@ dependencies {
     implementation 'com.google.mlkit:barcode-scanning:16.1.1'
     implementation 'com.github.mmin18:realtimeblurview:1.2.1'
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    implementation 'com.ebanx:swipe-button:0.8.3'
 
     //바코드 스캐너
     //implementation 'com.google.firebase:firebase-ml-vision:24.0.3'

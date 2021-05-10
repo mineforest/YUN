@@ -9,9 +9,9 @@
     <TextView
         android:id="@+id/Heading1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="96dp"
         android:gravity="center"
-        android:text="Pick Your Favorite Category"
+        android:text="Pick Your Diet Type"
         android:textSize="36sp"
         android:textStyle="bold" />
 
@@ -179,7 +179,7 @@
             android:layout_weight="1"
             android:background="@color/black"
             android:gravity="center"
-            android:text="1 out of 3 Selected"
+            android:text="2 out of 3 Selected"
             android:textColor="@android:color/holo_green_light" />
 
         <Button
