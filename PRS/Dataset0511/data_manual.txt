@@ -1,0 +1,14 @@
+
+
+user.csv
+['user_id','age']
+
+recipe.csv
+['recipe_id','title','unknown','kor','west','chi','jap']
+
+-> example file: 5 items per kind
+
+ratings.csv
+['user_id','recipe_id','rating']
+
+- user|recipe|rate
