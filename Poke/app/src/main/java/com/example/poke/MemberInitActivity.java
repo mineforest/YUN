@@ -15,9 +15,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class MemberInitActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
@@ -61,7 +58,7 @@ public class MemberInitActivity extends AppCompatActivity {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             mDatabase = FirebaseDatabase.getInstance().getReference();
             String uid = user.getUid();
-            UserInfo userInfo = new UserInfo(nickName, age, birthDay, gender);
+            User userInfo = new User(nickName, age, birthDay, gender);
             if(user != null){
                 mDatabase.child("users").child(uid).setValue(userInfo)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
