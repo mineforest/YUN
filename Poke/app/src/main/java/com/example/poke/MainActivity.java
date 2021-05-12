@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
         findViewById(R.id.gotoPasswordResetButton).setOnClickListener(onClickListener);
         findViewById(R.id.revokeButton).setOnClickListener(onClickListener);
+        findViewById(R.id.preButton).setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener(){
@@ -68,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
                     revokeAccess();
                     myStartActivity(LoginActivity.class);
                     break;
+                case R.id.preButton:
+                    myStartActivity(PreferenceActivity.class);
             }
         }
     };

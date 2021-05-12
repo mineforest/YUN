@@ -52,7 +52,7 @@ public class PreferenceActivity extends AppCompatActivity {
             String uid = user.getUid();
             UserAllergy userAllergy = new UserAllergy(preference);
 
-            mDatabase.child("preference").child(uid).push().setValue(userAllergy)
+            mDatabase.child("users").child(uid).child("preference").push().setValue(userAllergy)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
