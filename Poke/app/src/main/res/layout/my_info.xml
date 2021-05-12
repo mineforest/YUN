@@ -68,29 +68,24 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <TextView
-                android:id="@+id/evaluation_food"
+            <Button
+                android:id="@+id/historyButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="평가한 요리"
-                android:textSize="16sp" />
+                android:text="평가한 요리" />
 
-            <TextView
-                android:id="@+id/zzim"
+            <Button
+                android:id="@+id/dibsButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="찜한 요리"
-                android:textSize="16sp" />
+                android:text="찜한요리" />
 
-            <TextView
-                android:id="@+id/allergy"
+            <Button
+                android:id="@+id/AllergyButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="알러지 / 기피"
-                android:textSize="16sp" />
+                android:text="기피 재료" />
+
         </TableRow>
 
         <TableRow
