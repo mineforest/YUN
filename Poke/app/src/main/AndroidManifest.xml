@@ -28,6 +28,11 @@
         </activity>
         <activity android:name=".PreferenceActivity">
         </activity>
+        <activity android:name=".MyInfoActivity">
+        </activity>
+        <activity android:name=".CheckAllergyActivity">
+        </activity>
+
     </application>
 
 </manifest>

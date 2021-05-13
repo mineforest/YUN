@@ -58,7 +58,7 @@ public class MemberInitActivity extends AppCompatActivity {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             mDatabase = FirebaseDatabase.getInstance().getReference();
             String uid = user.getUid();
-            User userInfo = new User(nickName, age, birthDay, gender);
+            UserInfo userInfo = new UserInfo(nickName, age, birthDay, gender);
             if(user != null){
                 mDatabase.child("users").child(uid).setValue(userInfo)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -33,5 +33,11 @@
         android:layout_height="wrap_content"
         android:text="선호도" />
 
+    <Button
+        android:id="@+id/myInfoButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="내정보" />
+
 </LinearLayout>
 

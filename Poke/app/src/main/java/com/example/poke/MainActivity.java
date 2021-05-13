@@ -1,7 +1,6 @@
 package com.example.poke;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,16 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
@@ -45,13 +40,13 @@ public class MainActivity extends AppCompatActivity {
 
            nullStartActivity(uid,"preference");
            nullStartActivity(uid,"users");
-
         }
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
         findViewById(R.id.gotoPasswordResetButton).setOnClickListener(onClickListener);
         findViewById(R.id.revokeButton).setOnClickListener(onClickListener);
         findViewById(R.id.preButton).setOnClickListener(onClickListener);
+        findViewById(R.id.myInfoButton).setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener(){
@@ -71,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.preButton:
                     myStartActivity(PreferenceActivity.class);
+                    break;
+                case R.id.myInfoButton:
+                    myStartActivity(MyInfoActivity.class);
             }
         }
     };

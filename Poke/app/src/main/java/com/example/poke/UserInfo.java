@@ -5,17 +5,17 @@ import com.google.firebase.database.Exclude;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+public class UserInfo {
     String birthDay;
     String nickName;
     String age;
     String gender;
 
 
-    public User() {
+    public UserInfo() {
     }
 
-    public User(String nickName, String age, String birthDay, String gender){
+    public UserInfo(String nickName, String age, String birthDay, String gender){
         this.nickName = nickName;
         this.age = age;
         this.birthDay = birthDay;
