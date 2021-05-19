@@ -48,7 +48,7 @@ public class CheckAllergyActivity extends AppCompatActivity {
         textList.add(textView3);
         textList.add(textView4);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("preference").child(uid).addChildEventListener(allergyListener);
+        mDatabase.child("allergy").child(uid).addChildEventListener(allergyListener);
         //mDatabase.addValueEventListener(allergyListener);
     }
 //
@@ -77,7 +77,7 @@ public class CheckAllergyActivity extends AppCompatActivity {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
             UserAllergy allergy = snapshot.getValue(UserAllergy.class);
-            textList.get(i).setText(allergy.getPreference());
+            textList.get(i).setText(allergy.getAllergy());
             //textList.get(i).setText(snapshot.child("preference").child(uid).getChildren().toString());
             i++;
 

@@ -94,20 +94,20 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/textView13"
+                android:id="@+id/historyCountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="450"
+                android:text="0"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/dibsCountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="4"
+                android:text="0"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -116,7 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="3"
+                android:text="0"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </TableRow>

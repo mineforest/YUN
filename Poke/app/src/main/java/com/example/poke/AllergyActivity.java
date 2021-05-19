@@ -15,14 +15,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class PreferenceActivity extends AppCompatActivity {
+public class AllergyActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preference);
+        setContentView(R.layout.activity_allergy);
 
         findViewById(R.id.menuButton1).setOnClickListener(onClickListener);
         findViewById(R.id.menuButton2).setOnClickListener(onClickListener);
@@ -33,26 +33,26 @@ public class PreferenceActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.menuButton1:
-                    addPreference(R.id.menuButton1);
+                    addAllergy(R.id.menuButton1);
                     break;
                 case R.id.menuButton2:
-                    addPreference(R.id.menuButton2);
+                    addAllergy(R.id.menuButton2);
                     break;
                 case R.id.menuButton3:
-                    addPreference(R.id.menuButton3);
+                    addAllergy(R.id.menuButton3);
                     break;
             }
         }
     };
 
-        public void addPreference(int btn){
-            String preference = ((Button)findViewById(btn)).getText().toString();
+        public void addAllergy(int btn){
+            String allergy = ((Button)findViewById(btn)).getText().toString();
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             mDatabase = FirebaseDatabase.getInstance().getReference();
             String uid = user.getUid();
-            UserAllergy userAllergy = new UserAllergy(preference);
+            UserAllergy userAllergy = new UserAllergy(allergy);
 
-            mDatabase.child("preference").child(uid).push().setValue(userAllergy)
+            mDatabase.child("allergy").child(uid).push().setValue(userAllergy)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

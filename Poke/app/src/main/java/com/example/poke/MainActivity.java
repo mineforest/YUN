@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             mDatabase = FirebaseDatabase.getInstance().getReference();
             String uid = user.getUid();
 
-           nullStartActivity(uid,"preference");
+           nullStartActivity(uid,"allergy");
            nullStartActivity(uid,"users");
         }
 
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     myStartActivity(LoginActivity.class);
                     break;
                 case R.id.preButton:
-                    myStartActivity(PreferenceActivity.class);
+                    myStartActivity(AllergyActivity.class);
                     break;
                 case R.id.myInfoButton:
                     myStartActivity(MyInfoActivity.class);
@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
                         if (dataSnapshot.exists()) {
                             Log.d("firebase", String.valueOf(task.getResult().getValue()));
                         } else {
-                           if(child.equals("preference")){
-                               myStartActivity(PreferenceActivity.class);
+                           if(child.equals("allergy")){
+                               myStartActivity(AllergyActivity.class);
                            }
                            else if(child.equals("users")){
                                myStartActivity(MemberInitActivity.class);

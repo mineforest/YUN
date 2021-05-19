@@ -18,6 +18,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MyInfoActivity extends AppCompatActivity {
     TextView allergyCountTextView;
+    TextView historyCountTextView;
+    TextView dibsCountTextView;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -27,6 +29,8 @@ public class MyInfoActivity extends AppCompatActivity {
         setContentView(R.layout.my_info);
         mAuth = FirebaseAuth.getInstance();
 
+        dibsCountTextView = findViewById(R.id.dibsCountTextView);
+        historyCountTextView = findViewById(R.id.historyCountTextView);
         allergyCountTextView = findViewById(R.id.allergyCountTextView);
         findViewById(R.id.historyButton).setOnClickListener(onClickListener);
         findViewById(R.id.dibsButton).setOnClickListener(onClickListener);
@@ -41,8 +45,9 @@ public class MyInfoActivity extends AppCompatActivity {
 
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            allergyCountTextView.setText(Long.toString(dataSnapshot.child("preference").child(uid).getChildrenCount()));
-
+            allergyCountTextView.setText(Long.toString(dataSnapshot.child("allergy").child(uid).getChildrenCount()));
+            dibsCountTextView.setText(Long.toString(dataSnapshot.child("dibs").child(uid).getChildrenCount()));
+            historyCountTextView.setText(Long.toString(dataSnapshot.child("history").child(uid).getChildrenCount()));
         }
 
         @Override
@@ -56,10 +61,10 @@ public class MyInfoActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.historyButton:
-
+                break;
 
                 case R.id.dibsButton:
-
+                break;
 
                 case R.id.allergyButton:
                     myStartActivity(CheckAllergyActivity.class);
