@@ -31,9 +31,11 @@
         android:gravity="center"
         android:stretchColumns="0,1,2">
 
+
         <TableRow
             android:id="@+id/Table5"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="102dp"
             android:layout_weight="1"
             android:gravity="center">
 
@@ -41,29 +43,28 @@
             <Button
                 android:id="@+id/btn1"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="65dp"
                 android:background="@drawable/btn_shape"
-                android:text="1"
+                android:text="중식"
                 app:backgroundTint="@android:color/holo_green_light" />
 
             <Button
                 android:id="@+id/btn2"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="65dp"
                 android:background="@drawable/btn_shape"
-                android:text="2"
+                android:text="한식"
                 app:backgroundTint="@android:color/holo_green_light" />
 
             <Button
                 android:id="@+id/btn3"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="65dp"
                 android:background="@drawable/btn_shape"
-                android:text="3"
+                android:text="일식"
                 app:backgroundTint="@android:color/holo_green_light" />
 
         </TableRow>
-
 
         <TableRow
             android:id="@+id/Table6"
@@ -74,7 +75,7 @@
             <Button
                 android:id="@+id/btn4"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="65dp"
                 android:background="@drawable/btn_shape"
                 android:text="4"
                 app:backgroundTint="@android:color/holo_green_light" />
@@ -82,7 +83,7 @@
             <Button
                 android:id="@+id/btn5"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="65dp"
                 android:background="@drawable/btn_shape"
                 android:text="5"
                 app:backgroundTint="@android:color/holo_green_light" />
@@ -90,7 +91,7 @@
             <Button
                 android:id="@+id/btn6"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="65dp"
                 android:background="@drawable/btn_shape"
                 android:text="6"
                 app:backgroundTint="@android:color/holo_green_light" />
@@ -107,7 +108,7 @@
             <Button
                 android:id="@+id/btn7"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="65dp"
                 android:background="@drawable/btn_shape"
                 android:text="7"
                 app:backgroundTint="@android:color/holo_green_light" />
@@ -115,7 +116,7 @@
             <Button
                 android:id="@+id/btn8"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="65dp"
                 android:background="@drawable/btn_shape"
                 android:text="8"
                 app:backgroundTint="@android:color/holo_green_light" />
@@ -123,7 +124,7 @@
             <Button
                 android:id="@+id/btn9"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="65dp"
                 android:background="@drawable/btn_shape"
                 android:text="9"
                 app:backgroundTint="@android:color/holo_green_light" />
@@ -133,14 +134,14 @@
 
         <TableRow
             android:id="@+id/Table8"
-            android:layout_height="0dp"
+            android:layout_height="115dp"
             android:layout_weight="1"
             android:gravity="center">
 
             <Button
                 android:id="@+id/btn10"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="65dp"
                 android:background="@drawable/btn_shape"
                 android:text="10"
                 app:backgroundTint="@android:color/holo_green_light" />
@@ -148,7 +149,7 @@
             <Button
                 android:id="@+id/btn11"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="65dp"
                 android:background="@drawable/btn_shape"
                 android:text="11"
                 app:backgroundTint="@android:color/holo_green_light" />
@@ -156,13 +157,47 @@
             <Button
                 android:id="@+id/btn12"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="65dp"
                 android:background="@drawable/btn_shape"
                 android:text="12"
                 app:backgroundTint="@android:color/holo_green_light" />
 
         </TableRow>
 
+        <TableRow
+            android:id="@+id/Table10"
+            android:layout_width="match_parent"
+            android:layout_height="102dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ToggleButton
+                android:id="@+id/toggleButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="중식"
+                android:textOff="중식"
+                android:textOn="중식"
+                android:onClick="ToggleClicked"/>
+
+            <ToggleButton
+                android:id="@+id/toggleButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="한식"
+                android:textOff="한식"
+                android:textOn="한식"
+                android:onClick="ToggleClicked"/>
+
+            <ToggleButton
+                android:id="@+id/toggleButton4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ToggleButton"
+                android:textOff="양식"
+                android:textOn="양식"
+                android:onClick="ToggleClicked"/>
+        </TableRow>
 
     </TableLayout>
 

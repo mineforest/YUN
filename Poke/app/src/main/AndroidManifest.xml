@@ -32,7 +32,8 @@
         </activity>
         <activity android:name=".CheckAllergyActivity">
         </activity>
-
+        <activity android:name=".preferenceActivity">
+        </activity>
     </application>
 
 </manifest>
