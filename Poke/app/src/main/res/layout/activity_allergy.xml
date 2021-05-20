@@ -1,31 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/previousButton"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
 
-    <Button
-        android:id="@+id/menuButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="다이어트"
-        tools:layout_editor_absoluteX="159dp"
-        tools:layout_editor_absoluteY="94dp" />
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/allergyOption"
+        android:layout_width="292dp"
+        android:layout_height="480dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="88dp">
 
-    <Button
-        android:id="@+id/menuButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="채식주의"
-        tools:layout_editor_absoluteX="180dp"
-        tools:layout_editor_absoluteY="167dp" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/allergyChip1"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="계란" />
 
-    <Button
-        android:id="@+id/menuButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="저염식"
-        tools:layout_editor_absoluteX="178dp"
-        tools:layout_editor_absoluteY="240dp" />
-</LinearLayout>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/allergyChip2"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오이" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/allergyChip3"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="복숭아" />
+
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/allergyChip4"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="밀가루" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <LinearLayout
+        android:layout_width="420dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="660dp"
+        android:background="@color/black"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-1dp">
+
+        <Button
+            android:id="@+id/previousButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="previous"
+            android:textColor="@android:color/holo_green_light"
+            app:backgroundTint="@color/black" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="282dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/black"
+            android:gravity="center"
+            android:text="3 out of 3 Selected"
+            android:textColor="@android:color/holo_green_light" />
+
+        <Button
+            android:id="@+id/nextButton3"
+            android:layout_width="115dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="완료"
+            android:textColor="@android:color/holo_green_light"
+            app:backgroundTint="@color/black" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,8 +13,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class dietActivity extends AppCompatActivity {
+public class PreferenceActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
     public String uid;
 
     private ChipGroup chipGroup;
@@ -22,16 +23,15 @@ public class dietActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_diet);
+        setContentView(R.layout.preference);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         uid = user.getUid();
 
-        chipGroup = findViewById(R.id.dietOption);
-        findViewById(R.id.nextButton2).setOnClickListener(nextClickListener);
-        findViewById(R.id.previousButton2).setOnClickListener(preClickListener);
+        chipGroup = findViewById(R.id.preOption);
+        findViewById(R.id.nextButton1).setOnClickListener(nextClickListener);
     }
 
     View.OnClickListener nextClickListener = new View.OnClickListener() {
@@ -39,22 +39,18 @@ public class dietActivity extends AppCompatActivity {
         public void onClick(View v) {
             for(int list : chipGroup.getCheckedChipIds()){
                 Chip chip = findViewById(list);
-                mDatabase.child("diet").child(uid).push().setValue(new UserDiet(chip.getText().toString()));
+                mDatabase.child("preference").child(uid).push().setValue(new UserPreference(chip.getText().toString()));
             }
-            myStartActivity(AllergyActivity.class);
-        }
-    };
-
-    View.OnClickListener preClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onBackPressed();
+                myStartActivity(dietActivity.class);
         }
     };
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        moveTaskToBack(true);
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
     }
 
     private void myStartActivity(Class c){
@@ -62,6 +58,5 @@ public class dietActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
-
 
 }
