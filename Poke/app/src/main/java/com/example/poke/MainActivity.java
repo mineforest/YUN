@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
            nullStartActivity(uid,"allergy");
            nullStartActivity(uid,"users");
-            nullStartActivity(uid,"preference");
+           nullStartActivity(uid,"preference");
+
         }
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     myStartActivity(LoginActivity.class);
                     break;
                 case R.id.preButton:
-                    myStartActivity(AllergyActivity.class);
+                    myStartActivity(dietActivity.class);
                     break;
                 case R.id.myInfoButton:
                     myStartActivity(MyInfoActivity.class);
@@ -89,9 +90,6 @@ public class MainActivity extends AppCompatActivity {
                            }
                            else if(child.equals("users")){
                                myStartActivity(MemberInitActivity.class);
-                           }
-                           else if(child.equals("preference")){
-                               myStartActivity(preferenceActivity.class);
                            }
                         }
                     }
