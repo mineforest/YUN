@@ -40,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
            nullStartActivity(uid,"allergy");
            nullStartActivity(uid,"users");
+<<<<<<< HEAD
           //  nullStartActivity(uid,"preference");
+=======
+>>>>>>> parent of eabf485 (Poke)
         }
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
@@ -89,9 +92,6 @@ public class MainActivity extends AppCompatActivity {
                            }
                            else if(child.equals("users")){
                                myStartActivity(MemberInitActivity.class);
-                           }
-                           else if(child.equals("preference")){
-                               myStartActivity(preferenceActivity.class);
                            }
                         }
                     }
