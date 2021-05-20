@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomViewHolder> {
 
-    private ArrayList<Historydata> arrayList;
+    private ArrayList<UserHistory> historyList;
 
-    public HistoryAdapter(ArrayList<Historydata> arrayList) {
-        this.arrayList = arrayList;
+    public HistoryAdapter(ArrayList<UserHistory> historyList){
+        this.historyList = historyList;
     }
 
     @NonNull
@@ -36,9 +36,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
     @Override
     public void onBindViewHolder(@NonNull @org.jetbrains.annotations.NotNull HistoryAdapter.CustomViewHolder holder, int position) {
 
-        holder.history_image.setImageResource(arrayList.get(position).getHistory_image());
-        holder.history_rec.setText(arrayList.get(position).getHistory_rec());
-        holder.history_date.setText(arrayList.get(position).getHistory_date());
+        holder.history_image.setImageResource(historyList.get(position).getRecipeImage());
+        holder.history_rec.setText(historyList.get(position).getRecipeTitle());
+        holder.history_date.setText(historyList.get(position).getDate());
 
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -63,12 +63,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
 
     @Override
     public int getItemCount() {
-        return (null != arrayList ? arrayList.size() : 0);
+        return (null != historyList ? historyList.size() : 0);
     }
 
     public void remove(int position) {
         try {
-            arrayList.remove(position);
+            historyList.remove(position);
             notifyItemRemoved(position);
         } catch (IndexOutOfBoundsException ex) {
             ex.printStackTrace();

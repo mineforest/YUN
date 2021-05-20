@@ -1,47 +1,57 @@
 package com.example.poke;
 
-import java.util.Date;
-
 public class UserHistory {
-    String recipeHistory;
-    int stars;
+    int rate;
+    String recipeTitle;
     int recipeID;
-    Date date;
+    String date;
+    int recipeImage;
 
-    public UserHistory(String recipeHistory, int stars) {
-        this.recipeHistory = recipeHistory;
-        this.stars = stars;
+    public UserHistory(){}
+
+    public UserHistory(String recipeTitle, int recipeID, String date) {
+        this.recipeTitle = recipeTitle;
+        this.recipeID = recipeID;
+        this.date = date;
     }
 
-    public int getRecipeID() {
-        return recipeID;
+    public void setRecipeImage(int recipeImage) {
+        this.recipeImage = recipeImage;
+    }
+
+    public int getRecipeImage() {
+        return recipeImage;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setRecipeID(int recipeID) {
         this.recipeID = recipeID;
     }
 
-    public Date getDate() {
+    public void setRecipeTitle(String recipeTitle) {
+        this.recipeTitle = recipeTitle;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public int getRecipeID() {
+        return recipeID;
     }
 
-    public int getStars() {
-        return stars;
+    public String getRecipeTitle() {
+        return recipeTitle;
     }
 
-    public void setStars(int stars) {
-        this.stars = stars;
-    }
-
-    public void setRecipeHistory(String recipeHistory) {
-        this.recipeHistory = recipeHistory;
-    }
-
-    public String getRecipeHistory() {
-        return recipeHistory;
+    public int getRate() {
+        return rate;
     }
 }

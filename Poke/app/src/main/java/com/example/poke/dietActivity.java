@@ -13,10 +13,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class dietActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     public String uid;
-
+    UserDiet diet = new UserDiet();
     private ChipGroup chipGroup;
 
     @Override
@@ -39,7 +42,7 @@ public class dietActivity extends AppCompatActivity {
         public void onClick(View v) {
             for(int list : chipGroup.getCheckedChipIds()){
                 Chip chip = findViewById(list);
-                mDatabase.child("diet").child(uid).push().setValue(new UserDiet(chip.getText().toString()));
+                mDatabase.child("diet").child(uid).setValue(diet);
             }
             myStartActivity(AllergyActivity.class);
         }

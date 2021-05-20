@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.revokeButton).setOnClickListener(onClickListener);
         findViewById(R.id.preButton).setOnClickListener(onClickListener);
         findViewById(R.id.myInfoButton).setOnClickListener(onClickListener);
+        findViewById(R.id.starButton).setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener(){
@@ -70,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.myInfoButton:
                     myStartActivity(MyInfoActivity.class);
+                    break;
+                case R.id.starButton:
+                    myStartActivity(dod.class);
+                    break;
             }
         }
     };

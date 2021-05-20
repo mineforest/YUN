@@ -59,4 +59,5 @@ public class PreferenceActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
 }

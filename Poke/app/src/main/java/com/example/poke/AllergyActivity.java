@@ -18,9 +18,8 @@ import java.util.ArrayList;
 
 public class AllergyActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
     public String uid;
-
+    ArrayList<String> allergyList = new ArrayList<>();
     private ChipGroup chipGroup;
 
     @Override
@@ -43,7 +42,8 @@ public class AllergyActivity extends AppCompatActivity {
         public void onClick(View v) {
             for(int list : chipGroup.getCheckedChipIds()){
                 Chip chip = findViewById(list);
-                mDatabase.child("allergy").child(uid).push().setValue(new UserDiet(chip.getText().toString()));
+                allergyList.add(chip.getText().toString());
+                //mDatabase.child("allergy").child(uid).push().setValue(new UserAllergy(chip.getText().toString()));
             }
             myStartActivity(MainActivity.class);
         }
