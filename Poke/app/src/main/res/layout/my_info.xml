@@ -41,7 +41,7 @@
         <TextView
             android:id="@+id/Style"
             android:layout_width="match_parent"
-            android:layout_height="18dp"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="Food Specialist" />
@@ -58,7 +58,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="139dp"
+        android:layout_height="128dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:stretchColumns="0,1,2">

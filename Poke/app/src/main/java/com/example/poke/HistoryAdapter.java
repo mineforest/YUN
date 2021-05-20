@@ -27,7 +27,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
     @Override
     public HistoryAdapter.CustomViewHolder onCreateViewHolder(@NonNull @org.jetbrains.annotations.NotNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.historylist,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_list,parent,false);
         CustomViewHolder holder = new CustomViewHolder(view);
 
         return holder;
