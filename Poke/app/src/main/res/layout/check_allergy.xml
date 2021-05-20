@@ -137,7 +137,7 @@
             android:textColor="@android:color/holo_green_light" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/nextButton"
             android:layout_width="115dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

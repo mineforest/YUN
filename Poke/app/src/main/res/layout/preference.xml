@@ -171,32 +171,32 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <ToggleButton
-                android:id="@+id/toggleButton2"
+                <com.google.android.material.chip.Chip
+                android:id="@+id/chip1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="중식"
-                android:textOff="중식"
-                android:textOn="중식"
-                android:onClick="ToggleClicked"/>
-
-            <ToggleButton
-                android:id="@+id/toggleButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:checked="false"
                 android:text="한식"
-                android:textOff="한식"
-                android:textOn="한식"
-                android:onClick="ToggleClicked"/>
+                />
 
-            <ToggleButton
-                android:id="@+id/toggleButton4"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ToggleButton"
-                android:textOff="양식"
-                android:textOn="양식"
-                android:onClick="ToggleClicked"/>
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:checked="false"
+                android:text="중식"/>
+
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:checked="false"
+                android:text="일식"/>
+
         </TableRow>
 
     </TableLayout>
@@ -218,7 +218,7 @@
             android:textColor="@android:color/holo_green_light" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/nextButton"
             android:layout_width="115dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
