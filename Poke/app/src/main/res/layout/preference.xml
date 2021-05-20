@@ -4,63 +4,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/previousButton"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
 
-    android:layout_gravity="center">
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/preOption"
-        android:layout_width="292dp"
-        android:layout_height="480dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="88dp">
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/preChip1"
-            style="@style/CustomChipStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="중식" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/preChip2"
-            style="@style/CustomChipStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="한식" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/preChip3"
-            style="@style/CustomChipStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="일식" />
-
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/preChip4"
-            style="@style/CustomChipStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="양식" />
-
-    </com.google.android.material.chip.ChipGroup>
+    >
 
     <LinearLayout
-        android:layout_width="420dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="660dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="33dp" />
+
+        <TextView
+            android:id="@+id/Head1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Pick Your Favorite Category"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="57dp" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/preOption"
+            android:layout_width="wrap_content"
+            android:layout_height="175dp"
+            android:layout_gravity="center">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/preChip1"
+                style="@style/CustomChipStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="중식"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/preChip2"
+                style="@style/CustomChipStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="한식"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/preChip3"
+                style="@style/CustomChipStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="일식"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/preChip4"
+                style="@style/CustomChipStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="양식"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
         android:background="@color/black"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-1dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints">
+
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="282dp"
-            android:layout_height="wrap_content"
+            android:layout_width="596dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/black"
             android:gravity="center"
@@ -69,12 +102,13 @@
 
         <Button
             android:id="@+id/nextButton1"
-            android:layout_width="115dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Next"
             android:textColor="@android:color/holo_green_light"
             app:backgroundTint="@color/black" />
+
     </LinearLayout>
 
 
