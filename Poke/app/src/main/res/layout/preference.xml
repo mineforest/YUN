@@ -1,92 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/previousButton"
+    android:id="@+id/linearLayout1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
+    android:orientation="vertical"
     >
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="33dp" />
-
-        <TextView
-            android:id="@+id/Head1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Pick Your Favorite Category"
-            android:textSize="34sp"
-            android:textStyle="bold" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="57dp" />
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/preOption"
-            android:layout_width="wrap_content"
-            android:layout_height="175dp"
-            android:layout_gravity="center">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/preChip1"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="중식"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/preChip2"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="한식"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/preChip3"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="일식"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/preChip4"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="양식"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-        </com.google.android.material.chip.ChipGroup>
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
     </LinearLayout>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="33dp" />
+
+    <TextView
+        android:id="@+id/Head1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Pick Your Favorite Category"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="57dp" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/preOption"
+        android:layout_width="wrap_content"
+        android:layout_height="508dp"
+        android:layout_gravity="center">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip1"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="중식"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip2"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="한식"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip3"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일식"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip4"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="양식"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+    </com.google.android.material.chip.ChipGroup>
+
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="46dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/black"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="MissingConstraints">
 
 
@@ -112,4 +108,4 @@
     </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
