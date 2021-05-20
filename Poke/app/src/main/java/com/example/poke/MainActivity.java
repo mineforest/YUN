@@ -2,6 +2,7 @@ package com.example.poke;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.View;
 
@@ -40,10 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
            nullStartActivity(uid,"users");
            nullStartActivity(uid,"preference");
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
         }
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
@@ -90,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
                             if(child.equals("users")){
                                myStartActivity(MemberInitActivity.class);
                            }
+                            else if(child.equals("preference")){
+                                myStartActivity(preferenceActivity.class);
+                            }
                         }
                     }
                 }
