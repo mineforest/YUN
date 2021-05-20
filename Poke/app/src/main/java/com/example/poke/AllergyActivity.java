@@ -52,10 +52,14 @@ public class AllergyActivity extends AppCompatActivity {
     View.OnClickListener preClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            myStartActivity(dietActivity.class);
+            onBackPressed();
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     private void myStartActivity(Class c){
         Intent intent = new Intent(this,c);

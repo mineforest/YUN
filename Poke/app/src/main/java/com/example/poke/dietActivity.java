@@ -13,8 +13,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-
 public class dietActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     public String uid;
@@ -50,10 +48,14 @@ public class dietActivity extends AppCompatActivity {
     View.OnClickListener preClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-           myStartActivity(preferenceActivity.class);
+            onBackPressed();
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     private void myStartActivity(Class c){
         Intent intent = new Intent(this,c);

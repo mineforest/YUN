@@ -2,7 +2,6 @@ package com.example.poke;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.View;
 
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     myStartActivity(LoginActivity.class);
                     break;
                 case R.id.preButton:
-                    myStartActivity(preferenceActivity.class);
+                    myStartActivity(PreferenceActivity.class);
                     break;
                 case R.id.myInfoButton:
                     myStartActivity(MyInfoActivity.class);
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                                myStartActivity(MemberInitActivity.class);
                            }
                             else if(child.equals("preference")){
-                                myStartActivity(preferenceActivity.class);
+                                myStartActivity(PreferenceActivity.class);
                             }
                         }
                     }
