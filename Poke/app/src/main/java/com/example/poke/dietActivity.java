@@ -1,11 +1,12 @@
 package com.example.poke;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,11 +17,7 @@ import java.util.ArrayList;
 
 public class dietActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
     public String uid;
-
-    ArrayList<UserDiet> dietList= new ArrayList<UserDiet>();
-    String d[] = {"고기좋아","고기싫어"};
 
     private ChipGroup chipGroup;
 
@@ -34,20 +31,35 @@ public class dietActivity extends AppCompatActivity {
 
         uid = user.getUid();
 
-        chipGroup = findViewById(R.id.cgOption);
-
-        for(int i =0; i<d.length; i++){
-            Chip chip = new Chip(this);
-            ChipDrawable drawable = ChipDrawable.createFromAttributes(this, null, 0,
-                    R.style.Widget_MaterialComponents_Chip_Choice);
-            chip.setChipDrawable(drawable);
-
-            chip.setPadding(10,10,10,10);
-            chip.setText(d[i]);
-
-            chipGroup.addView(chip);
-
-        }
+        chipGroup = findViewById(R.id.dietOption);
+        findViewById(R.id.nextButton2).setOnClickListener(nextClickListener);
+        findViewById(R.id.previousButton2).setOnClickListener(preClickListener);
     }
+
+    View.OnClickListener nextClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            for(int list : chipGroup.getCheckedChipIds()){
+                Chip chip = findViewById(list);
+                mDatabase.child("diet").child(uid).push().setValue(new UserDiet(chip.getText().toString()));
+            }
+            myStartActivity(AllergyActivity.class);
+        }
+    };
+
+    View.OnClickListener preClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+           myStartActivity(preferenceActivity.class);
+        }
+    };
+
+
+    private void myStartActivity(Class c){
+        Intent intent = new Intent(this,c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
 
 }

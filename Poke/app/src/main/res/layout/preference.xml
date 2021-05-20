@@ -1,214 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/previousButton"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/Heading1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Pick Your Favorite Category"
-        android:textSize="36sp"
-        android:textStyle="bold" />
+    android:layout_gravity="center">
 
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/preOption"
+        android:layout_width="292dp"
+        android:layout_height="480dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="88dp">
 
-    <TextView
-        android:id="@+id/Heading2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="You can change this later"
-        android:textSize="24sp" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip1"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="중식" />
+>>>>>>> Stashed changes
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="557dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:stretchColumns="0,1,2">
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip2"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="한식" />
 
-        <TableRow
-            android:id="@+id/Table5"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center">
-
-
-            <Button
-                android:id="@+id/btn1"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:background="@drawable/btn_shape"
-                android:text="1"
-                app:backgroundTint="@android:color/holo_green_light" />
-
-            <Button
-                android:id="@+id/btn2"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:background="@drawable/btn_shape"
-                android:text="2"
-                app:backgroundTint="@android:color/holo_green_light" />
-
-            <Button
-                android:id="@+id/btn3"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:background="@drawable/btn_shape"
-                android:text="3"
-                app:backgroundTint="@android:color/holo_green_light" />
-
-        </TableRow>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip3"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일식" />
 
 
-        <TableRow
-            android:id="@+id/Table6"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center">
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip4"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="양식" />
 
-            <Button
-                android:id="@+id/btn4"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:background="@drawable/btn_shape"
-                android:text="4"
-                app:backgroundTint="@android:color/holo_green_light" />
-
-            <Button
-                android:id="@+id/btn5"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@drawable/btn_shape"
-                android:text="5"
-                app:backgroundTint="@android:color/holo_green_light" />
-
-            <Button
-                android:id="@+id/btn6"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@drawable/btn_shape"
-                android:text="6"
-                app:backgroundTint="@android:color/holo_green_light" />
-
-        </TableRow>
-
-
-        <TableRow
-            android:id="@+id/Table7"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/btn7"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@drawable/btn_shape"
-                android:text="7"
-                app:backgroundTint="@android:color/holo_green_light" />
-
-            <Button
-                android:id="@+id/btn8"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@drawable/btn_shape"
-                android:text="8"
-                app:backgroundTint="@android:color/holo_green_light" />
-
-            <Button
-                android:id="@+id/btn9"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@drawable/btn_shape"
-                android:text="9"
-                app:backgroundTint="@android:color/holo_green_light" />
-
-        </TableRow>
-
-
-        <TableRow
-            android:id="@+id/Table8"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/btn10"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@drawable/btn_shape"
-                android:text="10"
-                app:backgroundTint="@android:color/holo_green_light" />
-
-            <Button
-                android:id="@+id/btn11"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@drawable/btn_shape"
-                android:text="11"
-                app:backgroundTint="@android:color/holo_green_light" />
-
-            <Button
-                android:id="@+id/btn12"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@drawable/btn_shape"
-                android:text="12"
-                app:backgroundTint="@android:color/holo_green_light" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/Table10"
-            android:layout_width="match_parent"
-            android:layout_height="102dp"
-            android:layout_weight="1"
-            android:gravity="center">
-
-                <com.google.android.material.chip.Chip
-                android:id="@+id/chip1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:checked="false"
-                android:text="한식"
-                />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:checked="false"
-                android:text="중식"/>
-
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:checked="false"
-                android:text="일식"/>
-
-        </TableRow>
-
-    </TableLayout>
+    </com.google.android.material.chip.ChipGroup>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="420dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="660dp"
         android:background="@color/black"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-1dp">
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="285dp"
+            android:layout_width="282dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/black"
@@ -217,7 +69,7 @@
             android:textColor="@android:color/holo_green_light" />
 
         <Button
-            android:id="@+id/nextButton"
+            android:id="@+id/nextButton1"
             android:layout_width="115dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -227,4 +79,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
