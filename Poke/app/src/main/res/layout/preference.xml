@@ -163,7 +163,6 @@
 
         </TableRow>
 
-<<<<<<< HEAD
         <TableRow
             android:id="@+id/Table10"
             android:layout_width="match_parent"
@@ -198,8 +197,6 @@
                 android:text="일식"/>
 
         </TableRow>
-=======
->>>>>>> parent of eabf485 (Poke)
 
     </TableLayout>
 
