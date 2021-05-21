@@ -36,9 +36,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
     @Override
     public void onBindViewHolder(@NonNull @org.jetbrains.annotations.NotNull HistoryAdapter.CustomViewHolder holder, int position) {
 
-        holder.history_image.setImageResource(historyList.get(position).getRecipeImage());
-        holder.history_rec.setText(historyList.get(position).getRecipeTitle());
-        holder.history_date.setText(historyList.get(position).getDate());
+//        holder.history_image.setImageResource(historyList.get(position).getRecipeImage());
+//        holder.history_rec.setText(historyList.get(position).getRecipeTitle());
+//        holder.history_date.setText((historyList.get(position).getDate()));
 
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
