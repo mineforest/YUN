@@ -83,7 +83,8 @@ public class MyInfoActivity extends AppCompatActivity {
     ValueEventListener userValueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-            //nickNameTextView.setText((String)snapshot.child("users").child(uid).getValue());
+            for(DataSnapshot dataSnapshot : snapshot.child("users").child(uid).getChildren())
+            nickNameTextView.setText(dataSnapshot.getValue().toString());
 
         }
 
