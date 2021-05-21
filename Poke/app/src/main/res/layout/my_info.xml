@@ -46,14 +46,6 @@
             android:gravity="center"
             android:text="Food Specialist" />
 
-        <TextView
-            android:id="@+id/Type"
-            android:layout_width="match_parent"
-            android:layout_height="18dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="자취방"
-            android:textSize="18sp" />
     </LinearLayout>
 
     <TableLayout

@@ -2,6 +2,7 @@ package com.example.poke;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class MyInfoActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private ArrayList<UserHistory> historyList;
+
     private HistoryAdapter mainAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -81,11 +83,14 @@ public class MyInfoActivity extends AppCompatActivity {
     };
 
     ValueEventListener userValueEventListener = new ValueEventListener() {
+        private ArrayList<String> userInfoArrayList = new ArrayList<>();
+
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-            for(DataSnapshot dataSnapshot : snapshot.child("users").child(uid).getChildren())
-            nickNameTextView.setText(dataSnapshot.getValue().toString());
-
+            for(DataSnapshot dataSnapshot : snapshot.child("users").child(uid).getChildren()) {
+                userInfoArrayList.add(dataSnapshot.getValue().toString());
+            }
+                nickNameTextView.setText(userInfoArrayList.get(3));
         }
 
         @Override
