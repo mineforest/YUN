@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     myStartActivity(LoginActivity.class);
                     break;
                 case R.id.preButton:
-                    myStartActivity(PreferenceActivity.class);
+                    myStartActivity(MainFragment.class);
                     break;
                 case R.id.myInfoButton:
                     myStartActivity(MyInfoActivity.class);
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                                myStartActivity(MemberInitActivity.class);
                            }
                             else if(child.equals("preference")){
-                                myStartActivity(PreferenceActivity.class);
+//                                myStartActivity(PreferenceActivity.class);
                             }
                         }
                     }

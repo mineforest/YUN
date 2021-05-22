@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/frame_container2"
+        android:layout_width="match_parent"
+        android:layout_height="617dp">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@color/black"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/fragmentPreviousButton"
+            android:layout_width="125dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="previous"
+            android:textColor="@android:color/holo_green_light"
+            app:backgroundTint="@color/black" />
+
+        <TextView
+            android:id="@+id/ageTextView"
+            android:layout_width="282dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/black"
+            android:gravity="center"
+            android:textColor="@android:color/holo_green_light" />
+
+        <Button
+            android:id="@+id/fragmentNextButton"
+            android:layout_width="115dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Next"
+            android:textColor="@android:color/holo_green_light"
+            app:backgroundTint="@color/black" />
+    </LinearLayout>
+
+
+</LinearLayout>

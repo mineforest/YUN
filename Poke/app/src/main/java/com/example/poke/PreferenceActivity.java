@@ -12,10 +12,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+/*
 public class PreferenceActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
     public String uid;
 
     private ChipGroup chipGroup;
@@ -29,7 +28,6 @@ public class PreferenceActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         uid = user.getUid();
-
         chipGroup = findViewById(R.id.preOption);
         findViewById(R.id.nextButton1).setOnClickListener(nextClickListener);
     }
@@ -37,6 +35,7 @@ public class PreferenceActivity extends AppCompatActivity {
     View.OnClickListener nextClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            myStartActivity(DietActivity.class);
             for(int list : chipGroup.getCheckedChipIds()){
                 Chip chip = findViewById(list);
                 mDatabase.child("preference").child(uid).push().setValue(new UserPreference(chip.getText().toString()));
@@ -58,6 +57,6 @@ public class PreferenceActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
-
-
 }
+
+*/

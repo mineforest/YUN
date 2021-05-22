@@ -15,7 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-
+/*
 public class AllergyActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     public String uid;
@@ -42,8 +42,8 @@ public class AllergyActivity extends AppCompatActivity {
         public void onClick(View v) {
             for(int list : chipGroup.getCheckedChipIds()){
                 Chip chip = findViewById(list);
-                allergyList.add(chip.getText().toString());
-                //mDatabase.child("allergy").child(uid).push().setValue(new UserAllergy(chip.getText().toString()));
+                //allergyList.add(chip.getText().toString());
+                mDatabase.child("allergy").child(uid).push().setValue(new UserAllergy(chip.getText().toString()));
             }
             myStartActivity(MainActivity.class);
         }
@@ -67,5 +67,5 @@ public class AllergyActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
 }
+*/

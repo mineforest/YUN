@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -77,35 +78,35 @@
 
     </com.google.android.material.chip.ChipGroup>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/black"-->
+<!--        android:orientation="horizontal"-->
+<!--        tools:ignore="MissingConstraints">-->
 
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="596dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/black"
-            android:gravity="center"
-            android:text="1 out of 3 Selected"
-            android:textColor="@android:color/holo_green_light" />
+<!--        <TextView-->
+<!--            android:id="@+id/textView"-->
+<!--            android:layout_width="596dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@color/black"-->
+<!--            android:gravity="center"-->
+<!--            android:text="1 out of 3 Selected"-->
+<!--            android:textColor="@android:color/holo_green_light" />-->
 
-        <Button
-            android:id="@+id/nextButton1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Next"
-            android:textColor="@android:color/holo_green_light"
-            app:backgroundTint="@color/black" />
+<!--        <Button-->
+<!--            android:id="@+id/nextButton1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="Next"-->
+<!--            android:textColor="@android:color/holo_green_light"-->
+<!--            app:backgroundTint="@color/black" />-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
 
 </LinearLayout>
