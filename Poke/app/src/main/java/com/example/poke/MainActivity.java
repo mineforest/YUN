@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.preButton).setOnClickListener(onClickListener);
         findViewById(R.id.myInfoButton).setOnClickListener(onClickListener);
         findViewById(R.id.starButton).setOnClickListener(onClickListener);
+        findViewById(R.id.barcode_scan_Button).setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener(){
@@ -75,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.starButton:
                     myStartActivity(dod.class);
                     break;
+                case R.id.barcode_scan_Button:
+                    new IntentIntegrator(MainActivity.this).initiateScan();
             }
         }
     };
