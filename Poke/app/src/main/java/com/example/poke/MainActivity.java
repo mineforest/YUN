@@ -78,7 +78,10 @@ public class MainActivity extends AppCompatActivity {
                     myStartActivity(dod.class);
                     break;
                 case R.id.barcode_scan_Button:
-                    new IntentIntegrator(MainActivity.this).initiateScan();
+                    IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+                    integrator.setOrientationLocked(false);
+                    integrator.setPrompt("바코드를 읽혀주세요 헤헷");
+                    integrator.initiateScan();
             }
         }
     };
