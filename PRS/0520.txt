@@ -1,0 +1,57 @@
+import numpy as np
+from surprise import SVD
+import scipy as sp
+from scipy.sparse.linalg import svds
+import pandas as pd
+
+recipes=pd.read_csv('C:/RecoSys/recipe_tags.csv',header=0, encoding='utf-8')
+
+r_cols=['recipe_id', 'user_id', 'rating']
+ratings= pd.read_csv('C:/RecoSys/rating.csv',names=r_cols, header=None, encoding='UTF-8')
+# ratings=ratings.set_index('user_id')
+user_list=[0]*30000
+
+idx=0
+for i in ratings['user_id']:
+        if i not in user_list:
+            user_list[idx]=i
+            idx=idx+1
+print(idx)
+
+user_name='90050185'        # set target name
+
+df_ratings=ratings.pivot_table(
+    values='rating',
+    index='user_id',
+    columns='recipe_id'
+).fillna(0)
+
+mat=df_ratings.to_numpy()
+user_mean=np.mean(mat, axis=1)
+
+mat_user_mean=mat-user_mean.reshape(-1, 1)
+pd.DataFrame(mat_user_mean,columns=df_ratings.columns).tail()
+
+U, sigma, Vt = svds(df_ratings, k=500)  # k= 1~ 957
+
+sigma=np.diag(sigma)
+
+svd_user_pred_ratings= np.dot(np.dot(U,sigma),Vt)+user_mean.reshape(-1,1)
+df_svd= pd.DataFrame(svd_user_pred_ratings,columns=df_ratings.columns)
+
+
+def recommend_recipes(df_svd,user_id,recipe_df,ratings_df,rec_num=5):
+    user_row_num= user_list.index(user_id)
+    sorted_user_pred=df_svd.loc[user_row_num].sort_values(ascending=False)
+    user_data=ratings_df[ratings_df.user_id==user_id]
+    user_history=user_data.merge(recipe_df, on='recipe_id').sort_values(['rating'],ascending=False)
+    recmd=recipe_df[~recipe_df['recipe_id'].isin(user_history['recipe_id'])]
+    recmd=recmd.merge(pd.DataFrame(sorted_user_pred).reset_index(), on='recipe_id')
+    recmd=recmd.rename(columns={user_row_num: 'Predictions'}).sort_values('Predictions',ascending=False).iloc[:rec_num, :]
+
+    return user_history, recmd
+
+already_rated,predictions=recommend_recipes(df_svd,user_name,recipes,ratings,7)
+
+print(already_rated)
+print(predictions)
