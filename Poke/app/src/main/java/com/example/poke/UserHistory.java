@@ -3,23 +3,37 @@ package com.example.poke;
 public class UserHistory {
     int rate;
     String recipeTitle;
-    int recipeID;
+    String recipeID;
     String date;
-    int recipeImage;
+    String recipeImage;
 
-    public UserHistory(){}
+    public UserHistory() {}
+    public UserHistory(String recipeTitle, String recipeImage, String date, int rate){
+        this.recipeTitle = recipeTitle;
+        this.recipeImage = recipeImage;
+        this.date = date;
+        this.rate = rate;
+    }
 
-    public UserHistory(String recipeTitle, int recipeID, String date) {
+    public UserHistory(String recipeTitle, String recipeImage, String date, int rate, String recipeID){
+        this.recipeTitle = recipeTitle;
+        this.recipeImage = recipeImage;
+        this.date = date;
+        this.rate = rate;
+        this.recipeID = recipeID;
+    }
+
+    public UserHistory(String recipeTitle, String recipeID, String date) {
         this.recipeTitle = recipeTitle;
         this.recipeID = recipeID;
         this.date = date;
     }
 
-    public void setRecipeImage(int recipeImage) {
+    public void setRecipeImage(String recipeImage) {
         this.recipeImage = recipeImage;
     }
 
-    public int getRecipeImage() {
+    public String getRecipeImage() {
         return recipeImage;
     }
 
@@ -27,7 +41,7 @@ public class UserHistory {
         this.date = date;
     }
 
-    public void setRecipeID(int recipeID) {
+    public void setRecipeID(String recipeID) {
         this.recipeID = recipeID;
     }
 
@@ -43,7 +57,7 @@ public class UserHistory {
         return date;
     }
 
-    public int getRecipeID() {
+    public String getRecipeID() {
         return recipeID;
     }
 
