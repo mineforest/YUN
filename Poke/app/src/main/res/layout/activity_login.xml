@@ -14,9 +14,10 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="527dp"
+        android:layout_height="437dp"
         android:orientation="vertical"
         android:padding="10dp">
 

@@ -60,7 +60,6 @@ public class MemberInitActivity extends AppCompatActivity {
             String uid = user.getUid();
             UserInfo userInfo = new UserInfo(nickName, age, birthDay, gender);
             if(user != null){
-                //mDatabase.child("users").child(uid).push();
                 mDatabase.child("users").child(uid).setValue(userInfo)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -76,9 +75,6 @@ public class MemberInitActivity extends AppCompatActivity {
                             }
                         });
             }
-
-
-
         } else{
             startToast("회원정보를 입력해주세요.");
         }
@@ -87,7 +83,4 @@ public class MemberInitActivity extends AppCompatActivity {
     private void startToast(String msg){
         Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
     }
-
-
-
 }

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/dietOption"
+        android:layout_width="292dp"
+        android:layout_height="480dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="88dp">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip1"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="저열량" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip2"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="저지방" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip3"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="저 콜레스테롤" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip4"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="저 나트륨" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip5"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="고 식이섬유" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip6"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="고단백질" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip7"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="채식주의(비건)" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip8"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="키토제닉" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip9"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="채식주의(락토-오보)" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip10"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="지중해식 식단" />
+    </com.google.android.material.chip.ChipGroup>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="420dp"-->
+<!--        android:layout_height="72dp"-->
+<!--        android:layout_marginTop="660dp"-->
+<!--        android:background="@color/black"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        tools:layout_editor_absoluteX="-1dp">-->
+
+<!--        <Button-->
+<!--            android:id="@+id/previousButton2"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="previous"-->
+<!--            android:textColor="@android:color/holo_green_light"-->
+<!--            app:backgroundTint="@color/black" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView"-->
+<!--            android:layout_width="282dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@color/black"-->
+<!--            android:gravity="center"-->
+<!--            android:text="2 out of 3 Selected"-->
+<!--            android:textColor="@android:color/holo_green_light" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/nextButton2"-->
+<!--            android:layout_width="115dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="Next"-->
+<!--            android:textColor="@android:color/holo_green_light"-->
+<!--            app:backgroundTint="@color/black" />-->
+<!--    </LinearLayout>-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

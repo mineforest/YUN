@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="268dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:layout_weight="1"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
@@ -22,33 +22,105 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="191dp"
-        android:layout_weight="1">
+        android:layout_height="157dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:stretchColumns="0,1,2,3">
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/carlorie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Calories"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/protein"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Protein (g)"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/fat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Fat (g)"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/carb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Carb (g)"
+                android:textSize="16sp" />
+        </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/cal_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="100"
+                android:textSize="19sp" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/pro_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="100"
+                android:textSize="19sp" />
+
+            <TextView
+                android:id="@+id/fat_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="100"
+                android:textSize="19sp" />
+
+            <TextView
+                android:id="@+id/carb_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="100"
+                android:textSize="19sp" />
+        </TableRow>
+
     </TableLayout>
+
+    <TextView
+        android:id="@+id/ingredientview"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:layout_weight="1"
+        android:text="Ingredients"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="216dp"
         android:layout_weight="1" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
-        android:layout_height="265dp"
+        android:layout_height="120dp"
         android:layout_weight="1" />
 </LinearLayout>
