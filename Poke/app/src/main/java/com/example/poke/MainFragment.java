@@ -82,17 +82,11 @@ private void next(int fragment){
                             diet = new DietFragment();
                             fragmentManager.beginTransaction().add(R.id.frame_container2,diet).commit();
                         }
-                        layoutInflater = getLayoutInflater();
-                        header = layoutInflater.inflate(R.layout.preference,null);
-                        preGroup = header.findViewById(R.id.preOption);
+//                        layoutInflater = getLayoutInflater();
+//                        header = layoutInflater.inflate(R.layout.preference,null);
+//                        preGroup = header.findViewById(R.id.preOption);
 
-                        for(int list : preGroup.getCheckedChipIds()){
-                            Chip chip = findViewById(list);
-                            preList.add(chip.getText().toString());
-                            //mDatabase.child("preference").child(uid).push().setValue(new UserPreference(chip.getText().toString()));
-                        }
-                        bundle.putStringArrayList("preference", preList);
-                        pre.setArguments(bundle);
+
 
                         i=2;
                         preButton.setText("이전");

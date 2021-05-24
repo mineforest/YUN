@@ -19,6 +19,7 @@ public class PreferenceFragment extends Fragment {
     View header;
     private ChipGroup preGroup;
     private ArrayList<String> preList = new ArrayList<>();
+    Bundle bundle;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -30,7 +31,8 @@ public class PreferenceFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.preference,container,false);
-
+        preGroup = view.findViewById(R.id.preOption);
+        bundle = new Bundle();
 //        layoutInflater = getLayoutInflater();
 //        header = layoutInflater.inflate(R.layout.preference,null);
 //        preGroup = header.findViewById(R.id.preOption);
@@ -43,4 +45,5 @@ public class PreferenceFragment extends Fragment {
 
         return view;
     }
+
 }
