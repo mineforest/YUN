@@ -28,6 +28,10 @@
         android:iconifiedByDefault="false"
         android:queryHint="Search"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="516dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

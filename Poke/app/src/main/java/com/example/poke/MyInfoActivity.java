@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.core.Context;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -21,6 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -37,6 +40,7 @@ public class MyInfoActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     String uid;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class MyInfoActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         uid=user.getUid();
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         nickNameTextView=(TextView)findViewById(R.id.Nickname);
         dibsCountTextView = findViewById(R.id.dibsCountTextView);
         historyCountTextView = findViewById(R.id.historyCountTextView);
@@ -53,20 +58,36 @@ public class MyInfoActivity extends AppCompatActivity {
         findViewById(R.id.historyButton).setOnClickListener(onClickListener);
         findViewById(R.id.dibsButton).setOnClickListener(onClickListener);
         findViewById(R.id.allergyButton).setOnClickListener(onClickListener);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.addValueEventListener(allergyListener);
-
         recyclerView = (RecyclerView)findViewById(R.id.history_rv);
+        recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         historyList = new ArrayList<>();
-
         mDatabase.addValueEventListener(userValueEventListener);
         mDatabase.child("history").child(uid).addChildEventListener(historyChildEventListener);
+//        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                historyList.clear();
+//                for(DataSnapshot snapshot : dataSnapshot.getChildren())
+//                {
+//                    UserHistory useless = snapshot.getValue(UserHistory.class);
+//                    historyList.add(useless);
+//                }
+//                mainAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e("MyInfoActivity", String.valueOf(error.toException()));
+//            }
+//        });
         mainAdapter = new HistoryAdapter(historyList);
         recyclerView.setAdapter(mainAdapter);
     }
+
 
     ValueEventListener allergyListener = new ValueEventListener() {
         @Override
@@ -103,7 +124,7 @@ public class MyInfoActivity extends AppCompatActivity {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
             UserHistory history = snapshot.getValue(UserHistory.class);
-            historyList.add(new UserHistory(history.getRecipeTitle(), history.getRecipeImage(), history.getDate()));
+            historyList.add(new UserHistory(history.getRecipeTitle(), history.getRecipeImage(), history.getDate(), history.getRate()));
             mainAdapter.notifyDataSetChanged();
         }
 
@@ -133,6 +154,7 @@ public class MyInfoActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.historyButton:
+                    myStartActivity(HistoryFragment.class);
                 break;
 
                 case R.id.dibsButton:

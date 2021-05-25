@@ -40,8 +40,7 @@ public class dod extends AppCompatActivity {
 
              String title = tv1.getText().toString();
             String date = tv2.getText().toString();
-            int id = Integer.parseInt(tv3.getText().toString());
-
+            String id = tv3.getText().toString();
             UserHistory userHistory = new UserHistory(title, id, date );
             mDatabase.child("history").child(uid).push().setValue(userHistory);
         }

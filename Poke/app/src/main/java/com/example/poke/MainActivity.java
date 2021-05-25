@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,6 +17,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
@@ -48,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.preButton).setOnClickListener(onClickListener);
         findViewById(R.id.myInfoButton).setOnClickListener(onClickListener);
         findViewById(R.id.starButton).setOnClickListener(onClickListener);
+        findViewById(R.id.barcode_scan_Button).setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener(){
@@ -74,6 +79,11 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.starButton:
                     myStartActivity(dod.class);
                     break;
+                case R.id.barcode_scan_Button:
+                    IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+                    integrator.setOrientationLocked(false);
+                    integrator.setPrompt("바코드를 읽혀주세요 헤헷");
+                    integrator.initiateScan();
             }
         }
     };
@@ -117,5 +127,21 @@ public class MainActivity extends AppCompatActivity {
         mDatabase.child("users").child(uid).removeValue();
 
         mAuth.getCurrentUser().delete();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, BarcodeScannerActivity.class);
+                intent.putExtra("RESULT", result.getContents());
+                startActivity(intent);
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

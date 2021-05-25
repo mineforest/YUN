@@ -116,18 +116,17 @@
     </TableLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/history_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/history_rv"
+        android:layout_weight="1"
         android:scrollbarFadeDuration="0"
         android:scrollbarSize="5dp"
         android:scrollbarThumbVertical="@android:color/darker_gray"
-        android:scrollbars="vertical"
-        android:layout_weight="1"
-        />
+        android:scrollbars="vertical" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
