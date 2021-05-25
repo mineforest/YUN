@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
            nullStartActivity(uid,"users");
            nullStartActivity(uid,"preference");
-
         }
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                                myStartActivity(MemberInitActivity.class);
                            }
                             else if(child.equals("preference")){
-//                                myStartActivity(PreferenceActivity.class);
+                                    myStartActivity(MainFragment.class);
                             }
                         }
                     }
@@ -103,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void myStartActivity(Class c){

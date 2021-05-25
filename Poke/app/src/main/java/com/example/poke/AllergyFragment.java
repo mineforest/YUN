@@ -1,11 +1,11 @@
 package com.example.poke;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,13 +14,12 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AllergyFragment extends Fragment {
-    ArrayList<UserPreference> preferenceArrayList = new ArrayList<>();
-    ArrayList<UserDiet> dietArrayList = new ArrayList<>();
-
+    private ArrayList<String> allergyList = new ArrayList<>();
+    private ChipGroup allergyGroup;
+    private Chip chip;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -30,37 +29,49 @@ public class AllergyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_allergy,container,false);
-        ChipGroup chip = view.findViewById(R.id.allergyOption);
+        View view = inflater.inflate(R.layout.fragment_allergy,container,false);
+        allergyGroup =view.findViewById(R.id.allergyOption);
 
-
-        if(getArguments() != null){
-            for(String list : getArguments().getStringArrayList("preference")){
-                preferenceArrayList.add(new UserPreference(list));
-            }
-
-            for(String list : getArguments().getStringArrayList("diet")){
-                dietArrayList.add(new UserDiet(list));
-            }
-
+        for(int i = 0; i < allergyGroup.getChildCount(); i++) {
+            int id = allergyGroup.getChildAt(i).getId();
+            chip = view.findViewById(id);
+            chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        allergyList.add(buttonView.getText().toString());
+                    }
+                    else
+                        allergyList.remove(buttonView.getText().toString());
+                }
+            });
         }
 
+        allergyListener.allergyListener(allergyList);
         return view;
     }
 
-    public interface OnMyListener{
-        public void onReceivedData(ArrayList pre, ArrayList diet);
+    public interface AllergyListener {
+        void allergyListener(ArrayList allergy);
     }
 
-    private OnMyListener onMyListener;
+    private AllergyListener allergyListener;
 
     @Override
-    public void onAttach(@NonNull Context context) {
+    public void onAttach(Context context) {
         super.onAttach(context);
-        if(getActivity() != null && getActivity() instanceof OnMyListener){
-            onMyListener = (OnMyListener)getActivity();
+        if(context instanceof AllergyListener) {
+            allergyListener = (AllergyListener) context;
+        }
+        else {
+            throw new RuntimeException(context.toString()
+            + "must implement AllergyListener");
         }
     }
 
-
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        allergyListener=null;
+    }
 }

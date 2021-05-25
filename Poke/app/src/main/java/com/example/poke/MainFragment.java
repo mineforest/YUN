@@ -22,20 +22,16 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class MainFragment extends AppCompatActivity implements AllergyFragment.OnMyListener{
+public class MainFragment extends AppCompatActivity implements AllergyFragment.AllergyListener, PreferenceFragment.PreListener, DietFragment.DietListener {
     private FragmentManager fragmentManager;
     private Button preButton;
     private Button nextButton;
     private TextView text;
     private int i = 1;
     private Fragment pre, diet, allergy;
-    private ChipGroup preGroup, dietGroup, allergyGroup;
     private DatabaseReference mDatabase;
     private String uid;
     private ArrayList<String> preList, dietList, allergyList = new ArrayList<>();
-    Bundle bundle;
-    LayoutInflater layoutInflater;
-    View header;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,16 +45,14 @@ public class MainFragment extends AppCompatActivity implements AllergyFragment.O
         text = findViewById(R.id.ageTextView);
         nextButton.setOnClickListener(nextClickListener);
         preButton.setOnClickListener(preClickListener);
-        preGroup = findViewById(R.id.preOption);
-        dietGroup = findViewById(R.id.dietOption);
-        allergyGroup = findViewById(R.id.allergyOption);
-        bundle = new Bundle();
+
         pre = new PreferenceFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.frame_container2, pre).commit();
-        preButton.setText(" ");
-        nextButton.setText("다음");
-        text.setText("1 / 3");
+
+                preButton.setText(" ");
+                nextButton.setText("다음");
+                text.setText("1 / 3");
     }
 
 View.OnClickListener nextClickListener = new View.OnClickListener() {
@@ -82,11 +76,6 @@ private void next(int fragment){
                             diet = new DietFragment();
                             fragmentManager.beginTransaction().add(R.id.frame_container2,diet).commit();
                         }
-//                        layoutInflater = getLayoutInflater();
-//                        header = layoutInflater.inflate(R.layout.preference,null);
-//                        preGroup = header.findViewById(R.id.preOption);
-
-
 
                         i=2;
                         preButton.setText("이전");
@@ -102,17 +91,6 @@ private void next(int fragment){
                             allergy = new AllergyFragment();
                             fragmentManager.beginTransaction().add(R.id.frame_container2,allergy).commit();
                         }
-                        layoutInflater = getLayoutInflater();
-                        header = layoutInflater.inflate(R.layout.activity_diet,null);
-                        dietGroup = header.findViewById(R.id.dietOption);
-
-                        for(int list : dietGroup.getCheckedChipIds()){
-                            Chip chip = findViewById(list);
-                            dietList.add(chip.getText().toString());
-                            //mDatabase.child("preference").child(uid).push().setValue(new UserPreference(chip.getText().toString()));
-                        }
-                        bundle.putStringArrayList("diet", dietList);
-                        diet.setArguments(bundle);
 
                         i=3;
                         preButton.setText("이전");
@@ -124,10 +102,10 @@ private void next(int fragment){
                         break;
 
                     case 3:
-                      //  Log.d("pre", preList.get(0));
-                       // Log.d("diet", dietList.get(0));
+                        mDatabase.child("preference").child(uid).push().setValue(preList);
+                        mDatabase.child("diet").child(uid).push().setValue(dietList);
+                        mDatabase.child("allergy").child(uid).push().setValue(allergyList);
                         myStartActivity(MainActivity.class);
-
                 }
 }
 
@@ -166,8 +144,18 @@ private void pre(int fragment){
         }
 
     @Override
-    public void onReceivedData(ArrayList pre, ArrayList diet) {
+    public void dietListener(ArrayList diet) {
+        dietList = diet;
+    }
 
+    @Override
+    public void allergyListener(ArrayList allergy) {
+        allergyList = allergy;
+    }
+
+    @Override
+    public void preListener(ArrayList pre) {
+        preList = pre;
     }
 
     private void myStartActivity(Class c){
@@ -183,5 +171,4 @@ private void pre(int fragment){
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(1);
     }
-
 }
