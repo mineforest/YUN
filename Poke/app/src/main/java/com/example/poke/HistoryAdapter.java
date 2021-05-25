@@ -1,5 +1,6 @@
 package com.example.poke;
 
+import android.content.Context;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,20 +12,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.database.core.Context;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomViewHolder> {
 
     private ArrayList<UserHistory> historyList;
-    private Context context;
 
-    public HistoryAdapter(ArrayList<UserHistory> historyList, Context context) {
+    public HistoryAdapter(ArrayList<UserHistory> historyList) {
         this.historyList = historyList;
-        this.context = context;
+    }
+
+    Context context;
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull @NotNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        context = recyclerView.getContext();
     }
 
     @NonNull
@@ -42,9 +47,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
         Glide.with(holder.itemView)
                 .load(historyList.get(position).getRecipeImage())
                 .into(holder.history_image);
-        holder.history_rec.setText(historyList.get(position).getRecipeTitle());
-        holder.history_date.setText(historyList.get(position).getDate());
-        holder.history_rate.setText(historyList.get(position).getRate()+"");
+        holder.history_rec.setText(String.valueOf(historyList.get(position).getRecipeTitle()));
+        holder.history_date.setText(String.valueOf(historyList.get(position).getDate()));
+        holder.history_rate.setText(String.valueOf(historyList.get(position).getRate()));
     }
 
     @Override

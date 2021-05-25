@@ -67,24 +67,24 @@ public class MyInfoActivity extends AppCompatActivity {
         historyList = new ArrayList<>();
         mDatabase.addValueEventListener(userValueEventListener);
         mDatabase.child("history").child(uid).addChildEventListener(historyChildEventListener);
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                historyList.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren())
-                {
-                    UserHistory useless = snapshot.getValue(UserHistory.class);
-                    historyList.add(useless);
-                }
-                mainAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("MyInfoActivity", String.valueOf(error.toException()));
-            }
-        });
-        mainAdapter = new HistoryAdapter(historyList,context);
+//        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                historyList.clear();
+//                for(DataSnapshot snapshot : dataSnapshot.getChildren())
+//                {
+//                    UserHistory useless = snapshot.getValue(UserHistory.class);
+//                    historyList.add(useless);
+//                }
+//                mainAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e("MyInfoActivity", String.valueOf(error.toException()));
+//            }
+//        });
+        mainAdapter = new HistoryAdapter(historyList);
         recyclerView.setAdapter(mainAdapter);
     }
 
@@ -154,6 +154,7 @@ public class MyInfoActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.historyButton:
+                    myStartActivity(HistoryFragment.class);
                 break;
 
                 case R.id.dibsButton:

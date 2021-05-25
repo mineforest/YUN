@@ -1,21 +1,21 @@
 package com.example.poke;
 
 public class UserHistory {
-    int rate;
+    Long rate;
     String recipeTitle;
     String recipeID;
     String date;
     String recipeImage;
 
     public UserHistory() {}
-    public UserHistory(String recipeTitle, String recipeImage, String date, int rate){
+    public UserHistory(String recipeTitle, String recipeImage, String date, Long rate){
         this.recipeTitle = recipeTitle;
         this.recipeImage = recipeImage;
         this.date = date;
         this.rate = rate;
     }
 
-    public UserHistory(String recipeTitle, String recipeImage, String date, int rate, String recipeID){
+    public UserHistory(String recipeTitle, String recipeImage, String date, Long rate, String recipeID){
         this.recipeTitle = recipeTitle;
         this.recipeImage = recipeImage;
         this.date = date;
@@ -49,7 +49,7 @@ public class UserHistory {
         this.recipeTitle = recipeTitle;
     }
 
-    public void setRate(int rate) {
+    public void setRate(Long rate) {
         this.rate = rate;
     }
 
@@ -65,7 +65,7 @@ public class UserHistory {
         return recipeTitle;
     }
 
-    public int getRate() {
+    public Long getRate() {
         return rate;
     }
 }
