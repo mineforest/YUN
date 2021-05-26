@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Poke"
         android:usesCleartextTraffic="true"
         android:hardwareAccelerated="true">
-        <activity android:name=".MainActivity">
+        <activity android:name=".home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,11 +29,11 @@
         </activity>
         <activity android:name=".MemberInitActivity">
         </activity>
-        <activity android:name=".MyInfoActivity">
-        </activity>
+<!--        <activity android:name=".MyInfoActivity">-->
+<!--        </activity>-->
         <activity android:name=".CheckAllergyActivity">
         </activity>
-        <activity android:name=".MainFragment">
+        <activity android:name=".PreferenceActivity">
         </activity>
         <activity android:name=".dod">
         </activity>

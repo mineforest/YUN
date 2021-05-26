@@ -26,15 +26,21 @@
                 android:id="@+id/history_rec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="요리이름">
+                android:text="요리이름"
+                android:textSize="18sp">
 
             </TextView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
 
             <TextView
                 android:id="@+id/history_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="날짜">
+                android:text="날짜"
+                android:textSize="18sp">
 
             </TextView>
 
@@ -46,20 +52,13 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/rate_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="평점" />
-
-            <TextView
                 android:id="@+id/history_rate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0.0" />
+                android:text="0.0"
+                android:textSize="18sp" />
         </LinearLayout>
 
     </LinearLayout>
