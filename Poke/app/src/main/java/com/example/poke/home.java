@@ -2,6 +2,7 @@ package com.example.poke;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -20,10 +21,18 @@ public class home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.btm_nav);
 
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+
+
         mBottomNavigationView=findViewById(R.id.bottom_navigation);
+
+
 
         //첫 화면 띄우기
         getSupportFragmentManager().beginTransaction().add(R.id.frame_container,new MainActivity()).commit();
+        
+        
 
         //case 함수를 통해 클릭 받을 때마다 화면 변경하기
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -49,3 +58,4 @@ public class home extends AppCompatActivity {
         });
     }
 }
+    

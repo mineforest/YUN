@@ -2,10 +2,14 @@ package com.example.poke;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class HistoryFragment extends AppCompatActivity {
+public class HistoryFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -28,19 +32,24 @@ public class HistoryFragment extends AppCompatActivity {
     private DatabaseReference databaseReference;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.history_fragment);
+    }
 
-        recyclerView = findViewById(R.id.history_rv);
-        //recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.history_fragment, container, false);
+
+        recyclerView = view.findViewById(R.id.history_rv);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         arrayList = new ArrayList<>();
 
         database = FirebaseDatabase.getInstance();
 
         databaseReference = database.getReference("history");
+
+
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -64,5 +73,7 @@ public class HistoryFragment extends AppCompatActivity {
         adapter = new HistoryAdapter(arrayList);
         recyclerView.setAdapter(adapter);
 
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
+
 }
