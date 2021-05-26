@@ -2,7 +2,6 @@ package com.example.poke;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.core.Context;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -44,10 +43,22 @@ public class MyInfoActivity extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     String uid;
 
+    static HistoryFragment historyFragment;
+    static WishFragment wishFragment;
+
+
+    public static MyInfoActivity newInstance() {
+        return new MyInfoActivity();
+    }
+
+    static FragmentManager getSupportFragmentManager() {
+        return null;
+    }
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -59,6 +70,8 @@ public class MyInfoActivity extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         uid=user.getUid();
 
+        historyFragment = new HistoryFragment();
+        wishFragment = new WishFragment();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         nickNameTextView=(TextView)view.findViewById(R.id.Nickname);
         dibsCountTextView = view.findViewById(R.id.dibsCountTextView);
@@ -83,34 +96,6 @@ public class MyInfoActivity extends Fragment {
         return view;
     }
 
-//        @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.my_info);
-//        mAuth = FirebaseAuth.getInstance();
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        uid=user.getUid();
-//
-//        mDatabase = FirebaseDatabase.getInstance().getReference();
-//        nickNameTextView=(TextView)findViewById(R.id.Nickname);
-//        dibsCountTextView = findViewById(R.id.dibsCountTextView);
-//        historyCountTextView = findViewById(R.id.historyCountTextView);
-//        allergyCountTextView = findViewById(R.id.allergyCountTextView);
-//        findViewById(R.id.historyButton).setOnClickListener(onClickListener);
-//        findViewById(R.id.dibsButton).setOnClickListener(onClickListener);
-//        findViewById(R.id.allergyButton).setOnClickListener(onClickListener);
-//        mDatabase.addValueEventListener(allergyListener);
-//        recyclerView = (RecyclerView)findViewById(R.id.history_rv);
-//        recyclerView.setHasFixedSize(true);
-//        linearLayoutManager = new LinearLayoutManager(this);
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//
-//        historyList = new ArrayList<>();
-//        mDatabase.addValueEventListener(userValueEventListener);
-//        mDatabase.child("history").child(uid).addChildEventListener(historyChildEventListener);
-//        mainAdapter = new HistoryAdapter(historyList);
-//        recyclerView.setAdapter(mainAdapter);
-//    }
 
     ValueEventListener allergyListener = new ValueEventListener() {
         @Override
@@ -178,6 +163,7 @@ public class MyInfoActivity extends Fragment {
             switch (v.getId()){
                 case R.id.historyButton:
                     myStartActivity(HistoryAdapter.class);
+                    MyInfoActivity.onChangeFragment(0);
                 break;
 
                 case R.id.dibsButton:
@@ -191,6 +177,14 @@ public class MyInfoActivity extends Fragment {
         }
     };
 
+    public static void onChangeFragment(int index){
+        if(index == 0){
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,historyFragment).commit();
+        }else if(index ==1){
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,wishFragment).commit();
+        }
+    }
+
 
     private void startToast(String msg){
         Toast.makeText(getActivity(), msg,Toast.LENGTH_SHORT).show();
@@ -201,4 +195,5 @@ public class MyInfoActivity extends Fragment {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
 }

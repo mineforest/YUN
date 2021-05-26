@@ -2,6 +2,7 @@ package com.example.poke;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -20,27 +21,34 @@ public class home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.btm_nav);
 
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+
+
         mBottomNavigationView=findViewById(R.id.bottom_navigation);
+
+
 
         //첫 화면 띄우기
         mBottomNavigationView.setSelectedItemId(R.id.nav_home);
-        getSupportFragmentManager().beginTransaction().add(R.id.frame_container,new MainActivity()).commit();
+        fragmentTransaction.add(R.id.frame_container,new MainActivity()).commit();
+
         //case 함수를 통해 클릭 받을 때마다 화면 변경하기
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_info :
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,new MyInfoActivity()).commit();
+                        fragmentTransaction.replace(R.id.frame_container,new MyInfoActivity()).commit();
                         break;
                     case R.id.nav_home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,new MainActivity()).commit();
+                        fragmentTransaction.replace(R.id.frame_container,new MainActivity()).commit();
                         break;
                     case R.id.nav_ingredient:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,new Frag3()).commit();
+                        fragmentTransaction.replace(R.id.frame_container,new Frag3()).commit();
                         break;
                     case R.id.nav_search:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,new Frag4()).commit();
+                        fragmentTransaction.replace(R.id.frame_container,new Frag4()).commit();
                         break;
 
                 }
