@@ -43,7 +43,6 @@ public class MyInfoActivity extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     String uid;
-    private Context context;
 
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -54,7 +53,7 @@ public class MyInfoActivity extends Fragment {
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_diet,container,false);
+        View view = inflater.inflate(R.layout.my_info,container,false);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -69,6 +68,7 @@ public class MyInfoActivity extends Fragment {
         view.findViewById(R.id.dibsButton).setOnClickListener(onClickListener);
         view.findViewById(R.id.allergyButton).setOnClickListener(onClickListener);
         mDatabase.addValueEventListener(allergyListener);
+
         recyclerView = (RecyclerView)view.findViewById(R.id.history_rv);
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -111,7 +111,6 @@ public class MyInfoActivity extends Fragment {
 //        mainAdapter = new HistoryAdapter(historyList);
 //        recyclerView.setAdapter(mainAdapter);
 //    }
-
 
     ValueEventListener allergyListener = new ValueEventListener() {
         @Override
@@ -178,7 +177,7 @@ public class MyInfoActivity extends Fragment {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.historyButton:
-                    myStartActivity(HistoryFragment.class);
+                    myStartActivity(PasswordResetActivity.class);
                 break;
 
                 case R.id.dibsButton:
