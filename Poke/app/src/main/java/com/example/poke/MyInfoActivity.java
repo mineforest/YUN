@@ -177,7 +177,7 @@ public class MyInfoActivity extends Fragment {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.historyButton:
-                    myStartActivity(PasswordResetActivity.class);
+                    myStartActivity(HistoryAdapter.class);
                 break;
 
                 case R.id.dibsButton:
