@@ -9,6 +9,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -53,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.myInfoButton).setOnClickListener(onClickListener);
         findViewById(R.id.starButton).setOnClickListener(onClickListener);
         findViewById(R.id.barcode_scan_Button).setOnClickListener(onClickListener);
+
+        if (savedInstanceState == null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            MainRecyclerViewFragment fragment = new MainRecyclerViewFragment();
+            transaction.replace(R.id.content_fragment, fragment);
+            transaction.commit();
+        }
+
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener(){
@@ -82,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.barcode_scan_Button:
                     IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
                     integrator.setOrientationLocked(false);
-                    integrator.setPrompt("바코드를 읽혀주세요 헤헷");
+                    integrator.setPrompt("바코드를 읽혀주세요");
                     integrator.initiateScan();
             }
         }

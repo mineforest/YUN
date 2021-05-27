@@ -45,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="10"
+            android:textColor="#000"
             android:text="제품명" />
 
         <TextView
@@ -52,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="10"
+            android:textColor="#000"
             android:text="종류" />
 
         <TextView
@@ -59,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="10"
+            android:textColor="#000"
             android:text="유통기한" />
     </LinearLayout>
     <!-- Notice -->

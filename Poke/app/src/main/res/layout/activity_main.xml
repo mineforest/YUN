@@ -51,5 +51,12 @@
         android:layout_height="wrap_content"
         android:text="바코드스캔" />
 
+    <FrameLayout
+        android:id="@+id/content_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
 </LinearLayout>
 

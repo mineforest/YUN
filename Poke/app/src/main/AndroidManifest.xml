@@ -42,7 +42,8 @@
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
         <!-- 팝업 Activity -->
-        <activity android:name=".BarcodeScannerActivity"/>
+        <activity android:name=".BarcodeScannerActivity"
+            android:theme="@style/Theme.AppCompat"/>
     </application>
 
 </manifest>
