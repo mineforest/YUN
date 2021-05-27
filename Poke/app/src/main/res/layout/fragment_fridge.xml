@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:verticalScrollbarPosition="right">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,13 +13,17 @@
         android:orientation="horizontal">
 
         <SearchView
-            android:layout_width="345dp"
-            android:layout_height="match_parent">
+            android:id="@+id/ingredientSearch"
+            android:layout_width="323dp"
+            android:layout_height="match_parent"
+            android:isScrollContainer="false"
+            android:queryHint="재료를 입력하세요"
+            android:searchHintIcon="@drawable/ic_search">
 
         </SearchView>
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/barcodeButton"
             android:layout_width="68dp"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_qr_code_scanner_black_24dp" />
@@ -29,7 +34,8 @@
         android:id="@+id/fridgeTab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="scrollable">
+        app:tabMode="scrollable"
+        app:tabTextColor="@color/black">
 
 
         <com.google.android.material.tabs.TabItem
@@ -107,14 +113,21 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.gridlayout.widget.GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="483dp"
+        android:layout_margin="20dp">
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ingredientView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </androidx.gridlayout.widget.GridLayout>
+            android:layout_height="491dp"
+            android:layout_weight="1"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarSize="5dp"
+            android:scrollbarThumbVertical="@android:color/darker_gray"
+            android:scrollbars="vertical" />
+    </LinearLayout>
 
 </LinearLayout>

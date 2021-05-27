@@ -52,7 +52,7 @@ public class DietFragment extends Fragment {
         return view;
     }
     public interface DietListener {
-        void dietListener(ArrayList diet);
+        void dietListener(ArrayList<String> diet);
     }
 
     private DietFragment.DietListener dietListener;
