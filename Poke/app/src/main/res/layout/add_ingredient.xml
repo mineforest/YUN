@@ -11,13 +11,15 @@
         android:layout_height="wrap_content"
         android:hint="재료이름"
         tools:layout_editor_absoluteX="19dp"
-        tools:layout_editor_absoluteY="70dp" />
+        tools:layout_editor_absoluteY="70dp"
+        android:privateImeOptions="defaultInputmode=korean"/>
 
     <EditText
         android:id="@+id/ingreCate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="카테고리" />
+        android:hint="카테고리"
+        android:privateImeOptions="defaultInputmode=korean"/>
 
     <EditText
         android:id="@+id/ingreD"

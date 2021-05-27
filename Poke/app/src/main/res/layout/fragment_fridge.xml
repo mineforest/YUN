@@ -122,7 +122,7 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <GridLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="483dp"
         android:layout_margin="20dp"
@@ -140,6 +140,6 @@
             android:scrollbarSize="5dp"
             android:scrollbarThumbVertical="@android:color/darker_gray"
             android:scrollbars="vertical" />
-    </GridLayout>
+    </LinearLayout>
 
 </LinearLayout>

@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="닉네임"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:privateImeOptions="defaultInputmode=korean"/>
 
         <EditText
             android:id="@+id/ageEditText"
