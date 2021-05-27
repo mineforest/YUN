@@ -1,5 +1,6 @@
 package com.example.poke;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -26,6 +27,8 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     TextView prod_name;
     TextView prod_cat;
     TextView daycnt;
+    Dialog dialog01;
+
 
     String key = "2b7ec673daf748c0af0a";
     String url = "http://openapi.foodsafetykorea.go.kr/api/"+key+"/C005/xml/1/5/BAR_CD=";
@@ -34,21 +37,27 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.ingre_popup);
+        dialog01 = new Dialog(BarcodeScannerActivity.this);
+        dialog01.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog01.setContentView(R.layout.ingre_popup);
+
+        showDialog();
+    }
+
+    public void showDialog() {
+        dialog01.show();
+
+        txt = (TextView)dialog01.findViewById(R.id.txtText);
+        prod_name = (TextView)dialog01.findViewById(R.id.prod_name_txt);
+        prod_cat = (TextView)dialog01.findViewById(R.id.prod_cat_txt);
+        daycnt = (TextView)dialog01.findViewById(R.id.daycnt_txt);
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
-        txt = (TextView)findViewById(R.id.txtText);
-        prod_name = (TextView)findViewById(R.id.prod_name_txt);
-        prod_cat = (TextView)findViewById(R.id.prod_cat_txt);
-        daycnt = (TextView)findViewById(R.id.daycnt_txt);
         Intent intent = getIntent();
         String data = intent.getStringExtra("RESULT");
-        txt.setText(data);
 
         String[] apiout = getXmlData(data).split("-");
 
@@ -56,7 +65,10 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         prod_name.setText(apiout[1]);
         daycnt.setText(apiout[2]);
 
+        txt.setText(data);
+
     }
+
     public void mOnClose(View v) {
         Intent intent = new Intent();
         intent.putExtra("result", "Close Popup");
