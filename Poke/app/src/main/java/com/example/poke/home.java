@@ -6,15 +6,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import android.os.Bundle;
 
 public class home extends AppCompatActivity {
     private static final String TAG = "Main_Activity";
-
     private FragmentManager fragmentManager;
     private BottomNavigationView mBottomNavigationView;
 
@@ -33,6 +30,7 @@ public class home extends AppCompatActivity {
 
         //case 함수를 통해 클릭 받을 때마다 화면 변경하기
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -45,7 +43,7 @@ public class home extends AppCompatActivity {
                         fragmentTransaction.replace(R.id.frame_container,new MainActivity()).commit();
                         break;
                     case R.id.nav_ingredient:
-                        fragmentTransaction.replace(R.id.frame_container,new Frag3()).commit();
+                        fragmentTransaction.replace(R.id.frame_container,new Fridge()).commit();
                         break;
                     case R.id.nav_search:
                         fragmentTransaction.replace(R.id.frame_container,new Frag4()).commit();

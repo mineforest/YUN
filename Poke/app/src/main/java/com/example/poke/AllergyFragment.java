@@ -52,7 +52,7 @@ public class AllergyFragment extends Fragment {
     }
 
     public interface AllergyListener {
-        void allergyListener(ArrayList allergy);
+        void allergyListener(ArrayList<String> allergy);
     }
 
     private AllergyListener allergyListener;
