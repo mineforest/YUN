@@ -15,6 +15,5 @@ public class Frag4 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.search,container,false);
         return view;
-
     }
 }
