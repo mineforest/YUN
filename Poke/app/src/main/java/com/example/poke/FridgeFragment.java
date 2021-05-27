@@ -37,13 +37,14 @@ public class FridgeFragment extends Fragment {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private String uid;
+    long date;
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date now= new Date();
     String getTime = simpleDateFormat.format(now);
 
     Calendar today = Calendar.getInstance();
-
+    Calendar cal = Calendar.getInstance();
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -81,22 +82,20 @@ public class FridgeFragment extends Fragment {
     ChildEventListener childEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-                ingredientArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory()));
-                ingredientAdapter.notifyDataSetChanged();
 
-//            int[] todays={
-//                today.get(Calendar.YEAR),
-//                today.get(Calendar.MONTH) +1,
-//                today.get(Calendar.DAY_OF_MONTH)
-//            };
-//            String[] dday=ingredient.getExpirationDate().split("-");
-//            //yyyy-mm-dd
-//            int[] days=new int[3];
-//            for(int i=0;i<3;i++){
-//               days[i]=Integer.parseInt(dday[i]);
-//               days[i]-=todays[i];
-//            }
+                UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
+                String[] dday=ingredient.getExpirationDate().split("-");
+
+                int[] days=new int[3];
+                for(int i=0;i<3;i++){
+                    days[i]=Integer.parseInt(dday[i]);
+                }
+
+                cal.set(days[0],days[1]-1,days[2]);
+                date = (cal.getTimeInMillis() - today.getTimeInMillis());
+
+                ingredientArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), "D-"+Long.toString(date/86400000), ingredient.getCategory()));
+                ingredientAdapter.notifyDataSetChanged();
 
         }
 

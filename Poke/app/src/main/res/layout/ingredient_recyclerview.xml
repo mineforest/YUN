@@ -10,7 +10,7 @@
         android:id="@+id/categoryView"
         android:layout_width="70dp"
         android:layout_height="60dp"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="12dp"
         android:layout_marginTop="10dp"
         app:srcCompat="@drawable/ic_kitchen_black_24dp" />
 
@@ -18,7 +18,7 @@
         android:id="@+id/ingredientTitleView"
         android:layout_width="88dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="2dp"
         android:layout_marginTop="3dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -30,7 +30,7 @@
         style="@style/strokeGreen"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="17dp"
         android:layout_marginTop="3dp"
         android:text="New"
         android:textAlignment="center"
