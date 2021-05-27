@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:verticalScrollbarPosition="right">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <SearchView
+            android:id="@+id/ingredientSearch"
+            android:layout_width="261dp"
+            android:layout_height="match_parent"
+            android:isScrollContainer="false"
+            android:queryHint="재료를 입력하세요"
+            android:searchHintIcon="@drawable/ic_search"
+            app:iconifiedByDefault="false"
+            app:showAsAction="always">
+
+        </SearchView>
+
+        <ImageButton
+            android:id="@+id/barcodeButton"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_qr_code_scanner_black_24dp" />
+
+        <ImageButton
+            android:id="@+id/ingreAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_add_circle_black_24dp" />
+
+    </LinearLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/fridgeTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="scrollable"
+        app:tabTextColor="@color/black">
+
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/allItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전체" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/pulsecropItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="두류" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/nutItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="견과류" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/vegetableItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="채소류" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/fruitItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="과일류" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/meatItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="육류" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/eggItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알류" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/fishItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="어패류" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/seaalgaeItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="해조류" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/dairyproductsItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="유제품" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/drinksItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="음료/주류" />
+
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/etcItem"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="기타" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="483dp"
+        android:layout_margin="20dp"
+        android:columnCount="4"
+        android:orientation="horizontal">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ingredientRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="491dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarSize="5dp"
+            android:scrollbarThumbVertical="@android:color/darker_gray"
+            android:scrollbars="vertical" />
+    </GridLayout>
+
+</LinearLayout>

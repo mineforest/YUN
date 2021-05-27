@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class MainFragment extends AppCompatActivity implements AllergyFragment.AllergyListener, PreferenceFragment.PreListener, DietFragment.DietListener {
+public class PreferenceActivity extends AppCompatActivity implements AllergyFragment.AllergyListener, PreferenceFragment.PreListener, DietFragment.DietListener {
     private FragmentManager fragmentManager;
     private Button preButton;
     private Button nextButton;
@@ -102,10 +102,13 @@ private void next(int fragment){
                         break;
 
                     case 3:
-                        mDatabase.child("preference").child(uid).push().setValue(preList);
-                        mDatabase.child("diet").child(uid).push().setValue(dietList);
-                        mDatabase.child("allergy").child(uid).push().setValue(allergyList);
-                        myStartActivity(MainActivity.class);
+                        for(String list : preList)
+                            mDatabase.child("preference").child(uid).push().setValue(new UserPreference(list));
+                        for(String list : dietList)
+                            mDatabase.child("diet").child(uid).push().setValue(new UserDiet(list));
+                        for(String list : allergyList)
+                            mDatabase.child("allergy").child(uid).push().setValue(new UserAllergy(list));
+                        myStartActivity(home.class);
                 }
 }
 

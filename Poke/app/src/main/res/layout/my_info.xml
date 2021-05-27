@@ -56,6 +56,7 @@
         android:stretchColumns="0,1,2">
 
         <TableRow
+            android:id="@+id/TableButton"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center">
@@ -111,24 +112,28 @@
                 android:text="0"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
         </TableRow>
 
     </TableLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/history_rv"
+    <FrameLayout
+        android:id="@+id/InfoFrame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:scrollbarFadeDuration="0"
-        android:scrollbarSize="5dp"
-        android:scrollbarThumbVertical="@android:color/darker_gray"
-        android:scrollbars="vertical" />
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_nav"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/history_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarSize="5dp"
+            android:scrollbarThumbVertical="@android:color/darker_gray"
+            android:scrollbars="vertical">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </FrameLayout>
+
 
 </LinearLayout>

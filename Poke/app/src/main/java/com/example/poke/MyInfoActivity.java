@@ -2,18 +2,24 @@ package com.example.poke;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.core.Context;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -27,7 +33,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class MyInfoActivity extends AppCompatActivity {
+public class MyInfoActivity extends Fragment implements View.OnClickListener{
     TextView allergyCountTextView;
     TextView historyCountTextView;
     TextView dibsCountTextView;
@@ -35,59 +41,64 @@ public class MyInfoActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private ArrayList<UserHistory> historyList;
+    private TableRow tableRow;
 
     private HistoryAdapter mainAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     String uid;
-    private Context context;
+
+    private FragmentManager fragmentManager;
+
+    static HistoryFragment historyFragment;
+    static WishFragment wishFragment;
+
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_info);
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Nullable
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.my_info,container,false);
+
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        uid=user.getUid();
+        uid = user.getUid();
 
+        historyFragment = new HistoryFragment();
+        wishFragment = new WishFragment();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        nickNameTextView=(TextView)findViewById(R.id.Nickname);
-        dibsCountTextView = findViewById(R.id.dibsCountTextView);
-        historyCountTextView = findViewById(R.id.historyCountTextView);
-        allergyCountTextView = findViewById(R.id.allergyCountTextView);
-        findViewById(R.id.historyButton).setOnClickListener(onClickListener);
-        findViewById(R.id.dibsButton).setOnClickListener(onClickListener);
-        findViewById(R.id.allergyButton).setOnClickListener(onClickListener);
+        nickNameTextView=(TextView)view.findViewById(R.id.Nickname);
+        dibsCountTextView = view.findViewById(R.id.dibsCountTextView);
+        historyCountTextView = view.findViewById(R.id.historyCountTextView);
+        allergyCountTextView = view.findViewById(R.id.allergyCountTextView);
+        Button historyButton = (Button) view.findViewById(R.id.historyButton);
+        Button dipsButton = (Button) view.findViewById(R.id.dibsButton);
+        Button allergyButton = (Button) view.findViewById(R.id.allergyButton);
+        historyButton.setOnClickListener(this);
+        dipsButton.setOnClickListener(this);
+        allergyButton.setOnClickListener(this);
         mDatabase.addValueEventListener(allergyListener);
-        recyclerView = (RecyclerView)findViewById(R.id.history_rv);
+
+        recyclerView = (RecyclerView)view.findViewById(R.id.history_rv);
         recyclerView.setHasFixedSize(true);
-        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
         historyList = new ArrayList<>();
         mDatabase.addValueEventListener(userValueEventListener);
         mDatabase.child("history").child(uid).addChildEventListener(historyChildEventListener);
-//        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                historyList.clear();
-//                for(DataSnapshot snapshot : dataSnapshot.getChildren())
-//                {
-//                    UserHistory useless = snapshot.getValue(UserHistory.class);
-//                    historyList.add(useless);
-//                }
-//                mainAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e("MyInfoActivity", String.valueOf(error.toException()));
-//            }
-//        });
         mainAdapter = new HistoryAdapter(historyList);
         recyclerView.setAdapter(mainAdapter);
-    }
 
+        return view;
+    }
 
     ValueEventListener allergyListener = new ValueEventListener() {
         @Override
@@ -149,33 +160,29 @@ public class MyInfoActivity extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener onClickListener = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.historyButton:
-                    myStartActivity(HistoryFragment.class);
+    @Override
+    public void onClick(View v) {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        switch (v.getId()) {
+            case R.id.historyButton:
+                fragmentTransaction.replace(R.id.InfoFrame,new HistoryFragment()).commit();
                 break;
-
-                case R.id.dibsButton:
+            case R.id.dibsButton:
+                fragmentTransaction.replace(R.id.InfoFrame,new DipsFragment()).commit();
                 break;
-
-                case R.id.allergyButton:
-                    myStartActivity(CheckAllergyActivity.class);
-                    break;
-
-            }
+            case R.id.allergyButton:
+                fragmentTransaction.replace(R.id.InfoFrame,new AllergyFragment()).commit();
+                break;
         }
-    };
+    }
+
 
 
     private void startToast(String msg){
-        Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), msg,Toast.LENGTH_SHORT).show();
     }
 
-    private void myStartActivity(Class c){
-        Intent intent = new Intent(this,c);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
+
 }

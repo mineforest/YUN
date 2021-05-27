@@ -19,4 +19,18 @@
         <item name="android:textColor">@color/chip_text_color</item>
     </style>
 
+    <style name="strokeRed">
+        <item name="android:layout_marginRight">1dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/border_red</item>
+    </style>
+
+    <style name="strokeGreen">
+        <item name="android:layout_marginRight">1dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/border_green</item>
+    </style>
+
 </resources>

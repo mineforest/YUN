@@ -52,7 +52,7 @@ public class PreferenceFragment extends Fragment {
 
 
     public interface PreListener{
-        void preListener(ArrayList pre);
+        void preListener(ArrayList<String> pre);
     }
 
     private PreListener preListener;
