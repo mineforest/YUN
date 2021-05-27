@@ -46,10 +46,7 @@ public class HistoryFragment extends Fragment {
         historyList = new ArrayList<>();
 
         database = FirebaseDatabase.getInstance();
-
         databaseReference = database.getReference("history");
-
-
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

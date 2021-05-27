@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +38,7 @@ public class FridgeFragment extends Fragment {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private String uid;
+    private ImageView imageView;
     long date;
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -56,6 +58,7 @@ public class FridgeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_fridge,container,false);
         view.findViewById(R.id.barcodeButton).setBackgroundColor(Color.rgb(255,255,255));
+        imageView = view.findViewById(R.id.categoryView);
         btn = view.findViewById(R.id.ingreAdd);
         btn.setBackgroundColor(Color.rgb(255,255,255));
         btn.setOnClickListener(onClickListener);
@@ -82,7 +85,6 @@ public class FridgeFragment extends Fragment {
     ChildEventListener childEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
                 UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
                 String[] dday=ingredient.getExpirationDate().split("-");
 
@@ -96,34 +98,27 @@ public class FridgeFragment extends Fragment {
 
                 ingredientArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), "D-"+Long.toString(date/86400000), ingredient.getCategory()));
                 ingredientAdapter.notifyDataSetChanged();
-
         }
 
         @Override
-        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-        }
-
+        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
         @Override
-        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-        }
-
+        public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
         @Override
-        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-        }
-
+        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)  {}
         @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-
-        }
+        public void onCancelled(@NonNull DatabaseError error) {}
     };
 
 View.OnClickListener onClickListener = new View.OnClickListener() {
     @Override
     public void onClick(View v) {
+        if(v==btn)
         myStartActivity(IngredientAddActivity.class);
+        else{
+            
+        }
+
     }
 };
 
