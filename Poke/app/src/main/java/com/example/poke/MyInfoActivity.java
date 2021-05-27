@@ -59,7 +59,6 @@ public class MyInfoActivity extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-
     @Nullable
     @org.jetbrains.annotations.Nullable
     @Override
@@ -95,7 +94,6 @@ public class MyInfoActivity extends Fragment {
 
         return view;
     }
-
 
     ValueEventListener allergyListener = new ValueEventListener() {
         @Override

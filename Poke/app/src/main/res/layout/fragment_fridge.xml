@@ -14,11 +14,13 @@
 
         <SearchView
             android:id="@+id/ingredientSearch"
-            android:layout_width="323dp"
+            android:layout_width="261dp"
             android:layout_height="match_parent"
             android:isScrollContainer="false"
             android:queryHint="재료를 입력하세요"
-            android:searchHintIcon="@drawable/ic_search">
+            android:searchHintIcon="@drawable/ic_search"
+            app:iconifiedByDefault="false"
+            app:showAsAction="always">
 
         </SearchView>
 
@@ -27,6 +29,13 @@
             android:layout_width="68dp"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_qr_code_scanner_black_24dp" />
+
+        <ImageButton
+            android:id="@+id/ingreAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_add_circle_black_24dp" />
 
     </LinearLayout>
 
@@ -113,21 +122,24 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <LinearLayout
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="483dp"
-        android:layout_margin="20dp">
+        android:layout_margin="20dp"
+        android:columnCount="4"
+        android:orientation="horizontal">
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ingredientView"
-            android:layout_width="wrap_content"
+            android:id="@+id/ingredientRecyclerView"
+            android:layout_width="match_parent"
             android:layout_height="491dp"
             android:layout_weight="1"
+            android:orientation="horizontal"
             android:scrollbarFadeDuration="0"
             android:scrollbarSize="5dp"
             android:scrollbarThumbVertical="@android:color/darker_gray"
             android:scrollbars="vertical" />
-    </LinearLayout>
+    </GridLayout>
 
 </LinearLayout>
