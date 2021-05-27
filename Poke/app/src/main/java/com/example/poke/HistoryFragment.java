@@ -27,9 +27,9 @@ public class HistoryFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<UserHistory> arrayList;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private ArrayList<UserHistory> historyList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,10 +40,10 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.history_fragment, container, false);
 
-        recyclerView = view.findViewById(R.id.history_rv);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView = (RecyclerView) view.findViewById(R.id.history_rv);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        arrayList = new ArrayList<>();
+        historyList = new ArrayList<>();
 
         database = FirebaseDatabase.getInstance();
 
@@ -54,10 +54,10 @@ public class HistoryFragment extends Fragment {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                arrayList.clear();
+                historyList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     UserHistory user = ds.getValue(UserHistory.class);
-                    arrayList.add(user);
+                    historyList.add(user);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -70,7 +70,7 @@ public class HistoryFragment extends Fragment {
 
         });
 
-        adapter = new HistoryAdapter(arrayList);
+        adapter = new HistoryAdapter(historyList);
         recyclerView.setAdapter(adapter);
 
         return super.onCreateView(inflater, container, savedInstanceState);

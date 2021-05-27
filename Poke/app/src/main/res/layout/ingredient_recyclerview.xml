@@ -12,7 +12,6 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginLeft="50dp"
-        android:layout_margintop="50dp"
         app:srcCompat="@drawable/ic_lunch_dining_black_24dp" />
 
     <EditText
@@ -20,7 +19,6 @@
         android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
-        android:layout_margintop="35dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
@@ -31,7 +29,6 @@
         android:layout_width="87dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
-        android:layout_margintop="35dp"
         android:text="New"
         android:textAlignment="center"
         android:textColor="@color/black" />
