@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class home extends AppCompatActivity {
     private static final String TAG = "Main_Activity";
+    private FragmentManager fragmentManager;
     private BottomNavigationView mBottomNavigationView;
 
     @Override
@@ -20,6 +21,7 @@ public class home extends AppCompatActivity {
         setContentView(R.layout.btm_nav);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
+
         mBottomNavigationView=findViewById(R.id.bottom_navigation);
 
         //첫 화면 띄우기
