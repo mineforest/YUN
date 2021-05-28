@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,8 +31,10 @@ public class HistoryFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
+    private DatabaseReference mDatabase;
     private ArrayList<UserHistory> historyList;
+    private FirebaseAuth mAuth;
+    String uid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,40 +45,59 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.history_fragment, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.history_rv);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        uid = user.getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        recyclerView = (RecyclerView) view.findViewById(R.id.history_recycler);
+        LinearLayoutManager linearLayoutManager
+                = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
         historyList = new ArrayList<>();
 
         database = FirebaseDatabase.getInstance();
 
-        databaseReference = database.getReference("history");
 
+        mDatabase.child("history").child(uid).addChildEventListener(historyChildEventListener);
 
-
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                historyList.clear();
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    UserHistory user = ds.getValue(UserHistory.class);
-                    historyList.add(user);
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                Log.e("HistoryFragment", String.valueOf(error.toException()));
-
-            }
-
-        });
 
         adapter = new HistoryAdapter(historyList);
         recyclerView.setAdapter(adapter);
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
+
     }
 
+    ChildEventListener historyChildEventListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            UserHistory history = snapshot.getValue(UserHistory.class);
+            historyList.add(new UserHistory(history.getRecipeTitle(), history.getRecipeImage(), history.getDate(), history.getRate()));
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+        }
+
+        @Override
+        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    };
+
+
+
 }
+
