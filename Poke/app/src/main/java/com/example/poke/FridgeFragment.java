@@ -103,7 +103,11 @@ public class FridgeFragment extends Fragment {
         @Override
         public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
         @Override
-        public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
+            String[] dday=ingredient.getExpirationDate().split("-");
+            ingredientArrayList.remove(ingredientArrayList.size());
+        }
         @Override
         public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)  {}
         @Override
