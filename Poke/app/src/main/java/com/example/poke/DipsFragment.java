@@ -58,7 +58,7 @@ public class DipsFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
 
 
-        mDatabase.child("dips").child(uid).addChildEventListener(historyChildEventListener);
+        mDatabase.child("dips").child(uid).addChildEventListener(dipsChildEventListener);
 
 
         adapter = new DipsAdapter(dibsList);
@@ -68,7 +68,7 @@ public class DipsFragment extends Fragment {
 
     }
 
-    ChildEventListener historyChildEventListener = new ChildEventListener() {
+    ChildEventListener dipsChildEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
             UserDibs dibs = snapshot.getValue(UserDibs.class);

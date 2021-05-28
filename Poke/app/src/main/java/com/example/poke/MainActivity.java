@@ -61,6 +61,7 @@ public class MainActivity extends Fragment {
         view.findViewById(R.id.myInfoButton).setOnClickListener(onClickListener);
         view.findViewById(R.id.starButton).setOnClickListener(onClickListener);
         view.findViewById(R.id.barcode_scan_Button).setOnClickListener(onClickListener);
+        view.findViewById(R.id.dips_button).setOnClickListener(onClickListener);
         return view;
     }
 
@@ -117,6 +118,9 @@ public class MainActivity extends Fragment {
                     break;
                 case R.id.starButton:
                     myStartActivity(dod.class);
+                    break;
+                case R.id.dips_button:
+                    myStartActivity(Adddips.class);
                     break;
 //                case R.id.barcode_scan_Button:
 //                    IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);

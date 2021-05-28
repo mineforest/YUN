@@ -4,6 +4,7 @@ public class UserDibs {
     String dipsTitle;
     String dipsImage;
 
+    public UserDibs() {}
     public UserDibs(String dipsImage, String dipsTitle) {
         this.dipsImage = dipsImage;
         this.dipsTitle = dipsTitle;

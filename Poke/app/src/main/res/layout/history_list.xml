@@ -10,14 +10,14 @@
 
         <ImageView
             android:id="@+id/history_image"
-            android:layout_width="100dp"
-            android:layout_height="120dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:src="@mipmap/ic_launcher">
 
         </ImageView>
 
         <LinearLayout
-            android:layout_width="240dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical">
@@ -56,9 +56,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="0.0"
+                android:gravity="center|right"
+                android:text="TextView"
                 android:textSize="18sp" />
+
         </LinearLayout>
 
     </LinearLayout>
