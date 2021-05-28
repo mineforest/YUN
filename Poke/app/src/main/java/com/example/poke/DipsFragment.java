@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,8 +31,10 @@ public class DipsFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
-    private ArrayList<UserDibs> dipsList;
+    private DatabaseReference mDatabase;
+    private ArrayList<UserDibs> dibsList;
+    private FirebaseAuth mAuth;
+    String uid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,50 +45,59 @@ public class DipsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dips, container, false);
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        uid = user.getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         recyclerView = (RecyclerView) view.findViewById(R.id.dips_rv);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        dipsList = new ArrayList<>();
+        LinearLayoutManager linearLayoutManager
+                = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        dibsList = new ArrayList<>();
 
         database = FirebaseDatabase.getInstance();
 
-        databaseReference = database.getReference("dips");
+
+        mDatabase.child("dips").child(uid).addChildEventListener(historyChildEventListener);
 
 
-
-        ChildEventListener historyChildEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                UserDibs dibs = snapshot.getValue(UserDibs.class);
-                dipsList.add(new UserDibs(dibs.getDipsImage(), dibs.getDipsTitle()));
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-
-        adapter = new DipsAdapter(dipsList);
+        adapter = new DipsAdapter(dibsList);
         recyclerView.setAdapter(adapter);
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
+
     }
 
+    ChildEventListener historyChildEventListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            UserDibs dibs = snapshot.getValue(UserDibs.class);
+            dibsList.add(new UserDibs(dibs.getDipsImage(),dibs.getDipsTitle()));
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+        }
+
+        @Override
+        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    };
+
+
+
 }
+

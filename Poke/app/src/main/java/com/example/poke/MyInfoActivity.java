@@ -41,8 +41,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private ArrayList<UserHistory> historyList;
-    private TableRow tableRow;
-
     private HistoryAdapter mainAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -93,7 +91,7 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
 
         historyList = new ArrayList<>();
         mDatabase.addValueEventListener(userValueEventListener);
-        mDatabase.child("history").child(uid).addChildEventListener(historyChildEventListener);
+      //  mDatabase.child("history").child(uid).addChildEventListener(historyChildEventListener);
         mainAdapter = new HistoryAdapter(historyList);
         recyclerView.setAdapter(mainAdapter);
 
@@ -104,7 +102,7 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             allergyCountTextView.setText(Long.toString(dataSnapshot.child("allergy").child(uid).getChildrenCount()));
-            dibsCountTextView.setText(Long.toString(dataSnapshot.child("dibs").child(uid).getChildrenCount()));
+            dibsCountTextView.setText(Long.toString(dataSnapshot.child("dips").child(uid).getChildrenCount()));
             historyCountTextView.setText(Long.toString(dataSnapshot.child("history").child(uid).getChildrenCount()));
         }
 
@@ -131,34 +129,34 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         }
     };
 
-    ChildEventListener historyChildEventListener = new ChildEventListener() {
-        @Override
-        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            UserHistory history = snapshot.getValue(UserHistory.class);
-            historyList.add(new UserHistory(history.getRecipeTitle(), history.getRecipeImage(), history.getDate(), history.getRate()));
-            mainAdapter.notifyDataSetChanged();
-        }
-
-        @Override
-        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-        }
-
-        @Override
-        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-        }
-
-        @Override
-        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-
-        }
-    };
+//    ChildEventListener historyChildEventListener = new ChildEventListener() {
+//        @Override
+//        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//            UserHistory history = snapshot.getValue(UserHistory.class);
+//            historyList.add(new UserHistory(history.getRecipeTitle(), history.getRecipeImage(), history.getDate(), history.getRate()));
+//            mainAdapter.notifyDataSetChanged();
+//        }
+//
+//        @Override
+//        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//        }
+//
+//        @Override
+//        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//        }
+//
+//        @Override
+//        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//        }
+//
+//        @Override
+//        public void onCancelled(@NonNull DatabaseError error) {
+//
+//        }
+//    };
 
     @Override
     public void onClick(View v) {
