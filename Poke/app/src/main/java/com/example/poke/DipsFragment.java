@@ -58,7 +58,7 @@ public class DipsFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
 
 
-        mDatabase.child("dips").child(uid).addChildEventListener(historyChildEventListener);
+        mDatabase.child("dips").addChildEventListener(historyChildEventListener);
 
 
         adapter = new DipsAdapter(dibsList);

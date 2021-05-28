@@ -11,6 +11,8 @@ import android.util.Xml;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,9 +26,9 @@ import java.net.URL;
 
 public class BarcodeScannerActivity extends AppCompatActivity {
     TextView txt;
-    TextView prod_name;
-    TextView prod_cat;
-    TextView daycnt;
+    EditText prod_name;
+    EditText prod_cat;
+    EditText daycnt;
     Dialog dialog01;
 
 
@@ -48,9 +50,9 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         dialog01.show();
 
         txt = (TextView)dialog01.findViewById(R.id.txtText);
-        prod_name = (TextView)dialog01.findViewById(R.id.prod_name_txt);
-        prod_cat = (TextView)dialog01.findViewById(R.id.prod_cat_txt);
-        daycnt = (TextView)dialog01.findViewById(R.id.daycnt_txt);
+        prod_name = dialog01.findViewById(R.id.prod_name_txt);
+        prod_cat = dialog01.findViewById(R.id.prod_cat_txt);
+        daycnt = dialog01.findViewById(R.id.daycnt_txt);
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -61,12 +63,10 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
         String[] apiout = getXmlData(data).split("-");
 
-        prod_cat.setText(apiout[0]);
-        prod_name.setText(apiout[1]);
+        prod_name.setText(apiout[0]);
+        prod_cat.setText(apiout[1]);
         daycnt.setText(apiout[2]);
-
         txt.setText(data);
-
     }
 
     public void mOnClose(View v) {

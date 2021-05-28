@@ -102,7 +102,7 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             allergyCountTextView.setText(Long.toString(dataSnapshot.child("allergy").child(uid).getChildrenCount()));
-            dibsCountTextView.setText(Long.toString(dataSnapshot.child("dips").child(uid).getChildrenCount()));
+            dibsCountTextView.setText(Long.toString(dataSnapshot.child("dips").getChildrenCount()));
             historyCountTextView.setText(Long.toString(dataSnapshot.child("history").child(uid).getChildrenCount()));
         }
 

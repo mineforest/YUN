@@ -1,9 +1,15 @@
 package com.example.poke;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,18 +20,20 @@ import com.bumptech.glide.Glide;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.ViewHolder>{
+public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
     private ArrayList<UserIngredient> ingredientsList;
+    Context context;
 
     public IngredientAdapter(ArrayList<UserIngredient> list) {
         this.ingredientsList = list;
     }
-    Context context;
+
 
     @Override
     public void onAttachedToRecyclerView(@NonNull @NotNull RecyclerView recyclerView) {
@@ -69,6 +77,6 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
             this.day = itemView.findViewById(R.id.dDay);
 
         }
-    }
 
+    }
 }
