@@ -65,9 +65,7 @@ public class HistoryFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         return view;
-
     }
-
     ChildEventListener historyChildEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

@@ -21,10 +21,6 @@ import java.util.List;
 
 public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.ViewHolder>{
     private ArrayList<UserIngredient> ingredientsList;
-    long now = System.currentTimeMillis();
-    Date mDate = new Date(now);
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    String getTime = simpleDateFormat.format(mDate);
 
     public IngredientAdapter(ArrayList<UserIngredient> list) {
         this.ingredientsList = list;
@@ -49,9 +45,9 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Glide.with(holder.itemView)
-                .load(ingredientsList.get(position).getCategory())
-                .into(holder.image);
+//        Glide.with(holder.itemView)
+//                .load(ingredientsList.get(position).getCategory())
+//                .into(holder.image);
         holder.title.setText(String.valueOf(ingredientsList.get(position).getIngredientTitle()));
         holder.day.setText(String.valueOf(ingredientsList.get(position).getExpirationDate()));
     }
@@ -62,13 +58,13 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView image;
+        //ImageView image;
         TextView title;
         TextView day;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-            this.image = itemView.findViewById(R.id.categoryView);
+          //  this.image = itemView.findViewById(R.id.categoryView);
             this.title = itemView.findViewById(R.id.ingredientTitleView);
             this.day = itemView.findViewById(R.id.dDay);
 

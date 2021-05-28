@@ -58,7 +58,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         super.onViewCreated(view, savedInstanceState);
     }
 
-
     @Nullable
     @org.jetbrains.annotations.Nullable
     @Override
@@ -98,7 +97,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
 
         return view;
     }
-
 
     ValueEventListener allergyListener = new ValueEventListener() {
         @Override

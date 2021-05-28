@@ -33,6 +33,8 @@
 <!--        </activity>-->
         <activity android:name=".CheckAllergyActivity">
         </activity>
+        <activity android:name=".IngredientAddActivity">
+        </activity>
         <activity android:name=".PreferenceActivity">
         </activity>
         <activity android:name=".dod">
@@ -42,7 +44,8 @@
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
         <!-- 팝업 Activity -->
-        <activity android:name=".BarcodeScannerActivity"/>
+        <activity android:name=".BarcodeScannerActivity"
+            android:theme="@style/Theme.AppCompat"/>
     </application>
 
 </manifest>

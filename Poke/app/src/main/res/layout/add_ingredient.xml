@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/ingreTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="재료이름"
+        tools:layout_editor_absoluteX="19dp"
+        tools:layout_editor_absoluteY="70dp"
+        android:privateImeOptions="defaultInputmode=korean"/>
+
+    <EditText
+        android:id="@+id/ingreCate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="카테고리"
+        android:privateImeOptions="defaultInputmode=korean"/>
+
+    <EditText
+        android:id="@+id/ingreD"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="유통기한" />
+
+    <Button
+        android:id="@+id/ingreBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="submit" />
+
+</LinearLayout>

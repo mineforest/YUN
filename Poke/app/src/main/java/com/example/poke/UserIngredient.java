@@ -5,6 +5,10 @@ public class UserIngredient {
     String expirationDate;
     String category;
 
+    public UserIngredient(){
+
+    }
+
     public UserIngredient(String ingredientTitle, String expirationDate, String category) {
         this.ingredientTitle = ingredientTitle;
         this.expirationDate = expirationDate;
