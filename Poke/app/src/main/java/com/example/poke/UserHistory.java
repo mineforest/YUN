@@ -29,6 +29,7 @@ public class UserHistory {
         this.date = date;
     }
 
+
     public void setRecipeImage(String recipeImage) {
         this.recipeImage = recipeImage;
     }
