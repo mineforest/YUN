@@ -35,7 +35,7 @@
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/preOption"
-        android:layout_width="wrap_content"
+        android:layout_width="332dp"
         android:layout_height="508dp"
         android:layout_gravity="center">
 
@@ -44,27 +44,24 @@
             style="@style/CustomChipStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="중식"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:text="탕"
+            android:textSize="20sp" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/preChip2"
             style="@style/CustomChipStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="한식"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:text="찌개"
+            android:textSize="20sp" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/preChip3"
             style="@style/CustomChipStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="일식"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:text="디저트"
+            android:textSize="20sp" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/preChip4"
@@ -72,41 +69,162 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="면"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip5"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="만두"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip6"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="밥"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip7"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="죽"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip8"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="김치젓갈장류"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip9"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="양식"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip10"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="샐러드"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip11"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="스프"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip12"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="두류"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip13"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="견과류"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip14"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="채소류"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip15"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="버섯류"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip16"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="과실류"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip17"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="육류"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip18"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="난류"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip19"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="어패류"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip20"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="해조류"
+            android:textSize="20sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/preChip21"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="유제품류"
+            android:textSize="20sp" />
 
     </com.google.android.material.chip.ChipGroup>
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/linearLayout2"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@color/black"-->
-<!--        android:orientation="horizontal"-->
-<!--        tools:ignore="MissingConstraints">-->
-
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView"-->
-<!--            android:layout_width="596dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:background="@color/black"-->
-<!--            android:gravity="center"-->
-<!--            android:text="1 out of 3 Selected"-->
-<!--            android:textColor="@android:color/holo_green_light" />-->
-
-<!--        <Button-->
-<!--            android:id="@+id/nextButton1"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:text="Next"-->
-<!--            android:textColor="@android:color/holo_green_light"-->
-<!--            app:backgroundTint="@color/black" />-->
-
-<!--    </LinearLayout>-->
-
 
 </LinearLayout>
