@@ -64,9 +64,9 @@ public class AllergyFragment extends Fragment {
             allergyListener = (AllergyListener) context;
         }
         else {
-            throw new RuntimeException(context.toString()
-            + "must implement AllergyListener");
-        }
+           throw new RuntimeException(context.toString()
+           + "must implement AllergyListener");
+       }
     }
 
     @Override

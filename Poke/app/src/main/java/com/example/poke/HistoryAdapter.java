@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,7 +49,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
                 .into(holder.history_image);
         holder.history_rec.setText(String.valueOf(historyList.get(position).getRecipeTitle()));
         holder.history_date.setText(String.valueOf(historyList.get(position).getDate()));
-        holder.history_rate.setText(String.valueOf(historyList.get(position).getRate()));
+        holder.history_rate.setRating(Float.parseFloat(String.valueOf(historyList.get(position).getRate())));
     }
 
     @Override
@@ -60,7 +61,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
         ImageView history_image;
         TextView history_rec;
         TextView history_date;
-        TextView history_rate;
+        RatingBar history_rate;
 
         public CustomViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
