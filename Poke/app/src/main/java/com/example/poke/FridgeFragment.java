@@ -31,6 +31,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.auth.User;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ public class FridgeFragment extends Fragment {
     private ArrayList<UserIngredient> ingredientArrayList;
     private ArrayList<UserIngredient> tabArrayList;
     private ImageButton btn;
+    private ImageButton barcode_btn;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private String uid;
@@ -71,6 +74,10 @@ public class FridgeFragment extends Fragment {
         btn = view.findViewById(R.id.ingreAdd);
         btn.setBackgroundColor(Color.rgb(255,255,255));
         btn.setOnClickListener(addClickListener);
+
+        barcode_btn = view.findViewById(R.id.barcodeButton);
+        barcode_btn.setOnClickListener(scanClickListener);
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -212,6 +219,33 @@ View.OnClickListener addClickListener = new View.OnClickListener() {
         dialog.show(getActivity().getSupportFragmentManager(),"tag");
     }
 };
+
+View.OnClickListener scanClickListener = new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        IntentIntegrator.forSupportFragment(FridgeFragment.this).initiateScan();
+    }
+};
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        String barcode_num = result.getContents();
+        Bundle args = new Bundle();
+
+        BarcodeApiCaller barcodeApiCaller = new BarcodeApiCaller();
+        barcodeApiCaller.getXmlData(barcode_num);
+        String p_name = barcodeApiCaller.getP_name();
+        String p_cate = barcodeApiCaller.getP_cate();
+        String p_date = barcodeApiCaller.getP_date();
+        args.putString("title",p_name); // 제품명으로 출력됨
+        args.putString("category",p_cate); // 우리가 가진 재료 카테고리로의 매핑 알고리즘 필요
+        args.putString("date",p_date); //여기서 스트링 -> 날짜형으로  변환 필요
+
+        IngredientDialog dialog = new IngredientDialog();
+        dialog.setArguments(args);
+        dialog.show(getActivity().getSupportFragmentManager(),"tag");
+
+    }
 
     public void update(String cate, ArrayList<UserIngredient> al, ArrayList<UserIngredient> tab){
         tab.clear();
