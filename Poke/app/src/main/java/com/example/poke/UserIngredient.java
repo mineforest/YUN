@@ -4,6 +4,7 @@ public class UserIngredient {
     String ingredientTitle;
     String expirationDate;
     String category;
+    String ingredientKey;
 
     public UserIngredient(){
 
@@ -13,6 +14,22 @@ public class UserIngredient {
         this.ingredientTitle = ingredientTitle;
         this.expirationDate = expirationDate;
         this.category = category;
+
+    }
+
+    public UserIngredient(String ingredientTitle, String expirationDate, String category, String ingredientKey) {
+        this.ingredientTitle = ingredientTitle;
+        this.expirationDate = expirationDate;
+        this.category = category;
+        this.ingredientKey = ingredientKey;
+    }
+
+    public void setIngredientKey(String ingredientKey) {
+        this.ingredientKey = ingredientKey;
+    }
+
+    public String getIngredientKey() {
+        return ingredientKey;
     }
 
     public void setIngredientTitle(String ingredientTitle) {

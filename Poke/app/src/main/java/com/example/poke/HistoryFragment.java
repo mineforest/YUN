@@ -57,10 +57,7 @@ public class HistoryFragment extends Fragment {
 
         database = FirebaseDatabase.getInstance();
 
-
         mDatabase.child("history").child(uid).addChildEventListener(historyChildEventListener);
-
-
         adapter = new HistoryAdapter(historyList);
         recyclerView.setAdapter(adapter);
 

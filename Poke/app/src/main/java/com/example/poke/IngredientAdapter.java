@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,12 +24,27 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
     private ArrayList<UserIngredient> ingredientsList;
     Context context;
+    Calendar today = Calendar.getInstance();
+    Calendar cal = Calendar.getInstance();
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    long date;
+
+    private OnItemClickListener mlistener = null;
+
+    public interface OnItemClickListener {
+        void onItemClick(View v, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mlistener = listener;
+    }
 
     public IngredientAdapter(ArrayList<UserIngredient> list) {
         this.ingredientsList = list;
@@ -53,11 +69,21 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        String[] dday=ingredientsList.get(position).getExpirationDate().split("-");
+
+        int[] days=new int[3];
+        for(int i=0;i<3;i++){
+            days[i]=Integer.parseInt(dday[i]);
+        }
+
+        cal.set(days[0],days[1]-1,days[2]);
+        date = (cal.getTimeInMillis() - today.getTimeInMillis());
 //        Glide.with(holder.itemView)
 //                .load(ingredientsList.get(position).getCategory())
 //                .into(holder.image);
+
         holder.title.setText(String.valueOf(ingredientsList.get(position).getIngredientTitle()));
-        holder.day.setText(String.valueOf(ingredientsList.get(position).getExpirationDate()));
+        holder.day.setText(("D-" + Long.toString(date/86400000)));
     }
 
     @Override
@@ -72,7 +98,20 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-          //  this.image = itemView.findViewById(R.id.categoryView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                int pos = getAdapterPosition();
+                                                if(pos != RecyclerView.NO_POSITION){
+                                                    if(mlistener != null){
+                                                        mlistener.onItemClick(v, pos);
+                                                    }
+                                                }
+                                            }
+                                        });
+
+                    //  this.image = itemView.findViewById(R.id.categoryView);
             this.title = itemView.findViewById(R.id.ingredientTitleView);
             this.day = itemView.findViewById(R.id.dDay);
 

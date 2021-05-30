@@ -1,8 +1,10 @@
 package com.example.poke;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,11 +30,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.auth.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
+
+import static android.util.Log.d;
 
 public class FridgeFragment extends Fragment {
     private IngredientAdapter ingredientAdapter;
@@ -46,14 +53,8 @@ public class FridgeFragment extends Fragment {
     private String uid;
     private ImageView imageView;
     private TabLayout tabLayout;
-    long date;
-    String cate;
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    Date now= new Date();
-    String getTime = simpleDateFormat.format(now);
-
-    Calendar today = Calendar.getInstance();
-    Calendar cal = Calendar.getInstance();
+    String cate="전체";
+    private int pos;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class FridgeFragment extends Fragment {
         tabLayout = view.findViewById(R.id.fridgeTab);
         btn = view.findViewById(R.id.ingreAdd);
         btn.setBackgroundColor(Color.rgb(255,255,255));
-        btn.setOnClickListener(onClickListener);
+        btn.setOnClickListener(addClickListener);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -85,6 +86,8 @@ public class FridgeFragment extends Fragment {
         mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
 
         ingredientAdapter = new IngredientAdapter(ingredientArrayList);
+        ingredientAdapter.setOnItemClickListener(onItemClickListener);
+
         recyclerView.setAdapter(ingredientAdapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -92,7 +95,9 @@ public class FridgeFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
+                        cate = tab.getText().toString();
                         ingredientAdapter = new IngredientAdapter(ingredientArrayList);
+                        ingredientAdapter.setOnItemClickListener(onItemClickListener);
                         recyclerView.setAdapter(ingredientAdapter);
                         break;
                     case 1:
@@ -157,55 +162,56 @@ public class FridgeFragment extends Fragment {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-                String[] dday=ingredient.getExpirationDate().split("-");
 
-                int[] days=new int[3];
-                for(int i=0;i<3;i++){
-                    days[i]=Integer.parseInt(dday[i]);
+                ingredientArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
+
+                if(!cate.equals("전체") && cate.equals(ingredient.getCategory())){
+                    tabArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
                 }
 
-                cal.set(days[0],days[1]-1,days[2]);
-                date = (cal.getTimeInMillis() - today.getTimeInMillis());
-
-                ingredientArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), "D-"+Long.toString(date/86400000), ingredient.getCategory()));
                 ingredientAdapter.notifyDataSetChanged();
         }
 
         @Override
-        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
+            ingredient = new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(), snapshot.getKey());
+
+            if(!cate.equals("전체")){
+                tabArrayList.set(pos, ingredient);
+            }
+
+                for(int i=0; i<ingredientArrayList.size(); i++){
+                    if(snapshot.getKey().equals(ingredientArrayList.get(i).getIngredientKey())){
+                        ingredientArrayList.set(i,ingredient);
+                    }
+                }
+
+            ingredientAdapter.notifyDataSetChanged();
+        }
         @Override
         public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-            UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-            ingredientArrayList.remove(ingredient.getIngredientTitle());
-            ingredientAdapter.notifyDataSetChanged();
+//            UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
+//            ingredientArrayList.remove(ingredient.getIngredientTitle());
+//            ingredientAdapter.notifyDataSetChanged();
         }
         @Override
         public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)  {}
         @Override
         public void onCancelled(@NonNull DatabaseError error) {}
     };
-
-View.OnClickListener onClickListener = new View.OnClickListener() {
+    
+    //+ 버튼 클릭
+View.OnClickListener addClickListener = new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-//        myStartActivity(IngredientAddActivity.class);
         Bundle args = new Bundle();
-
-        args.putString("key", "value");
 
         IngredientDialog dialog = new IngredientDialog();
         dialog.setArguments(args); // 데이터 전달
         dialog.show(getActivity().getSupportFragmentManager(),"tag");
-
-
     }
 };
-
-    private void myStartActivity(Class c){
-        Intent intent = new Intent(getActivity(),c);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
 
     public void update(String cate, ArrayList<UserIngredient> al, ArrayList<UserIngredient> tab){
         tab.clear();
@@ -214,7 +220,32 @@ View.OnClickListener onClickListener = new View.OnClickListener() {
                 tab.add(al.get(i));
             }
             ingredientAdapter = new IngredientAdapter(tab);
+            ingredientAdapter.setOnItemClickListener(onItemClickListener);
             recyclerView.setAdapter(ingredientAdapter);
         }
     }
+
+    IngredientAdapter.OnItemClickListener onItemClickListener =new IngredientAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View v, int position) {
+            Bundle args = new Bundle();
+            pos = position;
+            if(cate.equals("전체")){
+                args.putString("title",ingredientArrayList.get(position).getIngredientTitle());
+                args.putString("category", ingredientArrayList.get(position).getCategory());
+                args.putString("date", ingredientArrayList.get(position).getExpirationDate());
+                args.putString("key",ingredientArrayList.get(position).getIngredientKey());
+            }
+            else{
+                args.putString("title",tabArrayList.get(position).getIngredientTitle());
+                args.putString("category", tabArrayList.get(position).getCategory());
+                args.putString("date", tabArrayList.get(position).getExpirationDate());
+                args.putString("key", tabArrayList.get(position).getIngredientKey());
+            }
+
+            IngredientDialog dialog = new IngredientDialog();
+            dialog.setArguments(args); // 데이터 전달
+            dialog.show(getActivity().getSupportFragmentManager(),"tag");
+        }
+    };
 }

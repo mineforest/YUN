@@ -18,28 +18,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="레시피 제목"
         android:inputType="textPersonName"
-        android:text="title"
         tools:layout_editor_absoluteX="169dp"
         tools:layout_editor_absoluteY="99dp" />
+
+    <EditText
+        android:id="@+id/urlTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="url"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="185dp"
+        tools:layout_editor_absoluteY="169dp" />
 
     <EditText
         android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="날짜"
         android:inputType="textPersonName"
-        android:text="id"
-        tools:layout_editor_absoluteX="185dp"
-        tools:layout_editor_absoluteY="169dp" />
-
-    <EditText
-        android:id="@+id/idTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="date"
         tools:layout_editor_absoluteX="185dp"
         tools:layout_editor_absoluteY="220dp" />
 
@@ -48,6 +48,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="rate" />
+        android:hint="평점"
+        android:inputType="textPersonName" />
 </LinearLayout>

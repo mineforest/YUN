@@ -76,11 +76,11 @@ private void next(int fragment){
                             diet = new DietFragment();
                             fragmentManager.beginTransaction().add(R.id.frame_container2,diet).commit();
                         }
-
                         i=2;
                         preButton.setText("이전");
                         nextButton.setText("다음");
                         text.setText("2 / 3");
+
                         if(pre != null) fragmentManager.beginTransaction().hide(pre).commit();
                         if(diet != null) fragmentManager.beginTransaction().show(diet).commit();
                         if(allergy != null) fragmentManager.beginTransaction().hide(allergy).commit();

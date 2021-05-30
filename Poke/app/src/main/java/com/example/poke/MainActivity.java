@@ -65,36 +65,6 @@ public class MainActivity extends Fragment {
         return view;
     }
 
-    //    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//        mAuth = FirebaseAuth.getInstance();
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//
-//        //로그인 되어 있지 않으면 로그인 화면으로
-//        if(user == null) {
-//            myStartActivity(LoginActivity.class);
-//        }
-//
-//        //회원정보가 없으면 회원등록 화면 나옴
-//        else {
-//            mDatabase = FirebaseDatabase.getInstance().getReference();
-//            String uid = user.getUid();
-//
-//           nullStartActivity(uid,"users");
-//           nullStartActivity(uid,"preference");
-//        }
-//
-//        findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
-//        findViewById(R.id.gotoPasswordResetButton).setOnClickListener(onClickListener);
-//        findViewById(R.id.revokeButton).setOnClickListener(onClickListener);
-//        findViewById(R.id.preButton).setOnClickListener(onClickListener);
-//        findViewById(R.id.myInfoButton).setOnClickListener(onClickListener);
-//        findViewById(R.id.starButton).setOnClickListener(onClickListener);
-//        findViewById(R.id.barcode_scan_Button).setOnClickListener(onClickListener);
-//    }
-
     View.OnClickListener onClickListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {

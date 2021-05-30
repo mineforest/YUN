@@ -26,8 +26,8 @@ public class dod extends AppCompatActivity {
         setContentView(R.layout.historydd);
 
         tv1 = (EditText) findViewById(R.id.titleTextView);
-        tv2 = (EditText) findViewById(R.id.dateTextView);
-        tv3 = (EditText) findViewById(R.id.idTextView);
+        tv2 = (EditText) findViewById(R.id.urlTextView);
+        tv3 = (EditText) findViewById(R.id.dateTextView);
         tv4 = (EditText) findViewById(R.id.rateTextView);
         findViewById(R.id.okButton).setOnClickListener(onClickListener);
 
@@ -41,10 +41,10 @@ public class dod extends AppCompatActivity {
             String uid = user.getUid();
 
             String title = tv1.getText().toString();
-            String date = tv2.getText().toString();
-            String id = tv3.getText().toString();
+            String url = tv2.getText().toString();
+            String date = tv3.getText().toString();
             Long rate = Long.valueOf(tv4.getText().toString());
-            UserHistory userHistory = new UserHistory(title, id, date, rate);
+            UserHistory userHistory = new UserHistory(title, url, date, rate);
             mDatabase.child("history").child(uid).push().setValue(userHistory);
         }
     };

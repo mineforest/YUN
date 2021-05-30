@@ -43,6 +43,7 @@ public class IngredientAddActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
         String uid = user.getUid();
 
         mDatabase.child("ingredient").child(uid).push().setValue(new UserIngredient(title, day, cate));

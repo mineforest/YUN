@@ -45,13 +45,9 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     String uid;
-
     private FragmentManager fragmentManager;
-
     static HistoryFragment historyFragment;
     static WishFragment wishFragment;
-
-
 
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -63,7 +59,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_info,container,false);
-
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -84,6 +79,8 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         allergyButton.setOnClickListener(this);
         mDatabase.addValueEventListener(allergyListener);
 
+       getChildFragmentManager().beginTransaction().add(R.id.InfoFrame,new HistoryFragment()).commit();
+
         recyclerView = (RecyclerView)view.findViewById(R.id.history_rv);
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -101,7 +98,7 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             allergyCountTextView.setText(Long.toString(dataSnapshot.child("allergy").child(uid).getChildrenCount()));
-            dibsCountTextView.setText(Long.toString(dataSnapshot.child("dips").getChildrenCount()));
+            dibsCountTextView.setText(Long.toString(dataSnapshot.child("dips").child(uid).getChildrenCount()));
             historyCountTextView.setText(Long.toString(dataSnapshot.child("history").child(uid).getChildrenCount()));
         }
 
@@ -146,8 +143,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
                 break;
         }
     }
-
-
 
     private void startToast(String msg){
         Toast.makeText(getActivity(), msg,Toast.LENGTH_SHORT).show();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
-    android:layout_height="300dp"
+    android:layout_height="350dp"
     android:background="#eeeeee"
     android:orientation="vertical">
 
@@ -26,7 +26,7 @@
     <!-- Notice -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="176dp"
+        android:layout_height="225dp"
         android:orientation="vertical"
         android:padding="24dp">
 
@@ -43,26 +43,26 @@
         <EditText
             android:id="@+id/prod_name_txt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="10"
-            android:textColor="#000"
-            android:text="제품명" />
+            android:hint="제품명"
+            android:textColor="#000" />
 
         <EditText
             android:id="@+id/prod_cat_txt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="10"
-            android:textColor="#000"
-            android:text="종류" />
+            android:hint="종류"
+            android:textColor="#000" />
 
         <EditText
             android:id="@+id/daycnt_txt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="10"
-            android:textColor="#000"
-            android:text="유통기한" />
+            android:hint="유통기한"
+            android:textColor="#000" />
     </LinearLayout>
     <!-- Notice -->
 
@@ -88,7 +88,6 @@
         android:gravity="center"
         android:padding="16dp"
         android:text="확인"
-        android:onClick="mOnClose"
         android:textColor="#ff7a00"
         android:textSize="15sp" />
     <!--// 닫기 버튼 -->
