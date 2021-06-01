@@ -229,22 +229,33 @@ View.OnClickListener scanClickListener = new View.OnClickListener() {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        String barcode_num = result.getContents();
-        Bundle args = new Bundle();
+        if(result != null) {
+            String barcode_num = result.getContents();
+            if(barcode_num == null) {
+                Toast.makeText(getContext(), "취소됨",Toast.LENGTH_LONG).show();
+             } else {
+                Bundle args = new Bundle();
 
-        BarcodeApiCaller barcodeApiCaller = new BarcodeApiCaller();
-        barcodeApiCaller.getXmlData(barcode_num);
-        String p_name = barcodeApiCaller.getP_name();
-        String p_cate = barcodeApiCaller.getP_cate();
-        String p_date = barcodeApiCaller.getP_date();
-        args.putString("title",p_name); // 제품명으로 출력됨
-        args.putString("category",p_cate); // 우리가 가진 재료 카테고리로의 매핑 알고리즘 필요
-        args.putString("date",p_date); //여기서 스트링 -> 날짜형으로  변환 필요
+                BarcodeApiCaller barcodeApiCaller = new BarcodeApiCaller();
+                barcodeApiCaller.getXmlData(barcode_num);
+                String p_name = barcodeApiCaller.getP_name();
+                String p_cate = barcodeApiCaller.getP_cate();
+                String p_date = barcodeApiCaller.getP_date();
 
-        IngredientDialog dialog = new IngredientDialog();
-        dialog.setArguments(args);
-        dialog.show(getActivity().getSupportFragmentManager(),"tag");
-
+                if(p_name == null || p_cate == null || p_date == null) {
+                    Toast.makeText(getContext(), "읽을 수 없습니다.\n다시 시도하거나 수동 입력해주세요.",Toast.LENGTH_LONG).show();
+                } else {
+                    args.putString("title", p_name); // 제품명으로 출력됨
+                    args.putString("category", p_cate); // 우리가 가진 재료 카테고리로의 매핑 알고리즘 필요
+                    args.putString("date", p_date);
+                }
+                IngredientDialog dialog = new IngredientDialog();
+                dialog.setArguments(args);
+                dialog.show(getActivity().getSupportFragmentManager(), "tag");
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     public void update(String cate, ArrayList<UserIngredient> al, ArrayList<UserIngredient> tab){
