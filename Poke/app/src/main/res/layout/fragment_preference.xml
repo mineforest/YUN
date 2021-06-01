@@ -6,14 +6,29 @@
     android:id="@+id/linearLayout1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:text="< 이전"
+            android:textColor="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="235dp"
+            android:backgroundTint="@color/white"
+            android:text="다음 >"
+            android:textColor="@android:color/darker_gray" />
     </LinearLayout>
 
     <Space
@@ -25,13 +40,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Pick Your Favorite Category"
+        android:text="어떤 음식을 좋아하나요?"
+        android:textColor="@color/black"
         android:textSize="34sp"
         android:textStyle="bold" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="57dp" />
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="336dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="15dp"
+        android:text="취향에 맞게 레시피를 추천받을 수 있습니다. 좋아하는 음식을 탭 하세요"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/preOption"

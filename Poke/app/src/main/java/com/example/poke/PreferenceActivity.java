@@ -53,14 +53,11 @@ public class PreferenceActivity extends AppCompatActivity implements AllergyFrag
         text = findViewById(R.id.ageTextView);
         nextButton.setOnClickListener(nextClickListener);
         preButton.setOnClickListener(preClickListener);
-
+        viewPager2.setCurrentItem(0);
         pre = new PreferenceFragment();
         fragmentManager = getSupportFragmentManager();
        // fragmentManager.beginTransaction().replace(R.id.frame_container2, pre).commit();
-        viewPager2.setCurrentItem(0);
-                preButton.setText(" ");
-                nextButton.setText("다음");
-                text.setText("1 / 3");
+
     }
 
 View.OnClickListener nextClickListener = new View.OnClickListener() {
@@ -77,9 +74,15 @@ View.OnClickListener nextClickListener = new View.OnClickListener() {
         }
     };
 
-private void next(int fragment){
+public void next(int fragment){
                 switch(fragment){
                     case 1:
+                        preButton.setText(" ");
+                        nextButton.setText("다음");
+                        text.setText("1 / 3");
+                        viewPager2.setCurrentItem(1);
+                        break;
+                    case 2:
 //                        if(diet == null){
 //                            diet = new DietFragment();
 //                            fragmentManager.beginTransaction().add(R.id.frame_container2,diet).commit();
@@ -88,18 +91,18 @@ private void next(int fragment){
                         preButton.setText("이전");
                         nextButton.setText("다음");
                         text.setText("2 / 3");
-                        viewPager2.setCurrentItem(1);
+                        viewPager2.setCurrentItem(2);
 //                        if(pre != null) fragmentManager.beginTransaction().hide(pre).commit();
 //                        if(diet != null) fragmentManager.beginTransaction().show(diet).commit();
 //                        if(allergy != null) fragmentManager.beginTransaction().hide(allergy).commit();
                         break;
 
-                    case 2:
+                    case 3:
 //                        if(allergy == null){
 //                            allergy = new AllergyFragment();
 //                            fragmentManager.beginTransaction().add(R.id.frame_container2,allergy).commit();
 //                        }
-                        viewPager2.setCurrentItem(2);
+                        viewPager2.setCurrentItem(3);
                         i=3;
                         preButton.setText("이전");
                         nextButton.setText("완료");
@@ -109,7 +112,7 @@ private void next(int fragment){
 //                        if(allergy != null) fragmentManager.beginTransaction().show(allergy).commit();
                         break;
 
-                    case 3:
+                    case 4:
                         for(String list : preList)
                             mDatabase.child("preference").child(uid).push().setValue(new UserPreference(list));
                         for(String list : dietList)
@@ -122,12 +125,12 @@ private void next(int fragment){
 
 private void pre(int fragment){
             switch (fragment){
-                case 2:
+                case 3:
 //                    if(pre == null){
 //                        pre = new PreferenceFragment();
 //                        fragmentManager.beginTransaction().add(R.id.frame_container2,pre).commit();
 //                    }
-                    i=1;
+//                    i=1;
                     nextButton.setText("다음");
                     text.setText("1 / 3");
                     preButton.setText(" ");
@@ -137,13 +140,13 @@ private void pre(int fragment){
 //                    if(allergy != null) fragmentManager.beginTransaction().hide(allergy).commit();
                     break;
 
-                case 3:
+                case 4:
 //                    if(diet == null){
 //                        diet = new DietFragment();
 //                        fragmentManager.beginTransaction().add(R.id.frame_container2,diet).commit();
 //                    }
                     viewPager2.setCurrentItem(1);
-                    i=2;
+//                    i=2;
                     preButton.setText("이전");
                     nextButton.setText("다음");
                     text.setText("2 / 3");
@@ -177,10 +180,14 @@ private void pre(int fragment){
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        moveTaskToBack(true);
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
+        if (viewPager2.getCurrentItem() == 0) {
+            super.onBackPressed();
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+        } else {
+            viewPager2.setCurrentItem(viewPager2.getCurrentItem() - 1);
+        }
     }
 
     ViewPager2.OnPageChangeCallback pageChangeCallback = new ViewPager2.OnPageChangeCallback() {
