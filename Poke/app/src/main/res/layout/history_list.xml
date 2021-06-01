@@ -5,19 +5,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="122dp"
+        android:layout_height="107dp"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/history_image"
-            android:layout_width="150dp"
+            android:layout_width="99dp"
             android:layout_height="match_parent"
             android:src="@mipmap/ic_launcher">
 
         </ImageView>
 
         <LinearLayout
-            android:layout_width="141dp"
+            android:layout_width="120dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical">
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="요리이름"
-                android:textSize="18sp">
+                android:textSize="14sp">
 
             </TextView>
 
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="날짜"
-                android:textSize="18sp">
+                android:textSize="14sp">
 
             </TextView>
 
@@ -58,7 +58,7 @@
             <RatingBar
                 android:id="@+id/history_rate"
                 style="?android:attr/ratingBarStyleIndicator"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:isIndicator="true"
