@@ -4,11 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -31,7 +36,8 @@ public class home extends AppCompatActivity {
 
         //첫 화면 띄우기
         mBottomNavigationView.setSelectedItemId(R.id.nav_home);
-       // fragmentManager.beginTransaction().add(R.id.frame_container,new MainActivity()).commit();
+        fragmentManager.beginTransaction().add(R.id.frame_container,new MainRecyclerViewFragment()).commit();
+
         viewPager2.setCurrentItem(1);
         //case 함수를 통해 클릭 받을 때마다 화면 변경하기
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
