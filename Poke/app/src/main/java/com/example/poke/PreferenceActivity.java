@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -32,6 +34,8 @@ public class PreferenceActivity extends AppCompatActivity implements AllergyFrag
     private DatabaseReference mDatabase;
     private String uid;
     private ArrayList<String> preList, dietList, allergyList = new ArrayList<>();
+    private ViewPager2 viewPager2;
+    private FragmentStateAdapter pagerAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +44,10 @@ public class PreferenceActivity extends AppCompatActivity implements AllergyFrag
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
+        viewPager2 = findViewById(R.id.pager2);
+        pagerAdapter=new PreferenceFragmentAdapter(this);
+        viewPager2.setAdapter(pagerAdapter);
+        viewPager2.registerOnPageChangeCallback(pageChangeCallback);
         preButton = findViewById(R.id.fragmentPreviousButton);
         nextButton = findViewById(R.id.fragmentNextButton);
         text = findViewById(R.id.ageTextView);
@@ -48,8 +56,8 @@ public class PreferenceActivity extends AppCompatActivity implements AllergyFrag
 
         pre = new PreferenceFragment();
         fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame_container2, pre).commit();
-
+       // fragmentManager.beginTransaction().replace(R.id.frame_container2, pre).commit();
+        viewPager2.setCurrentItem(0);
                 preButton.setText(" ");
                 nextButton.setText("다음");
                 text.setText("1 / 3");
@@ -72,33 +80,33 @@ View.OnClickListener nextClickListener = new View.OnClickListener() {
 private void next(int fragment){
                 switch(fragment){
                     case 1:
-                        if(diet == null){
-                            diet = new DietFragment();
-                            fragmentManager.beginTransaction().add(R.id.frame_container2,diet).commit();
-                        }
+//                        if(diet == null){
+//                            diet = new DietFragment();
+//                            fragmentManager.beginTransaction().add(R.id.frame_container2,diet).commit();
+//                        }
                         i=2;
                         preButton.setText("이전");
                         nextButton.setText("다음");
                         text.setText("2 / 3");
-
-                        if(pre != null) fragmentManager.beginTransaction().hide(pre).commit();
-                        if(diet != null) fragmentManager.beginTransaction().show(diet).commit();
-                        if(allergy != null) fragmentManager.beginTransaction().hide(allergy).commit();
+                        viewPager2.setCurrentItem(1);
+//                        if(pre != null) fragmentManager.beginTransaction().hide(pre).commit();
+//                        if(diet != null) fragmentManager.beginTransaction().show(diet).commit();
+//                        if(allergy != null) fragmentManager.beginTransaction().hide(allergy).commit();
                         break;
 
                     case 2:
-                        if(allergy == null){
-                            allergy = new AllergyFragment();
-                            fragmentManager.beginTransaction().add(R.id.frame_container2,allergy).commit();
-                        }
-
+//                        if(allergy == null){
+//                            allergy = new AllergyFragment();
+//                            fragmentManager.beginTransaction().add(R.id.frame_container2,allergy).commit();
+//                        }
+                        viewPager2.setCurrentItem(2);
                         i=3;
                         preButton.setText("이전");
                         nextButton.setText("완료");
                         text.setText("3 / 3");
-                        if(pre != null) fragmentManager.beginTransaction().hide(pre).commit();
-                        if(diet != null) fragmentManager.beginTransaction().hide(diet).commit();
-                        if(allergy != null) fragmentManager.beginTransaction().show(allergy).commit();
+//                        if(pre != null) fragmentManager.beginTransaction().hide(pre).commit();
+//                        if(diet != null) fragmentManager.beginTransaction().hide(diet).commit();
+//                        if(allergy != null) fragmentManager.beginTransaction().show(allergy).commit();
                         break;
 
                     case 3:
@@ -115,33 +123,33 @@ private void next(int fragment){
 private void pre(int fragment){
             switch (fragment){
                 case 2:
-                    if(pre == null){
-                        pre = new PreferenceFragment();
-                        fragmentManager.beginTransaction().add(R.id.frame_container2,pre).commit();
-                    }
+//                    if(pre == null){
+//                        pre = new PreferenceFragment();
+//                        fragmentManager.beginTransaction().add(R.id.frame_container2,pre).commit();
+//                    }
                     i=1;
                     nextButton.setText("다음");
                     text.setText("1 / 3");
                     preButton.setText(" ");
-
-                    if(pre != null) fragmentManager.beginTransaction().show(pre).commit();
-                    if(diet != null) fragmentManager.beginTransaction().hide(diet).commit();
-                    if(allergy != null) fragmentManager.beginTransaction().hide(allergy).commit();
+                    viewPager2.setCurrentItem(0);
+//                    if(pre != null) fragmentManager.beginTransaction().show(pre).commit();
+//                    if(diet != null) fragmentManager.beginTransaction().hide(diet).commit();
+//                    if(allergy != null) fragmentManager.beginTransaction().hide(allergy).commit();
                     break;
 
                 case 3:
-                    if(diet == null){
-                        diet = new DietFragment();
-                        fragmentManager.beginTransaction().add(R.id.frame_container2,diet).commit();
-                    }
-
+//                    if(diet == null){
+//                        diet = new DietFragment();
+//                        fragmentManager.beginTransaction().add(R.id.frame_container2,diet).commit();
+//                    }
+                    viewPager2.setCurrentItem(1);
                     i=2;
                     preButton.setText("이전");
                     nextButton.setText("다음");
                     text.setText("2 / 3");
-                    if(pre != null) fragmentManager.beginTransaction().hide(pre).commit();
-                    if(diet != null) fragmentManager.beginTransaction().show(diet).commit();
-                    if(allergy != null) fragmentManager.beginTransaction().hide(allergy).commit();
+//                    if(pre != null) fragmentManager.beginTransaction().hide(pre).commit();
+//                    if(diet != null) fragmentManager.beginTransaction().show(diet).commit();
+//                    if(allergy != null) fragmentManager.beginTransaction().hide(allergy).commit();
                     break;
             }
         }
@@ -174,4 +182,11 @@ private void pre(int fragment){
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(1);
     }
+
+    ViewPager2.OnPageChangeCallback pageChangeCallback = new ViewPager2.OnPageChangeCallback() {
+        @Override
+        public void onPageSelected(int position) {
+            super.onPageSelected(position);
+        }
+    };
 }
