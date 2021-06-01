@@ -14,7 +14,7 @@ public class MainFragmentAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         if(position == 0 ) return new MyInfoActivity();
-        else if(position == 1) return new MainActivity();
+        else if(position == 1) return new MainRecyclerViewFragment();
         else if(position == 2) return new FridgeFragment();
         else return new Frag4();
     }

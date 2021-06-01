@@ -59,9 +59,6 @@ public class MainRecyclerViewFragment extends Fragment {
                     String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
                     String cook_time = documentSnapshot.getData().get("time").toString();
                     Recipe_get r = new Recipe_get(title, thumbnail, cook_time);
-                    Log.d("title", title);
-                    Log.d("thumbnail", thumbnail);
-                    Log.d("time", cook_time);
                     rcps.add(r);
                 }
             });

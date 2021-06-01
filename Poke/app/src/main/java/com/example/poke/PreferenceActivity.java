@@ -2,8 +2,6 @@ package com.example.poke;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,8 +13,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -119,7 +115,7 @@ public void next(int fragment){
                             mDatabase.child("diet").child(uid).push().setValue(new UserDiet(list));
                         for(String list : allergyList)
                             mDatabase.child("allergy").child(uid).push().setValue(new UserAllergy(list));
-                        myStartActivity(home.class);
+                        myStartActivity(MainActivity.class);
                 }
 }
 
@@ -134,7 +130,7 @@ private void pre(int fragment){
                     nextButton.setText("다음");
                     text.setText("1 / 3");
                     preButton.setText(" ");
-                    viewPager2.setCurrentItem(0);
+                    viewPager2.setCurrentItem(1);
 //                    if(pre != null) fragmentManager.beginTransaction().show(pre).commit();
 //                    if(diet != null) fragmentManager.beginTransaction().hide(diet).commit();
 //                    if(allergy != null) fragmentManager.beginTransaction().hide(allergy).commit();
@@ -145,8 +141,8 @@ private void pre(int fragment){
 //                        diet = new DietFragment();
 //                        fragmentManager.beginTransaction().add(R.id.frame_container2,diet).commit();
 //                    }
-                    viewPager2.setCurrentItem(1);
-//                    i=2;
+                    viewPager2.setCurrentItem(2);
+                    i=2;
                     preButton.setText("이전");
                     nextButton.setText("다음");
                     text.setText("2 / 3");

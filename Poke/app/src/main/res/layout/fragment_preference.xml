@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout1"
@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:text="< 이전"
+            android:text="&lt; 이전"
             android:textColor="@android:color/darker_gray" />
 
         <Button
@@ -27,18 +27,15 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="235dp"
             android:backgroundTint="@color/white"
-            android:text="다음 >"
+            android:text="다음 &gt;"
             android:textColor="@android:color/darker_gray" />
     </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="33dp" />
 
     <TextView
         android:id="@+id/Head1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
         android:gravity="center"
         android:text="어떤 음식을 좋아하나요?"
         android:textColor="@color/black"
@@ -50,7 +47,7 @@
         android:layout_width="336dp"
         android:layout_height="70dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="140dp"
         android:text="취향에 맞게 레시피를 추천받을 수 있습니다. 좋아하는 음식을 탭 하세요"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -59,8 +56,9 @@
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/preOption"
         android:layout_width="332dp"
-        android:layout_height="508dp"
-        android:layout_gravity="center">
+        android:layout_height="339dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="210dp">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/preChip1"
@@ -250,4 +248,4 @@
 
     </com.google.android.material.chip.ChipGroup>
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
