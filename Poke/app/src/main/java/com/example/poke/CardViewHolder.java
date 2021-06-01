@@ -6,9 +6,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.android.volley.toolbox.NetworkImageView;
-
 public class CardViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView rcp_thumbnail;
