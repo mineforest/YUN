@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -92,11 +94,6 @@ public class MainActivity extends Fragment {
                 case R.id.dips_button:
                     myStartActivity(Adddips.class);
                     break;
-//                case R.id.barcode_scan_Button:
-//                    IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
-//                    integrator.setOrientationLocked(false);
-//                    integrator.setPrompt("바코드를 읽혀주세요 헤헷");
-//                    integrator.initiateScan();
             }
         }
     };
@@ -141,20 +138,4 @@ public class MainActivity extends Fragment {
 
         mAuth.getCurrentUser().delete();
     }
-
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-//        if(result != null) {
-//            if(result.getContents() == null) {
-//                Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
-//            } else {
-//                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(this, BarcodeScannerActivity.class);
-//                intent.putExtra("RESULT", result.getContents());
-//                startActivity(intent);
-//            }
-//        } else {
-//            super.onActivityResult(requestCode, resultCode, data);
-//        }
-//    }
 }
