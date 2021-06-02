@@ -16,7 +16,7 @@
         android:layout_marginTop="50dp"
         android:orientation="vertical"
         app:behavior_hideable="false"
-        app:behavior_peekHeight="300dp"
+        app:behavior_peekHeight="399dp"
         app:layout_behavior="@string/bottom_sheet_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,7 +73,7 @@
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/dietOption"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="388dp"
             android:layout_marginTop="20dp"
             android:gravity="center">
 

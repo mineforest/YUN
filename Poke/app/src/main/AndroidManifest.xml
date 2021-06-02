@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Poke"
         android:usesCleartextTraffic="true"
+        android:name = ".MyApplication"
         android:hardwareAccelerated="true">
         <activity android:name=".MainActivity">
             <intent-filter>
