@@ -38,10 +38,11 @@ public class Recipe_get {
         this.time = cook_time;
     }
 
-    Recipe_get(String thumbnail, String name) {
-        this.name = name;
+    public Recipe_get(String thumbnail, String name) {
         this.thumbnail = thumbnail;
+        this.name = name;
     }
+
 
     public Recipe_get(String id, String name, String thumbnail, String url, List<Long> ingredient_ids, String time, List<Map<String, String>> ingre_list, List<Map<String, String>> sauce_list, List<String> recipe, List<String> recipe_img, List<String> tag) {
         this.id = id;
