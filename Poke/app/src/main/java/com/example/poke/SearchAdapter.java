@@ -1,6 +1,7 @@
 package com.example.poke;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,7 @@ import com.bumptech.glide.Glide;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomViewHolder> {
+public class SearchAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     private ArrayList<Recipe_get> searchList;
 
@@ -34,19 +35,21 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
     @NonNull
     @NotNull
     @Override
-    public CustomViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public CardViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_list,parent,false);
-        CustomViewHolder holder = new CustomViewHolder(view);
-
-        return holder;
+        return new CardViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull SearchAdapter.CustomViewHolder holder, int position) {
-        Glide.with(holder.itemView)
-                .load(searchList.get(position).getThumbnail())
-                .into(holder.search_image);
-        holder.search_title.setText(String.valueOf(searchList.get(position).getName()));
+    public void onBindViewHolder(@NonNull @NotNull CardViewHolder holder, int position) {
+        if (searchList != null && position < searchList.size()) {
+            Recipe_get rcp = searchList.get(position);
+            holder.rcp_title.setText(rcp.getName());
+            Glide.with(holder.itemView)
+                    .load(rcp.getThumbnail())
+                    .into(holder.rcp_thumbnail);
+            Log.d("dddddddddddd","helooooooo");
+        }
 
     }
 
@@ -55,16 +58,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         return (searchList != null ? searchList.size() : 0);
     }
 
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
-        ImageView search_image;
-        TextView search_title;
-
-        public CustomViewHolder(@NonNull @NotNull View itemView) {
-            super(itemView);
-            this.search_image = itemView.findViewById(R.id.search_image);
-            this.search_title = itemView.findViewById(R.id.search_title);
-
-
-        }
-    }
+//    public class CardViewHolder extends RecyclerView.ViewHolder {
+//        ImageView search_image;
+//        TextView search_title;
+//
+//        public CardViewHolder(@NonNull @NotNull View itemView) {
+//            super(itemView);
+//            this.search_image = itemView.findViewById(R.id.search_image);
+//            this.search_title = itemView.findViewById(R.id.search_title);
+//
+//
+//        }
+//    }
 }
