@@ -34,7 +34,8 @@ public class Adddips extends AppCompatActivity {
         public void onClick(View v) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             mDatabase = FirebaseDatabase.getInstance().getReference();
-            String uid = user.getUid();
+            if(user != null)
+               uid = user.getUid();
 
             String image = tv1.getText().toString();
             String title = tv2.getText().toString();

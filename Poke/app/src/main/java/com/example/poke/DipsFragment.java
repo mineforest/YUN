@@ -47,7 +47,8 @@ public class DipsFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        uid = user.getUid();
+        if(user != null)
+          uid = user.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         recyclerView = (RecyclerView) view.findViewById(R.id.dips_rv);
         LinearLayoutManager linearLayoutManager

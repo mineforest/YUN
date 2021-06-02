@@ -53,7 +53,8 @@ public class SearchFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        uid = user.getUid();
+        if(user != null)
+            uid = user.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         recyclerView = (RecyclerView) view.findViewById(R.id.recipe_rv);
         LinearLayoutManager linearLayoutManager

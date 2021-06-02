@@ -27,7 +27,7 @@ public class CheckAllergyActivity extends AppCompatActivity {
     private TextView textView2;
     private TextView textView3;
     private TextView textView4;
-
+    String uid;
     ArrayList<TextView> textList = new ArrayList<>();
 
     @Override
@@ -37,7 +37,8 @@ public class CheckAllergyActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
+        if(user != null)
+            uid = user.getUid();
 
         textView1 = (TextView)findViewById(R.id.textView1);
         textView2 = (TextView)findViewById(R.id.textView2);

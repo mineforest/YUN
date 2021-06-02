@@ -42,6 +42,7 @@ public class IngredientDialog extends DialogFragment {
         okBtn = view.findViewById(R.id.dialogOkBtn);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        if(user != null)
         uid = user.getUid();
         okBtn.setOnClickListener(onClickListener);
         Bundle args = getArguments();

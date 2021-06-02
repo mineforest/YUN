@@ -38,7 +38,8 @@ public class dod extends AppCompatActivity {
         public void onClick(View v) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             mDatabase = FirebaseDatabase.getInstance().getReference();
-            String uid = user.getUid();
+            if(user != null)
+                uid = user.getUid();
 
             String title = tv1.getText().toString();
             String url = tv2.getText().toString();
