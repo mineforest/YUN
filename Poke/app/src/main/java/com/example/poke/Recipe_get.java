@@ -34,6 +34,10 @@ public class Recipe_get {
         this.cook_time = cook_time;
         this.tag2 = tag;
     }
+    Recipe_get(String thumbnail, String rcp_title) {
+        this.rcp_title = rcp_title;
+        this.thumbnail = thumbnail;
+    }
 
     public String getTag2() {return tag2;}
 

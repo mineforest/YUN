@@ -47,7 +47,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     String uid;
     private FragmentManager fragmentManager;
     static HistoryFragment historyFragment;
-    static WishFragment wishFragment;
 
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -65,7 +64,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         uid = user.getUid();
 
         historyFragment = new HistoryFragment();
-        wishFragment = new WishFragment();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         nickNameTextView=(TextView)view.findViewById(R.id.Nickname);
         dibsCountTextView = view.findViewById(R.id.dibsCountTextView);

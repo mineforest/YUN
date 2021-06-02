@@ -44,7 +44,7 @@ public class home extends AppCompatActivity {
                         fragmentTransaction.replace(R.id.frame_container,new FridgeFragment()).commit();
                         break;
                     case R.id.nav_search:
-                        fragmentTransaction.replace(R.id.frame_container,new Frag4()).commit();
+                        fragmentTransaction.replace(R.id.frame_container,new SearchFragment()).commit();
                         break;
 
                 }

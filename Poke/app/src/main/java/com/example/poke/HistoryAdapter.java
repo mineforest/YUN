@@ -1,12 +1,15 @@
 package com.example.poke;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +28,24 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
     }
 
     Context context;
+    private Intent intent;
+
+    public HistoryAdapter() {
+
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View v,int position);
+    }
+
+    private OnItemClickListener mListener = null;
+
+
+
+    // OnItemClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mListener = listener ;
+    }
 
     @Override
     public void onAttachedToRecyclerView(@NonNull @NotNull RecyclerView recyclerView) {
@@ -50,12 +71,26 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
         holder.history_rec.setText(String.valueOf(historyList.get(position).getRecipeTitle()));
         holder.history_date.setText(String.valueOf(historyList.get(position).getDate()));
         holder.history_rate.setRating(Float.parseFloat(String.valueOf(historyList.get(position).getRate())));
+
+        holder.history_image.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(v.getContext(), Recipe_Info.class);
+                intent.putExtra("",historyList.get(position).getRecipeImage());
+                intent.putExtra("Title", historyList.get(position).getRecipeTitle());
+                v.getContext().startActivity(intent);
+                Toast.makeText(v.getContext(), "클릭되었습니다.",Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return (historyList != null ? historyList.size() : 0);
     }
+
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         ImageView history_image;
@@ -70,6 +105,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
             this.history_date = itemView.findViewById(R.id.history_date);
             this.history_rate = itemView.findViewById(R.id.history_rate);
 
+
         }
+
     }
 }

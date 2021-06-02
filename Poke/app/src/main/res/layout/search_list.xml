@@ -19,16 +19,22 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/wish_image"
+                android:id="@+id/search_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 
             <TextView
-                android:id="@+id/wish_title"
+                android:id="@+id/search_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="test" />
+                android:text="test"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

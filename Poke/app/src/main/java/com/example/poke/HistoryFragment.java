@@ -28,12 +28,12 @@ import java.util.ArrayList;
 
 public class HistoryFragment extends Fragment {
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private ArrayList<UserHistory> historyList;
     private FirebaseAuth mAuth;
+    HistoryAdapter adapter = new HistoryAdapter();
     String uid;
 
     @Override
@@ -59,10 +59,14 @@ public class HistoryFragment extends Fragment {
 
         mDatabase.child("history").child(uid).addChildEventListener(historyChildEventListener);
         adapter = new HistoryAdapter(historyList);
+
+
         recyclerView.setAdapter(adapter);
+
 
         return view;
     }
+
     ChildEventListener historyChildEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
