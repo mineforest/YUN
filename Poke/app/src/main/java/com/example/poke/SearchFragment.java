@@ -30,6 +30,7 @@ public class SearchFragment extends Fragment {
     private ArrayList<Recipe_get> searchList;
     private FirebaseAuth mAuth;
     SearchAdapter searchAdapter;
+    String uid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,15 +41,13 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.search, container, false);
 
-<<<<<<< HEAD
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null)
             uid = user.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        recyclerView = (RecyclerView) view.findViewById(R.id.recipe_rv);
-=======
+        recyclerView = (RecyclerView) view.findViewById(R.id.search_rv);
 
         String[] test_ids = {"1762278", "1762498","1894779", "1899131", "1978049", "2001746",
                 "2017354", "2442087", "2528933", "2442087", "2803587", "3568149"};
@@ -72,7 +71,6 @@ public class SearchFragment extends Fragment {
 
 
         recyclerView = (RecyclerView) view.findViewById(R.id.search_rv);
->>>>>>> 580f861d31670eddbd0f30d0f4a78a3cfb7af15e
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -88,5 +86,4 @@ public class SearchFragment extends Fragment {
 
 
 }
-
 
