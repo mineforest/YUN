@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 import static android.content.ContentValues.TAG;
 
@@ -34,6 +35,11 @@ public class Recipe_Info extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_info);
+
+        recipe_image = findViewById(R.id.rcpinfo_thumbnail);
+        recipe_title = findViewById(R.id.title_txt);
+        recipe_tag = findViewById(R.id.tag_txt);
+
         Intent intent = getIntent();
         recipe_id = intent.getStringExtra("rcp_id");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -52,19 +58,13 @@ public class Recipe_Info extends AppCompatActivity {
                 List<String> recipe_img = (List<String>) documentSnapshot.get("recipe_img");
                 List<String> tags = (List<String>) documentSnapshot.get("tag");
 
-                Log.d("ddddd",recipe_list.get(0)); //
                 rcp = new Recipe_get(recipe_id, title, thumbnail,  url, ingredient_ids, cook_time, ingre_list, sauce_list, recipe_list, recipe_img, tags);
+
+                Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
+                recipe_title.setText(rcp.getName());
+                recipe_tag.setText(rcp.getTag().toString());
             }
         });
-
-        recipe_image = findViewById(R.id.rcpinfo_thumbnail);
-        recipe_title = findViewById(R.id.title_txt);
-        recipe_tag = findViewById(R.id.tag_txt);
-
-        Glide.with(this).load(rcp.getThumbnail()).into(recipe_image);
-        recipe_title.setText(rcp.getName());
-        recipe_tag.setText(rcp.getTag().toString());
-
 
     }
 }
