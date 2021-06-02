@@ -13,6 +13,8 @@ import com.google.firestore.v1.WriteResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import com.google.firebase.firestore.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
@@ -21,13 +23,13 @@ public class Recipe_get {
     String name;
     String thumbnail;
     String url;
-    String[] ingredient_ids;
+    List<Long> ingredient_ids;
     String time;
-    String[] ingre_list;
-    String[] sauce_list;
-    String[] recipe;
-    String[] recipe_img;
-    String[] tag;
+    List<Map<String, String>> ingre_list;
+    List<Map<String, String>> sauce_list;
+    List<String> recipe;
+    List<String> recipe_img;
+    List<String> tag;
 
     public Recipe_get() {};
     public Recipe_get(String rcp_title, String thumbnail, String cook_time) {
@@ -35,12 +37,8 @@ public class Recipe_get {
         this.thumbnail = thumbnail;
         this.time = cook_time;
     }
-    Recipe_get(String thumbnail, String rcp_title) {
-        this.name = rcp_title;
-        this.thumbnail = thumbnail;
-    }
 
-    public Recipe_get(String id, String name, String thumbnail, String url, String[] ingredient_ids, String time, String[] ingre_list, String[] sauce_list, String[] recipe, String[] recipe_img, String[] tag) {
+    public Recipe_get(String id, String name, String thumbnail, String url, List<Long> ingredient_ids, String time, List<Map<String, String>> ingre_list, List<Map<String, String>> sauce_list, List<String> recipe, List<String> recipe_img, List<String> tag) {
         this.id = id;
         this.name = name;
         this.thumbnail = thumbnail;
@@ -52,14 +50,6 @@ public class Recipe_get {
         this.recipe = recipe;
         this.recipe_img = recipe_img;
         this.tag = tag;
-    }
-
-    public String[] getSauce_list() {
-        return sauce_list;
-    }
-
-    public void setSauce_list(String[] sauce_list) {
-        this.sauce_list = sauce_list;
     }
 
     public String getId() {
@@ -94,11 +84,11 @@ public class Recipe_get {
         this.url = url;
     }
 
-    public String[] getIngredient_ids() {
+    public List<Long> getIngredient_ids() {
         return ingredient_ids;
     }
 
-    public void setIngredient_ids(String[] ingredient_ids) {
+    public void setIngredient_ids(List<Long> ingredient_ids) {
         this.ingredient_ids = ingredient_ids;
     }
 
@@ -110,35 +100,43 @@ public class Recipe_get {
         this.time = time;
     }
 
-    public String[] getIngre_list() {
+    public List<Map<String, String>> getIngre_list() {
         return ingre_list;
     }
 
-    public void setIngre_list(String[] ingre_list) {
+    public void setIngre_list(List<Map<String, String>> ingre_list) {
         this.ingre_list = ingre_list;
     }
 
-    public String[] getRecipe() {
+    public List<Map<String, String>> getSauce_list() {
+        return sauce_list;
+    }
+
+    public void setSauce_list(List<Map<String, String>> sauce_list) {
+        this.sauce_list = sauce_list;
+    }
+
+    public List<String> getRecipe() {
         return recipe;
     }
 
-    public void setRecipe(String[] recipe) {
+    public void setRecipe(List<String> recipe) {
         this.recipe = recipe;
     }
 
-    public String[] getRecipe_img() {
+    public List<String> getRecipe_img() {
         return recipe_img;
     }
 
-    public void setRecipe_img(String[] recipe_img) {
+    public void setRecipe_img(List<String> recipe_img) {
         this.recipe_img = recipe_img;
     }
 
-    public String[] getTag() {
+    public List<String> getTag() {
         return tag;
     }
 
-    public void setTag(String[] tag) {
+    public void setTag(List<String> tag) {
         this.tag = tag;
     }
 }

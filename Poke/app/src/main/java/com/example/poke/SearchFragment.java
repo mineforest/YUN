@@ -1,33 +1,23 @@
 package com.example.poke;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.core.Tag;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import static android.content.ContentValues.TAG;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -39,7 +29,7 @@ public class SearchFragment extends Fragment {
     private DatabaseReference mDatabase;
     private ArrayList<Recipe_get> searchList;
     private FirebaseAuth mAuth;
-    String uid;
+    SearchAdapter searchAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,9 +37,10 @@ public class SearchFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.search, container, false);
 
+<<<<<<< HEAD
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -57,64 +48,42 @@ public class SearchFragment extends Fragment {
             uid = user.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         recyclerView = (RecyclerView) view.findViewById(R.id.recipe_rv);
+=======
+
+        String[] test_ids = {"1762278", "1762498","1894779", "1899131", "1978049", "2001746",
+                "2017354", "2442087", "2528933", "2442087", "2803587", "3568149"};
+        for(int i =0;i<test_ids.length; i++){
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
+            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    String title = documentSnapshot.getData().get("name").toString();
+                    String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
+                    Recipe_get r = new Recipe_get(thumbnail, title);
+                    searchList.add(r);
+                }
+            });
+        }
+        for(int i = 0; i<20; i++) {
+            Recipe_get r = new Recipe_get("https://pbs.twimg.com/profile_images/538716586576592896/DKIQ0dPL_400x400.jpeg","test");
+            searchList.add(r);
+        }
+
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.search_rv);
+>>>>>>> 580f861d31670eddbd0f30d0f4a78a3cfb7af15e
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         searchList = new ArrayList<>();
-
-        database = FirebaseDatabase.getInstance();
-
-
-
-        db.collection("recipe").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()) {
-                    for(QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " =>" + document.getData());
-                    }
-                } else {
-                    Log.w(TAG,"Error getting documents.", task.getException());
-                }
-            }
-        });
-
-        adapter = new SearchAdapter(searchList);
-        recyclerView.setAdapter(adapter);
+        searchAdapter = new SearchAdapter(searchList);
+        recyclerView.setAdapter(searchAdapter);
 
         return view;
 
     }
 
-
-//    ChildEventListener searchChildEventListener = new ChildEventListener() {
-//        @Override
-//        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//            Recipe_get search = snapshot.getValue(Recipe_get.class);
-//            searchList.add(new Recipe_get(search.getThumbnail(),search.getRcp_title()));
-//            adapter.notifyDataSetChanged();
-//        }
-//
-//        @Override
-//        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//        }
-//
-//        @Override
-//        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-//
-//        }
-//
-//        @Override
-//        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//        }
-//
-//        @Override
-//        public void onCancelled(@NonNull DatabaseError error) {
-//
-//        }
-//    };
 
 
 

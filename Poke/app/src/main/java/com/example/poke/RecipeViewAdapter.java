@@ -63,9 +63,9 @@ public class RecipeViewAdapter extends RecyclerView.Adapter<RecipeViewAdapter.Cu
 
         public CustomViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-            this.recipe_image = itemView.findViewById(R.id.Thumbnail);
-            this.recipe_title = itemView.findViewById(R.id.recipe_name);
-            this.recipe_tag = itemView.findViewById(R.id.tag);
+            this.recipe_image = itemView.findViewById(R.id.rcpinfo_thumbnail);
+            this.recipe_title = itemView.findViewById(R.id.title_txt);
+            this.recipe_tag = itemView.findViewById(R.id.tag_txt);
 
 
 

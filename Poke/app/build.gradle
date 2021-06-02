@@ -61,8 +61,14 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     testImplementation 'junit:junit:4.13.2'
     implementation 'com.google.firebase:firebase-firestore:17.0.2'
+<<<<<<< HEAD
 
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+=======
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    //bottom sheet
+
+>>>>>>> 580f861d31670eddbd0f30d0f4a78a3cfb7af15e
     //noinspection GradleCompatible
     implementation 'com.android.support:design:23.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

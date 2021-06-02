@@ -88,9 +88,6 @@ public class Menu extends Fragment {
                 case R.id.myInfoButton:
                     myStartActivity(MyInfoActivity.class);
                     break;
-                case R.id.starButton:
-                    myStartActivity(dod.class);
-                    break;
                 case R.id.dips_button:
                     myStartActivity(Adddips.class);
                     break;
