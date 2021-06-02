@@ -24,12 +24,22 @@
 
     </FrameLayout>
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1"
+        android:background="#FFFFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/pager2" />
+
     <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
         android:id="@+id/dots_indicator"
         android:layout_width="109dp"
         android:layout_height="22dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginEnd="150dp"
+        android:layout_marginEnd="130dp"
         android:layout_marginBottom="15dp"
         app:dotsColor="@color/light_gray"
         app:dotsCornerRadius="8dp"
@@ -42,15 +52,5 @@
         app:selectedDotColor="@android:color/darker_gray">
 
     </com.tbuonomo.viewpagerdotsindicator.DotsIndicator>
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_weight="1"
-        android:backgroundTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/pager2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,11 +44,9 @@ public class PreferenceActivity extends AppCompatActivity implements AllergyFrag
         dotsIndicator = (DotsIndicator) findViewById(R.id.dots_indicator);
         viewPager2 = (ViewPager2) findViewById(R.id.pager2);
         pagerAdapter=new PreferenceFragmentAdapter(this);
-
         viewPager2.registerOnPageChangeCallback(pageChangeCallback);
         startFragment = new StartFragment();
         fragmentManager = getSupportFragmentManager();
-
         fragmentManager.beginTransaction().add(R.id.frame_container2,startFragment).commit();
     }
 
@@ -57,10 +55,10 @@ public void next(int page){
                 fragmentTransaction = fragmentManager.beginTransaction();
                 switch(page){
                     case 0:
-                        fragmentManager =getSupportFragmentManager();
                         fragmentManager.beginTransaction().remove(startFragment).commit();
                         viewPager2.setAdapter(pagerAdapter);
                         dotsIndicator.setViewPager2(viewPager2);
+                        dotsIndicator.setVisibility(View.VISIBLE);
                         viewPager2.setCurrentItem(0);
                         break;
 
@@ -92,7 +90,7 @@ public void pre(int page){
                     viewPager2.setCurrentItem(1);
                     break;
                 case -1:
-                    dotsIndicator.removeView(viewPager2);
+                    dotsIndicator.setVisibility(View.GONE);
                     viewPager2.setAdapter(null);
                     fragmentManager.beginTransaction().add(R.id.frame_container2,startFragment).commit();
                     break;
@@ -124,10 +122,8 @@ public void pre(int page){
     public void onBackPressed() {
         int vp =viewPager2.getCurrentItem();
         if (vp == 0) {
-//            dotsIndicator.removeViewAt(0);
-
+            dotsIndicator.setVisibility(View.GONE);
             viewPager2.setAdapter(null);
-
             fragmentManager.beginTransaction().add(R.id.frame_container2,startFragment).commit();
         } else if(vp == 1 || vp == 2) {
             viewPager2.setCurrentItem(viewPager2.getCurrentItem() - 1);
