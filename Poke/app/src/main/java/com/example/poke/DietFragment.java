@@ -44,6 +44,8 @@ public class DietFragment extends Fragment {
         bottomSheetBehavior = view.findViewById(R.id.bottomSheet2);
         behavior = BottomSheetBehavior.from(bottomSheetBehavior);
 
+        ((BottomSheetBehavior) behavior).setBottomSheetCallback(bottomSheetCallback);
+
         for(int i = 0; i < dietGroup.getChildCount(); i++) {
             int id = dietGroup.getChildAt(i).getId();
             chip = view.findViewById(id);
@@ -61,10 +63,12 @@ public class DietFragment extends Fragment {
             });
         }
 
+        dietListener.dietListener(dietList);
+        btn3.setVisibility(View.INVISIBLE);
+        btn4.setVisibility(View.INVISIBLE);
         btn3.setOnClickListener(onClickListener);
         btn4.setOnClickListener(onClickListener);
 
-        dietListener.dietListener(dietList);
         return view;
     }
 
@@ -79,6 +83,24 @@ public class DietFragment extends Fragment {
                     preferenceActivity.next(2);
                     break;
             }
+        }
+    };
+
+    BottomSheetBehavior.BottomSheetCallback bottomSheetCallback = new BottomSheetBehavior.BottomSheetCallback() {
+        @Override
+        public void onStateChanged(@NonNull View bottomSheet, int newState) {
+            if (newState == 3) {
+                btn3.setVisibility(View.VISIBLE);
+                btn4.setVisibility(View.VISIBLE);
+            } else {
+                btn3.setVisibility(View.INVISIBLE);
+                btn4.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        @Override
+        public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
         }
     };
 

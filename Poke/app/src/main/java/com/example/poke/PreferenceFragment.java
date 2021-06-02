@@ -61,7 +61,8 @@ public class PreferenceFragment extends Fragment {
             });
         }
         preListener.preListener(preList);
-
+        btn1.setVisibility(View.INVISIBLE);
+        btn2.setVisibility(View.INVISIBLE);
         btn1.setOnClickListener(onClickListener);
         btn2.setOnClickListener(onClickListener);
 
@@ -86,7 +87,12 @@ public class PreferenceFragment extends Fragment {
         @Override
         public void onStateChanged(@NonNull View bottomSheet, int newState) {
             if(newState==3){
-
+                btn1.setVisibility(View.VISIBLE);
+                btn2.setVisibility(View.VISIBLE);
+            }
+            else{
+                btn1.setVisibility(View.INVISIBLE);
+                btn2.setVisibility(View.INVISIBLE);
             }
         }
 

@@ -6,7 +6,8 @@
     android:id="@+id/linearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/ic_home">
 
     <LinearLayout
         android:id="@+id/bottomSheet1"
@@ -54,6 +55,7 @@
                 app:rippleColor="#FFFFFF"
                 app:strokeColor="@color/white"
                 app:strokeWidth="0dp" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView

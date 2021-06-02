@@ -26,8 +26,8 @@
 
     <View
         android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="38dp"
+        android:layout_width="413dp"
+        android:layout_height="43dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_weight="1"
@@ -40,7 +40,7 @@
         android:layout_height="22dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginEnd="130dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="12dp"
         app:dotsColor="@color/light_gray"
         app:dotsCornerRadius="8dp"
         app:dotsSize="12dp"

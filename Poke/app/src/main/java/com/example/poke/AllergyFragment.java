@@ -44,6 +44,8 @@ public class AllergyFragment extends Fragment {
         bottomSheetBehavior = view.findViewById(R.id.bottomSheet3);
         behavior = BottomSheetBehavior.from(bottomSheetBehavior);
 
+        ((BottomSheetBehavior) behavior).setBottomSheetCallback(bottomSheetCallback);
+
         for(int i = 0; i < allergyGroup.getChildCount(); i++) {
             int id = allergyGroup.getChildAt(i).getId();
             chip = view.findViewById(id);
@@ -58,10 +60,13 @@ public class AllergyFragment extends Fragment {
                 }
             });
         }
+        allergyListener.allergyListener(allergyList);
 
+        btn5.setVisibility(View.INVISIBLE);
+        btn6.setVisibility(View.INVISIBLE);
         btn5.setOnClickListener(onClickListener);
         btn6.setOnClickListener(onClickListener);
-        allergyListener.allergyListener(allergyList);
+
         return view;
     }
 
@@ -78,6 +83,25 @@ public class AllergyFragment extends Fragment {
             }
         }
     };
+
+    BottomSheetBehavior.BottomSheetCallback bottomSheetCallback = new BottomSheetBehavior.BottomSheetCallback() {
+        @Override
+        public void onStateChanged(@NonNull View bottomSheet, int newState) {
+            if (newState == 3) {
+                btn5.setVisibility(View.VISIBLE);
+                btn6.setVisibility(View.VISIBLE);
+            } else {
+                btn5.setVisibility(View.INVISIBLE);
+                btn6.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        @Override
+        public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+        }
+    };
+
 
     public interface AllergyListener {
         void allergyListener(ArrayList<String> allergy);

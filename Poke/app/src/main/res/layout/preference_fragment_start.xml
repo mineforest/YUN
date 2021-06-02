@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_welcome">
+    android:background="@drawable/ic_home">
 
     <Button
         android:id="@+id/startButton"

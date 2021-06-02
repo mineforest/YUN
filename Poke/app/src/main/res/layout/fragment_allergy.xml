@@ -5,7 +5,8 @@
     android:id="@+id/linearLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/ic_home">
 
         <LinearLayout
             android:id="@+id/bottomSheet3"
