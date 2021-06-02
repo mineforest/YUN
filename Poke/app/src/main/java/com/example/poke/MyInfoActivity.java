@@ -38,7 +38,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     TextView historyCountTextView;
     TextView dibsCountTextView;
     TextView nickNameTextView;
-    private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private ArrayList<UserHistory> historyList;
     private HistoryAdapter mainAdapter;
@@ -59,7 +58,7 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_info,container,false);
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
 
