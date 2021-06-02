@@ -41,14 +41,6 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.search, container, false);
 
-
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null)
-            uid = user.getUid();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        recyclerView = (RecyclerView) view.findViewById(R.id.search_rv);
-
         String[] test_ids = {"1762278", "1762498","1894779", "1899131", "1978049", "2001746",
                 "2017354", "2442087", "2528933", "2442087", "2803587", "3568149"};
         for(int i =0;i<test_ids.length; i++){

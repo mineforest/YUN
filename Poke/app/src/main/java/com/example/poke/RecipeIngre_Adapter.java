@@ -14,12 +14,15 @@ import com.bumptech.glide.Glide;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+import java.util.Map;
+
 public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapter.CustomViewHolder> {
 
-    private Recipe_get recipeView;
+    private final List<Map<String, String>> list;
 
-    public RecipeIngre_Adapter(Recipe_get recipeView) {
-        this.recipeView = recipeView;
+    public RecipeIngre_Adapter(List<Map<String, String>> list) {
+        this.list = list;
     }
 
     Context context;
@@ -34,38 +37,35 @@ public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapte
     @NotNull
     @Override
     public CustomViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_info,parent,false);
-        CustomViewHolder holder = new CustomViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_ingre_itemview,parent,false);
 
-        return holder;
+        return new CustomViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull RecipeIngre_Adapter.CustomViewHolder holder, int position) {
-        Glide.with(holder.itemView)
-                .load(recipeView.getThumbnail())
-                .into(holder.recipe_image);
-        holder.recipe_title.setText(String.valueOf(recipeView.getName()));
-        holder.recipe_tag.setText(String.valueOf(recipeView.getTag()));
-
+        if(list != null && position < list.size()) {
+            holder.i_name.setText(list.get(position).get("ingre_name"));
+            holder.i_amount.setText(list.get(position).get("ingre_count"));
+            holder.i_unit.setText(list.get(position).get("ingre_unit"));
+        }
     }
 
     @Override
     public int getItemCount() {
-        //return (recipeView != null ? recipeView.size() : 0);
-        return 0;
+        return (list != null ? list.size() : 0);
     }
 
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
-        ImageView recipe_image;
-        TextView recipe_title;
-        TextView recipe_tag;
+    public static class CustomViewHolder extends RecyclerView.ViewHolder {
+        public TextView i_name;
+        public TextView i_amount;
+        public TextView i_unit;
 
         public CustomViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-            this.recipe_image = itemView.findViewById(R.id.rcpinfo_thumbnail);
-            this.recipe_title = itemView.findViewById(R.id.title_txt);
-            this.recipe_tag = itemView.findViewById(R.id.tag_txt);
+            this.i_name = itemView.findViewById(R.id.i_name_txt);
+            this.i_amount = itemView.findViewById(R.id.i_amount_txt);
+            this.i_unit = itemView.findViewById(R.id.i_unit_txt);
         }
     }
 }
