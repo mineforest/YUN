@@ -81,7 +81,8 @@ public class FridgeFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        uid=user.getUid();
+        if(user != null)
+            uid=user.getUid();
 
         recyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
         layoutManager = new GridLayoutManager(getActivity(),4);

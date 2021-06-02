@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -20,6 +23,11 @@ public class DietFragment extends Fragment {
     private ArrayList<String> dietList = new ArrayList<>();
     private ChipGroup dietGroup;
     private Chip chip;
+    private Button btn3;
+    private Button btn4;
+    private View bottomSheetBehavior;
+    private CoordinatorLayout.Behavior behavior;
+    PreferenceActivity preferenceActivity;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -31,6 +39,10 @@ public class DietFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_diet,container,false);
         dietGroup =view.findViewById(R.id.dietOption);
+        btn3 = view.findViewById(R.id.button3);
+        btn4 = view.findViewById(R.id.button4);
+        bottomSheetBehavior = view.findViewById(R.id.bottomSheet2);
+        behavior = BottomSheetBehavior.from(bottomSheetBehavior);
 
         for(int i = 0; i < dietGroup.getChildCount(); i++) {
             int id = dietGroup.getChildAt(i).getId();
@@ -48,9 +60,28 @@ public class DietFragment extends Fragment {
                 }
             });
         }
+
+        btn3.setOnClickListener(onClickListener);
+        btn4.setOnClickListener(onClickListener);
+
         dietListener.dietListener(dietList);
         return view;
     }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.button3:
+                    preferenceActivity.pre(0);
+                    break;
+                case R.id.button4:
+                    preferenceActivity.next(2);
+                    break;
+            }
+        }
+    };
+
     public interface DietListener {
         void dietListener(ArrayList<String> diet);
     }
@@ -60,6 +91,7 @@ public class DietFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        preferenceActivity = (PreferenceActivity)getActivity();
         if(context instanceof DietFragment.DietListener) {
             dietListener = (DietFragment.DietListener) context;
         }
@@ -73,5 +105,6 @@ public class DietFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         dietListener =null;
+        preferenceActivity=null;
     }
 }

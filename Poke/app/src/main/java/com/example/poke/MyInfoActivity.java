@@ -60,7 +60,8 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        uid = user.getUid();
+        if(user != null)
+            uid = user.getUid();
 
         historyFragment = new HistoryFragment();
         mDatabase = FirebaseDatabase.getInstance().getReference();

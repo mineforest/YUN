@@ -12,20 +12,24 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Adddips extends AppCompatActivity {
+public class dod extends AppCompatActivity {
     TextView tv1;
     TextView tv2;
+    TextView tv3;
+    TextView tv4;
     private DatabaseReference mDatabase;
     String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_dips);
+        setContentView(R.layout.historydd);
 
-        tv1 = (EditText) findViewById(R.id.dipsimageView);
-        tv2 = (EditText) findViewById(R.id.dipstitleview);
-        findViewById(R.id.pushbutton).setOnClickListener(onClickListener);
+        tv1 = (EditText) findViewById(R.id.titleTextView);
+        tv2 = (EditText) findViewById(R.id.urlTextView);
+        tv3 = (EditText) findViewById(R.id.dateTextView);
+        tv4 = (EditText) findViewById(R.id.rateTextView);
+        findViewById(R.id.okButton).setOnClickListener(onClickListener);
 
     }
 
@@ -35,12 +39,14 @@ public class Adddips extends AppCompatActivity {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             mDatabase = FirebaseDatabase.getInstance().getReference();
             if(user != null)
-               uid = user.getUid();
+                uid = user.getUid();
 
-            String image = tv1.getText().toString();
-            String title = tv2.getText().toString();
-            UserDibs userDibs = new UserDibs(image, title);
-            mDatabase.child("dips").child(uid).push().setValue(userDibs);
+            String title = tv1.getText().toString();
+            String url = tv2.getText().toString();
+            String date = tv3.getText().toString();
+            Long rate = Long.valueOf(tv4.getText().toString());
+            UserHistory userHistory = new UserHistory(title, url, date, rate);
+            mDatabase.child("history").child(uid).push().setValue(userHistory);
         }
     };
 }

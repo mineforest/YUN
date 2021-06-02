@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -20,6 +23,11 @@ public class AllergyFragment extends Fragment {
     private ArrayList<String> allergyList = new ArrayList<>();
     private ChipGroup allergyGroup;
     private Chip chip;
+    private Button btn5;
+    private Button btn6;
+    private View bottomSheetBehavior;
+    private CoordinatorLayout.Behavior behavior;
+    PreferenceActivity preferenceActivity;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -31,6 +39,10 @@ public class AllergyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_allergy,container,false);
         allergyGroup =view.findViewById(R.id.allergyOption);
+        btn5 = view.findViewById(R.id.button5);
+        btn6 = view.findViewById(R.id.button6);
+        bottomSheetBehavior = view.findViewById(R.id.bottomSheet3);
+        behavior = BottomSheetBehavior.from(bottomSheetBehavior);
 
         for(int i = 0; i < allergyGroup.getChildCount(); i++) {
             int id = allergyGroup.getChildAt(i).getId();
@@ -47,9 +59,25 @@ public class AllergyFragment extends Fragment {
             });
         }
 
+        btn5.setOnClickListener(onClickListener);
+        btn6.setOnClickListener(onClickListener);
         allergyListener.allergyListener(allergyList);
         return view;
     }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.button5:
+                    preferenceActivity.pre(1);
+                    break;
+                case R.id.button6:
+                    preferenceActivity.next(3);
+                    break;
+            }
+        }
+    };
 
     public interface AllergyListener {
         void allergyListener(ArrayList<String> allergy);
@@ -60,6 +88,7 @@ public class AllergyFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        preferenceActivity = (PreferenceActivity)getActivity();
         if(context instanceof AllergyListener) {
             allergyListener = (AllergyListener) context;
         }
@@ -73,5 +102,6 @@ public class AllergyFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         allergyListener=null;
+        preferenceActivity=null;
     }
 }

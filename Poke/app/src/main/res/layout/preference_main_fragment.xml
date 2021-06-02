@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,52 +10,47 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     </androidx.viewpager2.widget.ViewPager2>
 
     <FrameLayout
         android:id="@+id/frame_container2"
         android:layout_width="match_parent"
-        android:layout_height="663dp">
+        android:layout_height="663dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+        android:id="@+id/dots_indicator"
+        android:layout_width="109dp"
+        android:layout_height="22dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginEnd="150dp"
+        android:layout_marginBottom="15dp"
+        app:dotsColor="@color/light_gray"
+        app:dotsCornerRadius="8dp"
+        app:dotsSize="12dp"
+        app:dotsSpacing="3dp"
+        app:dotsWidthFactor="2.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:progressMode="false"
+        app:selectedDotColor="@android:color/darker_gray">
+
+    </com.tbuonomo.viewpagerdotsindicator.DotsIndicator>
+
+    <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="38dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:background="@color/black"
-        android:orientation="horizontal" >
+        android:layout_weight="1"
+        android:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/pager2" />
 
-        <Button
-            android:id="@+id/fragmentPreviousButton"
-            android:layout_width="125dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="previous"
-            android:textColor="@android:color/holo_green_light"
-            app:backgroundTint="@color/black" />
-
-        <TextView
-            android:id="@+id/ageTextView"
-            android:layout_width="282dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/black"
-            android:gravity="center"
-            android:textColor="@android:color/holo_green_light" />
-
-        <Button
-            android:id="@+id/fragmentNextButton"
-            android:layout_width="115dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Next"
-            android:textColor="@android:color/holo_green_light"
-            app:backgroundTint="@color/black" />
-
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -20,6 +23,11 @@ public class PreferenceFragment extends Fragment {
     private ArrayList<String> preList = new ArrayList<>();
     private ChipGroup preGroup;
     private Chip chip;
+    private Button btn1;
+    private Button btn2;
+    private View bottomSheetBehavior;
+    private CoordinatorLayout.Behavior behavior;
+    PreferenceActivity preferenceActivity;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -31,6 +39,12 @@ public class PreferenceFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_preference,container,false);
         preGroup=view.findViewById(R.id.preOption);
+        btn1 = view.findViewById(R.id.button1);
+        btn2 = view.findViewById(R.id.button2);
+        bottomSheetBehavior = view.findViewById(R.id.bottomSheet1);
+        behavior = BottomSheetBehavior.from(bottomSheetBehavior);
+
+        ((BottomSheetBehavior) behavior).setBottomSheetCallback(bottomSheetCallback);
 
         for(int i=0; i < preGroup.getChildCount(); i++) {
             int id = preGroup.getChildAt(i).getId();
@@ -47,9 +61,40 @@ public class PreferenceFragment extends Fragment {
             });
         }
         preListener.preListener(preList);
+
+        btn1.setOnClickListener(onClickListener);
+        btn2.setOnClickListener(onClickListener);
+
         return view;
     }
 
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+             case R.id.button1:
+                    preferenceActivity.pre(-1);
+                    break;
+             case R.id.button2:
+                    preferenceActivity.next(1);
+                    break;
+            }
+        }
+    };
+
+    BottomSheetBehavior.BottomSheetCallback bottomSheetCallback = new BottomSheetBehavior.BottomSheetCallback() {
+        @Override
+        public void onStateChanged(@NonNull View bottomSheet, int newState) {
+            if(newState==3){
+
+            }
+        }
+
+        @Override
+        public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+        }
+    };
 
     public interface PreListener{
         void preListener(ArrayList<String> pre);
@@ -60,6 +105,7 @@ public class PreferenceFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        preferenceActivity = (PreferenceActivity)getActivity();
         if(context instanceof PreListener) {
             preListener = (PreListener) context;
         }
@@ -73,5 +119,7 @@ public class PreferenceFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         preListener=null;
+        preferenceActivity=null;
     }
+
 }
