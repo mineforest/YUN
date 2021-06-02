@@ -46,7 +46,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.CustomView
         Glide.with(holder.itemView)
                 .load(searchList.get(position).getThumbnail())
                 .into(holder.search_image);
-        holder.search_title.setText(String.valueOf(searchList.get(position).getRcp_title()));
+        holder.search_title.setText(String.valueOf(searchList.get(position).getName()));
 
     }
 

@@ -46,7 +46,7 @@ public class RecipeViewAdapter extends RecyclerView.Adapter<RecipeViewAdapter.Cu
         Glide.with(holder.itemView)
                 .load(recipeView.get(position).getThumbnail())
                 .into(holder.recipe_image);
-        holder.recipe_title.setText(String.valueOf(recipeView.get(position).getRcp_title()));
+        holder.recipe_title.setText(String.valueOf(recipeView.get(position).getName()));
         holder.recipe_tag.setText(String.valueOf(recipeView.get(position).getTag()));
 
     }

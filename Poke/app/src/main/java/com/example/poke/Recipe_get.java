@@ -36,7 +36,7 @@ public class Recipe_get {
         this.time = cook_time;
     }
     Recipe_get(String thumbnail, String rcp_title) {
-        this.rcp_title = rcp_title;
+        this.name = rcp_title;
         this.thumbnail = thumbnail;
     }
 
