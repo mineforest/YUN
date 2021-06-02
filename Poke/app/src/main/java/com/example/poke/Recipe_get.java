@@ -12,51 +12,70 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firestore.v1.WriteResult;
 
 import java.util.ArrayList;
+import java.util.List;
+import com.google.firebase.firestore.IgnoreExtraProperties;
 
+@IgnoreExtraProperties
 public class Recipe_get {
-    String rcp_id;
-    String rcp_title;
+    String id;
+    String name;
     String thumbnail;
-    String rcp_url;
-    String ingre_id[];
-    String cook_time;
-    String ingre[];
-    String sauce[];
-    String rcp_method[];
-    String rcp_method_img[];
-    String tag[];
-    String tag2;
+    String url;
+    String[] ingredient_ids;
+    String time;
+    String[] ingre_list;
+    String[] sauce_list;
+    String[] recipe;
+    String[] recipe_img;
+    String[] tag;
 
-    Recipe_get() {};
-    Recipe_get(String rcp_title, String thumbnail, String cook_time, String tag) {
-        this.rcp_title = rcp_title;
+    public Recipe_get() {};
+    public Recipe_get(String rcp_title, String thumbnail, String cook_time) {
+        this.name = rcp_title;
         this.thumbnail = thumbnail;
-        this.cook_time = cook_time;
-        this.tag2 = tag;
+        this.time = cook_time;
     }
     Recipe_get(String thumbnail, String rcp_title) {
         this.rcp_title = rcp_title;
         this.thumbnail = thumbnail;
     }
 
-    public String getTag2() {return tag2;}
-
-    public void setTag2(String tag2) {this.tag2 = tag2;}
-
-    public String getRcp_id() {
-        return rcp_id;
+    public Recipe_get(String id, String name, String thumbnail, String url, String[] ingredient_ids, String time, String[] ingre_list, String[] sauce_list, String[] recipe, String[] recipe_img, String[] tag) {
+        this.id = id;
+        this.name = name;
+        this.thumbnail = thumbnail;
+        this.url = url;
+        this.ingredient_ids = ingredient_ids;
+        this.time = time;
+        this.ingre_list = ingre_list;
+        this.sauce_list = sauce_list;
+        this.recipe = recipe;
+        this.recipe_img = recipe_img;
+        this.tag = tag;
     }
 
-    public void setRcp_id(String rcp_id) {
-        this.rcp_id = rcp_id;
+    public String[] getSauce_list() {
+        return sauce_list;
     }
 
-    public String getRcp_title() {
-        return rcp_title;
+    public void setSauce_list(String[] sauce_list) {
+        this.sauce_list = sauce_list;
     }
 
-    public void setRcp_title(String rcp_title) {
-        this.rcp_title = rcp_title;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getThumbnail() {
@@ -67,60 +86,52 @@ public class Recipe_get {
         this.thumbnail = thumbnail;
     }
 
-    public String getRcp_url() {
-        return rcp_url;
+    public String getUrl() {
+        return url;
     }
 
-    public void setRcp_url(String rcp_url) {
-        this.rcp_url = rcp_url;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String[] getIngre_id() {
-        return ingre_id;
+    public String[] getIngredient_ids() {
+        return ingredient_ids;
     }
 
-    public void setIngre_id(String[] ingre_id) {
-        this.ingre_id = ingre_id;
+    public void setIngredient_ids(String[] ingredient_ids) {
+        this.ingredient_ids = ingredient_ids;
     }
 
-    public String getCook_time() {
-        return cook_time;
+    public String getTime() {
+        return time;
     }
 
-    public void setCook_time(String cook_time) {
-        this.cook_time = cook_time;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public String[] getIngre() {
-        return ingre;
+    public String[] getIngre_list() {
+        return ingre_list;
     }
 
-    public void setIngre(String[] ingre) {
-        this.ingre = ingre;
+    public void setIngre_list(String[] ingre_list) {
+        this.ingre_list = ingre_list;
     }
 
-    public String[] getSauce() {
-        return sauce;
+    public String[] getRecipe() {
+        return recipe;
     }
 
-    public void setSauce(String[] sauce) {
-        this.sauce = sauce;
+    public void setRecipe(String[] recipe) {
+        this.recipe = recipe;
     }
 
-    public String[] getRcp_method() {
-        return rcp_method;
+    public String[] getRecipe_img() {
+        return recipe_img;
     }
 
-    public void setRcp_method(String[] rcp_method) {
-        this.rcp_method = rcp_method;
-    }
-
-    public String[] getRcp_method_img() {
-        return rcp_method_img;
-    }
-
-    public void setRcp_method_img(String[] rcp_method_img) {
-        this.rcp_method_img = rcp_method_img;
+    public void setRecipe_img(String[] recipe_img) {
+        this.recipe_img = recipe_img;
     }
 
     public String[] getTag() {
@@ -130,5 +141,4 @@ public class Recipe_get {
     public void setTag(String[] tag) {
         this.tag = tag;
     }
-
 }

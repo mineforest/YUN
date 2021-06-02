@@ -1,121 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout1"
+    android:id="@+id/linearLayout3"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="40dp" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="식단을 선택해주세요"
-        android:textSize="34sp"
-        android:textStyle="bold" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="40dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <Space
-            android:layout_width="58dp"
-            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:text="&lt; 이전"
+            android:textColor="@android:color/darker_gray" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/dietOption"
-            android:layout_width="301dp"
-            android:layout_height="480dp"
-            android:gravity="center">
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="235dp"
+            android:backgroundTint="@color/white"
+            android:text="다음 &gt;"
+            android:textColor="@android:color/darker_gray" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/dietChip1"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="저열량" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/dietChip2"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="저지방" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/dietChip3"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="저 콜레스테롤" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/dietChip4"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="저 나트륨" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/dietChip5"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="고 식이섬유" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/dietChip6"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="고단백질" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/dietChip7"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="채식주의(비건)" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/dietChip8"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="키토제닉" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/dietChip9"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="채식주의(락토-오보)" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/dietChip10"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="지중해식 식단" />
-
-        </com.google.android.material.chip.ChipGroup>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
     </LinearLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:text="나만의 특별한 식단을 원하세요?"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:text="식단 조절 유형에 알맞는 레시피를 추천해 드릴게요."
+        android:textAlignment="center"
+        android:textColor="@color/black" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/dietOption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:gravity="center">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip1"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="저열량" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip2"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="저지방" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip3"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="저 콜레스테롤" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip4"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="저 나트륨" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip5"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="고 식이섬유" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip6"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="고단백질" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip7"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="채식주의(비건)" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip8"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="키토제닉" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip9"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="채식주의(락토-오보)" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/dietChip10"
+            style="@style/CustomChipStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="지중해식 식단" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

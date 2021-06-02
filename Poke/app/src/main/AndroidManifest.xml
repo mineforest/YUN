@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Poke"
         android:usesCleartextTraffic="true"
         android:hardwareAccelerated="true">
-        <activity android:name=".home">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,8 +49,6 @@
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
         <!-- 팝업 Activity -->
-        <activity android:name=".BarcodeScannerActivity"
-            android:theme="@style/Theme.AppCompat"/>
     </application>
 
 </manifest>

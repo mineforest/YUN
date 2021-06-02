@@ -137,7 +137,7 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
                 fragmentTransaction.replace(R.id.InfoFrame,new DipsFragment()).commit();
                 break;
             case R.id.allergyButton:
-                fragmentTransaction.replace(R.id.InfoFrame,new AllergyFragment()).commit();
+                fragmentTransaction.replace(R.id.InfoFrame,new Menu()).commit();
                 break;
         }
     }
