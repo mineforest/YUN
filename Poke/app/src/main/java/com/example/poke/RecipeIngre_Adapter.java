@@ -14,12 +14,11 @@ import com.bumptech.glide.Glide;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-public class RecipeViewAdapter extends RecyclerView.Adapter<RecipeViewAdapter.CustomViewHolder> {
+public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapter.CustomViewHolder> {
 
-    private ArrayList<Recipe_get> recipeView;
+    private Recipe_get recipeView;
 
-    public RecipeViewAdapter(ArrayList<Recipe_get> recipeView) {
+    public RecipeIngre_Adapter(Recipe_get recipeView) {
         this.recipeView = recipeView;
     }
 
@@ -42,18 +41,19 @@ public class RecipeViewAdapter extends RecyclerView.Adapter<RecipeViewAdapter.Cu
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull RecipeViewAdapter.CustomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull RecipeIngre_Adapter.CustomViewHolder holder, int position) {
         Glide.with(holder.itemView)
-                .load(recipeView.get(position).getThumbnail())
+                .load(recipeView.getThumbnail())
                 .into(holder.recipe_image);
-        holder.recipe_title.setText(String.valueOf(recipeView.get(position).getName()));
-        holder.recipe_tag.setText(String.valueOf(recipeView.get(position).getTag()));
+        holder.recipe_title.setText(String.valueOf(recipeView.getName()));
+        holder.recipe_tag.setText(String.valueOf(recipeView.getTag()));
 
     }
 
     @Override
     public int getItemCount() {
-        return (recipeView != null ? recipeView.size() : 0);
+        //return (recipeView != null ? recipeView.size() : 0);
+        return 0;
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
@@ -66,9 +66,6 @@ public class RecipeViewAdapter extends RecyclerView.Adapter<RecipeViewAdapter.Cu
             this.recipe_image = itemView.findViewById(R.id.rcpinfo_thumbnail);
             this.recipe_title = itemView.findViewById(R.id.title_txt);
             this.recipe_tag = itemView.findViewById(R.id.tag_txt);
-
-
-
         }
     }
 }

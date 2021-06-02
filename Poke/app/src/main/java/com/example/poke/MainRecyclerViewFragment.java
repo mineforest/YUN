@@ -55,10 +55,11 @@ public class MainRecyclerViewFragment extends Fragment {
             docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    String rcp_id = documentSnapshot.getData().get("id").toString();
                     String title = documentSnapshot.getData().get("name").toString();
                     String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
                     String cook_time = documentSnapshot.getData().get("time").toString();
-                    Recipe_get r = new Recipe_get(title, thumbnail, cook_time);
+                    Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
                     rcps.add(r);
                 }
             });

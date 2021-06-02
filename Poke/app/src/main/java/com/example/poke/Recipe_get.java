@@ -38,6 +38,11 @@ public class Recipe_get {
         this.time = cook_time;
     }
 
+    Recipe_get(String thumbnail, String name) {
+        this.name = name;
+        this.thumbnail = thumbnail;
+    }
+
     public Recipe_get(String id, String name, String thumbnail, String url, List<Long> ingredient_ids, String time, List<Map<String, String>> ingre_list, List<Map<String, String>> sauce_list, List<String> recipe, List<String> recipe_img, List<String> tag) {
         this.id = id;
         this.name = name;
@@ -50,6 +55,13 @@ public class Recipe_get {
         this.recipe = recipe;
         this.recipe_img = recipe_img;
         this.tag = tag;
+    }
+
+    public Recipe_get(String rcp_id, String title, String thumbnail, String cook_time) {
+        this.id = rcp_id;
+        this.name = title;
+        this.thumbnail = thumbnail;
+        this.time = cook_time;
     }
 
     public String getId() {

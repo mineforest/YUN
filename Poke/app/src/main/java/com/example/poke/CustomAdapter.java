@@ -5,12 +5,15 @@ import androidx.annotation.VisibleForTesting;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -21,10 +24,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     private final ArrayList<Recipe_get> mRcplist;
+    private Intent intent;
 
     CustomAdapter(ArrayList<Recipe_get> rcp_list) {
         this.mRcplist = rcp_list;
@@ -53,8 +58,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
             Glide.with(holder.itemView)
                     .load(rcp.getThumbnail())
                     .into(holder.rcp_thumbnail);
-            Log.d("dddddddddddd","helooooooo");
         }
+
+        holder.rcp_thumbnail.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(v.getContext(), Recipe_Info.class);
+                intent.putExtra("rcp_id", mRcplist.get(position).getId());
+                v.getContext().startActivity(intent);
+            }
+        });
 
     }
 
