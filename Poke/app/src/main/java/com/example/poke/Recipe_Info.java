@@ -8,9 +8,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -31,6 +35,9 @@ public class Recipe_Info extends AppCompatActivity {
     private TextView recipe_title;
     private TextView recipe_tag;
 
+    RecipeIngre_Adapter adapter;
+    RecipeStep_Adapter adapter2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +50,17 @@ public class Recipe_Info extends AppCompatActivity {
         Intent intent = getIntent();
         recipe_id = intent.getStringExtra("rcp_id");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CountDownLatch done = new CountDownLatch(1);
+
         DocumentReference docRef = db.collection("recipe").document(recipe_id);
+        done.countDown();
+
+        try {
+            done.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -63,6 +80,30 @@ public class Recipe_Info extends AppCompatActivity {
                 Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
                 recipe_title.setText(rcp.getName());
                 recipe_tag.setText(rcp.getTag().toString());
+
+                RecyclerView recyclerView = findViewById(R.id.ingre_recyclerView);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                adapter = new RecipeIngre_Adapter(rcp.getIngre_list());
+                recyclerView.setAdapter(adapter);
+
+                RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);
+                recyclerView2.setHasFixedSize(true);
+                recyclerView2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                adapter = new RecipeIngre_Adapter(rcp.getSauce_list());
+                recyclerView2.setAdapter(adapter);
+
+                RecyclerView recyclerView3 = findViewById(R.id.recipe_recyclerView);
+                recyclerView3.setHasFixedSize(true);
+                recyclerView3.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                adapter2 = new RecipeStep_Adapter(rcp.getRecipe_img(),rcp.getRecipe());
+                recyclerView3.setAdapter(adapter2);
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("ddddddddddddd","실패~");
             }
         });
 
