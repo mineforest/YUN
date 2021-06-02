@@ -71,7 +71,7 @@ public class HistoryFragment extends Fragment {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
             UserHistory history = snapshot.getValue(UserHistory.class);
-            historyList.add(new UserHistory(history.getRecipeTitle(), history.getRecipeImage(), history.getDate(), history.getRate()));
+            historyList.add(new UserHistory(history.getRcp_id(),history.getRecipeTitle(), history.getRecipeImage(), history.getDate(), history.getRate()));
             adapter.notifyDataSetChanged();
         }
 

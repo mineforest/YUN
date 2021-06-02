@@ -37,8 +37,6 @@
         </activity>
         <activity android:name=".PreferenceActivity">
         </activity>
-        <activity android:name=".dod">
-        </activity>
         <activity android:name=".Adddips">
         </activity>
         <activity android:name=".Recipe_Info">

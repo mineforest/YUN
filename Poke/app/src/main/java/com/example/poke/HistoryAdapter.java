@@ -77,10 +77,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
             @Override
             public void onClick(View v) {
                 intent = new Intent(v.getContext(), Recipe_Info.class);
-                intent.putExtra("",historyList.get(position).getRecipeImage());
-                intent.putExtra("Title", historyList.get(position).getRecipeTitle());
+                intent.putExtra("rcp_id", historyList.get(position).getRcp_id());
                 v.getContext().startActivity(intent);
-                Toast.makeText(v.getContext(), "클릭되었습니다.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), historyList.get(position).getRcp_id(),Toast.LENGTH_SHORT).show();
 
             }
         });

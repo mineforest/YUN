@@ -6,64 +6,63 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+    <ImageView
+        android:id="@+id/rcpinfo_thumbnail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="200dp"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/title_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
-            <ImageView
-                android:id="@+id/Thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars" />
+    <TextView
+        android:id="@+id/tag_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
-            <TextView
-                android:id="@+id/recipe_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="TextView"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="TextView"
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="30dp" />
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="재료" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/재료"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ingre_recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="재료"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Ingredient_rv"
+            android:id="@+id/sauce_recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="레시피" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recipe_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

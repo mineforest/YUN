@@ -3,48 +3,68 @@ package com.example.poke;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.Source;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
 public class Recipe_Info extends AppCompatActivity {
-    private String Image;
-    private String Title;
+    private Recipe_get  rcp;
+    private String recipe_id;
+    private ImageView recipe_image;
+    private TextView recipe_title;
+    private TextView recipe_tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_info);
-        String recipe;
         Intent intent = getIntent();
+        recipe_id = intent.getStringExtra("rcp_id");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        Image = intent.getStringExtra("Image");
-        Title = intent.getStringExtra("Title");
-
-        db.collection("recipe").get(Source.valueOf(Image)).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        DocumentReference docRef = db.collection("recipe").document(recipe_id);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()) {
-                    for(QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " =>" + document.getData());
-                    }
-                } else {
-                    Log.w(TAG,"Error getting documents.", task.getException());
-                }
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                String title = documentSnapshot.getData().get("name").toString();
+                String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
+                String cook_time = documentSnapshot.getData().get("time").toString();
+                List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
+                List<Map<String, String>> sauce_list = (List<Map<String, String>>) documentSnapshot.get("sauce_list");
+                String url = documentSnapshot.getData().get("url").toString();
+                List<Long> ingredient_ids = (List<Long>) documentSnapshot.get("ingredient_ids");
+                List<String> recipe_list = (List<String>) documentSnapshot.get("recipe");
+                List<String> recipe_img = (List<String>) documentSnapshot.get("recipe_img");
+                List<String> tags = (List<String>) documentSnapshot.get("tag");
+
+                Log.d("ddddd",recipe_list.get(0)); //
+                rcp = new Recipe_get(recipe_id, title, thumbnail,  url, ingredient_ids, cook_time, ingre_list, sauce_list, recipe_list, recipe_img, tags);
             }
         });
+
+        recipe_image = findViewById(R.id.rcpinfo_thumbnail);
+        recipe_title = findViewById(R.id.title_txt);
+        recipe_tag = findViewById(R.id.tag_txt);
+
+        Glide.with(this).load(rcp.getThumbnail()).into(recipe_image);
+        recipe_title.setText(rcp.getName());
+        recipe_tag.setText(rcp.getTag().toString());
+
 
     }
 }

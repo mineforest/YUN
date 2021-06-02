@@ -1,6 +1,7 @@
 package com.example.poke;
 
 public class UserHistory {
+    String rcp_id;
     Long rate;
     String recipeTitle;
     String recipeID;
@@ -8,6 +9,14 @@ public class UserHistory {
     String recipeImage;
 
     public UserHistory() {}
+
+    public UserHistory(String rcp_id, String recipeTitle, String recipeImage, String date, Long rate){
+        this.rcp_id = rcp_id;
+        this.recipeTitle = recipeTitle;
+        this.recipeImage = recipeImage;
+        this.date = date;
+        this.rate = rate;
+    }
     public UserHistory(String recipeTitle, String recipeImage, String date, Long rate){
         this.recipeTitle = recipeTitle;
         this.recipeImage = recipeImage;
@@ -28,7 +37,13 @@ public class UserHistory {
         this.recipeID = recipeID;
         this.date = date;
     }
+    public String getRcp_id() {
+        return rcp_id;
+    }
 
+    public void setRcp_id(String rcp_id) {
+        this.rcp_id = rcp_id;
+    }
 
     public void setRecipeImage(String recipeImage) {
         this.recipeImage = recipeImage;
