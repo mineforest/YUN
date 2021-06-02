@@ -42,11 +42,9 @@ public class StartFragment extends Fragment {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            preferenceActivity.next(1);
+            preferenceActivity.next(0);
         }
     };
-
-
 
 
 }
