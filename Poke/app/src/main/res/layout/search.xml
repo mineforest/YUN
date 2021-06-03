@@ -20,8 +20,8 @@
             android:drawableLeft="@drawable/ic_search"
             android:drawableRight="@android:drawable/ic_menu_close_clear_cancel"
             android:ems="10"
+            android:hint="search"
             android:inputType="textPersonName"
-            android:text="Search"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     </LinearLayout>
