@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".sub">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/preButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="선호도" />
+
+        <Button
+            android:id="@+id/revokeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="회원탈퇴" />
+
+        <Button
+            android:id="@+id/myInfoButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="내정보" />
+
+        <Button
+            android:id="@+id/starButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="평점" />
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="로그아웃" />
+
+        <Button
+            android:id="@+id/gotoPasswordResetButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="비밀번호 재설정" />
+
+        <Button
+            android:id="@+id/barcode_scan_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="바코드스캔" />
+
+        <Button
+            android:id="@+id/dips_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="찜하기" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/content_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+</LinearLayout>
+
