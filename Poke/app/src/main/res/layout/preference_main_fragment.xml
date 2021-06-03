@@ -45,7 +45,7 @@
         app:dotsColor="#B1BBC4"
         app:dotsCornerRadius="8dp"
         app:dotsSize="12dp"
-        app:dotsSpacing="3dp"
+        app:dotsSpacing="4dp"
         app:dotsWidthFactor="2.5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

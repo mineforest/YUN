@@ -61,7 +61,6 @@ public class HistoryFragment extends Fragment {
         mDatabase.child("history").child(uid).addChildEventListener(historyChildEventListener);
         adapter = new HistoryAdapter(historyList);
 
-
         recyclerView.setAdapter(adapter);
 
 
