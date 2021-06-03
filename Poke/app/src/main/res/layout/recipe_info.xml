@@ -1,78 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/rcpinfo_thumbnail"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-    <TextView
-        android:id="@+id/title_txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/tag_txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="재료" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ingre_recyclerView"
+        android:layout_height="wrap_content">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBarr"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/recipe_ingre_itemview">
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            style="@style/rcpToolbar">
 
-        </androidx.recyclerview.widget.RecyclerView>
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="양념" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sauce_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/recipe_ingre_itemview" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView17"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="레시피" />
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recipe_recyclerView"
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-</LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/rcpinfo_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+            <TextView
+                android:id="@+id/title_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/tag_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="재료" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ingre_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/recipe_ingre_itemview">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="양념" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/sauce_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/recipe_ingre_itemview" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="레시피" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recipe_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -7,19 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,8 +23,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class MainRecyclerViewFragment extends Fragment {
     ArrayList<Recipe_get> rcps = new ArrayList<>();
@@ -49,8 +41,8 @@ public class MainRecyclerViewFragment extends Fragment {
         //테스트용 레시피 id들
         String[] test_ids = {"1762278", "1762498","1894779", "1899131", "1978049", "2001746",
                 "2017354", "2442087", "2528933", "2442087", "2803587", "3568149",};
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         for(int i =0;i<test_ids.length; i++){
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
             DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
             docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
@@ -61,15 +53,10 @@ public class MainRecyclerViewFragment extends Fragment {
                     String cook_time = documentSnapshot.getData().get("time").toString();
                     Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
                     rcps.add(r);
+                    adapter.notifyDataSetChanged();
                 }
             });
         }
-
-        for(int i = 0; i<20; i++) {
-            Recipe_get r = new Recipe_get("test", "https://pbs.twimg.com/profile_images/538716586576592896/DKIQ0dPL_400x400.jpeg", "test");
-            rcps.add(r);
-        }
-
         RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
