@@ -33,4 +33,7 @@
         <item name="android:background">@drawable/border_green</item>
     </style>
 
+    <style name="SplashTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:windowBackground">@drawable/ic_kitchen_black_24dp</item>
+    </style>
 </resources>

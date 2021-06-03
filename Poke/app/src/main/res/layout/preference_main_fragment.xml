@@ -18,7 +18,7 @@
     <FrameLayout
         android:id="@+id/frame_container2"
         android:layout_width="match_parent"
-        android:layout_height="663dp"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -32,7 +32,8 @@
         android:layout_alignParentBottom="true"
         android:layout_weight="1"
         android:background="#FFFFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/pager2" />
+        app:layout_constraintBottom_toBottomOf="@+id/pager2"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
         android:id="@+id/dots_indicator"
@@ -49,7 +50,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:progressMode="false"
-        app:selectedDotColor="@android:color/darker_gray">
+        app:selectedDotColor="@color/gray">
 
     </com.tbuonomo.viewpagerdotsindicator.DotsIndicator>
 
