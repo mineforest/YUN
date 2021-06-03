@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-public class SplashActivity extends Activity {
+public class LoadingActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,12 +17,12 @@ public class SplashActivity extends Activity {
     }
 
     private void CallAsyncTask(){
-        SplashActivity.MyAsyncTask myAsyncTask = new SplashActivity.MyAsyncTask();
+        LoadingActivity.MyAsyncTask myAsyncTask = new LoadingActivity.MyAsyncTask();
         myAsyncTask.execute();
     }
 
     private class MyAsyncTask extends AsyncTask<Void, Void, Integer>{
-        ProgressDialog asyncDialog = new ProgressDialog(SplashActivity.this);
+        ProgressDialog asyncDialog = new ProgressDialog(LoadingActivity.this);
 
         @Override
         protected void onPreExecute() {

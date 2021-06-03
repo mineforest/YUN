@@ -40,13 +40,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.btm_nav);
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = mAuth.getCurrentUser();
 
         //로그인 되어 있지 않으면 로그인 화면으로
         if(user == null) {
             myStartActivity(LoginActivity.class);
         }
-
         //회원정보가 없으면 회원등록 화면 나옴
         else {
             mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -54,46 +53,46 @@ public class MainActivity extends AppCompatActivity {
 
             nullStartActivity(uid,"preference");
             nullStartActivity(uid,"users");
-        }
 
-        viewPager2 = findViewById(R.id.pager);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        pagerAdapter = new MainFragmentAdapter(this);
-        viewPager2.setAdapter(pagerAdapter);
-        viewPager2.registerOnPageChangeCallback(pageChangeCallback);
-        mBottomNavigationView=findViewById(R.id.bottom_navigation);
+            viewPager2 = findViewById(R.id.pager);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            pagerAdapter = new MainFragmentAdapter(this);
+            viewPager2.setAdapter(pagerAdapter);
+            viewPager2.registerOnPageChangeCallback(pageChangeCallback);
+            mBottomNavigationView=findViewById(R.id.bottom_navigation);
 
-        //첫 화면 띄우기
-        mBottomNavigationView.setSelectedItemId(R.id.nav_home);
+            //첫 화면 띄우기
+            mBottomNavigationView.setSelectedItemId(R.id.nav_home);
 
-        viewPager2.setCurrentItem(1);
-        //case 함수를 통해 클릭 받을 때마다 화면 변경하기
-        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                switch (item.getItemId()){
-                    case R.id.nav_info :
-                        viewPager2.setCurrentItem(0);
-                      //  fragmentTransaction.replace(R.id.frame_container,new MyInfoActivity()).commit();
-                        break;
-                    case R.id.nav_home:
-                        viewPager2.setCurrentItem(1);
-                       // fragmentTransaction.replace(R.id.frame_container,new MainActivity()).commit();
-                        break;
-                    case R.id.nav_ingredient:
-                        viewPager2.setCurrentItem(2);
-                        //fragmentTransaction.replace(R.id.frame_container,new FridgeFragment()).commit();
-                        break;
-                    case R.id.nav_search:
-                        viewPager2.setCurrentItem(3);
-                        //fragmentTransaction.replace(R.id.frame_container,new Frag4()).commit();
-                        break;
+            viewPager2.setCurrentItem(1);
+            //case 함수를 통해 클릭 받을 때마다 화면 변경하기
+            mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    switch (item.getItemId()){
+                        case R.id.nav_info :
+                            viewPager2.setCurrentItem(0);
+                            //  fragmentTransaction.replace(R.id.frame_container,new MyInfoActivity()).commit();
+                            break;
+                        case R.id.nav_home:
+                            viewPager2.setCurrentItem(1);
+                            // fragmentTransaction.replace(R.id.frame_container,new MainActivity()).commit();
+                            break;
+                        case R.id.nav_ingredient:
+                            viewPager2.setCurrentItem(2);
+                            //fragmentTransaction.replace(R.id.frame_container,new FridgeFragment()).commit();
+                            break;
+                        case R.id.nav_search:
+                            viewPager2.setCurrentItem(3);
+                            //fragmentTransaction.replace(R.id.frame_container,new Frag4()).commit();
+                            break;
 
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
+        }
     }
 
     @Override

@@ -20,7 +20,7 @@
             android:value="2.1"/>
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".LoadingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
