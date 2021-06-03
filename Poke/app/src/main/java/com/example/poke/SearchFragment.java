@@ -52,13 +52,13 @@ public class SearchFragment extends Fragment {
                     String title = documentSnapshot.getData().get("name").toString();
                     String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
                     Recipe_get r = new Recipe_get(thumbnail, title);
-                    searchList.add(r);
+                    //searchList.add(r);
                 }
             });
         }
         for(int i = 0; i<20; i++) {
             Recipe_get r = new Recipe_get("https://pbs.twimg.com/profile_images/538716586576592896/DKIQ0dPL_400x400.jpeg","test");
-            searchList.add(r);
+            //searchList.add(r);
         }
 
 
