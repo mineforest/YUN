@@ -6,6 +6,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +77,6 @@ public class FridgeFragment extends Fragment {
         btn = view.findViewById(R.id.ingreAdd);
         btn.setBackgroundColor(Color.rgb(255,255,255));
         btn.setOnClickListener(addClickListener);
-
         barcode_btn = view.findViewById(R.id.barcodeButton);
         barcode_btn.setOnClickListener(scanClickListener);
 

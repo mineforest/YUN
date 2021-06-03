@@ -31,7 +31,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_weight="1"
-        android:background="#FFFFFFFF"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/pager2"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -42,7 +42,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginEnd="130dp"
         android:layout_marginBottom="12dp"
-        app:dotsColor="@color/light_gray"
+        app:dotsColor="#B1BBC4"
         app:dotsCornerRadius="8dp"
         app:dotsSize="12dp"
         app:dotsSpacing="3dp"
@@ -50,7 +50,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:progressMode="false"
-        app:selectedDotColor="@color/gray">
+        app:selectedDotColor="#A2AAB1">
 
     </com.tbuonomo.viewpagerdotsindicator.DotsIndicator>
 

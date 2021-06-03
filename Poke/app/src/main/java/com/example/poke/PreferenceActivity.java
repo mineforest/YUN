@@ -48,6 +48,7 @@ public class PreferenceActivity extends AppCompatActivity implements AllergyFrag
         startFragment = new StartFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.frame_container2,startFragment).commit();
+        viewPager2.setUserInputEnabled(false);
     }
 
 public void next(int page){

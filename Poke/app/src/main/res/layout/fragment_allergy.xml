@@ -60,7 +60,7 @@
                     android:gravity="center"
                     android:text="못 먹는 식재료가 있나요?"
                     android:textColor="@color/black"
-                    android:textSize="34sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -70,164 +70,223 @@
                     android:text="알레르기 등 싫어하는 식재료가 있나요?\n 선택한 식재료를 포함하는 레시피는\n 제외하고 추천해 드릴게요."
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textColorHint="#FFFFFF" />
+                    android:textColorHint="#FFFFFF"
+                    android:textSize="12sp" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/allergyOption"
-                    android:layout_width="match_parent"
+                    android:layout_width="364dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="25dp">
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip1"
                             style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="새우" />
+                            android:layout_margin="7dp"
+                            android:text="새우"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip2"
                             style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="굴" />
+                            android:layout_margin="7dp"
+                            android:text="굴"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip3"
                             style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="게" />
+                            android:layout_margin="7dp"
+                            android:text="게"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
 
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip4"
                             style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="홍합" />
+                            android:layout_margin="7dp"
+                            android:text="홍합"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip5"
                             style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="오징어" />
+                            android:layout_margin="7dp"
+                            android:text="오징어"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip6"
                             style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="전복" />
+                            android:layout_margin="7dp"
+                            android:text="전복"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip7"
                             style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="고등어" />
+                            android:layout_margin="7dp"
+                            android:text="고등어"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip8"
                             style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="조개" />
+                            android:layout_margin="7dp"
+                            android:text="조개"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip9"
                             style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="메밀" />
+                            android:layout_margin="7dp"
+                            android:text="메밀"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip10"
                             style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="밀" />
+                            android:layout_margin="7dp"
+                            android:text="밀"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip11"
                             style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="대두" />
+                            android:layout_margin="7dp"
+                            android:text="대두"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip12"
                             style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="호두" />
+                            android:layout_margin="7dp"
+                            android:text="호두"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip13"
                             style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="땅콩" />
+                            android:layout_margin="7dp"
+                            android:text="땅콩"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip14"
                             style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="난류" />
+                            android:layout_margin="7dp"
+                            android:text="난류"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip15"
                             style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="우유" />
+                            android:layout_margin="7dp"
+                            android:text="우유"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip16"
                             style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="쇠고기" />
+                            android:layout_margin="7dp"
+                            android:text="쇠고기"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip17"
                             style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="돼지고기" />
+                            android:layout_margin="7dp"
+                            android:text="돼지고기"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip18"
                             style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="닭고기" />
+                            android:layout_margin="7dp"
+                            android:text="닭고기"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip19"
                             style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="복숭아" />
+                            android:layout_margin="7dp"
+                            android:text="복숭아"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip20"
                             style="@style/CustomChipStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="토마토" />
+                            android:layout_margin="7dp"
+                            android:text="토마토"
+                            android:textSize="20sp" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/allergyChip21"
                             style="@style/CustomChipStyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:text="잣" />
+                            android:layout_margin="7dp"
+                            android:text="잣"
+                            android:textAlignment="center"
+                            android:textSize="20sp" />
 
 
                 </com.google.android.material.chip.ChipGroup>
+
         </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
