@@ -7,7 +7,6 @@
     android:orientation="vertical"
     android:verticalScrollbarPosition="right">
 
-    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +15,7 @@
 
         <SearchView
             android:id="@+id/ingredientSearch"
-            android:layout_width="203dp"
+            android:layout_width="263dp"
             android:layout_height="match_parent"
             android:isScrollContainer="false"
             android:queryHint="재료를 입력하세요"
@@ -38,10 +37,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_add_circle_black_24dp" />
-
-        <androidx.appcompat.widget.ActionMenuView
-            android:layout_width="78dp"
-            android:layout_height="match_parent" />
 
 
     </LinearLayout>
@@ -138,13 +133,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredientRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="491dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:scrollbarFadeDuration="0"
             android:scrollbarSize="3dp"
             android:scrollbarThumbVertical="@android:color/darker_gray"
-            android:scrollbars="vertical" >
+            android:scrollbars="vertical">
 
         </androidx.recyclerview.widget.RecyclerView>
 

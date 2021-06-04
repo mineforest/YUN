@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +41,8 @@ import com.google.zxing.integration.android.IntentResult;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
@@ -61,16 +64,13 @@ public class FridgeFragment extends Fragment {
     private TabLayout tabLayout;
     String cate="전체";
     private int pos;
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
+    private Toolbar toolbar;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_fridge,container,false);
+        setHasOptionsMenu(true);
         view.findViewById(R.id.barcodeButton).setBackgroundColor(Color.rgb(255,255,255));
         imageView = view.findViewById(R.id.categoryView);
         tabLayout = view.findViewById(R.id.fridgeTab);
@@ -79,6 +79,7 @@ public class FridgeFragment extends Fragment {
         btn.setOnClickListener(addClickListener);
         barcode_btn = view.findViewById(R.id.barcodeButton);
         barcode_btn.setOnClickListener(scanClickListener);
+//        toolbar = view.findViewById(R.id.toolbar2);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -166,6 +167,37 @@ public class FridgeFragment extends Fragment {
             }
             });
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.ingredient_sort, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.id:
+                Collections.sort(ingredientArrayList, new Comparator<UserIngredient>() {
+                    @Override
+                    public int compare(UserIngredient o1, UserIngredient o2) {
+                        return o1.getIngredientTitle().compareTo(o2.getIngredientTitle());
+                    }
+                });
+                ingredientAdapter.notifyDataSetChanged();
+                break;
+            case R.id.day:
+                Collections.sort(ingredientArrayList, new Comparator<UserIngredient>() {
+                    @Override
+                    public int compare(UserIngredient o1, UserIngredient o2) {
+                        return o1.getExpirationDate().compareTo(o2.getExpirationDate());
+                    }
+                });
+                ingredientAdapter.notifyDataSetChanged();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     ChildEventListener childEventListener = new ChildEventListener() {

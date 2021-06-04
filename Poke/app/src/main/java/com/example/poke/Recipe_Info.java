@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -52,7 +53,8 @@ public class Recipe_Info extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_info);
-
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.hide();
         toolbar = (MaterialToolbar) findViewById(R.id.topAppBarr);
         toolbar.inflateMenu(R.menu.top_app_bar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_ios_new_white_24dp);
