@@ -1,11 +1,15 @@
 package com.example.poke;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,10 +33,14 @@ public class SearchFragment extends Fragment implements TextWatcher {
     private RecyclerView.LayoutManager layoutManager;
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
-    private ArrayList<Recipe_get> searchList;
+    private ArrayList<Recipe_get> searchList = new ArrayList<>();
+    private ArrayList<Recipe_get> searchedList = new ArrayList<>();
     private FirebaseAuth mAuth;
     SearchAdapter adapter;
+    EditText editText;
     String uid;
+    ImageView clear_btn;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +50,6 @@ public class SearchFragment extends Fragment implements TextWatcher {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.search, container, false);
-        searchList = new ArrayList<>();
         String[] test_ids = {"1762278", "1762498","1894779", "1899131", "1978049", "2001746",
                 "2017354", "2442087", "2528933", "2442087", "2803587", "3568149"};
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -63,9 +70,15 @@ public class SearchFragment extends Fragment implements TextWatcher {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.search_rv);
         recyclerView.setHasFixedSize(true);
+        editText = (EditText) view.findViewById(R.id.rec_search);
+        editText.addTextChangedListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new SearchAdapter(searchList);
         recyclerView.setAdapter(adapter);
+        clear_btn = (ImageView) view.findViewById(R.id.clear_btn);
+        clearText();
+
+        ArrayList<Object> filteredList = new ArrayList<>();
 
         return view;
 
@@ -79,12 +92,41 @@ public class SearchFragment extends Fragment implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        adapter.getFilter().filter(charSequence);
+
     }
 
     @Override
     public void afterTextChanged(Editable editable) {
 
-    }
-}
+        String searchText = editText.getText().toString();
+        searchFilter(searchText);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    public void searchFilter(String searchText) {
+        searchedList.clear();
+
+        for (int i = 0; i < searchList.size(); i++) {
+            if (searchList.get(i).getName().toLowerCase().contains(searchText.toLowerCase())) {
+                searchedList.add(searchList.get(i));
+            }
+        }
+
+        adapter.filterList(searchedList);
+    }
+    private void clearText() {
+        clear_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText.setText(null);
+            }
+        });
+    }
+
+
+}

@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 public class Recipe_Info extends AppCompatActivity {
-    private Recipe_get  rcp;
+    private Recipe_get rcp;
     private String recipe_id;
     private ImageView recipe_image;
     private TextView recipe_title;
@@ -69,7 +69,7 @@ public class Recipe_Info extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 mDatabase = FirebaseDatabase.getInstance().getReference();
-                if(user != null)
+                if (user != null)
                     uid = user.getUid();
                 String rid = rcp.getId();
                 String thumbnail = rcp.getThumbnail();
@@ -77,17 +77,19 @@ public class Recipe_Info extends AppCompatActivity {
                 mDatabase.child("dips").child(uid).orderByChild("rcp_id").equalTo(rid).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot != null && snapshot.getChildren() != null && snapshot.getChildren().iterator().hasNext()) {
+                        if (snapshot != null && snapshot.getChildren() != null && snapshot.getChildren().iterator().hasNext()) {
                             mDatabase.child("dips").child(uid).child(rid).removeValue();
-                            Snackbar.make(findViewById(R.id.topAppBarr),"찜 목록에서 삭제되었습니다.",Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(R.id.topAppBarr), "찜 목록에서 삭제되었습니다.", Snackbar.LENGTH_LONG).show();
                         } else {
-                            UserDibs userDibs = new UserDibs(rid,thumbnail,rtitle);
+                            UserDibs userDibs = new UserDibs(rid, thumbnail, rtitle);
                             mDatabase.child("dips").child(uid).child(rid).setValue(userDibs);
-                            Snackbar.make(findViewById(R.id.topAppBarr),"찜 목록에 추가되었습니다.",Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(R.id.topAppBarr), "찜 목록에 추가되었습니다.", Snackbar.LENGTH_LONG).show();
                         }
                     }
+
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {}
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
                 });
 
                 return false;
@@ -100,62 +102,67 @@ public class Recipe_Info extends AppCompatActivity {
 
         Intent intent = getIntent();
         recipe_id = intent.getStringExtra("rcp_id");
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CountDownLatch done = new CountDownLatch(1);
+        if (recipe_id == null) {
+            Log.d("error","errorror");
+        } else {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            CountDownLatch done = new CountDownLatch(1);
 
-        DocumentReference docRef = db.collection("recipe").document(recipe_id);
-        done.countDown();
+            DocumentReference docRef = db.collection("recipe").document(recipe_id);
 
-        try {
-            done.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            done.countDown();
+
+            try {
+                done.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    String title = documentSnapshot.getData().get("name").toString();
+                    String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
+                    String cook_time = documentSnapshot.getData().get("time").toString();
+                    List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
+                    List<Map<String, String>> sauce_list = (List<Map<String, String>>) documentSnapshot.get("sauce_list");
+                    String url = documentSnapshot.getData().get("url").toString();
+                    List<Long> ingredient_ids = (List<Long>) documentSnapshot.get("ingredient_ids");
+                    List<String> recipe_list = (List<String>) documentSnapshot.get("recipe");
+                    List<String> recipe_img = (List<String>) documentSnapshot.get("recipe_img");
+                    List<String> tags = (List<String>) documentSnapshot.get("tag");
+
+                    rcp = new Recipe_get(recipe_id, title, thumbnail, url, ingredient_ids, cook_time, ingre_list, sauce_list, recipe_list, recipe_img, tags);
+
+                    Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
+                    recipe_title.setText(rcp.getName());
+                    recipe_tag.setText(rcp.getTag().toString());
+
+                    RecyclerView recyclerView = findViewById(R.id.ingre_recyclerView);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    adapter = new RecipeIngre_Adapter(rcp.getIngre_list());
+                    recyclerView.setAdapter(adapter);
+
+                    RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);
+                    recyclerView2.setHasFixedSize(true);
+                    recyclerView2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    adapter = new RecipeIngre_Adapter(rcp.getSauce_list());
+                    recyclerView2.setAdapter(adapter);
+
+                    RecyclerView recyclerView3 = findViewById(R.id.recipe_recyclerView);
+                    recyclerView3.setHasFixedSize(true);
+                    recyclerView3.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    adapter2 = new RecipeStep_Adapter(rcp.getRecipe_img(), rcp.getRecipe());
+                    recyclerView3.setAdapter(adapter2);
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("ddddddddddddd", "실패~");
+                        }
+                    });
         }
-
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                String title = documentSnapshot.getData().get("name").toString();
-                String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                String cook_time = documentSnapshot.getData().get("time").toString();
-                List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
-                List<Map<String, String>> sauce_list = (List<Map<String, String>>) documentSnapshot.get("sauce_list");
-                String url = documentSnapshot.getData().get("url").toString();
-                List<Long> ingredient_ids = (List<Long>) documentSnapshot.get("ingredient_ids");
-                List<String> recipe_list = (List<String>) documentSnapshot.get("recipe");
-                List<String> recipe_img = (List<String>) documentSnapshot.get("recipe_img");
-                List<String> tags = (List<String>) documentSnapshot.get("tag");
-
-                rcp = new Recipe_get(recipe_id, title, thumbnail,  url, ingredient_ids, cook_time, ingre_list, sauce_list, recipe_list, recipe_img, tags);
-
-                Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
-                recipe_title.setText(rcp.getName());
-                recipe_tag.setText(rcp.getTag().toString());
-
-                RecyclerView recyclerView = findViewById(R.id.ingre_recyclerView);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                adapter = new RecipeIngre_Adapter(rcp.getIngre_list());
-                recyclerView.setAdapter(adapter);
-
-                RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);
-                recyclerView2.setHasFixedSize(true);
-                recyclerView2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                adapter = new RecipeIngre_Adapter(rcp.getSauce_list());
-                recyclerView2.setAdapter(adapter);
-
-                RecyclerView recyclerView3 = findViewById(R.id.recipe_recyclerView);
-                recyclerView3.setHasFixedSize(true);
-                recyclerView3.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                adapter2 = new RecipeStep_Adapter(rcp.getRecipe_img(),rcp.getRecipe());
-                recyclerView3.setAdapter(adapter2);
-            }
-        })
-        .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("ddddddddddddd","실패~");
-            }
-        });
     }
 }

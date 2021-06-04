@@ -1,6 +1,8 @@
 package com.example.poke;
 
 import android.content.Context;
+import android.content.Intent;
+import android.nfc.Tag;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,21 +16,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> implements Filterable {
+public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder>  {
 
-    ArrayList<Recipe_get> unFilteredList;
-    ArrayList<Recipe_get> filteredList;
-    private final ArrayList<Recipe_get> searchList;
+    private Intent intent;
+
+    private ArrayList<Recipe_get> searchList;
 
     public SearchAdapter(ArrayList<Recipe_get> search_list) {
 
         this.searchList = search_list;
-        this.unFilteredList = search_list;
-        this.filteredList = search_list;
+
     }
 
     Context context;
@@ -55,42 +57,28 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> implem
             Glide.with(holder.itemView)
                     .load(rcp.getThumbnail())
                     .into(holder.search_thumbnail);
+
+            holder.search_thumbnail.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    intent = new Intent(v.getContext(), Recipe_Info.class);
+                    intent.putExtra("rcp_id", searchList.get(position).getId());
+                    v.getContext().startActivity(intent);
+                    Log.e("intent URI", intent.toUri(0));
+                }
+            });
         }
     }
 
+    public void  filterList(ArrayList<Recipe_get> filteredList) {
+        searchList = filteredList;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {
         return (searchList != null ? searchList.size() : 0);
     }
 
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                String charString = constraint.toString();
-                if(charString.isEmpty()) {
-                    filteredList = unFilteredList;
-                } else {
-                    ArrayList<Recipe_get> filteringList = new ArrayList<>();
-                    for(Recipe_get name : unFilteredList) {
-                       // if(name.getName().toLowerCase().contains(charString.toLowerCase())) {
-                            filteringList.add(name);
-                       // }
-                    }
-                    filteredList = filteringList;
-                }
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = filteredList;
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredList = (ArrayList<Recipe_get>)results.values;
-                notifyDataSetChanged();
-            }
-        };
-    }
 }
