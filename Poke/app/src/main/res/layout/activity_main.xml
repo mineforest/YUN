@@ -12,13 +12,10 @@
         android:background="@color/material_on_primary_emphasis_medium"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/Backbtn"
-            android:layout_width="50dp"
-            android:layout_height="10dp"
-            android:layout_weight="1"
-            android:background="?attr/actionModeCloseDrawable"
-            app:srcCompat="@drawable/abc_vector_test" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/Profileimage"
