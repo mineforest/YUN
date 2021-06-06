@@ -1,11 +1,13 @@
 package com.example.poke;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class IngredientDialog extends DialogFragment {
     private Fragment fragment;
@@ -31,6 +35,7 @@ public class IngredientDialog extends DialogFragment {
     private String key;
     private DatabaseReference mDatabase;
     String uid;
+    private ImageButton barcode_btn;
 
     public IngredientDialog(){
     }
@@ -49,6 +54,8 @@ public class IngredientDialog extends DialogFragment {
         nameText = view.findViewById(R.id.prod_name_txt);
         cateText = view.findViewById(R.id.prod_cat_txt);
         dateText = view.findViewById(R.id.daycnt_txt);
+        barcode_btn = view.findViewById(R.id.barcodeButton);
+        barcode_btn.setOnClickListener(scanClickListener);
 
         if(args != null) {
             title = args.getString("title");
@@ -91,6 +98,44 @@ public class IngredientDialog extends DialogFragment {
             }
         }
     };
+
+    View.OnClickListener scanClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            IntentIntegrator.forSupportFragment(IngredientDialog.this).initiateScan();
+        }
+    };
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            String barcode_num = result.getContents();
+            if(barcode_num == null) {
+                Toast.makeText(getContext(), "취소됨",Toast.LENGTH_LONG).show();
+            } else {
+                Bundle args = new Bundle();
+
+                BarcodeApiCaller barcodeApiCaller = new BarcodeApiCaller();
+                barcodeApiCaller.getXmlData(barcode_num);
+                String p_name = barcodeApiCaller.getP_name();
+                String p_cate = barcodeApiCaller.getP_cate();
+                String p_date = barcodeApiCaller.getP_date();
+
+                if(p_name == null || p_cate == null || p_date == null) {
+                    Toast.makeText(getContext(), "읽을 수 없습니다.\n다시 시도하거나 수동 입력해주세요.",Toast.LENGTH_LONG).show();
+                } else {
+                    args.putString("title", p_name); // 제품명으로 출력됨
+                    args.putString("category", p_cate); // 우리가 가진 재료 카테고리로의 매핑 알고리즘 필요
+                    args.putString("date", p_date);
+                }
+                IngredientDialog dialog = new IngredientDialog();
+                dialog.setArguments(args);
+                dialog.show(getActivity().getSupportFragmentManager(), "tag");
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 
     private void startToast(String msg){
         Toast.makeText(getActivity(), msg,Toast.LENGTH_SHORT).show();

@@ -12,11 +12,11 @@
 
     <item
         android:id="@+id/id"
-        android:title="name"
+        android:title="이름순"
         app:showAsAction="never" />
     <item
         android:id="@+id/day"
-        android:title="date"
+        android:title="유통기한순"
         app:showAsAction="never" />
 
 

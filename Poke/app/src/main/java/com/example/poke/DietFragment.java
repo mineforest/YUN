@@ -64,8 +64,8 @@ public class DietFragment extends Fragment {
         }
 
         dietListener.dietListener(dietList);
-        btn3.setVisibility(View.INVISIBLE);
-        btn4.setVisibility(View.INVISIBLE);
+        btn3.setVisibility(View.GONE);
+        btn4.setVisibility(View.GONE);
         btn3.setOnClickListener(onClickListener);
         btn4.setOnClickListener(onClickListener);
 
@@ -93,8 +93,8 @@ public class DietFragment extends Fragment {
                 btn3.setVisibility(View.VISIBLE);
                 btn4.setVisibility(View.VISIBLE);
             } else {
-                btn3.setVisibility(View.INVISIBLE);
-                btn4.setVisibility(View.INVISIBLE);
+                btn3.setVisibility(View.GONE);
+                btn4.setVisibility(View.GONE);
             }
         }
 

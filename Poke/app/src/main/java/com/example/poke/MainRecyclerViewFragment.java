@@ -1,8 +1,12 @@
 package com.example.poke;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -14,6 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,6 +35,8 @@ import java.util.List;
 public class MainRecyclerViewFragment extends Fragment {
     ArrayList<Recipe_get> rcps = new ArrayList<>();
     CustomAdapter adapter;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +47,10 @@ public class MainRecyclerViewFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.home_recyler_test, container, false);
+        setHasOptionsMenu(true);
+
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         //테스트용 레시피 id들
         String[] test_ids = {"1762278", "1762498","1894779", "1899131", "1978049", "2001746",
@@ -67,5 +81,47 @@ public class MainRecyclerViewFragment extends Fragment {
         recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.logout_menu:
+                FirebaseAuth.getInstance().signOut();
+                myStartActivity(LoginActivity.class);
+                break;
+
+            case R.id.passwrod_reset_menu:
+                myStartActivity(PasswordResetActivity.class);
+                break;
+
+            case R.id.revoke_menu:
+                revokeAccess();
+                myStartActivity(LoginActivity.class);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void myStartActivity(Class c){
+        Intent intent = new Intent(getActivity(),c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    private void revokeAccess() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(uid).removeValue();
+
+        mAuth.getCurrentUser().delete();
     }
 }

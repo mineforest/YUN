@@ -50,7 +50,6 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
         this.ingredientsList = list;
     }
 
-
     @Override
     public void onAttachedToRecyclerView(@NonNull @NotNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
@@ -85,6 +84,8 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
         holder.title.setText(String.valueOf(ingredientsList.get(position).getIngredientTitle()));
         holder.day.setText(("D-" + Long.toString(date/86400000)));
     }
+
+
 
     @Override
     public int getItemCount() {

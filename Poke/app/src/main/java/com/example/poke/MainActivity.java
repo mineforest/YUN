@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.btm_nav);
-
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
@@ -55,16 +54,16 @@ public class MainActivity extends AppCompatActivity {
             nullStartActivity(uid,"users");
 
             viewPager2 = findViewById(R.id.pager);
-            FragmentManager fragmentManager = getSupportFragmentManager();
             pagerAdapter = new MainFragmentAdapter(this);
             viewPager2.setAdapter(pagerAdapter);
             viewPager2.registerOnPageChangeCallback(pageChangeCallback);
-            mBottomNavigationView=findViewById(R.id.bottom_navigation);
 
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            mBottomNavigationView=findViewById(R.id.bottom_navigation);
+            viewPager2.setCurrentItem(1);
             //첫 화면 띄우기
             mBottomNavigationView.setSelectedItemId(R.id.nav_home);
 
-            viewPager2.setCurrentItem(1);
             //case 함수를 통해 클릭 받을 때마다 화면 변경하기
             mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (viewPager2.getCurrentItem() == 0) {
+        if (viewPager2.getCurrentItem() == 1) {
             super.onBackPressed();
         } else {
             viewPager2.setCurrentItem(viewPager2.getCurrentItem() - 1);

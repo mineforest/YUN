@@ -61,8 +61,8 @@ public class PreferenceFragment extends Fragment {
             });
         }
         preListener.preListener(preList);
-        btn1.setVisibility(View.INVISIBLE);
-        btn2.setVisibility(View.INVISIBLE);
+        btn1.setVisibility(View.GONE);
+        btn2.setVisibility(View.GONE);
         btn1.setOnClickListener(onClickListener);
         btn2.setOnClickListener(onClickListener);
 
@@ -91,8 +91,8 @@ public class PreferenceFragment extends Fragment {
                 btn2.setVisibility(View.VISIBLE);
             }
             else{
-                btn1.setVisibility(View.INVISIBLE);
-                btn2.setVisibility(View.INVISIBLE);
+                btn1.setVisibility(View.GONE);
+                btn2.setVisibility(View.GONE);
             }
         }
 

@@ -2,44 +2,11 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:verticalScrollbarPosition="right">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <SearchView
-            android:id="@+id/ingredientSearch"
-            android:layout_width="263dp"
-            android:layout_height="match_parent"
-            android:isScrollContainer="false"
-            android:queryHint="재료를 입력하세요"
-            android:searchHintIcon="@drawable/ic_search"
-            app:iconifiedByDefault="false"
-            app:showAsAction="always">
-
-        </SearchView>
-
-        <ImageButton
-            android:id="@+id/barcodeButton"
-            android:layout_width="68dp"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_qr_code_scanner_black_24dp" />
-
-        <ImageButton
-            android:id="@+id/ingreAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_add_circle_black_24dp" />
-
-
-    </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/fridgeTab"
@@ -123,26 +90,37 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="483dp"
-        android:layout_margin="20dp"
-        android:columnCount="4"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredientRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="353dp"
+            android:layout_height="451dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:scrollbarFadeDuration="0"
             android:scrollbarSize="3dp"
             android:scrollbarThumbVertical="@android:color/darker_gray"
-            android:scrollbars="vertical">
+            android:scrollbars="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         </androidx.recyclerview.widget.RecyclerView>
 
-    </LinearLayout>
+        <ImageButton
+            android:id="@+id/ingredientAddBtn"
+            android:layout_width="66dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="84dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_add_circle_black_24dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

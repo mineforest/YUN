@@ -62,8 +62,8 @@ public class AllergyFragment extends Fragment {
         }
         allergyListener.allergyListener(allergyList);
 
-        btn5.setVisibility(View.INVISIBLE);
-        btn6.setVisibility(View.INVISIBLE);
+        btn5.setVisibility(View.GONE);
+        btn6.setVisibility(View.GONE);
         btn5.setOnClickListener(onClickListener);
         btn6.setOnClickListener(onClickListener);
 
@@ -91,8 +91,8 @@ public class AllergyFragment extends Fragment {
                 btn5.setVisibility(View.VISIBLE);
                 btn6.setVisibility(View.VISIBLE);
             } else {
-                btn5.setVisibility(View.INVISIBLE);
-                btn6.setVisibility(View.INVISIBLE);
+                btn5.setVisibility(View.GONE);
+                btn6.setVisibility(View.GONE);
             }
         }
 

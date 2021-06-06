@@ -11,10 +11,11 @@
 
     <LinearLayout
         android:id="@+id/bottomSheet2"
-        android:background="@drawable/layout_radius"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/layout_radius"
+        android:elevation="50dp"
         android:orientation="vertical"
         app:behavior_hideable="false"
         app:behavior_peekHeight="399dp"
@@ -26,36 +27,36 @@
 
             <Button
                 android:id="@+id/button3"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="@color/white"
                 android:text="&lt; 이전"
                 android:textColor="@android:color/darker_gray"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/button4"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="@color/white"
                 android:text="다음 &gt;"
                 android:textColor="@android:color/darker_gray"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"/>
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:text="나만의 특별한 식단을 원하세요?"
             android:textColor="@color/black"
@@ -74,7 +75,7 @@
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/dietOption"
-            android:layout_width="wrap_content"
+            android:layout_width="371dp"
             android:layout_height="388dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="25dp"
@@ -118,6 +119,15 @@
                 android:textSize="20sp" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/dietChip7"
+                style="@style/CustomChipStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:text="채식주의(비건)"
+                android:textSize="20sp" />
+
+            <com.google.android.material.chip.Chip
                 android:id="@+id/dietChip5"
                 style="@style/CustomChipStyle"
                 android:layout_width="wrap_content"
@@ -133,15 +143,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:text="고단백질"
-                android:textSize="20sp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/dietChip7"
-                style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="7dp"
-                android:text="채식주의(비건)"
                 android:textSize="20sp" />
 
             <com.google.android.material.chip.Chip

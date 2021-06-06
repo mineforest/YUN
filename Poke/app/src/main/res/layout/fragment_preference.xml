@@ -6,51 +6,55 @@
     android:id="@+id/linearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:clipToPadding="true"
+    android:orientation="vertical"
+    android:background="@drawable/ic_home">
 
     <LinearLayout
         android:id="@+id/bottomSheet1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/layout_radius"
+        android:elevation="50dp"
         android:orientation="vertical"
         app:behavior_hideable="false"
         app:behavior_peekHeight="399dp"
-        app:layout_behavior="@string/bottom_sheet_behavior"
-        android:background="@drawable/layout_radius">
+        app:layout_behavior="@string/bottom_sheet_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <Button
-                style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/button1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="86dp"
+                android:layout_height="43dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="-1dp"
                 android:backgroundTint="@color/white"
                 android:elevation="0dp"
                 android:text="&lt; 이전"
                 android:textColor="@android:color/darker_gray"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:strokeColor="@color/white" />
 
             <Button
-                style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="89dp"
+                android:layout_height="44dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginBottom="-1dp"
                 android:backgroundTint="@color/white"
                 android:text="다음 &gt;"
+                android:textAlignment="center"
                 android:textColor="@android:color/darker_gray"
                 android:textColorLink="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:rippleColor="#FFFFFF"
                 app:strokeColor="@color/white"
                 app:strokeWidth="0dp" />
@@ -61,7 +65,7 @@
             android:id="@+id/Head1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:text="어떤 음식을 좋아하나요?"
             android:textColor="@color/black"
