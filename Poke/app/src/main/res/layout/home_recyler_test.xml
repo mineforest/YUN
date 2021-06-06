@@ -4,7 +4,8 @@
     android:id="@+id/main_recylerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:listitem="@layout/cardview_test">
+    tools:listitem="@layout/cardview_test"
+    android:layout_marginBottom="?attr/actionBarSize">
 
 
 </androidx.recyclerview.widget.RecyclerView>
