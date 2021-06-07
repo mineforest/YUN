@@ -30,6 +30,7 @@
             android:layout_height="5dp"
             android:layout_weight="1"
             android:drawableRight="@android:drawable/ic_menu_edit"
+            android:fontFamily="@font/iphone_font"
             android:gravity="center"
             android:text="Michael Adams"
             android:textSize="18sp"
@@ -40,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:fontFamily="@font/iphone_font"
             android:gravity="center"
             android:text="Food Specialist" />
 
@@ -63,6 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:background="@drawable/btn_right"
+                android:fontFamily="@font/iphone_font"
                 android:text="평가한 요리"
                 android:textColor="@color/black" />
 
@@ -71,6 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:background="@drawable/btn_right"
+                android:fontFamily="@font/iphone_font"
                 android:text="찜한요리"
                 android:textColor="@color/black" />
 
@@ -79,6 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:background="@drawable/btn_right"
+                android:fontFamily="@font/iphone_font"
                 android:text="기피 재료"
                 android:textColor="@color/black" />
 
@@ -95,6 +100,7 @@
                 android:id="@+id/historyCountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/iphone_font"
                 android:gravity="center"
                 android:text="0"
                 android:textSize="18sp"
@@ -104,6 +110,7 @@
                 android:id="@+id/dibsCountTextView"
                 android:layout_width="134dp"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/iphone_font"
                 android:gravity="center"
                 android:text="0"
                 android:textSize="18sp"
@@ -113,6 +120,7 @@
                 android:id="@+id/allergyCountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/iphone_font"
                 android:gravity="center"
                 android:text="0"
                 android:textSize="18sp"

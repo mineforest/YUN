@@ -5,8 +5,8 @@
     android:id="@+id/linearLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/ic_home">
+    android:background="@drawable/allergy_background"
+    android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/bottomSheet3"
@@ -32,6 +32,7 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="10dp"
                             android:backgroundTint="@color/white"
+                            android:fontFamily="@font/iphone_font"
                             android:text="&lt; 이전"
                             android:textColor="@android:color/darker_gray"
                             app:layout_constraintStart_toStartOf="parent"
@@ -42,10 +43,10 @@
                             style="?android:attr/borderlessButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="-1dp"
                             android:backgroundTint="@color/white"
+                            android:fontFamily="@font/iphone_font"
                             android:text="다음 &gt;"
                             android:textColor="@android:color/darker_gray"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -58,6 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:fontFamily="@font/iphone_font"
                     android:gravity="center"
                     android:text="못 먹는 식재료가 있나요?"
                     android:textColor="@color/black"
@@ -69,6 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/iphone_font"
                     android:text="알레르기 등 싫어하는 식재료가 있나요?\n 선택한 식재료를 포함하는 레시피는\n 제외하고 추천해 드릴게요."
                     android:textAlignment="center"
                     android:textColor="@color/black"
@@ -88,6 +91,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="새우"
                             android:textAlignment="center"
                             android:textSize="20sp" />
@@ -98,6 +102,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="굴"
                             android:textAlignment="center"
                             android:textSize="20sp" />
@@ -108,6 +113,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="게"
                             android:textAlignment="center"
                             android:textSize="20sp" />
@@ -119,6 +125,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="홍합"
                             android:textAlignment="center"
                             android:textSize="20sp" />
@@ -129,6 +136,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="오징어"
                             android:textSize="20sp" />
 
@@ -138,6 +146,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="전복"
                             android:textAlignment="center"
                             android:textSize="20sp" />
@@ -148,6 +157,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="고등어"
                             android:textSize="20sp" />
 
@@ -157,6 +167,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="조개"
                             android:textAlignment="center"
                             android:textSize="20sp" />
@@ -167,6 +178,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="메밀"
                             android:textAlignment="center"
                             android:textSize="20sp" />
@@ -177,6 +189,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="밀"
                             android:textAlignment="center"
                             android:textSize="20sp" />
@@ -187,6 +200,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="대두"
                             android:textAlignment="center"
                             android:textSize="20sp" />
@@ -197,6 +211,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="호두"
                             android:textAlignment="center"
                             android:textSize="20sp" />
@@ -207,6 +222,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="땅콩"
                             android:textAlignment="center"
                             android:textSize="20sp" />
@@ -217,6 +233,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="난류"
                             android:textAlignment="center"
                             android:textSize="20sp" />
@@ -227,6 +244,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="우유"
                             android:textAlignment="center"
                             android:textSize="20sp" />
@@ -237,6 +255,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="쇠고기"
                             android:textSize="20sp" />
 
@@ -246,6 +265,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="돼지고기"
                             android:textSize="20sp" />
 
@@ -255,6 +275,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="닭고기"
                             android:textSize="20sp" />
 
@@ -264,6 +285,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="복숭아"
                             android:textSize="20sp" />
 
@@ -273,6 +295,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="토마토"
                             android:textSize="20sp" />
 
@@ -282,6 +305,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            android:fontFamily="@font/iphone_font"
                             android:text="잣"
                             android:textAlignment="center"
                             android:textSize="20sp" />

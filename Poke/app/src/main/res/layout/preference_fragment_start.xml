@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/ic_launcher">
+    android:background="@drawable/background_masked_image"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
     <Button
         android:id="@+id/startButton"
@@ -14,6 +14,7 @@
         android:layout_marginEnd="116dp"
         android:layout_marginBottom="56dp"
         android:backgroundTint="@color/green"
+        android:fontFamily="@font/iphone_font"
         android:text="START   >"
         android:textAlignment="viewEnd"
         android:textColor="@color/white"
@@ -28,6 +29,7 @@
         android:layout_height="58dp"
         android:layout_marginTop="188dp"
         android:layout_marginEnd="112dp"
+        android:fontFamily="@font/iphone_font"
         android:text="Welcome"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -36,10 +38,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textView5"
         android:layout_width="276dp"
         android:layout_height="58dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="68dp"
+        android:fontFamily="@font/iphone_font"
         android:text="몇 가지 정보만 입력하면 취향에 맞는 \n요리를 추천받을 수 있어요."
         android:textAlignment="center"
         android:textColor="@color/black"

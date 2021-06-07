@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_search"
             android:ems="10"
+            android:fontFamily="@font/iphone_font"
             android:hint="Search"
             android:inputType="textPersonName"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />

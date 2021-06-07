@@ -13,6 +13,7 @@
         android:id="@+id/Heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/iphone_font"
         android:gravity="center"
         android:text="다 쓴 재료를 선택하세요."
         android:textSize="34sp"

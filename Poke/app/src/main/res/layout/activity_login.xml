@@ -8,6 +8,7 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:fontFamily="@font/iphone_font"
         android:gravity="center"
         android:text="로그인"
         android:textColor="#000000"
@@ -27,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:ems="10"
+            android:fontFamily="@font/iphone_font"
             android:hint="이메일"
             android:inputType="textEmailAddress"
             android:textColor="#000000"
@@ -38,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:ems="10"
+            android:fontFamily="@font/iphone_font"
             android:hint="비밀번호"
             android:inputType="textPassword"
             android:paddingBottom="5dp"
@@ -54,12 +57,14 @@
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/iphone_font"
             android:text="로그인" />
 
         <Button
             android:id="@+id/gotoSignUpButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/iphone_font"
             android:text="회원가입" />
 
     </LinearLayout>
