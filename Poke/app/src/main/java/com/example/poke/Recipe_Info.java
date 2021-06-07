@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -48,6 +50,7 @@ public class Recipe_Info extends AppCompatActivity {
     RecipeStep_Adapter adapter2;
     private DatabaseReference mDatabase;
     String uid;
+    private Button doneButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +58,12 @@ public class Recipe_Info extends AppCompatActivity {
         setContentView(R.layout.recipe_info);
         ActionBar actionbar = getSupportActionBar();
         actionbar.hide();
+        doneButton = findViewById(R.id.doneButton);
         toolbar = (MaterialToolbar) findViewById(R.id.topAppBarr);
         toolbar.inflateMenu(R.menu.top_app_bar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_ios_new_white_24dp);
+
+        doneButton.setOnClickListener(onClickListener);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,5 +170,24 @@ public class Recipe_Info extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ArrayList<String> al = new ArrayList<>();
+            Intent intent = new Intent(v.getContext(), RatingActivity.class);
+            for(int i=0; i<rcp.getIngre_list().size(); i++) {
+                al.add(rcp.getIngre_list().get(i).get("ingre_name"));
+            }
+            intent.putStringArrayListExtra("list",al);
+            myStartActivity(RatingActivity.class);
+        }
+    };
+
+    private void myStartActivity(Class c){
+        Intent intent = new Intent(this,c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -23,10 +24,11 @@
         android:fillViewport="true"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="#ffffff">
 
             <ImageView
                 android:id="@+id/rcpinfo_thumbnail"
@@ -96,8 +98,23 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recipe_recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content" >
+
+                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/doneButton"
+                android:layout_width="205dp"
+                android:layout_height="59dp"
+                android:background="@drawable/btn_shape"
+                android:text="         다음        >"
+                android:textAlignment="gravity"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="105dp"
+                android:layout_marginBottom="15dp"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

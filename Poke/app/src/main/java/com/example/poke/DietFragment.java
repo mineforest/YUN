@@ -92,6 +92,7 @@ public class DietFragment extends Fragment {
             if (newState == 3) {
                 btn3.setVisibility(View.VISIBLE);
                 btn4.setVisibility(View.VISIBLE);
+
             } else {
                 btn3.setVisibility(View.GONE);
                 btn4.setVisibility(View.GONE);

@@ -7,18 +7,18 @@
     android:layout_height="match_parent"
     android:background="@mipmap/ic_launcher">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/startButton"
-        android:layout_width="185dp"
-        android:layout_height="62dp"
+        android:layout_width="205dp"
+        android:layout_height="59dp"
         android:layout_marginEnd="116dp"
         android:layout_marginBottom="56dp"
-        android:backgroundTint="@color/green"
-        android:text="START   >"
-        android:textAlignment="viewEnd"
-        android:textColor="@color/white"
+        android:background="@drawable/btn_shape"
+        android:text="        START     >"
+        android:textAlignment="gravity"
+        android:textColor="@color/black"
         android:textSize="24sp"
-        app:cornerRadius="150dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
