@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -47,6 +49,7 @@ public class Recipe_Info extends AppCompatActivity {
     RecipeIngre_Adapter adapter;
     RecipeStep_Adapter adapter2;
     private DatabaseReference mDatabase;
+    private ArrayList ingreList = new ArrayList<>();
     String uid;
 
     @Override
@@ -142,6 +145,21 @@ public class Recipe_Info extends AppCompatActivity {
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     adapter = new RecipeIngre_Adapter(rcp.getIngre_list());
+//                    int count = 0;
+//                    float average = (float) 0.0;
+//                    CheckBox checkBox = (CheckBox) findViewById(R.id.check);
+//                    TextView viewave = (TextView) findViewById(R.id.average);
+//                    ingreList = ingre_list;
+//                    for(int i=0; i<ingreList.size();i++) {
+//                        if(ingreList[i] == Refrigerator.ingredient) {
+//                            checkBox.setChecked(true);
+//                            count++;
+//                        }
+//                    }
+//                    average = ingreList.size()/count;
+//                    viewave = toString(average);
+
+
                     recyclerView.setAdapter(adapter);
 
                     RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);
