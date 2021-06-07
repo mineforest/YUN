@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:background="#ff7a00"
-            android:fontFamily="@font/iphone_font"
+            android:fontFamily="@font/noto_sans"
             android:gravity="center"
             android:text="Notice"
             android:textColor="#fff"
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight="10"
-            android:fontFamily="@font/iphone_font"
+            android:fontFamily="@font/noto_sans"
             android:hint="제품명"
             android:textColor="#000" />
 
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight="10"
-            android:fontFamily="@font/iphone_font"
+            android:fontFamily="@font/noto_sans"
             android:hint="종류"
             android:textColor="#000" />
 
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight="10"
-            android:fontFamily="@font/iphone_font"
+            android:fontFamily="@font/noto_sans"
             android:hint="유통기한"
             android:textColor="#000" />
     </LinearLayout>
@@ -85,7 +85,7 @@
             android:layout_width="140dp"
             android:layout_height="match_parent"
             android:background="#00000000"
-            android:fontFamily="@font/iphone_font"
+            android:fontFamily="@font/noto_sans"
             android:gravity="center"
             android:padding="16dp"
             android:text="확인"

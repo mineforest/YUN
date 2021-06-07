@@ -26,7 +26,7 @@
                 android:id="@+id/dips_rec"
                 android:layout_width="match_parent"
                 android:layout_height="122dp"
-                android:fontFamily="@font/iphone_font"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center|left"
                 android:text="TextView"
                 android:textSize="24sp"

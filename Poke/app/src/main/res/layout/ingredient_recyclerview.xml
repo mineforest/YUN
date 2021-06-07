@@ -21,7 +21,7 @@
         android:layout_marginLeft="2dp"
         android:layout_marginTop="3dp"
         android:ems="10"
-        android:fontFamily="@font/iphone_font"
+        android:fontFamily="@font/noto_sans"
         android:inputType="textPersonName"
         android:text="Name"
         android:textAlignment="center" />
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"
         android:layout_marginTop="3dp"
-        android:fontFamily="@font/iphone_font"
+        android:fontFamily="@font/noto_sans"
         android:text="New"
         android:textAlignment="center"
         android:textColor="@color/black" />

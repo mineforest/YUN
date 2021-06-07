@@ -8,7 +8,7 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:fontFamily="@font/iphone_font"
+        android:fontFamily="@font/noto_sans"
         android:gravity="center"
         android:text="회원정보"
         android:textColor="#000000"
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:fontFamily="@font/iphone_font"
+            android:fontFamily="@font/noto_sans"
             android:hint="닉네임"
             android:inputType="textPersonName"
             android:privateImeOptions="defaultInputmode=korean" />
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:fontFamily="@font/iphone_font"
+            android:fontFamily="@font/noto_sans"
             android:hint="나이"
             android:inputType="phone" />
 
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:fontFamily="@font/iphone_font"
+            android:fontFamily="@font/noto_sans"
             android:hint="생년월일"
             android:inputType="date" />
 
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:fontFamily="@font/iphone_font"
+            android:fontFamily="@font/noto_sans"
             android:hint="성별"
             android:inputType="textPostalAddress" />
 
@@ -62,7 +62,7 @@
             android:id="@+id/checkButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/iphone_font"
+            android:fontFamily="@font/noto_sans"
             android:text="확인" />
 
     </LinearLayout>

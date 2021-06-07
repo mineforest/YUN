@@ -8,7 +8,7 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:fontFamily="@font/iphone_font"
+        android:fontFamily="@font/noto_sans"
         android:gravity="center"
         android:text="회원가입"
         android:textColor="#000000"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:ems="10"
-            android:fontFamily="@font/iphone_font"
+            android:fontFamily="@font/noto_sans"
             android:hint="이메일"
             android:inputType="textEmailAddress"
             android:textColor="#000000"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:ems="10"
-            android:fontFamily="@font/iphone_font"
+            android:fontFamily="@font/noto_sans"
             android:hint="비밀번호"
             android:inputType="textPassword"
             android:paddingBottom="5dp"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:ems="10"
-            android:fontFamily="@font/iphone_font"
+            android:fontFamily="@font/noto_sans"
             android:hint="비밀번호 확인"
             android:inputType="textPassword"
             android:textColorHint="#000000" />
@@ -61,7 +61,7 @@
             android:id="@+id/signUpButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/iphone_font"
+            android:fontFamily="@font/noto_sans"
             android:text="회원가입" />
 
     </LinearLayout>

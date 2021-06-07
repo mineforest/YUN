@@ -30,7 +30,7 @@
                 android:id="@+id/rcp_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/iphone_font"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="test title"
                 android:textAlignment="center" />
@@ -39,7 +39,7 @@
                 android:id="@+id/cook_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/iphone_font"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="test text"
                 android:textAlignment="center" />
