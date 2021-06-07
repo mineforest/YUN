@@ -3,6 +3,7 @@ package com.example.poke;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.Tag;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,20 +44,19 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder>  {
     }
 
     @NonNull
-    @NotNull
     @Override
-    public SearchViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public SearchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_list,parent,false);
         return new SearchViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull SearchViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
         if (searchList != null && position < searchList.size()) {
-            Recipe_get rcp = searchList.get(position);
-            holder.search_title.setText(rcp.getName());
+            Recipe_get recipe_get = searchList.get(position);
+            holder.search_title.setText(recipe_get.getName());
             Glide.with(holder.itemView)
-                    .load(rcp.getThumbnail())
+                    .load(recipe_get.getThumbnail())
                     .into(holder.search_thumbnail);
 
             holder.search_thumbnail.setOnClickListener(new View.OnClickListener() {
@@ -63,9 +64,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder>  {
                 @Override
                 public void onClick(View v) {
                     intent = new Intent(v.getContext(), Recipe_Info.class);
-                    intent.putExtra("rcp_id", searchList.get(position).getId());
+                    intent.putExtra("rcp_id",searchList.get(position).getId());
                     v.getContext().startActivity(intent);
-                    Log.e("intent URI", intent.toUri(0));
+                    Toast.makeText(v.getContext(), searchList.get(position).getId(),Toast.LENGTH_SHORT).show();
                 }
             });
         }

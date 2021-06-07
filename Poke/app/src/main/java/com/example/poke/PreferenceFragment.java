@@ -1,5 +1,6 @@
 package com.example.poke;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
@@ -18,6 +20,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PreferenceFragment extends Fragment {
     private ArrayList<String> preList = new ArrayList<>();
@@ -44,6 +47,7 @@ public class PreferenceFragment extends Fragment {
         bottomSheetBehavior = view.findViewById(R.id.bottomSheet1);
         behavior = BottomSheetBehavior.from(bottomSheetBehavior);
 
+
         ((BottomSheetBehavior) behavior).setBottomSheetCallback(bottomSheetCallback);
 
         for(int i=0; i < preGroup.getChildCount(); i++) {
@@ -65,7 +69,7 @@ public class PreferenceFragment extends Fragment {
         btn2.setVisibility(View.GONE);
         btn1.setOnClickListener(onClickListener);
         btn2.setOnClickListener(onClickListener);
-
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
         return view;
     }
 

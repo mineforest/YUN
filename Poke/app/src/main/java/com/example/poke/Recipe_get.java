@@ -32,13 +32,9 @@ public class Recipe_get {
     List<String> tag;
 
     public Recipe_get() {};
-    public Recipe_get(String rcp_title, String thumbnail, String cook_time) {
-        this.name = rcp_title;
-        this.thumbnail = thumbnail;
-        this.time = cook_time;
-    }
 
-    public Recipe_get(String thumbnail, String name) {
+    public Recipe_get(String rcp_id,String thumbnail, String name) {
+        this.id = rcp_id;
         this.thumbnail = thumbnail;
         this.name = name;
     }

@@ -58,9 +58,10 @@ public class SearchFragment extends Fragment implements TextWatcher {
             docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    String rcp_id = documentSnapshot.getData().get("id").toString();
                     String title = documentSnapshot.getData().get("name").toString();
                     String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                    Recipe_get r = new Recipe_get(thumbnail, title);
+                    Recipe_get r = new Recipe_get(rcp_id,thumbnail, title);
                     searchList.add(r);
                     adapter.notifyDataSetChanged();
                 }

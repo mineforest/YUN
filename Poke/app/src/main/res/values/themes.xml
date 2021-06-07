@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Poke" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/ic_launcher_image_background</item>
+        <item name="colorPrimaryVariant">@color/green</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -19,6 +19,7 @@
         <item name="android:textColor">@color/chip_text_color</item>
 
     </style>
+
 
     <style name="strokeRed">
         <item name="android:layout_marginRight">1dp</item>

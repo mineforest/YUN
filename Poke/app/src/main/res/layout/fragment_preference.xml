@@ -6,9 +6,9 @@
     android:id="@+id/linearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/image_bg"
     android:clipToPadding="true"
-    android:orientation="vertical"
-    android:background="@drawable/ic_home">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/bottomSheet1"
@@ -35,6 +35,7 @@
                 android:layout_marginBottom="-1dp"
                 android:backgroundTint="@color/white"
                 android:elevation="0dp"
+                android:fontFamily="@font/noto_sans"
                 android:text="&lt; 이전"
                 android:textColor="@android:color/darker_gray"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -49,6 +50,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="-1dp"
                 android:backgroundTint="@color/white"
+                android:fontFamily="@font/noto_sans"
                 android:text="다음 &gt;"
                 android:textAlignment="center"
                 android:textColor="@android:color/darker_gray"
@@ -66,6 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:fontFamily="@font/noto_sans"
             android:gravity="center"
             android:text="어떤 음식을 좋아하나요?"
             android:textColor="@color/black"
@@ -78,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/noto_sans"
             android:text="취향에 맞게 레시피를 추천받을 수 있습니다. \n좋아하는 음식을 탭 하세요"
             android:textAlignment="center"
             android:textColor="@color/black"
@@ -97,6 +101,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:text="탕"
                 android:textAlignment="center"
                 android:textSize="20sp" />
@@ -107,6 +112,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:text="찌개"
                 android:textAlignment="center"
                 android:textSize="20sp" />
@@ -117,6 +123,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="면"
                 android:textAlignment="center"
@@ -128,6 +135,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="만두"
                 android:textAlignment="center"
@@ -139,6 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:text="디저트"
                 android:textSize="20sp" />
 
@@ -148,6 +157,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="밥"
                 android:textAlignment="center"
@@ -159,6 +169,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="죽"
                 android:textAlignment="center"
@@ -170,6 +181,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="샐러드"
                 android:textSize="20sp" />
@@ -180,6 +192,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="김치젓갈장류"
                 android:textSize="20sp" />
@@ -190,6 +203,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="양식"
                 android:textAlignment="center"
@@ -201,6 +215,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="스프"
                 android:textAlignment="center"
@@ -212,6 +227,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="두류"
                 android:textAlignment="center"
@@ -223,6 +239,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="견과류"
                 android:textSize="20sp" />
@@ -233,6 +250,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="채소류"
                 android:textSize="20sp" />
@@ -243,6 +261,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="버섯류"
                 android:textSize="20sp" />
@@ -253,6 +272,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="과실류"
                 android:textSize="20sp" />
@@ -263,6 +283,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="육류"
                 android:textAlignment="center"
@@ -274,6 +295,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="난류"
                 android:textAlignment="center"
@@ -285,6 +307,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="어패류"
                 android:textSize="20sp" />
@@ -295,6 +318,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="해조류"
                 android:textSize="20sp" />
@@ -305,6 +329,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="유제품류"
                 android:textSize="20sp" />
