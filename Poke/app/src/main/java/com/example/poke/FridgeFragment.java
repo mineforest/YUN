@@ -277,7 +277,7 @@ public class FridgeFragment extends Fragment{
             UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
             ingredient = new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(), snapshot.getKey());
 
-            if(!cate.equals("전체")){
+            if(cate.equals("전체") || cate.equals(ingredient.getCategory())){
                 tabArrayList.set(pos, ingredient);
             }
 

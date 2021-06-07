@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,6 +52,7 @@ public class Recipe_Info extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private ArrayList ingreList = new ArrayList<>();
     String uid;
+    private Button doneButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +60,12 @@ public class Recipe_Info extends AppCompatActivity {
         setContentView(R.layout.recipe_info);
         ActionBar actionbar = getSupportActionBar();
         actionbar.hide();
+        doneButton = findViewById(R.id.doneButton);
         toolbar = (MaterialToolbar) findViewById(R.id.topAppBarr);
         toolbar.inflateMenu(R.menu.top_app_bar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_ios_new_white_24dp);
+
+        doneButton.setOnClickListener(onClickListener);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,5 +187,24 @@ public class Recipe_Info extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ArrayList<String> al = new ArrayList<>();
+            Intent intent = new Intent(v.getContext(), RatingActivity.class);
+            for(int i=0; i<rcp.getIngre_list().size(); i++) {
+                al.add(rcp.getIngre_list().get(i).get("ingre_name"));
+            }
+            intent.putStringArrayListExtra("list",al);
+            myStartActivity(RatingActivity.class);
+        }
+    };
+
+    private void myStartActivity(Class c){
+        Intent intent = new Intent(this,c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }
