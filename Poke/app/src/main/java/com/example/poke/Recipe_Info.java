@@ -156,7 +156,6 @@ public class Recipe_Info extends AppCompatActivity {
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     adapter = new RecipeIngre_Adapter(rcp.getIngre_list());
-//                    avg.setText(Integer.toString(adapter.get_count()));
                     recyclerView.setAdapter(adapter);
 
                     RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);
