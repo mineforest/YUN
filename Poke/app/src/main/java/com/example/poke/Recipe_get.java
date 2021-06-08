@@ -30,6 +30,7 @@ public class Recipe_get {
     List<String> recipe;
     List<String> recipe_img;
     List<String> tag;
+    long rate;
 
     public Recipe_get() {};
 
@@ -59,6 +60,22 @@ public class Recipe_get {
         this.name = title;
         this.thumbnail = thumbnail;
         this.time = cook_time;
+    }
+
+    public Recipe_get(String rcp_id, String title, String thumbnail, String cook_time,  long rate) {
+        this.id = rcp_id;
+        this.name = title;
+        this.thumbnail = thumbnail;
+        this.time = cook_time;
+        this.rate = rate;
+    }
+
+    public void setRate(long rate) {
+        this.rate = rate;
+    }
+
+    public long getRate() {
+        return rate;
     }
 
     public String getId() {

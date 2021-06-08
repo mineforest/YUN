@@ -93,9 +93,8 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
         else {
             holder.day.setText(("D-" + Long.toString(date / 86400000)));
         }
+        //textView.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
     }
-
-
 
     @Override
     public int getItemCount() {

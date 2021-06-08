@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,15 +36,18 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class MainRecyclerViewFragment extends Fragment {
     ArrayList<Recipe_get> rcps = new ArrayList<>();
+    ArrayList<String> myIngreList = new ArrayList<>();
     CustomAdapter adapter;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private String uid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,9 @@ public class MainRecyclerViewFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user = mAuth.getCurrentUser();
+        uid = user.getUid();
+        readIngre();
 
         //테스트용 레시피 id들
         String[] test_ids = {"6900699", "6880252","6903806", "6901559", "6883872", "6886282",
@@ -67,13 +75,28 @@ public class MainRecyclerViewFragment extends Fragment {
             docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    int cnt=0;
                     String rcp_id = documentSnapshot.getData().get("id").toString();
                     String title = documentSnapshot.getData().get("name").toString();
                     String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
                     String cook_time = documentSnapshot.getData().get("time").toString();
 //                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
+                    List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
+
+                    for(int j=0; j<ingre_list.size(); j++){
+                        for(int k=0; k<myIngreList.size(); k++){
+                            if(ingre_list.get(j).containsValue(myIngreList.get(k))){
+                                cnt++;
+                            }
+                        }
+                    }
+
+                    long dd = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
+                    Log.d("rate",Integer.toString(cnt));
+                    Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, dd);
                     Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
-                    rcps.add(r);
+                    rcps.add(rr);
+
                     adapter.notifyDataSetChanged();
                 }
             });
@@ -115,6 +138,36 @@ public class MainRecyclerViewFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void readIngre(){
+        mDatabase.child("ingredient").child(uid).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
+                myIngreList.add(ingredient.getIngredientTitle());
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void myStartActivity(Class c){

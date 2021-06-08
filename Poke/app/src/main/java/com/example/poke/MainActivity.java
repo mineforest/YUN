@@ -4,18 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -54,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             nullStartActivity(uid,"users");
 
             viewPager2 = findViewById(R.id.pager);
-            pagerAdapter = new MainFragmentAdapter(this);
+            pagerAdapter = new MainPagerAdapter(this);
             viewPager2.setAdapter(pagerAdapter);
             viewPager2.registerOnPageChangeCallback(pageChangeCallback);
 
