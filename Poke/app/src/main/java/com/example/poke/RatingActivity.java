@@ -103,13 +103,10 @@ public class RatingActivity extends AppCompatActivity {
     AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            for(int i=0; i<chipArrayList.size(); i++) {
-                if (chipArrayList.get(i).toString().equals(dbList.get(position).toString())){
-                    break;
-                    }
-                }
-            addChip(dbList.get(position).toString());
+            if(!chipArrayList.contains(dbList.get(position).toString())) {
+                addChip(dbList.get(position).toString());
             }
+        }
     };
 
     ChildEventListener childEventListener = new ChildEventListener() {
@@ -206,46 +203,24 @@ public class RatingActivity extends AppCompatActivity {
         parent.removeView(chip);
     }
 
-    public void deleteIngredient(){
-        mDatabase.child("ingredient").child("uid").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
-                            for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                                for(int i=0; i<chipArrayList.size(); i++){
-                                    if(chipArrayList.get(i).equals(dataSnapshot.child("ingredientTitle").getValue(String.class))){
-                                        dataSnapshot.getRef().removeValue();
-                                    }
-                                }
-                            }
+    public void deleteIngredient() {
+        mDatabase.child("ingredient").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        if (chipArrayList.contains(dataSnapshot.child("ingredientTitle").getValue(String.class))) {
+                            dataSnapshot.getRef().getParent().removeValue();
                         }
                     }
+                }
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+            }
+        });
 
     }
-    /*
-    public void addList(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        cnt=0;
-        db.collection("ingre")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful() && cnt<10) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                dbArrayList.add(document.get("식품명").toString());
-                                cnt++;
-                            }
-                        } else {
-                            Log.d("IngredientListAdpater", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }*/
 }
