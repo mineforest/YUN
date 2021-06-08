@@ -1,58 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-<!--    <androidx.appcompat.widget.SearchView-->
-<!--        android:id="@+id/searchView"-->
-<!--        android:layout_width="324dp"-->
-<!--        android:layout_height="36dp"-->
-<!--        android:layout_marginStart="40dp"-->
-<!--        android:layout_marginTop="40dp"-->
-<!--        android:background="#A8A5A5"-->
-<!--        android:queryHint="삭제할 재료를 입력하세요"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <RatingBar
-        android:id="@+id/ratingBar2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="324dp"
+        android:layout_height="36dp"
         android:layout_marginStart="40dp"
-        android:layout_marginBottom="56dp"
-        android:numStars="5"
-        android:stepSize="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <LinearLayout
-        android:layout_width="349dp"
-        android:layout_height="352dp"
-        android:layout_marginStart="20dp"
-        android:orientation="vertical"
+        android:layout_marginTop="40dp"
+        android:background="#C6C2C2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/ratingGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="40dp">
+    </androidx.appcompat.widget.SearchView>
 
-        </com.google.android.material.chip.ChipGroup>
-    </LinearLayout>
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="247dp"
+        android:layout_height="284dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="2dp"
+        android:divider="#FF999999"
+        android:dividerHeight="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"/>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/ratingGroup"
+        android:layout_width="338dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="180dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.google.android.material.chip.ChipGroup>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/doneButton2"
-        android:layout_width="wrap_content"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="58dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginTop="168dp"
+        android:layout_marginEnd="16dp"
+        android:background="#B3ACAC"
+        android:text="완료"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listView" />
+
+    <RatingBar
+        android:id="@+id/ratingBar2"
+        android:layout_width="234dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="160dp"
+        android:numStars="5"
+        android:stepSize="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

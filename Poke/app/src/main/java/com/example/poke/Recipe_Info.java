@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,7 +35,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -58,12 +61,13 @@ public class Recipe_Info extends AppCompatActivity {
         setContentView(R.layout.recipe_info);
         ActionBar actionbar = getSupportActionBar();
         actionbar.hide();
+
         doneButton = findViewById(R.id.doneButton);
         toolbar = (MaterialToolbar) findViewById(R.id.topAppBarr);
         toolbar.inflateMenu(R.menu.top_app_bar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_ios_new_white_24dp);
 
-        doneButton.setOnClickListener(onClickListener);
+        doneButton.setOnClickListener(clickListener);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,22 +176,23 @@ public class Recipe_Info extends AppCompatActivity {
         }
     }
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
+    View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             ArrayList<String> al = new ArrayList<>();
-            Intent intent = new Intent(v.getContext(), RatingActivity.class);
+            ArrayList<String> recipeList = new ArrayList<>();
+            Intent intent = new Intent(getApplicationContext(), RatingActivity.class);
+
+            recipeList.add(rcp.getId());
+            recipeList.add(rcp.getName());
+            recipeList.add(rcp.getThumbnail());
+
             for(int i=0; i<rcp.getIngre_list().size(); i++) {
-                al.add(rcp.getIngre_list().get(i).get("ingre_name"));
+              al.add(rcp.getIngre_list().get(i).get("ingre_name"));
             }
-            intent.putStringArrayListExtra("list",al);
-            myStartActivity(RatingActivity.class);
+            intent.putStringArrayListExtra("ingre",al);
+            intent.putStringArrayListExtra("recipe",recipeList);
+            startActivity(intent);
         }
     };
-
-    private void myStartActivity(Class c){
-        Intent intent = new Intent(this,c);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
 }

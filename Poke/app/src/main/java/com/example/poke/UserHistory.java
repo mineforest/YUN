@@ -4,7 +4,6 @@ public class UserHistory {
     String rcp_id;
     Long rate;
     String recipeTitle;
-    String recipeID;
     String date;
     String recipeImage;
 
@@ -17,26 +16,15 @@ public class UserHistory {
         this.date = date;
         this.rate = rate;
     }
-    public UserHistory(String recipeTitle, String recipeImage, String date, Long rate){
+
+    public UserHistory(String rcp_id, String recipeTitle, String recipeImage){
+        this.rcp_id = rcp_id;
         this.recipeTitle = recipeTitle;
         this.recipeImage = recipeImage;
-        this.date = date;
-        this.rate = rate;
     }
 
-    public UserHistory(String recipeTitle, String recipeImage, String date, Long rate, String recipeID){
-        this.recipeTitle = recipeTitle;
-        this.recipeImage = recipeImage;
-        this.date = date;
-        this.rate = rate;
-        this.recipeID = recipeID;
-    }
 
-    public UserHistory(String recipeTitle, String recipeID, String date) {
-        this.recipeTitle = recipeTitle;
-        this.recipeID = recipeID;
-        this.date = date;
-    }
+
     public String getRcp_id() {
         return rcp_id;
     }
@@ -57,10 +45,6 @@ public class UserHistory {
         this.date = date;
     }
 
-    public void setRecipeID(String recipeID) {
-        this.recipeID = recipeID;
-    }
-
     public void setRecipeTitle(String recipeTitle) {
         this.recipeTitle = recipeTitle;
     }
@@ -71,10 +55,6 @@ public class UserHistory {
 
     public String getDate() {
         return date;
-    }
-
-    public String getRecipeID() {
-        return recipeID;
     }
 
     public String getRecipeTitle() {

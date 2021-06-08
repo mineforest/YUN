@@ -73,7 +73,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         mDatabase.addValueEventListener(allergyListener);
 
        getChildFragmentManager().beginTransaction().add(R.id.InfoFrame,new HistoryFragment()).commit();
-
         recyclerView = (RecyclerView)view.findViewById(R.id.history_rv);
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -106,10 +105,10 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
 
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-            for(DataSnapshot dataSnapshot : snapshot.child("users").child(uid).getChildren()) {
-                userInfoArrayList.add(dataSnapshot.getValue().toString());
-            }
-                nickNameTextView.setText(userInfoArrayList.get(3));
+                for (DataSnapshot dataSnapshot : snapshot.child("users").child(uid).getChildren()) {
+                    userInfoArrayList.add(dataSnapshot.getValue().toString());
+                }
+            nickNameTextView.setText(userInfoArrayList.get(3));
         }
 
         @Override

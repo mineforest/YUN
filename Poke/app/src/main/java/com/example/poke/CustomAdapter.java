@@ -59,9 +59,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
                     .load(rcp.getThumbnail())
                     .into(holder.rcp_thumbnail);
 
-
             holder.rcp_thumbnail.setOnClickListener(new View.OnClickListener() {
-
                 @Override
                 public void onClick(View v) {
                     intent = new Intent(v.getContext(), Recipe_Info.class);

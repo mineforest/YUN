@@ -33,6 +33,8 @@
         </activity>
         <activity android:name=".MainActivity">
         </activity>
+        <activity android:name=".RatingActivity">
+        </activity>
         <activity android:name=".SignUpActivity">
         </activity>
         <activity android:name=".PasswordResetActivity">
@@ -49,7 +51,6 @@
         </activity>
         <activity android:name=".Adddips">
         </activity>
-        <activity android:name=".RatingActivity"/>
         <activity android:name=".Recipe_Info">
         </activity>
         <activity
