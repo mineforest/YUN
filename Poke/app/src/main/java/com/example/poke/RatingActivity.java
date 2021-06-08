@@ -64,6 +64,8 @@ public class RatingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
         Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
         cnt=0;
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

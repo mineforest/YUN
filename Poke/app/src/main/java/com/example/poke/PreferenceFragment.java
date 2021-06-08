@@ -47,7 +47,6 @@ public class PreferenceFragment extends Fragment {
         bottomSheetBehavior = view.findViewById(R.id.bottomSheet1);
         behavior = BottomSheetBehavior.from(bottomSheetBehavior);
 
-
         ((BottomSheetBehavior) behavior).setBottomSheetCallback(bottomSheetCallback);
 
         for(int i=0; i < preGroup.getChildCount(); i++) {
