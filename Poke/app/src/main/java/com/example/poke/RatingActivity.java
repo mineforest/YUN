@@ -210,7 +210,7 @@ public class RatingActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         if (chipArrayList.contains(dataSnapshot.child("ingredientTitle").getValue(String.class))) {
-                            dataSnapshot.getRef().getParent().removeValue();
+                            dataSnapshot.getRef().removeValue();
                         }
                     }
                 }
