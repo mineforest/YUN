@@ -66,7 +66,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder>  {
                     intent = new Intent(v.getContext(), Recipe_Info.class);
                     intent.putExtra("rcp_id",searchList.get(position).getId());
                     v.getContext().startActivity(intent);
-                    Toast.makeText(v.getContext(), searchList.get(position).getId(),Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(v.getContext(), searchList.get(position).getId(),Toast.LENGTH_SHORT).show();
                 }
             });
         }

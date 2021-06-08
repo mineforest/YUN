@@ -131,5 +131,5 @@ public class MainRecyclerViewFragment extends Fragment {
 
         mAuth.getCurrentUser().delete();
     }
-    
+
 }

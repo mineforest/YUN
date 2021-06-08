@@ -72,7 +72,9 @@ public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapte
                     holder.checkBox.setChecked(true);
                 } else {
                     holder.checkBox.setChecked(false);
-                    count++;
+                    if(holder.checkBox.isChecked()) {
+                        count++;
+                    }
                 }
             }
 
