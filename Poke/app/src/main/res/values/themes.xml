@@ -45,7 +45,7 @@
     </style>
 
     <style name="SplashTheme" parent="@android:style/Theme.Light.NoTitleBar">
-        <item name="android:windowBackground">@drawable/ic_kitchen_black_24dp</item>
+        <item name="android:windowBackground">@drawable/loading_image</item>
     </style>
 
 </resources>

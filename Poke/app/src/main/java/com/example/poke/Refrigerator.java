@@ -1,8 +1,8 @@
 package com.example.poke;
 
 public class Refrigerator {
+    public static String ingredient;
     String users;
-    String ingredient;
     String fridgeName;
 
     public void Refrigerator(String users, String ingredient, String fridgeName){

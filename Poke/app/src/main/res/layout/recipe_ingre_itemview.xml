@@ -3,15 +3,18 @@
     android:id="@+id/recipe_ingre_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/layout_bottom"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/i_name_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_weight="1"
+        android:gravity="center"
         android:text="재료명"
-        android:textAlignment="textStart" />
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/i_amount_txt"
@@ -28,4 +31,13 @@
         android:layout_weight="1"
         android:text="단위"
         android:textAlignment="textStart" />
+
+    <CheckBox
+        android:id="@+id/check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:checked="false"
+        android:clickable="false"
+        android:gravity="center_vertical|end" />
 </LinearLayout>

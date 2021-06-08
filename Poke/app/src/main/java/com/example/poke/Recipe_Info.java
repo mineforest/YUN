@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.widget.CheckBox;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,8 +53,10 @@ public class Recipe_Info extends AppCompatActivity {
     RecipeIngre_Adapter adapter;
     RecipeStep_Adapter adapter2;
     private DatabaseReference mDatabase;
+    private ArrayList ingreList = new ArrayList<>();
     String uid;
     private Button doneButton;
+    private TextView avg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +112,7 @@ public class Recipe_Info extends AppCompatActivity {
         recipe_image = findViewById(R.id.rcpinfo_thumbnail);
         recipe_title = findViewById(R.id.title_txt);
         recipe_tag = findViewById(R.id.tag_txt);
+       // avg = findViewById(R.id.average);
 
         Intent intent = getIntent();
         recipe_id = intent.getStringExtra("rcp_id");
@@ -152,6 +156,7 @@ public class Recipe_Info extends AppCompatActivity {
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     adapter = new RecipeIngre_Adapter(rcp.getIngre_list());
+//                    avg.setText(Integer.toString(adapter.get_count()));
                     recyclerView.setAdapter(adapter);
 
                     RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);

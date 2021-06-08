@@ -4,6 +4,8 @@
     android:id="@+id/main_card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@drawable/layout_bottom"
+    app:cardCornerRadius="50dp"
     app:cardElevation="2dp"
     app:cardPreventCornerOverlap="true">
 
@@ -16,8 +18,8 @@
             android:id="@+id/rcp_thumbnail"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:gravity="center"
             android:background="@color/cardview_dark_background"
+            android:gravity="center"
             android:scaleType="centerCrop" />
 
         <LinearLayout
