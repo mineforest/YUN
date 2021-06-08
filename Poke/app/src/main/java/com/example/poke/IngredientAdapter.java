@@ -89,7 +89,6 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
         holder.title.setText(String.valueOf(ingredientsList.get(position).getIngredientTitle()));
         if(date/86400000 < 0){
             holder.day.setText(("D+" + Long.toString(Math.abs(date/86400000))));
-            textView.setBackground(ContextCompat.getDrawable(context,R.drawable.border_red));
         }
         else {
             holder.day.setText(("D-" + Long.toString(date / 86400000)));
