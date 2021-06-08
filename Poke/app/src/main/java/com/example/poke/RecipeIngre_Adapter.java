@@ -2,6 +2,7 @@ package com.example.poke;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +66,7 @@ public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapte
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         String uid = user.getUid();
+
         mDatabase.child("ingredient").child(uid).orderByChild("ingredientTitle").equalTo(list.get(position).get("ingre_name")).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -88,6 +90,7 @@ public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapte
             holder.i_amount.setText(list.get(position).get("ingre_count"));
             holder.i_unit.setText(list.get(position).get("ingre_unit"));
         }
+
     }
 
     @Override

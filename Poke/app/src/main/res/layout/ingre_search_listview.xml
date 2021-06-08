@@ -6,7 +6,7 @@
     <TextView
         android:id="@+id/label"
         android:layout_width="207dp"
-        android:layout_height="44dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:paddingLeft="5dp"
         android:textColor="#000000"

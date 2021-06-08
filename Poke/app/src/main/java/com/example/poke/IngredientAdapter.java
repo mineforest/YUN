@@ -2,6 +2,8 @@ package com.example.poke;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -35,6 +38,7 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
     Calendar cal = Calendar.getInstance();
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     long date;
+    TextView textView;
 
     private OnItemClickListener mlistener = null;
 
@@ -62,6 +66,7 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
     public IngredientAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_recyclerview,parent,false);
         IngredientAdapter.ViewHolder holder = new IngredientAdapter.ViewHolder(view);
+        textView = view.findViewById(R.id.dDay);
 
         return holder;
     }
@@ -82,7 +87,15 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
 //                .into(holder.image);
 
         holder.title.setText(String.valueOf(ingredientsList.get(position).getIngredientTitle()));
-        holder.day.setText(("D-" + Long.toString(date/86400000)));
+        if(date/86400000 < 0){
+            holder.day.setText(("D+" + Long.toString(Math.abs(date/86400000))));
+        }
+        else {
+            holder.day.setText(("D-" + Long.toString(date / 86400000)));
+        }
+        
+        if(date/86400000 < 4)
+            textView.setBackground(ContextCompat.getDrawable(context,R.drawable.border_red));
     }
 
 
