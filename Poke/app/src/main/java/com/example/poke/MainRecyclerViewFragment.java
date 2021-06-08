@@ -20,8 +20,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,8 +32,11 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainRecyclerViewFragment extends Fragment {
     ArrayList<Recipe_get> rcps = new ArrayList<>();
@@ -65,6 +71,7 @@ public class MainRecyclerViewFragment extends Fragment {
                     String title = documentSnapshot.getData().get("name").toString();
                     String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
                     String cook_time = documentSnapshot.getData().get("time").toString();
+//                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
                     Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
                     rcps.add(r);
                     adapter.notifyDataSetChanged();
@@ -124,4 +131,5 @@ public class MainRecyclerViewFragment extends Fragment {
 
         mAuth.getCurrentUser().delete();
     }
+    
 }

@@ -53,6 +53,7 @@ public class Recipe_Info extends AppCompatActivity {
     private ArrayList ingreList = new ArrayList<>();
     String uid;
     private Button doneButton;
+    private TextView avg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +108,7 @@ public class Recipe_Info extends AppCompatActivity {
         recipe_image = findViewById(R.id.rcpinfo_thumbnail);
         recipe_title = findViewById(R.id.title_txt);
         recipe_tag = findViewById(R.id.tag_txt);
+        avg = findViewById(R.id.average);
 
         Intent intent = getIntent();
         recipe_id = intent.getStringExtra("rcp_id");
@@ -150,21 +152,7 @@ public class Recipe_Info extends AppCompatActivity {
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     adapter = new RecipeIngre_Adapter(rcp.getIngre_list());
-//                    int count = 0;
-//                    float average = (float) 0.0;
-//                    CheckBox checkBox = (CheckBox) findViewById(R.id.check);
-//                    TextView viewave = (TextView) findViewById(R.id.average);
-//                    ingreList = ingre_list;
-//                    for(int i=0; i<ingreList.size();i++) {
-//                        if(ingreList[i] == Refrigerator.ingredient) {
-//                            checkBox.setChecked(true);
-//                            count++;
-//                        }
-//                    }
-//                    average = ingreList.size()/count;
-//                    viewave = toString(average);
-
-
+                    avg.setText(Integer.toString(adapter.get_count()));
                     recyclerView.setAdapter(adapter);
 
                     RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);
