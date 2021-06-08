@@ -54,7 +54,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
         if (mRcplist != null && position < mRcplist.size()) {
             Recipe_get rcp = mRcplist.get(position);
             holder.rcp_title.setText(rcp.getName());
-            holder.rcp_cooktime.setText(rcp.getTime());
             holder.rate.setText(Long.toString(rcp.getRate())+"%");
             holder.rcp_cooktime.setText(rcp.getTime()+"분");
 
