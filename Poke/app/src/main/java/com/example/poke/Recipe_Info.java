@@ -195,7 +195,7 @@ public class Recipe_Info extends AppCompatActivity {
             for(int i=0; i<rcp.getIngre_list().size(); i++) {
               al.add(rcp.getIngre_list().get(i).get("ingre_name"));
             }
-            //intent.putStringArrayListExtra("ingre",al);
+            intent.putStringArrayListExtra("ingre",al);
             intent.putStringArrayListExtra("recipe",recipeList);
             startActivity(intent);
         }
