@@ -54,8 +54,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
         if (mRcplist != null && position < mRcplist.size()) {
             Recipe_get rcp = mRcplist.get(position);
             holder.rcp_title.setText(rcp.getName());
-            holder.rate.setText(Long.toString(rcp.getRate())+"%");
             holder.rcp_cooktime.setText(rcp.getTime()+"분");
+            holder.rate.setText((rcp.getRate())+"%");
 
             Glide.with(holder.itemView)
                     .load(rcp.getThumbnail())
