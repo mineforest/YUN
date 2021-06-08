@@ -43,7 +43,7 @@ import java.util.Map;
 
 public class MainRecyclerViewFragment extends Fragment {
     ArrayList<Recipe_get> rcps = new ArrayList<>();
-    ArrayList<String> myIngreList = new ArrayList<>();
+    ArrayList<String> myIngreList;
     CustomAdapter adapter;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -60,11 +60,16 @@ public class MainRecyclerViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.home_recyler_test, container, false);
         setHasOptionsMenu(true);
 
+//        Runnable thread = new Threadg();
+//        Thread thread1 = new Thread(thread);
+
+        myIngreList = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = mAuth.getCurrentUser();
         uid = user.getUid();
-        readIngre();
+//        thread1.start();
+        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
 
         //테스트용 레시피 id들
         String[] test_ids = {"6900699", "6880252","6903806", "6901559", "6883872", "6886282",
@@ -83,16 +88,15 @@ public class MainRecyclerViewFragment extends Fragment {
 //                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
                     List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
 
-                    for(int j=0; j<ingre_list.size(); j++){
-                        for(int k=0; k<myIngreList.size(); k++){
-                            if(ingre_list.get(j).containsValue(myIngreList.get(k))){
+                        for(int k=0; k<ingre_list.size(); k++){
+                            if(myIngreList.contains(ingre_list.get(k).get("ingre_name"))){
+
                                 cnt++;
                             }
                         }
-                    }
 
                     long dd = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
-                    Log.d("rate",Integer.toString(cnt));
+
                     Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, dd);
                     Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
                     rcps.add(rr);
@@ -101,6 +105,7 @@ public class MainRecyclerViewFragment extends Fragment {
                 }
             });
         }
+
         RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
@@ -112,6 +117,7 @@ public class MainRecyclerViewFragment extends Fragment {
 
         return view;
     }
+
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -140,12 +146,12 @@ public class MainRecyclerViewFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void readIngre(){
-        mDatabase.child("ingredient").child(uid).addChildEventListener(new ChildEventListener() {
+    ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
                 myIngreList.add(ingredient.getIngredientTitle());
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -165,10 +171,8 @@ public class MainRecyclerViewFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
-        });
-    }
+        };
 
     private void myStartActivity(Class c){
         Intent intent = new Intent(getActivity(),c);
@@ -183,6 +187,13 @@ public class MainRecyclerViewFragment extends Fragment {
         mDatabase.child("users").child(uid).removeValue();
 
         mAuth.getCurrentUser().delete();
+    }
+
+    class Threadg implements Runnable{
+        @Override
+        public void run() {
+
+        }
     }
 
 }
