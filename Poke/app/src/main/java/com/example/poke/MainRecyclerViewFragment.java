@@ -60,7 +60,7 @@ public class MainRecyclerViewFragment extends Fragment {
 
         //테스트용 레시피 id들
         String[] test_ids = {"1762278", "1762498","1894779", "1899131", "1978049", "2001746",
-                "2017354", "2442087", "2528933", "2442087", "2803587", "3568149",};
+                "2017354", "2442087", "2528933", "2442087", "2803587", "3568149"};
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         for(int i =0;i<test_ids.length; i++){
             DocumentReference docRef = db.collection("recipe").document(test_ids[i]);

@@ -50,8 +50,8 @@ public class SignUpActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    startToast("회원가입이 완료되었습니다.");
-                                    myStartActivity(Menu.class);
+//                                    startToast("회원가입이 완료되었습니다.");
+                                    myStartActivity(MemberInitActivity.class);
                                 }
                                 //형식에 맞지 않을 때 파이어베이스에서 제공
                                 else {

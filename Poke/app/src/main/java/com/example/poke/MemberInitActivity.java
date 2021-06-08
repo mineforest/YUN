@@ -1,5 +1,6 @@
 package com.example.poke;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -65,7 +66,7 @@ public class MemberInitActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 startToast("회원정보 등록을 성공하였습니다.");
-                                finish();
+                                myStartActivity(MainActivity.class);
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -78,6 +79,12 @@ public class MemberInitActivity extends AppCompatActivity {
         } else{
             startToast("회원정보를 입력해주세요.");
         }
+    }
+
+    private void myStartActivity(Class c){
+        Intent intent = new Intent(this,c);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void startToast(String msg){

@@ -121,10 +121,7 @@ public class MainActivity extends AppCompatActivity {
                         if (dataSnapshot.exists()) {
                             Log.d("firebase", String.valueOf(task.getResult().getValue()));
                         } else {
-                            if(child.equals("users")){
-                                myStartActivity(MemberInitActivity.class);
-                            }
-                            else if(child.equals("preference")){
+                            if(child.equals("preference")){
                                 myStartActivity(PreferenceActivity.class);
                             }
                         }
