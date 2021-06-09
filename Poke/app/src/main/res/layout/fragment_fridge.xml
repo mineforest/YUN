@@ -104,7 +104,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredientRecyclerView"
-            android:layout_width="413dp"
+            android:layout_width="418dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
@@ -122,9 +122,9 @@
             android:id="@+id/ingredientAddBtn"
             android:layout_width="66dp"
             android:layout_height="56dp"
-            android:layout_marginEnd="36dp"
-            android:layout_marginBottom="76dp"
-            android:background="#00ffffff"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="68dp"
+            android:background="#00000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_add_circle_black_24dp" />

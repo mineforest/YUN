@@ -35,6 +35,7 @@ public class IngredientDialog extends DialogFragment {
     private String key;
     private DatabaseReference mDatabase;
     String uid;
+    private Button cancelBtn;
     private ImageButton barcode_btn;
 
     public IngredientDialog(){
@@ -56,6 +57,8 @@ public class IngredientDialog extends DialogFragment {
         dateText = view.findViewById(R.id.daycnt_txt);
         barcode_btn = view.findViewById(R.id.barcodeButton);
         barcode_btn.setOnClickListener(scanClickListener);
+        cancelBtn = view.findViewById(R.id.dialogCancelBtn);
+        cancelBtn.setOnClickListener(onClickListener);
 
         if(args != null) {
             title = args.getString("title");
@@ -74,28 +77,35 @@ public class IngredientDialog extends DialogFragment {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            title = nameText.getText().toString();
-            cate = cateText.getText().toString();
-            date = dateText.getText().toString();
-            UserIngredient userIngredient;
+            if(v.getId() == R.id.dialogOkBtn){
+                title = nameText.getText().toString();
+                cate = cateText.getText().toString();
+                date = dateText.getText().toString();
+                UserIngredient userIngredient;
 
-            if(title.length() >=2 && cate.length() >=2 ){
-                if(key != null){
-                    userIngredient = new UserIngredient(title, date, cate);
-                    mDatabase.child("ingredient").child(uid).child(key).setValue(userIngredient);
+                if(title.length() >=2 && cate.length() >=2 ){
+                    if(key != null){
+                        userIngredient = new UserIngredient(title, date, cate);
+                        mDatabase.child("ingredient").child(uid).child(key).setValue(userIngredient);
+                    }
+                    else{
+                        userIngredient = new UserIngredient(title, date, cate);
+                        mDatabase.child("ingredient").child(uid).push().setValue(userIngredient);
+                    }
+                    if (fragment != null) {
+                        DialogFragment dialogFragment = (DialogFragment) fragment;
+                        dialogFragment.dismiss();
+                    }
                 }
                 else{
-                    userIngredient = new UserIngredient(title, date, cate);
-                    mDatabase.child("ingredient").child(uid).push().setValue(userIngredient);
-                }
-                if (fragment != null) {
-                    DialogFragment dialogFragment = (DialogFragment) fragment;
-                    dialogFragment.dismiss();
-                }
-            }
-            else{
                     startToast("다시 입력해주세요");
+                }
             }
+            else if(v.getId() == R.id.dialogCancelBtn){
+                DialogFragment dialogFragment = (DialogFragment) fragment;
+                dialogFragment.dismiss();
+            }
+
         }
     };
 

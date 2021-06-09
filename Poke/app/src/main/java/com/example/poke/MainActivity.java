@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             pagerAdapter = new MainPagerAdapter(this);
             viewPager2.setAdapter(pagerAdapter);
             viewPager2.registerOnPageChangeCallback(pageChangeCallback);
-
+            viewPager2.setUserInputEnabled(false);
             FragmentManager fragmentManager = getSupportFragmentManager();
             mBottomNavigationView=findViewById(R.id.bottom_navigation);
             viewPager2.setCurrentItem(1);

@@ -8,12 +8,13 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBarr"
+            style="@style/rcpToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            style="@style/rcpToolbar">
+            app:layout_scrollFlags="scroll|enterAlways|snap">
 
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -29,6 +30,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="#ffffff">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
 
             <ImageView
                 android:id="@+id/rcpinfo_thumbnail"
@@ -59,6 +65,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shadow"
                 android:orientation="vertical">
 
                 <TextView
@@ -66,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/border_top"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
                     android:text="재료"
@@ -82,12 +90,21 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shadow"
+                android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/textView11"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/border_top"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
                     android:text="양념"
@@ -99,29 +116,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:listitem="@layout/recipe_ingre_itemview" />
-
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_top"
-                android:fontFamily="@font/noto_sans"
-                android:gravity="center"
-                android:text="레시피"
-                android:textSize="16sp"
-                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shadow"
                 android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:gravity="center"
+                    android:text="레시피"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recipe_recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
@@ -129,15 +148,15 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/doneButton"
                 android:layout_width="205dp"
-                android:layout_height="59dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="105dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
                 android:background="@drawable/btn_shape"
                 android:text="         다음        >"
-                android:textAlignment="gravity"
+                android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="24sp"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="105dp"
-                android:layout_marginBottom="15dp"/>
+                android:textSize="24sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

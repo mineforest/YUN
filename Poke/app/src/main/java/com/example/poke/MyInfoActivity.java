@@ -1,5 +1,6 @@
 package com.example.poke;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -29,9 +31,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class MyInfoActivity extends Fragment implements View.OnClickListener{
-    TextView allergyCountTextView;
-    TextView historyCountTextView;
-    TextView dibsCountTextView;
     TextView nickNameTextView;
     private DatabaseReference mDatabase;
     private ArrayList<UserHistory> historyList;
@@ -39,7 +38,9 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     String uid;
-    private FragmentManager fragmentManager;
+    Button historyButton;
+    Button dipsButton;
+    Button allergyButton;
     static HistoryFragment historyFragment;
 
     @Override
@@ -61,15 +62,13 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         historyFragment = new HistoryFragment();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         nickNameTextView=(TextView)view.findViewById(R.id.Nickname);
-        dibsCountTextView = view.findViewById(R.id.dibsCountTextView);
-        historyCountTextView = view.findViewById(R.id.historyCountTextView);
-        allergyCountTextView = view.findViewById(R.id.allergyCountTextView);
-        Button historyButton = (Button) view.findViewById(R.id.historyButton);
-        Button dipsButton = (Button) view.findViewById(R.id.dibsButton);
-        Button allergyButton = (Button) view.findViewById(R.id.allergyButton);
+        historyButton = (Button) view.findViewById(R.id.historyButton);
+        dipsButton = (Button) view.findViewById(R.id.dibsButton);
+        allergyButton = (Button) view.findViewById(R.id.allergyButton);
         historyButton.setOnClickListener(this);
         dipsButton.setOnClickListener(this);
         allergyButton.setOnClickListener(this);
+        historyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.btn_shape));
         mDatabase.addValueEventListener(allergyListener);
 
        getChildFragmentManager().beginTransaction().add(R.id.InfoFrame,new HistoryFragment()).commit();
@@ -89,9 +88,9 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     ValueEventListener allergyListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            allergyCountTextView.setText(Long.toString(dataSnapshot.child("allergy").child(uid).getChildrenCount()));
-            dibsCountTextView.setText(Long.toString(dataSnapshot.child("dips").child(uid).getChildrenCount()));
-            historyCountTextView.setText(Long.toString(dataSnapshot.child("history").child(uid).getChildrenCount()));
+            historyButton.setText("평가한 요리\n"+Long.toString(dataSnapshot.child("allergy").child(uid).getChildrenCount()));
+            dipsButton.setText("찜한요리\n"+Long.toString(dataSnapshot.child("dips").child(uid).getChildrenCount()));
+            allergyButton.setText("알러지/기피\n"+Long.toString(dataSnapshot.child("history").child(uid).getChildrenCount()));
         }
 
         @Override
@@ -122,16 +121,24 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         FragmentManager fragmentManager = getChildFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
         switch (v.getId()) {
             case R.id.historyButton:
                 fragmentTransaction.replace(R.id.InfoFrame,new HistoryFragment()).commit();
+                historyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.btn_shape));
+                allergyButton.setBackgroundColor(Color.rgb(255,255,255));
+                dipsButton.setBackgroundColor(Color.rgb(255,255,255));
                 break;
             case R.id.dibsButton:
                 fragmentTransaction.replace(R.id.InfoFrame,new DipsFragment()).commit();
+                historyButton.setBackgroundColor(Color.rgb(255,255,255));
+                allergyButton.setBackgroundColor(Color.rgb(255,255,255));
+                dipsButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.btn_shape));
                 break;
             case R.id.allergyButton:
                 fragmentTransaction.replace(R.id.InfoFrame,new Menu()).commit();
+                historyButton.setBackgroundColor(Color.rgb(255,255,255));
+                allergyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.btn_shape));
+                dipsButton.setBackgroundColor(Color.rgb(255,255,255));
                 break;
         }
     }

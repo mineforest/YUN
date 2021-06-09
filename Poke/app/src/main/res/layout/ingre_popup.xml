@@ -1,34 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
-    android:layout_height="350dp"
-    android:background="#eeeeee"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_radius"
+    android:elevation="20dp"
     android:orientation="vertical">
 
     <!-- 타이틀바 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="53dp"
-            android:background="#ff7a00"
-            android:fontFamily="@font/noto_sans"
-            android:gravity="center"
-            android:text="Notice"
-            android:textColor="#fff"
-            android:textSize="20sp" />
-
-    </LinearLayout>
     <!-- //end 타이틀바 -->
 
     <!-- Notice -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="225dp"
+        android:background="#00000000"
         android:orientation="vertical"
         android:padding="24dp">
 
@@ -68,31 +55,42 @@
     </LinearLayout>
     <!-- Notice -->
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#66bdbdbd" />
-
     <!-- 닫기 버튼 -->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_height="75dp"
+        android:background="#00000000"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/dialogOkBtn"
-            android:layout_width="140dp"
-            android:layout_height="match_parent"
-            android:background="#00000000"
+            android:layout_width="100dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="36dp"
+            android:background="@drawable/btn_shape"
             android:fontFamily="@font/noto_sans"
-            android:gravity="center"
-            android:padding="16dp"
-            android:text="확인"
-            android:textColor="#ff7a00"
-            android:textSize="15sp" />
+            android:text="추가"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-    </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dialogCancelBtn"
+            android:layout_width="100dp"
+            android:layout_height="47dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/cancel_shape"
+            android:fontFamily="@font/noto_sans"
+            android:text="취소"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--// 닫기 버튼 -->
 </LinearLayout>
