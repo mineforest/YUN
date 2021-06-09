@@ -60,15 +60,12 @@ public class MainRecyclerViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.home_recyler_test, container, false);
         setHasOptionsMenu(true);
 
-//        Runnable thread = new Threadg();
-//        Thread thread1 = new Thread(thread);
-
         myIngreList = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = mAuth.getCurrentUser();
         uid = user.getUid();
-//        thread1.start();
+
         mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
 
         //테스트용 레시피 id들
@@ -188,12 +185,4 @@ public class MainRecyclerViewFragment extends Fragment {
 
         mAuth.getCurrentUser().delete();
     }
-
-    class Threadg implements Runnable{
-        @Override
-        public void run() {
-
-        }
-    }
-
 }

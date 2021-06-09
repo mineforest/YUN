@@ -20,6 +20,10 @@
 
     </style>
 
+    <style name="CustomTabStyle" parent="android:Widget">
+        <item name="tabBackground">@drawable/tab_selector</item>
+    </style>
+
     <style name="RatingChipStyle" parent="Widget.MaterialComponents.Chip.Entry">
         <item name="chipBackgroundColor">@color/chip_background_color</item>
         <item name="android:textColor">@color/chip_text_color</item>

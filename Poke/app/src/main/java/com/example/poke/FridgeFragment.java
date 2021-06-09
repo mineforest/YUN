@@ -62,7 +62,7 @@ public class FridgeFragment extends Fragment{
             uid=user.getUid();
 
         recyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
-        layoutManager = new GridLayoutManager(getActivity(),4);
+        layoutManager = new GridLayoutManager(getActivity(),1);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         tabArrayList = new ArrayList<>();
