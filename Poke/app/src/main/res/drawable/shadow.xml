@@ -5,8 +5,6 @@
         <shape>
             <padding
                 android:bottom="2.5dp"
-                android:left="2.5dp"
-                android:right="2.5dp"
                 android:top="2.5dp" />
             <solid android:color="#00CCCCCC" />
             <corners android:radius="50dp"/>
@@ -16,8 +14,6 @@
         <shape>
             <padding
                 android:bottom="2.5dp"
-                android:left="2.5dp"
-                android:right="2.5dp"
                 android:top="2.5dp" />
             <solid android:color="#06CCCCCC" />
             <corners android:radius="50dp"/>
@@ -27,8 +23,6 @@
         <shape>
             <padding
                 android:bottom="2.5dp"
-                android:left="2.5dp"
-                android:right="2.5dp"
                 android:top="2.5dp" />
             <solid android:color="#09CCCCCC" />
             <corners android:radius="50dp"/>
@@ -38,8 +32,6 @@
         <shape>
             <padding
                 android:bottom="2.5dp"
-                android:left="2.5dp"
-                android:right="2.5dp"
                 android:top="2.5dp" />
             <solid android:color="#0BCCCCCC" />
             <corners android:radius="50dp"/>
@@ -49,8 +41,6 @@
         <shape>
             <padding
                 android:bottom="2.5dp"
-                android:left="2.5dp"
-                android:right="2.5dp"
                 android:top="2.5dp" />
             <solid android:color="#0DCCCCCC" />
             <corners android:radius="50dp"/>
@@ -60,8 +50,6 @@
         <shape>
             <padding
                 android:bottom="2.5dp"
-                android:left="2.5dp"
-                android:right="2.5dp"
                 android:top="2.5dp" />
             <solid android:color="#10CCCCCC" />
             <corners android:radius="50dp"/>
@@ -71,8 +59,6 @@
         <shape>
             <padding
                 android:bottom="2.5dp"
-                android:left="2.5dp"
-                android:right="2.5dp"
                 android:top="2.5dp" />
             <solid android:color="#12CCCCCC" />
             <corners android:radius="50dp"/>
@@ -82,8 +68,6 @@
         <shape>
             <padding
                 android:bottom="2.5dp"
-                android:left="2.5dp"
-                android:right="2.5dp"
                 android:top="2.5dp" />
             <solid android:color="#15CCCCCC" />
             <corners android:radius="50dp"/>
@@ -93,8 +77,6 @@
         <shape>
             <padding
                 android:bottom="2.5dp"
-                android:left="2.5dp"
-                android:right="2.5dp"
                 android:top="2.5dp" />
             <solid android:color="#17CCCCCC" />
             <corners android:radius="50dp"/>
@@ -104,8 +86,6 @@
         <shape>
             <padding
                 android:bottom="2.5dp"
-                android:left="2.5dp"
-                android:right="2.5dp"
                 android:top="2.5dp" />
             <solid android:color="#1ACCCCCC" />
             <corners android:radius="50dp"/>
