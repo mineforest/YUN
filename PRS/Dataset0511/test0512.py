@@ -15,12 +15,12 @@ user_list=[0]*30000
 
 # get params
 traindata=Dataset.load_from_df(ratings, Reader())
-param_grid = {'n_epochs': [25,35,55,75], 'n_factors': [1,5,20,50,100]}
+param_grid = {'n_epochs': [20,30,50,100], 'n_factors': [1,5,50,100,500]}
 gs = GridSearchCV(SVD, param_grid, measures=['rmse', 'mse'], cv=3)
 gs.fit(traindata)
 print(gs.best_score['rmse'])
 pr=gs.best_params['rmse']
-print('n_epochs : ',pr['n_epochs'],' / ','n_factors : ',pr['n_factors'])
+print('n_epochs : ', pr['n_epochs'],' / ','n_factors : ',pr['n_factors'])
 
 idx=0
 for i in ratings['user_id']:
@@ -28,7 +28,7 @@ for i in ratings['user_id']:
             user_list[idx]=i
             idx=idx+1
 print(idx)
-user_name='90050185'        # set target name
+user_name='mu0249'        # set target name
 
 df_ratings=ratings.pivot_table(
     values='rating',
@@ -47,7 +47,6 @@ sigma=np.diag(sigma)
 
 svd_user_pred_ratings= np.dot(np.dot(U,sigma),Vt)+user_mean.reshape(-1,1)
 df_svd= pd.DataFrame(svd_user_pred_ratings,columns=df_ratings.columns)
-
 
 def recommend_recipes(df_svd,user_id,recipe_df,ratings_df,rec_num=5):
     user_row_num= user_list.index(user_id)
