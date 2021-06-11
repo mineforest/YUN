@@ -66,7 +66,6 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
     public IngredientAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_recyclerview,parent,false);
         IngredientAdapter.ViewHolder holder = new IngredientAdapter.ViewHolder(view);
-        textView = view.findViewById(R.id.dDay);
 
         return holder;
     }
@@ -93,7 +92,8 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
         else {
             holder.day.setText(("D-" + Long.toString(date / 86400000)));
         }
-        //textView.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
+//        if(date/86400000 <= 3 )
+//            holder.day.setBackground(ContextCompat.getDrawable(context,R.drawable.border_red));
     }
 
     @Override
@@ -124,7 +124,6 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
                     //  this.image = itemView.findViewById(R.id.categoryView);
             this.title = itemView.findViewById(R.id.ingredientTitleView);
             this.day = itemView.findViewById(R.id.dDay);
-
         }
 
     }

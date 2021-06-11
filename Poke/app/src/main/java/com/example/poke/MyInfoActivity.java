@@ -116,7 +116,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         }
     };
 
-
     @Override
     public void onClick(View v) {
         FragmentManager fragmentManager = getChildFragmentManager();

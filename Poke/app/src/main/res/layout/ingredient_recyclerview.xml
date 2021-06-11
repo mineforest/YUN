@@ -39,7 +39,7 @@
 
     <TextView
         android:id="@+id/dDay"
-        style="@style/strokeGreen"
+        style="@style/strokeGray"
         android:layout_width="74dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -47,7 +47,7 @@
         android:fontFamily="@font/noto_sans"
         android:text="New"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

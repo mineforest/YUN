@@ -23,7 +23,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="114dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/menu_shadow">
 
             <Button
@@ -32,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="#00ff0000"
+                android:backgroundTint="#00000000"
                 android:fontFamily="@font/noto_sans"
                 android:text="다음 &gt;"
                 android:textColor="@android:color/darker_gray"
@@ -46,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="#00ff0000"
+                android:backgroundTint="#00000000"
                 android:fontFamily="@font/noto_sans"
                 android:text="&lt; 이전"
                 android:textColor="@android:color/darker_gray"
@@ -58,8 +59,8 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="#00ff0000"
+            android:layout_marginTop="-50dp"
+            android:background="#00000000"
             android:fontFamily="@font/noto_sans"
             android:gravity="center"
             android:text="나만의 특별한 식단을 원하세요?"
@@ -72,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="#00ff0000"
+            android:background="#00000000"
             android:fontFamily="@font/noto_sans"
             android:text="식단 조절 유형에 알맞는 레시피를 추천해 드릴게요."
             android:textAlignment="center"

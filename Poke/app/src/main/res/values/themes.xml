@@ -53,6 +53,13 @@
         <item name="android:background">@drawable/border_green</item>
     </style>
 
+    <style name="strokeGray">
+        <item name="android:layout_marginRight">1dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/border_gray</item>
+    </style>
+
     <style name="rcpToolbar">
         <item name="titleTextColor">@color/white</item>
         <item name="colorControlNormal">@color/white</item>
