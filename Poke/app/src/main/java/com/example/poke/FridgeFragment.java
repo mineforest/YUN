@@ -1,5 +1,6 @@
 package com.example.poke;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -7,11 +8,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -60,6 +65,15 @@ public class FridgeFragment extends Fragment{
         mDatabase = FirebaseDatabase.getInstance().getReference();
         if(user != null)
             uid=user.getUid();
+
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.fridgeTab);
+        int betweenSpace = 30;
+        ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
+        for (int i=0; i<slidingTabStrip.getChildCount()-1; i++) {
+            View v = slidingTabStrip.getChildAt(i);
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            params.rightMargin = betweenSpace;
+        }
 
         recyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
         layoutManager = new GridLayoutManager(getActivity(),1);
@@ -203,11 +217,15 @@ public class FridgeFragment extends Fragment{
         inflater.inflate(R.menu.ingredient_sort, menu);
         MenuItem searchItem = menu.findItem(R.id.menu_search);
         searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setQueryHint("재료 검색");
-        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setQueryHint("냉장고 속 재료를 찾아보세요.");
+        searchView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_radius));
+        searchView.setIconifiedByDefault(false);
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(onQueryTextListener);
         searchView.setQuery(null,false);
+        EditText editText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        editText.setTextColor(Color.parseColor("#6E7377"));
+        editText.setHintTextColor(Color.parseColor("#6E7377"));
     }
 
     SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
@@ -354,5 +372,6 @@ public class FridgeFragment extends Fragment{
             dialog.show(getActivity().getSupportFragmentManager(),"tag");
         }
     };
+
 
 }

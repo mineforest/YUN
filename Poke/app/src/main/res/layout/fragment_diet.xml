@@ -9,13 +9,13 @@
     android:background="@drawable/image_bg_masked"
     android:orientation="vertical">
 
+
     <LinearLayout
         android:id="@+id/bottomSheet2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/preference_radius"
-        android:elevation="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/diet_shadow"
         android:orientation="vertical"
         app:behavior_hideable="false"
         app:behavior_peekHeight="399dp"
@@ -23,7 +23,21 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_shadow">
+
+            <Button
+                android:id="@+id/button4"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#00ff0000"
+                android:fontFamily="@font/noto_sans"
+                android:text="다음 &gt;"
+                android:textColor="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/button3"
@@ -32,24 +46,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="#00ff0000"
                 android:fontFamily="@font/noto_sans"
                 android:text="&lt; 이전"
                 android:textColor="@android:color/darker_gray"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/button4"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/noto_sans"
-                android:text="다음 &gt;"
-                android:textColor="@android:color/darker_gray"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -58,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:background="#00ff0000"
             android:fontFamily="@font/noto_sans"
             android:gravity="center"
             android:text="나만의 특별한 식단을 원하세요?"
@@ -70,6 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:background="#00ff0000"
             android:fontFamily="@font/noto_sans"
             android:text="식단 조절 유형에 알맞는 레시피를 추천해 드릴게요."
             android:textAlignment="center"

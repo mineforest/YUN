@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="40dp"
-        android:background="@drawable/preference_radius"
+        android:background="@drawable/top_shadow"
         android:elevation="50dp"
         android:orientation="vertical"
         app:behavior_hideable="false"

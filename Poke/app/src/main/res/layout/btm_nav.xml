@@ -25,9 +25,9 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="78dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/preference_radius"
+        android:background="@drawable/menu_shadow"
         android:elevation="80dp"
         app:elevation="80dp"
         app:itemBackground="@color/white"

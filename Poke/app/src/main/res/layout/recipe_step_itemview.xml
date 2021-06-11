@@ -9,15 +9,18 @@
 
     <ImageView
         android:id="@+id/step_img"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="294dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/layout_radius"
         android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <TextView
         android:id="@+id/step_txt"
-        android:layout_width="match_parent"
+        android:layout_width="332dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:text="TextView" />

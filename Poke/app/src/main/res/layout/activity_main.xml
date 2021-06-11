@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FAFAFA"
     android:orientation="vertical">
 
     <LinearLayout
@@ -75,7 +76,7 @@
                     android:layout_width="45dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:background="@color/white"
+                    android:background="#00ff0000"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
                     android:text="평가한 요리"
@@ -85,7 +86,7 @@
                     android:id="@+id/dibsButton"
                     android:layout_width="45dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:background="#00ff0000"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
                     android:text="찜한요리"
@@ -96,7 +97,7 @@
                     android:layout_width="45dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
-                    android:background="@color/white"
+                    android:background="#00ff0000"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
                     android:text="기피 재료"

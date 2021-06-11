@@ -125,20 +125,20 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
             case R.id.historyButton:
                 fragmentTransaction.replace(R.id.InfoFrame,new HistoryFragment()).commit();
                 historyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.btn_shape));
-                allergyButton.setBackgroundColor(Color.rgb(255,255,255));
-                dipsButton.setBackgroundColor(Color.rgb(255,255,255));
+                allergyButton.setBackgroundColor(Color.parseColor("#00ff0000"));
+                dipsButton.setBackgroundColor(Color.parseColor("#00ff0000"));
                 break;
             case R.id.dibsButton:
                 fragmentTransaction.replace(R.id.InfoFrame,new DipsFragment()).commit();
-                historyButton.setBackgroundColor(Color.rgb(255,255,255));
-                allergyButton.setBackgroundColor(Color.rgb(255,255,255));
+                historyButton.setBackgroundColor(Color.parseColor("#00ff0000"));
+                allergyButton.setBackgroundColor(Color.parseColor("#00ff0000"));
                 dipsButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.btn_shape));
                 break;
             case R.id.allergyButton:
                 fragmentTransaction.replace(R.id.InfoFrame,new Menu()).commit();
-                historyButton.setBackgroundColor(Color.rgb(255,255,255));
+                historyButton.setBackgroundColor(Color.parseColor("#00ff0000"));
                 allergyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.btn_shape));
-                dipsButton.setBackgroundColor(Color.rgb(255,255,255));
+                dipsButton.setBackgroundColor(Color.parseColor("#00ff0000"));
                 break;
         }
     }

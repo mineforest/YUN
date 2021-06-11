@@ -12,17 +12,26 @@
             android:id="@+id/bottomSheet3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/preference_radius"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/allergy_shadow"
             android:elevation="50dp"
             android:orientation="vertical"
             app:behavior_hideable="false"
             app:behavior_peekHeight="399dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
 
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="108dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/diet_shadow" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-95dp"
+                    android:background="@drawable/menu_shadow">
 
                         <Button
                             android:id="@+id/button5"
@@ -31,7 +40,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/white"
+                            android:backgroundTint="#00ff0000"
                             android:fontFamily="@font/noto_sans"
                             android:text="&lt; 이전"
                             android:textColor="@android:color/darker_gray"
@@ -45,7 +54,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="-1dp"
-                            android:backgroundTint="@color/white"
+                            android:backgroundTint="#00ff0000"
                             android:fontFamily="@font/noto_sans"
                             android:text="다음 &gt;"
                             android:textColor="@android:color/darker_gray"
@@ -59,6 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:background="#00ff0000"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
                     android:text="못 먹는 식재료가 있나요?"
