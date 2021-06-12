@@ -4,6 +4,26 @@ from scipy.sparse.linalg import svds
 import pandas as pd
 from surprise.model_selection import GridSearchCV
 
+
+##
+
+og_recipe= pd.read_json('C:/RecoSys/merged_recipe.json', encoding='UTF-8')
+
+#2열짜리로 1자로 쭉 생성
+cols=['id','name']
+recipe_name = pd.DataFrame(columns=cols)
+
+idx=0
+for rid, rname in zip(og_recipe['id'], og_recipe['name']):
+    list=[rid,rname]
+
+    recipe_name.loc[idx]=list
+    print(idx)
+    idx=idx+1
+##
+
+
+
 # get user,recipe and rating file and convert as matrix, treat with pandas
 u_cols=['name', 'id', 'pwd']
 users= pd.read_csv('C:/RecoSys/users.csv',names=u_cols, header=None, encoding='UTF-8')
@@ -18,12 +38,15 @@ for i in ratings['user_id']:
          if i not in user_list:
              user_list[idx]=i
              idx=idx+1
-user_id='33917744'
+#user_id='jtion2'
+#user_id='77726315'
+user_id='jf1000'
 user_pwd='123456'
 
 # get params by GridSearchCV
 traindata=Dataset.load_from_df(ratings, Reader())
-param_grid = {'n_epochs': [20,40,60], 'n_factors': [10,20,40,80]}
+#param_grid = {'n_epochs': [20,40,60], 'n_factors': [10,20,40,80]}
+param_grid = {'n_epochs': [10], 'n_factors': [70]}
 gs = GridSearchCV(SVD, param_grid, measures=['rmse', 'mse'], cv=3)
 gs.fit(traindata)
 print()
@@ -64,5 +87,5 @@ user_name=input("input id: ")
 print('-- info -- ')
 print('name:{},  id:{}, pwd:{}'.format(user_name,user_id,user_pwd))
 already_rated,predictions= recommend_recipes(df_svd, user_id, recipes, ratings, 10)
-print(already_rated)
-print(predictions)
+print(already_rated[['recipe_id','rating']])
+print(predictions[['recipe_id','Predictions']])
