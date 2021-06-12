@@ -23,13 +23,14 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         android:fillViewport="true"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffff"
+            android:background="@color/background"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,15 +54,22 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/title_txt" />
 
-                <ImageView
-                    android:id="@+id/rcpinfo_thumbnail"
-                    android:layout_width="182dp"
-                    android:layout_height="268dp"
-                    android:background="@drawable/layout_bottom"
-                    android:scaleType="centerCrop"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="179dp"
+                    android:layout_height="156dp"
+                    android:layout_marginTop="5dp"
+                    app:cardCornerRadius="30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/rcpinfo_thumbnail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/title_txt"
@@ -72,45 +80,81 @@
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center|left"
                     android:text="TextView"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="26dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view4"
+                    app:srcCompat="@drawable/ic_schedule_black_24dp" />
 
                 <TextView
                     android:id="@+id/timeText"
                     android:layout_width="64dp"
                     android:layout_height="0dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="13dp"
                     android:text="시간"
                     android:textColor="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="26dp"
+                    android:layout_height="29dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    app:srcCompat="@drawable/ic_ingredient" />
 
                 <TextView
                     android:id="@+id/rateText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="17dp"
                     android:text="재료비율"
                     android:textColor="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView6"
                     app:layout_constraintTop_toBottomOf="@+id/timeText" />
 
-                <TextView
-                    android:id="@+id/tag_txt"
-                    android:layout_width="163dp"
-                    android:layout_height="22dp"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/tagGroup"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="TextView"
-                    android:textColor="@color/black"
+                    android:layout_marginTop="23dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rateText" />
+                    app:layout_constraintTop_toBottomOf="@+id/rateText">
+
+                </com.google.android.material.chip.ChipGroup>
+
+
+                <!--                <TextView-->
+<!--                    android:id="@+id/tag_txt"-->
+<!--                    android:layout_width="163dp"-->
+<!--                    android:layout_height="22dp"-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:layout_marginTop="24dp"-->
+<!--                    android:fontFamily="@font/noto_sans"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="TextView"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="16sp"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/rateText" />-->
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
@@ -122,14 +166,12 @@
 
                 <TextView
                     android:id="@+id/textView16"
-                    android:layout_width="match_parent"
+                    android:layout_width="186dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/noto_sans"
                     android:text="재료"
-                    android:textAlignment="viewStart"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -137,8 +179,9 @@
                     android:id="@+id/person"
                     android:layout_width="69dp"
                     android:layout_height="37dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="-30dp"
+                    android:layout_marginRight="20dp"
                     android:background="@drawable/border_gray"
                     android:gravity="center"
                     android:text="2인분"

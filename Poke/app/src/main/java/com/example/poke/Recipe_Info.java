@@ -3,6 +3,7 @@ package com.example.poke;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -23,6 +24,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,6 +52,9 @@ public class Recipe_Info extends AppCompatActivity {
     private ImageView recipe_image;
     private TextView recipe_title;
     private TextView recipe_tag;
+    private TextView recipe_time;
+    private ChipGroup chipGroup;
+    private Chip chip;
     private MaterialToolbar toolbar;
     RecipeIngre_Adapter adapter;
     RecipeStep_Adapter adapter2;
@@ -65,6 +71,7 @@ public class Recipe_Info extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.hide();
 
+        chipGroup = (ChipGroup)findViewById(R.id.tagGroup);
         doneButton = findViewById(R.id.doneButton);
         toolbar = (MaterialToolbar) findViewById(R.id.topAppBarr);
         toolbar.inflateMenu(R.menu.top_app_bar);
@@ -87,6 +94,7 @@ public class Recipe_Info extends AppCompatActivity {
                 String rid = rcp.getId();
                 String thumbnail = rcp.getThumbnail();
                 String rtitle = rcp.getName();
+
                 mDatabase.child("dips").child(uid).orderByChild("rcp_id").equalTo(rid).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -111,7 +119,8 @@ public class Recipe_Info extends AppCompatActivity {
 
         recipe_image = findViewById(R.id.rcpinfo_thumbnail);
         recipe_title = findViewById(R.id.title_txt);
-        recipe_tag = findViewById(R.id.tag_txt);
+       // recipe_tag = findViewById(R.id.tag_txt);
+        recipe_time = findViewById(R.id.timeText);
        // avg = findViewById(R.id.average);
 
         Intent intent = getIntent();
@@ -148,9 +157,18 @@ public class Recipe_Info extends AppCompatActivity {
 
                     rcp = new Recipe_get(recipe_id, title, thumbnail, url, ingredient_ids, cook_time, ingre_list, sauce_list, recipe_list, recipe_img, tags);
 
+                    String[] string;
+                    for(String t : tags){
+                        string = (t.split(","));
+                        for(String s : string){
+                            addChip(s);
+                        }
+                    }
+
                     Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
                     recipe_title.setText(rcp.getName());
-                    recipe_tag.setText(rcp.getTag().toString());
+//                    recipe_tag.setText(rcp.getTag().toString());
+                    recipe_time.setText("약 " + rcp.getTime() + "분");
 
                     RecyclerView recyclerView = findViewById(R.id.ingre_recyclerView);
                     recyclerView.setHasFixedSize(true);
@@ -199,4 +217,17 @@ public class Recipe_Info extends AppCompatActivity {
             startActivity(intent);
         }
     };
+
+    public void addChip(String text){
+        int paddingDp = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 15,
+                getResources().getDisplayMetrics()
+        );
+        chip =(Chip) this.getLayoutInflater().inflate(R.layout.tag_chip, null, false);
+        chip.setText(text);
+        chip.setClickable(false);
+        chip.setPadding(paddingDp, 0, paddingDp, 0);
+        chip.setCheckable(false);
+        chipGroup.addView(chip);
+    }
 }

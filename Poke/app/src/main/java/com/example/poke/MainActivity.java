@@ -1,5 +1,6 @@
 package com.example.poke;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -17,9 +18,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentStateAdapter pagerAdapter;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
         //회원정보가 없으면 회원등록 화면 나옴
         else {
             mDatabase = FirebaseDatabase.getInstance().getReference();
-            String uid = user.getUid();
-
+            uid = user.getUid();
             nullStartActivity(uid,"preference");
             nullStartActivity(uid,"users");
 
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             viewPager2.setUserInputEnabled(false);
             FragmentManager fragmentManager = getSupportFragmentManager();
             mBottomNavigationView=findViewById(R.id.bottom_navigation);
+
             viewPager2.setCurrentItem(1);
             //첫 화면 띄우기
             mBottomNavigationView.setSelectedItemId(R.id.nav_home);

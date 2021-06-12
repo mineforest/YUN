@@ -17,8 +17,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -26,28 +24,22 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MainRecyclerViewFragment extends Fragment {
+public class MainRecyclerViewFragment extends Fragment{
     ArrayList<Recipe_get> rcps = new ArrayList<>();
     ArrayList<String> myIngreList;
     CustomAdapter adapter;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private String uid;
+    FirebaseUser user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +55,7 @@ public class MainRecyclerViewFragment extends Fragment {
         myIngreList = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        FirebaseUser user = mAuth.getCurrentUser();
+        user = mAuth.getCurrentUser();
         uid = user.getUid();
 
         mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
@@ -87,7 +79,6 @@ public class MainRecyclerViewFragment extends Fragment {
 
                         for(int k=0; k<ingre_list.size(); k++){
                             if(myIngreList.contains(ingre_list.get(k).get("ingre_name"))){
-
                                 cnt++;
                             }
                         }
@@ -148,7 +139,6 @@ public class MainRecyclerViewFragment extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
                 myIngreList.add(ingredient.getIngredientTitle());
-                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -171,11 +161,24 @@ public class MainRecyclerViewFragment extends Fragment {
             }
         };
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mDatabase.removeEventListener(childEventListener);
+    }
+
     private void myStartActivity(Class c){
         Intent intent = new Intent(getActivity(),c);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        if(childEventListener != null)
+//            mDatabase.removeEventListener(childEventListener);
+//    }
 
     private void revokeAccess() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

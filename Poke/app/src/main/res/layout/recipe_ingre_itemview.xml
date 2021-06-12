@@ -10,7 +10,7 @@
         android:id="@+id/check"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
+        android:layout_marginLeft="16dp"
         android:layout_weight="1"
         android:checked="false"
         android:clickable="false"
@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="재료명"
-        android:textAlignment="center" />
+        android:textAlignment="viewStart" />
 
     <TextView
         android:id="@+id/i_amount_txt"
