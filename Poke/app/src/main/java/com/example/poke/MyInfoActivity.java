@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 
 public class MyInfoActivity extends Fragment implements View.OnClickListener{
     TextView nickNameTextView;
+    ImageView profileView;
     private DatabaseReference mDatabase;
     private ArrayList<UserHistory> historyList;
     private HistoryAdapter mainAdapter;
@@ -61,6 +63,7 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
 
         historyFragment = new HistoryFragment();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        profileView=(ImageView)view.findViewById(R.id.Profileimage);
         nickNameTextView=(TextView)view.findViewById(R.id.Nickname);
         historyButton = (Button) view.findViewById(R.id.historyButton);
         dipsButton = (Button) view.findViewById(R.id.dibsButton);

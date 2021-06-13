@@ -11,6 +11,8 @@ public class SearchList {
         this.searchTitle = searchTitle;
     }
 
+
+
     public String getSearchTitle() {
         return searchTitle;
     }

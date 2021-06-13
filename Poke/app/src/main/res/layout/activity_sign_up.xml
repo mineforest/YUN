@@ -31,7 +31,7 @@
             android:hint="이메일"
             android:inputType="textEmailAddress"
             android:textColor="#000000"
-            android:textColorHint="#000000" />
+            android:textColorHint="@color/gray" />
 
         <EditText
             android:id="@+id/passwordEditText"
@@ -44,7 +44,7 @@
             android:inputType="textPassword"
             android:paddingBottom="5dp"
             android:textColor="#000000"
-            android:textColorHint="#000000" />
+            android:textColorHint="@color/gray" />
 
         <EditText
             android:id="@+id/passwordCheckEditText"
@@ -55,13 +55,14 @@
             android:fontFamily="@font/noto_sans"
             android:hint="비밀번호 확인"
             android:inputType="textPassword"
-            android:textColorHint="#000000" />
+            android:textColorHint="@color/gray" />
 
         <Button
             android:id="@+id/signUpButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/noto_sans"
+            android:textColor="@color/black"
             android:text="회원가입" />
 
     </LinearLayout>
