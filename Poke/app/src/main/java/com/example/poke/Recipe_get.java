@@ -70,6 +70,15 @@ public class Recipe_get {
         this.rate = rate;
     }
 
+    public Recipe_get(String rcp_id, String title, String thumbnail, String cook_time,  long rate, List<String> tag) {
+        this.id = rcp_id;
+        this.name = title;
+        this.thumbnail = thumbnail;
+        this.time = cook_time;
+        this.rate = rate;
+        this.tag = tag;
+    }
+
     public void setRate(long rate) {
         this.rate = rate;
     }

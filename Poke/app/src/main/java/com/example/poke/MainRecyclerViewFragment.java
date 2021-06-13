@@ -16,6 +16,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +44,9 @@ public class MainRecyclerViewFragment extends Fragment{
     private String uid;
     FirebaseUser user;
 
+    private ViewPager2 viewPager;
+    private MainViewpageAdapter adapter2;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +55,7 @@ public class MainRecyclerViewFragment extends Fragment{
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
-        View view = inflater.inflate(R.layout.home_recyler_test, container, false);
+        View view = inflater.inflate(R.layout.main_page, container, false);
         setHasOptionsMenu(true);
 
         myIngreList = new ArrayList<>();
@@ -75,6 +80,7 @@ public class MainRecyclerViewFragment extends Fragment{
                     String title = documentSnapshot.getData().get("name").toString();
                     String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
                     String cook_time = documentSnapshot.getData().get("time").toString();
+                    List<String> tags = (List<String>) documentSnapshot.get("tag");
 //                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
                     List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
 
@@ -86,11 +92,12 @@ public class MainRecyclerViewFragment extends Fragment{
 
                     long dd = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
 
-                    Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, dd);
+                    Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, dd, tags);
                     Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
                     rcps.add(rr);
 
                     adapter.notifyDataSetChanged();
+                    adapter2.notifyDataSetChanged();
                 }
             });
         }
@@ -103,6 +110,10 @@ public class MainRecyclerViewFragment extends Fragment{
         int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
         recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
+
+        viewPager = view.findViewById(R.id.main_pager);
+        adapter2 = new MainViewpageAdapter(rcps);
+        viewPager.setAdapter(adapter2);
 
         return view;
     }
