@@ -15,6 +15,5 @@ public class SearchViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         search_thumbnail = itemView.findViewById(R.id.search_image);
         search_title = itemView.findViewById(R.id.search_title);
-
     }
 }
