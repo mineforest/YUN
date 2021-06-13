@@ -28,6 +28,7 @@
             android:ems="10"
             android:fontFamily="@font/noto_sans"
             android:hint="닉네임"
+            android:textColorHint="@color/gray"
             android:inputType="textPersonName"
             android:privateImeOptions="defaultInputmode=korean" />
 
@@ -36,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textColorHint="@color/gray"
             android:fontFamily="@font/noto_sans"
             android:hint="나이"
             android:inputType="phone" />
@@ -46,6 +48,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:fontFamily="@font/noto_sans"
+            android:textColorHint="@color/gray"
             android:hint="생년월일"
             android:inputType="date" />
 
@@ -55,6 +58,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:fontFamily="@font/noto_sans"
+            android:textColorHint="@color/gray"
             android:hint="성별"
             android:inputType="textPostalAddress" />
 
@@ -63,6 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/noto_sans"
+            android:textColor="@color/black"
             android:text="확인" />
 
     </LinearLayout>
