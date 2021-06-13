@@ -107,10 +107,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredientRecyclerView"
-            android:layout_width="418dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="?attr/actionBarSize"
-            android:layout_weight="1"
             android:orientation="vertical"
             android:scrollbarFadeDuration="0"
             android:scrollbarSize="3dp"

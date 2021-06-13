@@ -1,6 +1,7 @@
 package com.example.poke;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.btm_nav);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-
+        ActionBar actionbar = getSupportActionBar();
         //로그인 되어 있지 않으면 로그인 화면으로
         if(user == null) {
             myStartActivity(LoginActivity.class);
@@ -72,18 +73,23 @@ public class MainActivity extends AppCompatActivity {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     switch (item.getItemId()){
                         case R.id.nav_info :
+                            actionbar.hide();
                             viewPager2.setCurrentItem(0);
+
                             //  fragmentTransaction.replace(R.id.frame_container,new MyInfoActivity()).commit();
                             break;
                         case R.id.nav_home:
+                            actionbar.show();
                             viewPager2.setCurrentItem(1);
                             // fragmentTransaction.replace(R.id.frame_container,new MainActivity()).commit();
                             break;
                         case R.id.nav_ingredient:
+                            actionbar.show();
                             viewPager2.setCurrentItem(2);
                             //fragmentTransaction.replace(R.id.frame_container,new FridgeFragment()).commit();
                             break;
                         case R.id.nav_search:
+                            actionbar.hide();
                             viewPager2.setCurrentItem(3);
                             //fragmentTransaction.replace(R.id.frame_container,new Frag4()).commit();
                             break;

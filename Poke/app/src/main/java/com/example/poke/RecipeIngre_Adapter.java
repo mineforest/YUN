@@ -87,8 +87,7 @@ public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapte
 
         if(list != null && position < list.size()) {
             holder.i_name.setText(list.get(position).get("ingre_name"));
-            holder.i_amount.setText(list.get(position).get("ingre_count"));
-            holder.i_unit.setText(list.get(position).get("ingre_unit"));
+            holder.i_amount.setText(list.get(position).get("ingre_count")+list.get(position).get("ingre_unit"));
         }
 
     }
@@ -101,14 +100,12 @@ public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapte
     public static class CustomViewHolder extends RecyclerView.ViewHolder {
         public TextView i_name;
         public TextView i_amount;
-        public TextView i_unit;
         public CheckBox checkBox;
 
         public CustomViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             this.i_name = itemView.findViewById(R.id.i_name_txt);
             this.i_amount = itemView.findViewById(R.id.i_amount_txt);
-            this.i_unit = itemView.findViewById(R.id.i_unit_txt);
             this.checkBox = itemView.findViewById(R.id.check);
         }
     }

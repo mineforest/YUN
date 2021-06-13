@@ -43,7 +43,7 @@
                     android:id="@+id/view4"
                     android:layout_width="wrap_content"
                     android:layout_height="37dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/border_gray"
                     android:gravity="center"
@@ -55,11 +55,11 @@
                     app:layout_constraintTop_toBottomOf="@+id/title_txt" />
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="179dp"
-                    android:layout_height="156dp"
+                    android:layout_width="177dp"
+                    android:layout_height="163dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginEnd="20dp"
                     app:cardCornerRadius="30dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -75,8 +75,8 @@
                     android:id="@+id/title_txt"
                     android:layout_width="186dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center|left"
                     android:text="TextView"
@@ -89,7 +89,7 @@
                     android:id="@+id/imageView"
                     android:layout_width="26dp"
                     android:layout_height="30dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view4"
@@ -111,7 +111,7 @@
                     android:id="@+id/imageView6"
                     android:layout_width="26dp"
                     android:layout_height="29dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView"
@@ -122,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="15dp"
                     android:text="재료비율"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -131,44 +131,28 @@
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/tagGroup"
-                    android:layout_width="190dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="23dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rateText">
 
                 </com.google.android.material.chip.ChipGroup>
 
-
-                <!--                <TextView-->
-<!--                    android:id="@+id/tag_txt"-->
-<!--                    android:layout_width="163dp"-->
-<!--                    android:layout_height="22dp"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginTop="24dp"-->
-<!--                    android:fontFamily="@font/noto_sans"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="TextView"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="16sp"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/rateText" />-->
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/shadow"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView16"
                     android:layout_width="186dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/noto_sans"
                     android:text="재료"
@@ -210,14 +194,14 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView11"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
                     android:text="양념"
+                    android:textAlignment="viewStart"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -239,11 +223,12 @@
                     android:id="@+id/textView17"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
                     android:text="조리법"
+                    android:textAlignment="viewStart"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -259,10 +244,10 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/doneButton"
                 android:layout_width="205dp"
-                android:layout_height="48dp"
+                android:layout_height="59dp"
                 android:layout_marginLeft="105dp"
                 android:layout_marginTop="25dp"
-                android:layout_marginBottom="25dp"
+                android:layout_marginBottom="30dp"
                 android:background="@drawable/btn_shape"
                 android:text="         다음        >"
                 android:textAlignment="center"

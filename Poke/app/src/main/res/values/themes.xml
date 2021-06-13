@@ -2,9 +2,9 @@
     <!-- Base application theme. -->
     <style name="Theme.Poke" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/ic_launcher_image_background</item>
+        <item name="colorPrimary">@color/background</item>
         <item name="colorPrimaryVariant">@color/green</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/background</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
@@ -36,6 +36,8 @@
         <item name="android:textColorHint">#000000</item>
         <item name="searchHintIcon">@drawable/ic_search</item>
         <item name="searchIcon">@drawable/ic_search</item>
+        <item name="closeIcon">@drawable/ic_search</item>
+        <item name="android:searchHintIcon">@drawable/ic_search</item>
     </style>
 
     <style name="strokeRed">

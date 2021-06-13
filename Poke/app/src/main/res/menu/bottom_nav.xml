@@ -4,21 +4,21 @@
 
     <item
         android:id="@+id/nav_info"
-        android:title="My info"
+        android:title="마이페이지"
         android:icon="@drawable/ic_myinform"/>
 
     <item
         android:id="@+id/nav_home"
-        android:title="Home"
+        android:title="홈"
         android:icon="@drawable/ic_home"/>
 
     <item
         android:id="@+id/nav_ingredient"
-        android:title="Ingredient"
+        android:title="냉장고"
         android:icon="@drawable/ic_ingredient"/>
 
     <item
         android:id="@+id/nav_search"
-        android:title="Search"
+        android:title="검색"
         android:icon="@drawable/ic_search"/>
 </menu>

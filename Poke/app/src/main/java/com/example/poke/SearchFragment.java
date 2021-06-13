@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,7 +42,6 @@ public class SearchFragment extends Fragment implements TextWatcher {
     String uid;
     ImageView clear_btn;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +50,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.search, container, false);
+
         String[] test_ids = {"6900699", "6880252","6903806", "6901559", "6883872", "6886282",
                 "6883047", "6948903", "6893957", "6893869", "6891643", "6947127"};
         FirebaseFirestore db = FirebaseFirestore.getInstance();

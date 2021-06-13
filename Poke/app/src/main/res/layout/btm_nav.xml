@@ -19,7 +19,6 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </androidx.viewpager2.widget.ViewPager2>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -28,10 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/menu_shadow"
-        android:elevation="80dp"
-        app:elevation="80dp"
-        app:itemBackground="@color/white"
-        app:menu="@menu/bottom_nav">
+        app:menu="@menu/bottom_nav"
+        app:itemIconTint="@color/navigation_selected"
+        app:itemTextColor="#6E7377">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 

@@ -14,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
-        app:cardCornerRadius="80dp"
+        app:cardCornerRadius="496dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,7 +22,7 @@
         <ImageView
             android:id="@+id/step_img"
             android:layout_width="296dp"
-            android:layout_height="126dp"
+            android:layout_height="135dp"
             android:background="@drawable/layout_radius"
             android:scaleType="centerCrop"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
@@ -32,7 +32,7 @@
         android:id="@+id/step_txt"
         android:layout_width="332dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"

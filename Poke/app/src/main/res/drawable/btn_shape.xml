@@ -4,7 +4,7 @@
 
 
     <corners
-       android:radius="150dp"  />
+       android:radius="30dp"  />
     <size android:width="205dp"
         android:height="59dp">
     </size>

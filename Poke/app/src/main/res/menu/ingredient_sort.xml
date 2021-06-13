@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:theme="@style/SearchViewStyle"
         android:id="@+id/menu_search"
-        android:title="@string/search"
         android:icon="@drawable/ic_search"
         android:iconTint="#6E7377"
-        app:iconifiedByDefault="false"
-        app:showAsAction="always"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+        android:theme="@style/SearchViewStyle"
+        android:title="@string/search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:iconifiedByDefault="true"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/id"
