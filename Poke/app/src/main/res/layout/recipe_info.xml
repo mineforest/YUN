@@ -42,23 +42,23 @@
                 <TextView
                     android:id="@+id/view4"
                     android:layout_width="wrap_content"
-                    android:layout_height="37dp"
+                    android:layout_height="30dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="18dp"
                     android:background="@drawable/border_gray"
                     android:gravity="center"
                     android:text="요리 초보자"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/title_txt" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="175dp"
                     android:layout_height="171dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
                     app:cardCornerRadius="30dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -80,17 +80,18 @@
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center|left"
                     android:text="TextView"
-                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="26dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="22dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="22dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view4"
                     app:srcCompat="@drawable/ic_schedule_black_24dp" />
@@ -100,17 +101,17 @@
                     android:layout_width="64dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="7dp"
-                    android:layout_marginTop="13dp"
+                    android:layout_marginTop="22dp"
                     android:text="시간"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toBottomOf="@+id/view4" />
 
                 <ImageView
                     android:id="@+id/imageView6"
-                    android:layout_width="26dp"
-                    android:layout_height="29dp"
+                    android:layout_width="20dp"
+                    android:layout_height="22dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -122,10 +123,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="13dp"
                     android:text="재료비율"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     app:layout_constraintStart_toEndOf="@+id/imageView6"
                     app:layout_constraintTop_toBottomOf="@+id/timeText" />
 
@@ -164,7 +165,7 @@
                 <TextView
                     android:id="@+id/person"
                     android:layout_width="69dp"
-                    android:layout_height="37dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="right"
                     android:layout_marginTop="-30dp"
                     android:layout_marginRight="20dp"
@@ -173,7 +174,7 @@
                     android:text="2인분"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/title_txt" />
 
@@ -238,7 +239,7 @@
                     android:id="@+id/recipe_recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginBottom="35dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
