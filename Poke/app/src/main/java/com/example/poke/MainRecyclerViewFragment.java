@@ -57,7 +57,7 @@ public class MainRecyclerViewFragment extends Fragment{
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.main_page, container, false);
         setHasOptionsMenu(true);
-
+        ((MainActivity)getActivity()).getSupportActionBar().setElevation(0);
         myIngreList = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();

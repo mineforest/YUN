@@ -55,8 +55,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/title_txt" />
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="177dp"
-                    android:layout_height="163dp"
+                    android:layout_width="175dp"
+                    android:layout_height="171dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="20dp"
                     app:cardCornerRadius="30dp"
@@ -66,7 +66,7 @@
                     <ImageView
                         android:id="@+id/rcpinfo_thumbnail"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         tools:srcCompat="@tools:sample/backgrounds/scenic" />
                 </androidx.cardview.widget.CardView>

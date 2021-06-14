@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -55,7 +54,7 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_main,container,false);
+        View view = inflater.inflate(R.layout.activity_myinfo,container,false);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null)
@@ -71,7 +70,7 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         historyButton.setOnClickListener(this);
         dipsButton.setOnClickListener(this);
         allergyButton.setOnClickListener(this);
-        historyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.btn_shape));
+        historyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.info_btn));
         mDatabase.addValueEventListener(allergyListener);
 
        getChildFragmentManager().beginTransaction().add(R.id.InfoFrame,new HistoryFragment()).commit();
@@ -126,7 +125,7 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.historyButton:
                 fragmentTransaction.replace(R.id.InfoFrame,new HistoryFragment()).commit();
-                historyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.btn_shape));
+                historyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.info_btn));
                 allergyButton.setBackgroundColor(Color.parseColor("#00ff0000"));
                 dipsButton.setBackgroundColor(Color.parseColor("#00ff0000"));
                 break;
@@ -134,12 +133,12 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
                 fragmentTransaction.replace(R.id.InfoFrame,new DipsFragment()).commit();
                 historyButton.setBackgroundColor(Color.parseColor("#00ff0000"));
                 allergyButton.setBackgroundColor(Color.parseColor("#00ff0000"));
-                dipsButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.btn_shape));
+                dipsButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.info_btn));
                 break;
             case R.id.allergyButton:
                 fragmentTransaction.replace(R.id.InfoFrame,new Menu()).commit();
                 historyButton.setBackgroundColor(Color.parseColor("#00ff0000"));
-                allergyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.btn_shape));
+                allergyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.info_btn));
                 dipsButton.setBackgroundColor(Color.parseColor("#00ff0000"));
                 break;
         }

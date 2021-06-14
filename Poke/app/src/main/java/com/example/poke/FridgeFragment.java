@@ -57,7 +57,7 @@ public class FridgeFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_fridge,container,false);
         setHasOptionsMenu(true);
-
+        ((MainActivity)getActivity()).getSupportActionBar().setElevation(0);
         tabLayout = view.findViewById(R.id.fridgeTab);
         addButton = view.findViewById(R.id.ingredientAddBtn);
         searchView = view.findViewById(R.id.menu_search);
