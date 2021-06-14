@@ -7,6 +7,7 @@
     android:background="@color/background">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -15,6 +16,7 @@
             style="@style/rcpToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:elevation="0dp"
             app:layout_scrollFlags="scroll|enterAlways|snap">
 
         </com.google.android.material.appbar.MaterialToolbar>

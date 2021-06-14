@@ -111,10 +111,9 @@
 
     <FrameLayout
         android:id="@+id/InfoFrame"
-        android:layout_width="match_parent"
-        android:layout_height="321dp"
+        android:layout_width="357dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +124,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="?attr/actionBarSize"
             android:layout_weight="1"
             android:scrollbarFadeDuration="0"
             android:scrollbarSize="3dp"
