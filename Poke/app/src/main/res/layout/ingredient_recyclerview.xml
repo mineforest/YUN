@@ -13,10 +13,10 @@
 
     <ImageView
         android:id="@+id/categoryView"
-        android:layout_width="63dp"
-        android:layout_height="73dp"
+        android:layout_width="45dp"
+        android:layout_height="57dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_kitchen_black_24dp" />
@@ -24,16 +24,16 @@
     <TextView
         android:id="@+id/ingredientTitleView"
         android:layout_width="119dp"
-        android:layout_height="34dp"
+        android:layout_height="25dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:fontFamily="@font/noto_sans"
         android:inputType="textPersonName"
         android:text="Name"
         android:textAlignment="gravity"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/categoryView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,12 +43,12 @@
         android:layout_width="74dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="22dp"
         android:fontFamily="@font/noto_sans"
         android:text="New"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="19sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,11 +57,11 @@
         android:layout_width="144dp"
         android:layout_height="27dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="0dp"
         android:text="TextView"
         android:textAlignment="gravity"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="13sp"
         app:layout_constraintStart_toEndOf="@+id/categoryView"
         app:layout_constraintTop_toBottomOf="@+id/ingredientTitleView" />
 

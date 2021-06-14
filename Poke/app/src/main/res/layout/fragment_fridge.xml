@@ -12,19 +12,21 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/fridgeTab"
         style="@style/CustomTabStyle"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="20dp"
         android:background="#FAFAFA"
         app:tabIndicatorHeight="0dp"
         app:tabMinWidth="80dp"
         app:tabMode="scrollable"
-        app:tabPaddingEnd="10dp"
+        app:tabPaddingEnd="30dp"
         app:tabPaddingStart="10dp"
-        app:tabTextColor="@color/black">
+        app:tabTextColor="@color/black"
+        android:textAlignment="center"
+        >
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/allItem"
