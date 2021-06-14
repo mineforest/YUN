@@ -172,7 +172,7 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/dietChip9"
                 style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"

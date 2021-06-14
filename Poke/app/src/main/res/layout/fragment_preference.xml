@@ -98,93 +98,95 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip1"
                 style="@style/CustomChipStyle"
-                android:layout_width="70dp"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:text="탕"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip2"
                 style="@style/CustomChipStyle"
-                android:layout_width="70dp"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:text="찌개"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip4"
                 style="@style/CustomChipStyle"
-                android:layout_width="70dp"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="면"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip5"
                 style="@style/CustomChipStyle"
-                android:layout_width="70dp"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="만두"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip3"
                 style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:text="디저트"
-                android:textSize="20sp" />
+                android:textAlignment="center"
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip6"
                 style="@style/CustomChipStyle"
-                android:layout_width="70dp"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="밥"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip7"
                 style="@style/CustomChipStyle"
-                android:layout_width="70dp"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="죽"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip10"
                 style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="93dp"
+                android:layout_height="55dp"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="샐러드"
-                android:textSize="20sp" />
+                android:textAlignment="center"
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip8"
@@ -195,144 +197,152 @@
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="김치젓갈장류"
-                android:textSize="20sp" />
+                android:textAlignment="center"
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip9"
                 style="@style/CustomChipStyle"
-                android:layout_width="70dp"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="양식"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip11"
                 style="@style/CustomChipStyle"
-                android:layout_width="70dp"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="스프"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip12"
                 style="@style/CustomChipStyle"
-                android:layout_width="70dp"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="두류"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip13"
                 style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="견과류"
-                android:textSize="20sp" />
+                android:textAlignment="center"
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip14"
                 style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="채소류"
-                android:textSize="20sp" />
+                android:textAlignment="center"
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip15"
                 style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="버섯류"
-                android:textSize="20sp" />
+                android:textAlignment="center"
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip16"
                 style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="과실류"
-                android:textSize="20sp" />
+                android:textAlignment="center"
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip17"
                 style="@style/CustomChipStyle"
-                android:layout_width="70dp"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="육류"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip18"
                 style="@style/CustomChipStyle"
-                android:layout_width="70dp"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="난류"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip19"
                 style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="어패류"
-                android:textSize="20sp" />
+                android:textAlignment="center"
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip20"
                 style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="해조류"
-                android:textSize="20sp" />
+                android:textAlignment="center"
+                android:textSize="15sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip21"
                 style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="유제품류"
-                android:textSize="20sp" />
+                android:textAlignment="center"
+                android:textSize="15sp" />
 
         </com.google.android.material.chip.ChipGroup>
 
