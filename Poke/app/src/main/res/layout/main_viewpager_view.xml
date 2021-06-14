@@ -50,21 +50,22 @@
                 android:id="@+id/main_pager_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/imageView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
                 app:srcCompat="@drawable/ic_ingredient" />
 
             <TextView
                 android:id="@+id/main_pager_rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1" />
         </LinearLayout>
 
 <!--        <TextView-->
