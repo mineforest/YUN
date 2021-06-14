@@ -37,6 +37,7 @@ import java.util.Map;
 
 public class MainRecyclerViewFragment extends Fragment{
     ArrayList<Recipe_get> rcps = new ArrayList<>();
+    ArrayList<Recipe_get> rcps_siyeonyong = new ArrayList<>();
     ArrayList<String> myIngreList;
     CustomAdapter adapter;
     private FirebaseAuth mAuth;
@@ -67,7 +68,7 @@ public class MainRecyclerViewFragment extends Fragment{
         mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
 
         //테스트용 레시피 id들
-        String[] test_ids = {"6900699", "6880252","6903806", "6901559", "6883872", "6886282",
+        String[] test_ids = {"12345678", "6900699", "6880252","6903806", "6901559", "6883872", "6886282",
                 "6883047", "6948903", "6893957", "6893869", "6891643", "6947127"};
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         for(int i =0;i<test_ids.length; i++){
@@ -94,8 +95,12 @@ public class MainRecyclerViewFragment extends Fragment{
 
                     Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, dd, tags);
                     Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
-                    rcps.add(rr);
-
+                    if(rr.getId().equals("12345678")){
+                        rcps_siyeonyong.add(rr);
+                    }
+                    else {
+                        rcps.add(rr);
+                    }
                     adapter.notifyDataSetChanged();
                     adapter2.notifyDataSetChanged();
                 }
@@ -112,7 +117,7 @@ public class MainRecyclerViewFragment extends Fragment{
         recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
 
         viewPager = view.findViewById(R.id.main_pager);
-        adapter2 = new MainViewpageAdapter(rcps);
+        adapter2 = new MainViewpageAdapter(rcps_siyeonyong);
         viewPager.setAdapter(adapter2);
 
         return view;
