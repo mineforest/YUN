@@ -25,6 +25,9 @@ public class MainViewpageAdapter  extends RecyclerView.Adapter<MainViewpageViewh
     private static final int NUM_PAGES = 5;
     private final ArrayList<Recipe_get> mRcplist;
     private Intent intent;
+    private Chip chip;
+    private Context context;
+    LayoutInflater layoutInflater;
 
     MainViewpageAdapter(ArrayList<Recipe_get> rcp_list) {
         this.mRcplist = rcp_list;
@@ -34,6 +37,8 @@ public class MainViewpageAdapter  extends RecyclerView.Adapter<MainViewpageViewh
     @Override
     public MainViewpageViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_viewpager_view, parent, false);
+        context=parent.getContext();
+        layoutInflater = LayoutInflater.from(context);
         return new MainViewpageViewholder(layoutView);
     }
 
@@ -46,7 +51,24 @@ public class MainViewpageAdapter  extends RecyclerView.Adapter<MainViewpageViewh
             holder.rcp_title.setText(rcp.getName());
             holder.rcp_cooktime.setText(rcp.getTime()+"분");
             holder.rate.setText((rcp.getRate())+"%");
-            holder.tags.setText(String.join(", ",rcp.getTag())); // 수정 필요
+
+            int paddingDp = (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 15,
+                    context.getResources().getDisplayMetrics()
+            );
+
+            String[] string;
+            for(String t : rcp.getTag()){
+                string = (t.split(","));
+                for(String s : string){
+                    chip =(Chip)layoutInflater.inflate(R.layout.tag_chip, null, false);
+                    chip.setText(s);
+                    chip.setClickable(false);
+                    chip.setPadding(paddingDp, 0, paddingDp, 0);
+                    chip.setCheckable(false);
+                    holder.chipGroup.addView(chip);
+                }
+            }
 
             Glide.with(holder.itemView)
                     .load(rcp.getThumbnail())
@@ -67,5 +89,4 @@ public class MainViewpageAdapter  extends RecyclerView.Adapter<MainViewpageViewh
     public int getItemCount() {
         return NUM_PAGES;
     }
-
 }

@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 public class MainViewpageViewholder extends RecyclerView.ViewHolder {
@@ -15,7 +16,7 @@ public class MainViewpageViewholder extends RecyclerView.ViewHolder {
     public TextView rcp_cooktime;
     public TextView rate;
     public TextView keyword;
-    public TextView tags;
+    public ChipGroup chipGroup;
 
     public MainViewpageViewholder(@NonNull View itemView) {
         super(itemView);
@@ -24,6 +25,6 @@ public class MainViewpageViewholder extends RecyclerView.ViewHolder {
         rcp_cooktime = itemView.findViewById(R.id.main_pager_time);
         rate = itemView.findViewById(R.id.main_pager_rate);
         keyword = itemView.findViewById(R.id.useless);
-        tags = itemView.findViewById(R.id.main_pager_tags);
+        chipGroup = itemView.findViewById(R.id.tagGroup1);
     }
 }
