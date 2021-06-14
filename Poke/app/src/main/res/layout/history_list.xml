@@ -22,7 +22,7 @@
         </de.hdodenhof.circleimageview.CircleImageView>
 
         <LinearLayout
-            android:layout_width="220dp"
+            android:layout_width="181dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical">
@@ -54,14 +54,14 @@
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="111dp"
+            android:layout_width="149dp"
             android:layout_height="match_parent">
 
             <RatingBar
                 android:id="@+id/history_rate"
                 style="@style/Widget.AppCompat.RatingBar.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="19dp"
+                android:layout_width="127dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="55dp"
                 android:layout_marginEnd="10dp"
