@@ -12,91 +12,118 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/fridgeTab"
         style="@style/CustomTabStyle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:background="#FAFAFA"
         app:tabIndicatorHeight="0dp"
         app:tabMinWidth="80dp"
         app:tabMode="scrollable"
-        app:tabPaddingEnd="10dp"
+        app:tabPaddingEnd="30dp"
         app:tabPaddingStart="10dp"
-        app:tabTextColor="@color/black">
+        app:tabTextColor="@color/black"
+        android:textAlignment="center"
+        >
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/allItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="전체" />
+            android:text="전체"
+            android:textAlignment="center"
+            android:textSize="15sp" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/pulsecropItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="두류" />
+            android:text="두류"
+            android:textAlignment="center"
+            android:textSize="15sp" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/nutItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="견과류" />
+            android:text="견과류"
+            android:textAlignment="center"
+            android:textSize="15sp" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/vegetableItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="채소류" />
+            android:text="채소류"
+            android:textAlignment="center"
+            android:textSize="15sp" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/fruitItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="과일류" />
+            android:text="과일류"
+            android:textAlignment="center"
+            android:textSize="15sp" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/meatItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="육류" />
+            android:text="육류"
+            android:textAlignment="center"
+            android:textSize="15sp" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/eggItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="알류" />
+            android:text="알류"
+            android:textAlignment="center"
+            android:textSize="15sp" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/fishItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="어패류" />
+            android:text="어패류"
+            android:textAlignment="center"
+            android:textSize="15sp" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/seaalgaeItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="해조류" />
+            android:text="해조류"
+            android:textAlignment="center"
+            android:textSize="15sp" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/dairyproductsItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="유제품" />
+            android:text="유제품"
+            android:textAlignment="center"
+            android:textSize="15sp" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/drinksItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="음료/주류" />
+            android:text="음료/주류"
+            android:textAlignment="center"
+            android:textSize="15sp" />
 
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/etcItem"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="기타" />
+            android:text="기타"
+            android:textAlignment="center"
+            android:textSize="15sp" />
 
     </com.google.android.material.tabs.TabLayout>
 
