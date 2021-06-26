@@ -10,12 +10,12 @@ import time
 user_name='33917744'
 
 s_time=time.time()
-recipes=pd.read_csv('C:/RecoSys/new_recipe_tags.csv',header=0, encoding='utf-8')
+recipes=pd.read_csv('Dataset0626/new_recipe_tags.csv',header=0, encoding='utf-8')
 
 r_cols=['recipe_id', 'user_id', 'rating']
-ratings= pd.read_csv('C:/RecoSys/new_rating.csv',names=r_cols, header=None, encoding='UTF-8')
+ratings= pd.read_csv('Dataset0626/new_rating.csv',names=r_cols, header=None, encoding='UTF-8')
 ratings['rating']=ratings['rating'].replace([1,2,3,4,5],5)
-# ratings=ratings.set_index('user_id')
+
 
 user_list=[0]*31000
 
@@ -26,19 +26,15 @@ gs = GridSearchCV(SVD, param_grid, measures=['rmse', 'mse'], cv=3)
 gs.fit(traindata)
 #print(gs.best_score['rmse'])
 pr=gs.best_params['rmse']
-#print('n_epochs : ', pr['n_epochs'],' / ','n_factors : ',pr['n_factors'])
+print('n_epochs : ', pr['n_epochs'],' / ','n_factors : ',pr['n_factors'])
 
-#print("time :", time.time() - s_time)
-s_time=time.time()
 
 idx=0
 for i in ratings['user_id']:
         if i not in user_list:
             user_list[idx]=i
             idx=idx+1
-#print(idx)
-#print("time :", time.time() - s_time)
-s_time=time.time()
+
 
 df_ratings=ratings.pivot_table(
     values='rating',
