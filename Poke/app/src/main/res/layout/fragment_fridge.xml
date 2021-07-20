@@ -166,6 +166,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_add_circle_black_24dp" />
+
+<!--        <ProgressBar-->
+<!--            android:id="@+id/fridge_progress"-->
+<!--            style="?android:attr/progressBarStyle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="196dp"-->
+<!--            android:layout_marginEnd="180dp"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/ingredientRecyclerView"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ingredientRecyclerView" />-->
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </LinearLayout>

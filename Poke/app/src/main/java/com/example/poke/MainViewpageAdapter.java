@@ -59,20 +59,19 @@ public class MainViewpageAdapter  extends RecyclerView.Adapter<MainViewpageViewh
             int l=0;
 
             String[] string;
-
             for(String t : rcp.getTag()){
                 string = (t.split(","));
+                if(l>1){
+                    break;
+                }
+                l++;
                 for(String s : string){
-                    if(l>1){
-                        break;
-                    }
                     chip =(Chip)layoutInflater.inflate(R.layout.tag_chip, null, false);
                     chip.setText(s);
                     chip.setClickable(false);
                     chip.setPadding(paddingDp, 0, paddingDp, 0);
                     chip.setCheckable(false);
                     holder.chipGroup.addView(chip);
-                    l++;
                 }
             }
 

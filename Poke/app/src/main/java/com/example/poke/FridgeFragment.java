@@ -2,6 +2,7 @@ package com.example.poke;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,11 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuItemCompat;
@@ -35,8 +35,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import static android.util.Log.d;
-
 public class FridgeFragment extends Fragment{
     private IngredientAdapter ingredientAdapter;
     private RecyclerView recyclerView;
@@ -51,6 +49,8 @@ public class FridgeFragment extends Fragment{
     private int pos;
     private ImageButton addButton;
     private SearchView searchView;
+    private ProgressBar progressBar;
+    Handler handler = new Handler();
 
     @Nullable
     @Override
@@ -61,6 +61,9 @@ public class FridgeFragment extends Fragment{
         tabLayout = view.findViewById(R.id.fridgeTab);
         addButton = view.findViewById(R.id.ingredientAddBtn);
         searchView = view.findViewById(R.id.menu_search);
+//        progressBar =view.findViewById(R.id.fridge_progress);
+
+//        progressBar.setVisibility(view.VISIBLE);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -75,6 +78,13 @@ public class FridgeFragment extends Fragment{
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
             params.rightMargin = betweenSpace;
         }
+
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                progressBar.setVisibility(view.GONE);
+//            }
+//        }, 2000);
 
         recyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
         layoutManager = new GridLayoutManager(getActivity(),1);
@@ -255,7 +265,7 @@ public class FridgeFragment extends Fragment{
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.id:
-                Collections.sort(ingredientArrayList, new Comparator<UserIngredient>() {
+                Collections.sort(tabArrayList, new Comparator<UserIngredient>() {
                     @Override
                     public int compare(UserIngredient o1, UserIngredient o2) {
                         return o1.getIngredientTitle().compareTo(o2.getIngredientTitle());
@@ -265,7 +275,7 @@ public class FridgeFragment extends Fragment{
                 break;
 
             case R.id.day:
-                Collections.sort(ingredientArrayList, new Comparator<UserIngredient>() {
+                Collections.sort(tabArrayList, new Comparator<UserIngredient>() {
                     @Override
                     public int compare(UserIngredient o1, UserIngredient o2) {
                         return o1.getExpirationDate().compareTo(o2.getExpirationDate());

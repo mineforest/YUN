@@ -92,8 +92,12 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
         else {
             holder.day.setText(("D-" + Long.toString(date / 86400000)));
         }
-//        if(date/86400000 <= 3 )
-//            holder.day.setBackground(ContextCompat.getDrawable(context,R.drawable.border_red));
+        if(date/86400000 <= 3 ) {
+            holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
+        }
+        else{
+            holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_green));
+        }
     }
 
     @Override

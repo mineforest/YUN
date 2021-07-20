@@ -2,6 +2,7 @@ package com.example.poke;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,18 +60,31 @@ public class Recipe_Info extends AppCompatActivity {
     private ArrayList ingreList = new ArrayList<>();
     String uid;
     private Button doneButton;
+    private ProgressBar progressBar;
     private TextView avg;
+    Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_info);
+
+//        progressBar = findViewById(R.id.recipe_info_progress);
+//        progressBar.setVisibility(View.VISIBLE);
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                progressBar.setVisibility(View.GONE);
+//            }
+//        }, 2000);
+
         ActionBar actionbar = getSupportActionBar();
         actionbar.hide();
 
 //        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(mToolbar);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         chipGroup = (ChipGroup)findViewById(R.id.tagGroup);
         doneButton = findViewById(R.id.doneButton);
         toolbar = (MaterialToolbar) findViewById(R.id.topAppBarr);

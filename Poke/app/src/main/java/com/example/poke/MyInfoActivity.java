@@ -90,9 +90,9 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     ValueEventListener allergyListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            historyButton.setText("평가한 요리\n"+Long.toString(dataSnapshot.child("allergy").child(uid).getChildrenCount()));
+            historyButton.setText("평가한 요리\n"+Long.toString(dataSnapshot.child("history").child(uid).getChildrenCount()));
             dipsButton.setText("찜한요리\n"+Long.toString(dataSnapshot.child("dips").child(uid).getChildrenCount()));
-            allergyButton.setText("알러지/기피\n"+Long.toString(dataSnapshot.child("history").child(uid).getChildrenCount()));
+            allergyButton.setText("알러지/기피\n"+Long.toString(dataSnapshot.child("allergy").child(uid).getChildrenCount()));
         }
 
         @Override

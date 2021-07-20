@@ -82,6 +82,8 @@
             android:layout_marginRight="20dp">
 
         </com.google.android.material.chip.ChipGroup>
+
     </LinearLayout>
+
 
 </LinearLayout>

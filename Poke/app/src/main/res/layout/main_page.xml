@@ -16,7 +16,9 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/main_pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" >
+
+        </androidx.viewpager2.widget.ViewPager2>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
@@ -24,7 +26,9 @@
             android:id="@+id/main_recylerView"
             android:layout_marginBottom="?attr/actionBarSize"
             android:background="@color/background"
-            tools:listitem="@layout/cardview_test"/>
+            tools:listitem="@layout/cardview_test">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -1,7 +1,9 @@
 package com.example.poke;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -44,9 +46,9 @@ public class MainRecyclerViewFragment extends Fragment{
     private DatabaseReference mDatabase;
     private String uid;
     FirebaseUser user;
-
     private ViewPager2 viewPager;
     private MainViewpageAdapter adapter2;
+    Handler handler = new Handler();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,13 @@ public class MainRecyclerViewFragment extends Fragment{
         user = mAuth.getCurrentUser();
         uid = user.getUid();
 
-        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
+                mDatabase.onDisconnect();
+            }
+        },2000);
 
         //테스트용 레시피 id들
         String[] test_ids = {"12345678", "6900699", "6880252","6903806", "6901559", "6883872", "6886282",
@@ -91,9 +99,9 @@ public class MainRecyclerViewFragment extends Fragment{
                             }
                         }
 
-                    long dd = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
+                    long rate = Math.round((double)cnt/(double)myIngreList.size() * 100.0);
 
-                    Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, dd, tags);
+                    Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, rate, tags);
                     Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
                     if(rr.getId().equals("12345678")){
                         rcps_siyeonyong.add(rr);
@@ -122,7 +130,6 @@ public class MainRecyclerViewFragment extends Fragment{
 
         return view;
     }
-
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -156,6 +163,8 @@ public class MainRecyclerViewFragment extends Fragment{
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
                 myIngreList.add(ingredient.getIngredientTitle());
+                adapter.notifyDataSetChanged();
+                adapter2.notifyDataSetChanged();
             }
 
             @Override
