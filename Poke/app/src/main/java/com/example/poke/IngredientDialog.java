@@ -44,9 +44,7 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
     private ImageButton barcode_btn;
     Spinner spinner;
     String ingre_item[];
-
-//    public IngredientDialog(){
-//    }
+    
 
     @Nullable
     @Override
@@ -106,59 +104,7 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
 
 
 
-//    @Override
-//        public void onCreateOptionsMenu (Menu menu, MenuInflater inflater)
-//        {
-//            //super.onCreateOptionsMenu(menu, inflater);
-//
-//            //MenuInflater menuInflater = getMenuInflater();
-//
-//            inflater.inflate(R.menu.ingre_menu, menu);
-//
-//
-//
-//        }
-//
-//
-//        @Override
-//        public boolean onOptionsItemSelected (@NonNull MenuItem item){
-//            switch (item.getItemId()) {
-//                case R.id.item1:
-//                    cateText.setText("두류");
-//                    return true;
-//                case R.id.item2:
-//                    cateText.setText("견과류");
-//                    return true;
-//                case R.id.item3:
-//                    cateText.setText("채소류");
-//                    return true;
-//                case R.id.item4:
-//                    cateText.setText("과일류");
-//                    return true;
-//                case R.id.item5:
-//                    cateText.setText("육류");
-//                    return true;
-//                case R.id.item6:
-//                    cateText.setText("알류");
-//                    return true;
-//                case R.id.item7:
-//                    cateText.setText("어패류");
-//                    return true;
-//                case R.id.item8:
-//                    cateText.setText("해조류");
-//                    return true;
-//                case R.id.item9:
-//                    cateText.setText("유제품");
-//                    return true;
-//                case R.id.item10:
-//                    cateText.setText("음료/주류");
-//                    return true;
-//                case R.id.item11:
-//                    cateText.setText("기타");
-//                    return true;
-//            }
-//            return false;
-//        }
+
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
