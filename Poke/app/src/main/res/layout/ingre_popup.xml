@@ -35,14 +35,26 @@
             android:hint="제품명"
             android:textColor="#000" />
 
-        <EditText
-            android:id="@+id/prod_cat_txt"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="10"
-            android:fontFamily="@font/noto_sans"
-            android:hint="종류"
-            android:textColor="#000" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/prod_cat_txt"
+                android:layout_width="202dp"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:fontFamily="@font/noto_sans"
+                android:hint="종류"
+                android:textColor="#000"
+                tools:ignore="Deprecated" />
+
+            <Spinner
+                android:id="@+id/ingre_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
         <EditText
             android:id="@+id/daycnt_txt"

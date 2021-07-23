@@ -8,8 +8,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-public class IngredientDialog extends DialogFragment {
+public class IngredientDialog extends DialogFragment implements AdapterView.OnItemSelectedListener {
     private Fragment fragment;
     private Button okBtn;
     private EditText nameText;
@@ -37,9 +42,11 @@ public class IngredientDialog extends DialogFragment {
     String uid;
     private Button cancelBtn;
     private ImageButton barcode_btn;
+    Spinner spinner;
+    String ingre_item[];
 
-    public IngredientDialog(){
-    }
+//    public IngredientDialog(){
+//    }
 
     @Nullable
     @Override
@@ -52,6 +59,7 @@ public class IngredientDialog extends DialogFragment {
         uid = user.getUid();
         okBtn.setOnClickListener(onClickListener);
         Bundle args = getArguments();
+        spinner = view.findViewById(R.id.ingre_spinner);
         nameText = view.findViewById(R.id.prod_name_txt);
         cateText = view.findViewById(R.id.prod_cat_txt);
         dateText = view.findViewById(R.id.daycnt_txt);
@@ -59,6 +67,7 @@ public class IngredientDialog extends DialogFragment {
 //        barcode_btn.setOnClickListener(scanClickListener);
         cancelBtn = view.findViewById(R.id.dialogCancelBtn);
         cancelBtn.setOnClickListener(onClickListener);
+        registerForContextMenu(cateText);
 
         if(args != null) {
             title = args.getString("title");
@@ -69,10 +78,87 @@ public class IngredientDialog extends DialogFragment {
             cateText.setText(cate);
             dateText.setText(date);
         }
+        spinner.setOnItemSelectedListener(this);
+        ingre_item = new String[]{"두류","견과류","채소류","과일류","육류","알류"
+        ,"어패류","해조류","유제품","음료/주류","기타"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, ingre_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
         fragment = getActivity().getSupportFragmentManager().findFragmentByTag("tag");
+        setHasOptionsMenu(true);
         return view;
     }
+
+
+    //@Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long L){
+        cateText.setText(ingre_item[i]);
+    }
+
+    //@Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        cateText.setText("");
+    }
+
+
+
+
+
+//    @Override
+//        public void onCreateOptionsMenu (Menu menu, MenuInflater inflater)
+//        {
+//            //super.onCreateOptionsMenu(menu, inflater);
+//
+//            //MenuInflater menuInflater = getMenuInflater();
+//
+//            inflater.inflate(R.menu.ingre_menu, menu);
+//
+//
+//
+//        }
+//
+//
+//        @Override
+//        public boolean onOptionsItemSelected (@NonNull MenuItem item){
+//            switch (item.getItemId()) {
+//                case R.id.item1:
+//                    cateText.setText("두류");
+//                    return true;
+//                case R.id.item2:
+//                    cateText.setText("견과류");
+//                    return true;
+//                case R.id.item3:
+//                    cateText.setText("채소류");
+//                    return true;
+//                case R.id.item4:
+//                    cateText.setText("과일류");
+//                    return true;
+//                case R.id.item5:
+//                    cateText.setText("육류");
+//                    return true;
+//                case R.id.item6:
+//                    cateText.setText("알류");
+//                    return true;
+//                case R.id.item7:
+//                    cateText.setText("어패류");
+//                    return true;
+//                case R.id.item8:
+//                    cateText.setText("해조류");
+//                    return true;
+//                case R.id.item9:
+//                    cateText.setText("유제품");
+//                    return true;
+//                case R.id.item10:
+//                    cateText.setText("음료/주류");
+//                    return true;
+//                case R.id.item11:
+//                    cateText.setText("기타");
+//                    return true;
+//            }
+//            return false;
+//        }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
