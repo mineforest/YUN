@@ -3,6 +3,7 @@ package com.example.poke;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,6 +85,7 @@ public class MainViewpageAdapter  extends RecyclerView.Adapter<MainViewpageViewh
                 public void onClick(View v) {
                     intent = new Intent(v.getContext(), Recipe_Info.class);
                     intent.putExtra("rcp_id", mRcplist.get(position).getId());
+                    intent.putExtra("my_rate", mRcplist.get(position).getRate());
                     v.getContext().startActivity(intent);
                 }
             });

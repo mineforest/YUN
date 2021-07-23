@@ -8,7 +8,6 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 
-import android.widget.CheckBox;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -47,10 +46,11 @@ import java.util.concurrent.CountDownLatch;
 public class Recipe_Info extends AppCompatActivity {
     private Recipe_get rcp;
     private String recipe_id;
+    private long myIngre_rate;
     private ImageView recipe_image;
-    private TextView recipe_title;
-    private TextView recipe_tag;
-    private TextView recipe_time;
+    private TextView recipe_title_tv;
+    private TextView recipe_time_tv;
+    private TextView recipe_rate_tv;
     private ChipGroup chipGroup;
     private Chip chip;
     private MaterialToolbar toolbar;
@@ -61,7 +61,6 @@ public class Recipe_Info extends AppCompatActivity {
     String uid;
     private Button doneButton;
     private ProgressBar progressBar;
-    private TextView avg;
     Handler handler = new Handler();
 
     @Override
@@ -132,13 +131,13 @@ public class Recipe_Info extends AppCompatActivity {
         });
 
         recipe_image = findViewById(R.id.rcpinfo_thumbnail);
-        recipe_title = findViewById(R.id.title_txt);
-       // recipe_tag = findViewById(R.id.tag_txt);
-        recipe_time = findViewById(R.id.timeText);
-       // avg = findViewById(R.id.average);
+        recipe_title_tv = findViewById(R.id.title_txt);
+        recipe_time_tv = findViewById(R.id.timeText);
+        recipe_rate_tv = findViewById(R.id.rateText);
 
         Intent intent = getIntent();
         recipe_id = intent.getStringExtra("rcp_id");
+        myIngre_rate = intent.getLongExtra("my_rate",0);
         if (recipe_id == null) {
             Log.d("error","errorror");
         } else {
@@ -180,9 +179,9 @@ public class Recipe_Info extends AppCompatActivity {
                     }
 
                     Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
-                    recipe_title.setText(rcp.getName());
-//                    recipe_tag.setText(rcp.getTag().toString());
-                    recipe_time.setText("약 " + rcp.getTime() + "분");
+                    recipe_title_tv.setText(rcp.getName());
+                    recipe_rate_tv.setText(myIngre_rate + "%");
+                    recipe_time_tv.setText("약 " + rcp.getTime() + "분");
 
                     RecyclerView recyclerView = findViewById(R.id.ingre_recyclerView);
                     recyclerView.setHasFixedSize(true);
