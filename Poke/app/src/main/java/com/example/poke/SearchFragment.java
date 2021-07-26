@@ -51,8 +51,8 @@ public class SearchFragment extends Fragment implements TextWatcher {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.search, container, false);
 
-        String[] test_ids = {"6900699", "6880252","6903806", "6901559", "6883872", "6886282",
-                "6883047", "6948903", "6893957", "6893869", "6891643", "6947127"};
+        String[] test_ids = {"1011256", "1047204", "1051428","1058215", "1058543", "1146710", "1166652",
+                "1237737", "1334788", "1376504", "1392396", "6846727", "6846740"};
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         for(int i =0;i<test_ids.length; i++) {
             DocumentReference docRef = db.collection("recipe").document(test_ids[i]);

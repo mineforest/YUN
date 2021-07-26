@@ -77,8 +77,8 @@ public class MainRecyclerViewFragment extends Fragment{
                     @Override
                     public void run() {
                         //테스트용 레시피 id들
-                        String[] test_ids = {"12345678", "6900699", "6880252","6903806", "6901559", "6883872", "6886282",
-                                "6883047", "6948903", "6893957", "6893869", "6891643", "6947127"};
+                        String[] test_ids = {"1011256", "1047204", "1051428","1058215", "1058543", "1146710", "1166652",
+                                "1237737", "1334788", "1376504", "1392396", "6846727", "6846740"};
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         for(int i =0;i<test_ids.length; i++){
                             DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
@@ -104,7 +104,7 @@ public class MainRecyclerViewFragment extends Fragment{
 
                                     Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, rate, tags);
                                     Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
-                                    if(rr.getId().equals("12345678")){
+                                    if(rr.getId().equals("1011256")){
                                         rcps_siyeonyong.add(rr);
                                     }
                                     else {
