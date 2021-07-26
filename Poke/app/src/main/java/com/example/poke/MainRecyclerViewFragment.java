@@ -77,7 +77,7 @@ public class MainRecyclerViewFragment extends Fragment{
                     @Override
                     public void run() {
                         //테스트용 레시피 id들
-                        String[] test_ids = {"1011256", "1047204", "1051428","1058215", "1058543", "1146710", "1166652",
+                        String[] test_ids = {"1011256", "1047204", "1058215","1058215", "1058543", "1146710", "1166652",
                                 "1237737", "1334788", "1376504", "1392396", "6846727", "6846740"};
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         for(int i =0;i<test_ids.length; i++){

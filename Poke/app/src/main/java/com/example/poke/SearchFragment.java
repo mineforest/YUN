@@ -51,7 +51,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.search, container, false);
 
-        String[] test_ids = {"1011256", "1047204", "1051428","1058215", "1058543", "1146710", "1166652",
+        String[] test_ids = {"1011256", "1047204", "1058215","1058215", "1058543", "1146710", "1166652",
                 "1237737", "1334788", "1376504", "1392396", "6846727", "6846740"};
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         for(int i =0;i<test_ids.length; i++) {
