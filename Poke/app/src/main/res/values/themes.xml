@@ -69,7 +69,7 @@
     </style>
 
     <style name="SplashTheme" parent="@android:style/Theme.Light.NoTitleBar">
-        <item name="android:windowBackground">@drawable/loading</item>
+        <item name="android:windowBackground">@drawable/loading_image</item>
     </style>
 
 </resources>
