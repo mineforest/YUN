@@ -180,7 +180,7 @@ public class Recipe_Info extends AppCompatActivity {
 
                     Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
                     recipe_title_tv.setText(rcp.getName());
-                    recipe_rate_tv.setText(recipe_id + "%");
+                    recipe_rate_tv.setText(myIngre_rate + "%");
                     recipe_time_tv.setText("약 " + rcp.getTime() + "분");
 
                     RecyclerView recyclerView = findViewById(R.id.ingre_recyclerView);
