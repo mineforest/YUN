@@ -61,8 +61,8 @@ public class FridgeFragment extends Fragment{
         tabLayout = view.findViewById(R.id.fridgeTab);
         addButton = view.findViewById(R.id.ingredientAddBtn);
         searchView = view.findViewById(R.id.menu_search);
-//        progressBar =view.findViewById(R.id.fridge_progress);
-
+//        progressBar =view.findViewById(R.id.progressBar);
+//
 //        progressBar.setVisibility(view.VISIBLE);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -79,12 +79,12 @@ public class FridgeFragment extends Fragment{
             params.rightMargin = betweenSpace;
         }
 
-//        handler.postDelayed(new Runnable() {
+//        handler.post(new Runnable() {
 //            @Override
 //            public void run() {
 //                progressBar.setVisibility(view.GONE);
 //            }
-//        }, 2000);
+//        });
 
         recyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
         layoutManager = new GridLayoutManager(getActivity(),1);

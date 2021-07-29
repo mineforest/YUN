@@ -167,7 +167,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_add_circle_black_24dp" />
 
-<!--        <ProgressBar-->
+        <!--        <ProgressBar-->
 <!--            android:id="@+id/fridge_progress"-->
 <!--            style="?android:attr/progressBarStyle"-->
 <!--            android:layout_width="wrap_content"-->
