@@ -80,7 +80,7 @@
                         android:id="@+id/rcpinfo_thumbnail"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
+                        android:scaleType="fitXY"
                         tools:srcCompat="@tools:sample/backgrounds/scenic" />
                 </androidx.cardview.widget.CardView>
 
