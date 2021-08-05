@@ -49,6 +49,7 @@ public class MainRecyclerViewFragment extends Fragment{
     private ViewPager2 viewPager;
     private MainViewpageAdapter adapter2;
     Handler handler = new Handler();
+    ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,8 @@ public class MainRecyclerViewFragment extends Fragment{
         user = mAuth.getCurrentUser();
         uid = user.getUid();
 
+        progressDialog = new ProgressDialog(getActivity());
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -76,6 +79,21 @@ public class MainRecyclerViewFragment extends Fragment{
                 handler1.post(new Runnable() {
                     @Override
                     public void run() {
+                        Handler handler2 = new Handler();
+                        handler2.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                progressDialog.show();
+                                progressDialog.setContentView(R.layout.progress_dialog);
+                                progressDialog.getWindow().setBackgroundDrawableResource(
+                                        android.R.color.transparent
+                                );
+                                progressDialog.setCancelable(false);
+
+                            }
+                        });
+
                         //테스트용 레시피 id들
                         String[] test_ids = {"1011256", "6867464", "6867464","6867464", "6867464", "6867464", "1166652",
                                 "6867464", "6867464", "6867464", "6867464", "6867464", "6867464"};
@@ -129,10 +147,17 @@ public class MainRecyclerViewFragment extends Fragment{
                         adapter2 = new MainViewpageAdapter(rcps_siyeonyong);
                         viewPager.setAdapter(adapter2);
 
+                        new android.os.Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.dismiss();
+                            }
+                        },1000);
                     }
                 });
+
             }
-        },2000);
+        },500);
 
         return view;
     }
