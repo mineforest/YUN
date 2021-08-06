@@ -70,94 +70,93 @@ public class MainRecyclerViewFragment extends Fragment{
 
         progressDialog = new ProgressDialog(getActivity());
 
-        handler.postDelayed(new Runnable() {
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent
+        );
+        progressDialog.setCancelable(false);
+
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
-                mDatabase.onDisconnect();
-                Handler handler1 = new Handler();
-                handler1.post(new Runnable() {
+                handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Handler handler2 = new Handler();
-                        handler2.post(new Runnable() {
+                        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
+                        mDatabase.onDisconnect();
+                        Handler handler1 = new Handler();
+                        handler1.post(new Runnable() {
                             @Override
                             public void run() {
+                                //테스트용 레시피 id들
+                                String[] test_ids = {"1011256", "6867464", "6867464","6867464", "6867464", "6867464", "1166652",
+                                        "6867464", "6867464", "6867464", "6867464", "6867464", "6867464"};
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                for(int i =0;i<test_ids.length; i++){
+                                    DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
+                                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            int cnt=0;
+                                            String rcp_id = documentSnapshot.getData().get("id").toString();
+                                            String title = documentSnapshot.getData().get("name").toString();
+                                            String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
+                                            String cook_time = documentSnapshot.getData().get("time").toString();
+                                            List<String> tags = (List<String>) documentSnapshot.get("tag");
+//                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
+                                            List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
 
-                                progressDialog.show();
-                                progressDialog.setContentView(R.layout.progress_dialog);
-                                progressDialog.getWindow().setBackgroundDrawableResource(
-                                        android.R.color.transparent
-                                );
-                                progressDialog.setCancelable(false);
+                                            for(int k=0; k<ingre_list.size(); k++){
+                                                if(myIngreList.contains(ingre_list.get(k).get("ingre_name"))){
+                                                    cnt++;
+                                                }
+                                            }
+
+                                            long rate = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
+
+                                            Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, rate, tags);
+                                            Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
+                                            if(rr.getId().equals("1011256")){
+                                                rcps_siyeonyong.add(rr);
+                                            }
+                                            else {
+                                                rcps.add(rr);
+                                            }
+                                            adapter.notifyDataSetChanged();
+                                            adapter2.notifyDataSetChanged();
+                                        }
+                                    });
+                                }
+
+                                RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
+                                recyclerView.setHasFixedSize(true);
+                                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
+                                adapter = new CustomAdapter(rcps);
+                                recyclerView.setAdapter(adapter);
+                                int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
+                                int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
+                                recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
+
+                                viewPager = view.findViewById(R.id.main_pager);
+                                adapter2 = new MainViewpageAdapter(rcps_siyeonyong);
+                                viewPager.setAdapter(adapter2);
+
+                                new android.os.Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        progressDialog.dismiss();
+                                    }
+                                }, 1000);
 
                             }
                         });
 
-                        //테스트용 레시피 id들
-                        String[] test_ids = {"1011256", "6867464", "6867464","6867464", "6867464", "6867464", "1166652",
-                                "6867464", "6867464", "6867464", "6867464", "6867464", "6867464"};
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        for(int i =0;i<test_ids.length; i++){
-                            DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
-                            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    int cnt=0;
-                                    String rcp_id = documentSnapshot.getData().get("id").toString();
-                                    String title = documentSnapshot.getData().get("name").toString();
-                                    String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                                    String cook_time = documentSnapshot.getData().get("time").toString();
-                                    List<String> tags = (List<String>) documentSnapshot.get("tag");
-//                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
-                                    List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
-
-                                    for(int k=0; k<ingre_list.size(); k++){
-                                        if(myIngreList.contains(ingre_list.get(k).get("ingre_name"))){
-                                            cnt++;
-                                        }
-                                    }
-
-                                    long rate = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
-
-                                    Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, rate, tags);
-                                    Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
-                                    if(rr.getId().equals("1011256")){
-                                        rcps_siyeonyong.add(rr);
-                                    }
-                                    else {
-                                        rcps.add(rr);
-                                    }
-                                    adapter.notifyDataSetChanged();
-                                    adapter2.notifyDataSetChanged();
-                                }
-                            });
-                        }
-
-                        RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
-                        adapter = new CustomAdapter(rcps);
-                        recyclerView.setAdapter(adapter);
-                        int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
-                        int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
-                        recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
-
-                        viewPager = view.findViewById(R.id.main_pager);
-                        adapter2 = new MainViewpageAdapter(rcps_siyeonyong);
-                        viewPager.setAdapter(adapter2);
-
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
-                            }
-                        },1000);
                     }
-                });
-
+                },500);
             }
-        },500);
+        });
+        thread.start();
 
         return view;
     }

@@ -1,5 +1,6 @@
 package com.example.poke;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -60,7 +61,7 @@ public class Recipe_Info extends AppCompatActivity {
     private ArrayList ingreList = new ArrayList<>();
     String uid;
     private Button doneButton;
-    private ProgressBar progressBar;
+    ProgressDialog progressDialog;
     Handler handler = new Handler();
 
     @Override
@@ -68,27 +69,23 @@ public class Recipe_Info extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_info);
 
-//        progressBar = findViewById(R.id.recipe_info_progress);
-//        progressBar.setVisibility(View.VISIBLE);
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                progressBar.setVisibility(View.GONE);
-//            }
-//        }, 2000);
-
         ActionBar actionbar = getSupportActionBar();
         actionbar.hide();
-
-//        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(mToolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         chipGroup = (ChipGroup)findViewById(R.id.tagGroup);
         doneButton = findViewById(R.id.doneButton);
         toolbar = (MaterialToolbar) findViewById(R.id.topAppBarr);
         toolbar.inflateMenu(R.menu.top_app_bar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_ios_new_white_24dp);
+
+        progressDialog = new ProgressDialog(Recipe_Info.this);
+
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent
+        );
+        progressDialog.setCancelable(false);
 
         doneButton.setOnClickListener(clickListener);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -138,77 +135,98 @@ public class Recipe_Info extends AppCompatActivity {
         Intent intent = getIntent();
         recipe_id = intent.getStringExtra("rcp_id");
         myIngre_rate = intent.getLongExtra("my_rate",0);
-        if (recipe_id == null) {
-            Log.d("error","errorror");
-        } else {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            CountDownLatch done = new CountDownLatch(1);
 
-            DocumentReference docRef = db.collection("recipe").document(recipe_id);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (recipe_id == null) {
+                            Log.d("error","errorror");
+                        } else {
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            CountDownLatch done = new CountDownLatch(1);
 
-            done.countDown();
+                            DocumentReference docRef = db.collection("recipe").document(recipe_id);
 
-            try {
-                done.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+                            done.countDown();
 
-            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    String title = documentSnapshot.getData().get("name").toString();
-                    String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                    String cook_time = documentSnapshot.getData().get("time").toString();
-                    List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
-                    List<Map<String, String>> sauce_list = (List<Map<String, String>>) documentSnapshot.get("sauce_list");
-                    String url = documentSnapshot.getData().get("url").toString();
-                    List<Long> ingredient_ids = (List<Long>) documentSnapshot.get("ingredient_ids");
-                    List<String> recipe_list = (List<String>) documentSnapshot.get("recipe");
-                    List<String> recipe_img = (List<String>) documentSnapshot.get("recipe_img");
-                    List<String> tags = (List<String>) documentSnapshot.get("tag");
+                            try {
+                                done.await();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
 
-                    rcp = new Recipe_get(recipe_id, title, thumbnail, url, ingredient_ids, cook_time, ingre_list, sauce_list, recipe_list, recipe_img, tags);
+                            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    String title = documentSnapshot.getData().get("name").toString();
+                                    String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
+                                    String cook_time = documentSnapshot.getData().get("time").toString();
+                                    List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
+                                    List<Map<String, String>> sauce_list = (List<Map<String, String>>) documentSnapshot.get("sauce_list");
+                                    String url = documentSnapshot.getData().get("url").toString();
+                                    List<Long> ingredient_ids = (List<Long>) documentSnapshot.get("ingredient_ids");
+                                    List<String> recipe_list = (List<String>) documentSnapshot.get("recipe");
+                                    List<String> recipe_img = (List<String>) documentSnapshot.get("recipe_img");
+                                    List<String> tags = (List<String>) documentSnapshot.get("tag");
 
-                    String[] string;
-                    for(String t : tags){
-                        string = (t.split(","));
-                        for(String s : string){
-                            addChip(s);
+                                    rcp = new Recipe_get(recipe_id, title, thumbnail, url, ingredient_ids, cook_time, ingre_list, sauce_list, recipe_list, recipe_img, tags);
+
+                                    String[] string;
+                                    for(String t : tags){
+                                        string = (t.split(","));
+                                        for(String s : string){
+                                            addChip(s);
+                                        }
+                                    }
+
+                                    Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
+                                    recipe_title_tv.setText(rcp.getName());
+                                    recipe_rate_tv.setText(myIngre_rate + "%");
+                                    recipe_time_tv.setText("약 " + rcp.getTime() + "분");
+
+                                    RecyclerView recyclerView = findViewById(R.id.ingre_recyclerView);
+                                    recyclerView.setHasFixedSize(true);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                    adapter = new RecipeIngre_Adapter(rcp.getIngre_list());
+                                    recyclerView.setAdapter(adapter);
+
+                                    RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);
+                                    recyclerView2.setHasFixedSize(true);
+                                    recyclerView2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                    adapter = new RecipeIngre_Adapter(rcp.getSauce_list());
+                                    recyclerView2.setAdapter(adapter);
+
+                                    RecyclerView recyclerView3 = findViewById(R.id.recipe_recyclerView);
+                                    recyclerView3.setHasFixedSize(true);
+                                    recyclerView3.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                    adapter2 = new RecipeStep_Adapter(rcp.getRecipe_img(), rcp.getRecipe());
+                                    recyclerView3.setAdapter(adapter2);
+                                }
+                            })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d("ddddddddddddd", "실패~");
+                                        }
+                                    });
                         }
+
+                        new android.os.Handler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.dismiss();
+                            }
+                        });
+
                     }
+                });
+            }
+        });
+        thread.start();
 
-                    Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
-                    recipe_title_tv.setText(rcp.getName());
-                    recipe_rate_tv.setText(myIngre_rate + "%");
-                    recipe_time_tv.setText("약 " + rcp.getTime() + "분");
-
-                    RecyclerView recyclerView = findViewById(R.id.ingre_recyclerView);
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    adapter = new RecipeIngre_Adapter(rcp.getIngre_list());
-                    recyclerView.setAdapter(adapter);
-
-                    RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);
-                    recyclerView2.setHasFixedSize(true);
-                    recyclerView2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    adapter = new RecipeIngre_Adapter(rcp.getSauce_list());
-                    recyclerView2.setAdapter(adapter);
-
-                    RecyclerView recyclerView3 = findViewById(R.id.recipe_recyclerView);
-                    recyclerView3.setHasFixedSize(true);
-                    recyclerView3.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    adapter2 = new RecipeStep_Adapter(rcp.getRecipe_img(), rcp.getRecipe());
-                    recyclerView3.setAdapter(adapter2);
-                }
-            })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("ddddddddddddd", "실패~");
-                        }
-                    });
-        }
     }
 //
 //    @Override

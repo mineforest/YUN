@@ -50,7 +50,7 @@ public class FridgeFragment extends Fragment{
     private int pos;
     private ImageButton addButton;
     private SearchView searchView;
-    Handler handler = new Handler();
+    Handler handler1 = new Handler();
     ProgressDialog progressDialog;
 
     @Nullable
@@ -60,19 +60,13 @@ public class FridgeFragment extends Fragment{
         setHasOptionsMenu(true);
         ((MainActivity)getActivity()).getSupportActionBar().setElevation(0);
 
-//        handler.postDelayed(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                progressDialog = new ProgressDialog(getActivity());
-//                progressDialog.show();
-//                progressDialog.setContentView(R.layout.progress_dialog);
-//                progressDialog.getWindow().setBackgroundDrawableResource(
-//                        android.R.color.transparent
-//                );
-//                progressDialog.setCancelable(false);
-//            }
-//        },0);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent
+        );
+        progressDialog.setCancelable(false);
 
         tabLayout = view.findViewById(R.id.fridgeTab);
         addButton = view.findViewById(R.id.ingredientAddBtn);
@@ -84,28 +78,49 @@ public class FridgeFragment extends Fragment{
         if(user != null)
             uid=user.getUid();
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.fridgeTab);
-        int betweenSpace = 30;
-        ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
-        for (int i=0; i<slidingTabStrip.getChildCount()-1; i++) {
-            View v = slidingTabStrip.getChildAt(i);
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            params.rightMargin = betweenSpace;
-        }
-
-        recyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
-        layoutManager = new GridLayoutManager(getActivity(),1);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
         tabArrayList = new ArrayList<>();
         ingredientArrayList = new ArrayList<>();
 
-        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.fridgeTab);
+        int betweenSpace = 30;
 
+        recyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
         ingredientAdapter = new IngredientAdapter(tabArrayList);
         ingredientAdapter.setOnItemClickListener(onItemClickListener);
         addButton.setOnClickListener(addClickListener);
-        recyclerView.setAdapter(ingredientAdapter);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handler1.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        layoutManager = new GridLayoutManager(getActivity(),1);
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setLayoutManager(layoutManager);
+
+                        ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
+                        for (int i=0; i<slidingTabStrip.getChildCount()-1; i++) {
+                            View v = slidingTabStrip.getChildAt(i);
+                            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+                            params.rightMargin = betweenSpace;
+                        }
+
+                        recyclerView.setAdapter(ingredientAdapter);
+                        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
+
+                        new android.os.Handler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.dismiss();
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+        thread.start();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
