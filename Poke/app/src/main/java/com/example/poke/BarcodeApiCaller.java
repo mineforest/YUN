@@ -73,18 +73,15 @@ public class BarcodeApiCaller {
 
                         if(tag.equals("PRDLST_DCNM")){
                             xpp.next();
-                            //p_cate = xpp.getText();
-                            p_cate = "유제품";
+                            p_cate = xpp.getText();
                         }
                         else if(tag.equals("PRDLST_NM")){
                             xpp.next();
-//                            p_name = xpp.getText();
-                            p_name = "우유";
+                            p_name = xpp.getText();
                         }
                         else if(tag.equals("POG_DAYCNT")){
                             xpp.next();
-                            //p_date = DateInverter(xpp.getText());
-                            p_date = "2021-06-20";
+                            p_date = DateInverter(xpp.getText());
                         }
                         break;
 

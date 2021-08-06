@@ -61,8 +61,8 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
         nameText = view.findViewById(R.id.prod_name_txt);
         cateText = view.findViewById(R.id.prod_cat_txt);
         dateText = view.findViewById(R.id.daycnt_txt);
-//        barcode_btn = view.findViewById(R.id.barcodeButton);
-//        barcode_btn.setOnClickListener(scanClickListener);
+        barcode_btn = view.findViewById(R.id.barcodeButton);
+        barcode_btn.setOnClickListener(scanClickListener);
         cancelBtn = view.findViewById(R.id.dialogCancelBtn);
         cancelBtn.setOnClickListener(onClickListener);
         registerForContextMenu(cateText);
