@@ -34,50 +34,43 @@ class Word2v:
                 document_embedding_list.append(doc2vec)
         return document_embedding_list
 
+    def merge(*dict_args):
+        res={}
+        for dict in dict_args:
+            result.update(dict)
+        return res
+
     def recommendations(self, id):
-        rcp = self.df[['id','name']]
+        rcp = self.df[['id', 'name']]
         res = ''
 
         indices = pd.Series(self.df.index, index=self.df['id']).drop_duplicates()
 
-        #og=defaultdict(float)
-        #tmp=defaultdict(float)
-        og=list(enumerate(self.cosine_sim[indices[int(2)]]))
-        tmp = list(enumerate(self.cosine_sim[indices[int(3)]]))
-        og = [i + j for i, j in zip(tmp, og)]
-        print(og)
-        return res
+        idx = indices.loc[id]
+        #print(idx)
 
-""" 
-        for i in id:
-            try:
-                tmp = list(enumerate(self.cosine_sim[indices[int(i)]]))
-                og = [i + j for i, j in zip(tmp, og)]
-            except:
-                continue
+        for i in idx:
+            sim_scores = list(enumerate(self.cosine_sim[i]))
+            sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+            sim_scores = sim_scores[1:51]
+            print(sim_scores)
 
-
-        #print(list(enumerate(self.cosine_sim[5]))+list(enumerate(self.cosine_sim[10])))
-        # x와 item 간의 거리: item
-       # sim_scores = list(enumerate(self.cosine_sim[5]))
-       # print(sim_scores[0],sim_scores[1])
-        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-        sim_scores = sim_scores[1:21]
-        print(sim_scores[0], sim_scores[1])
-
-
-
+        """
+        
 
         rcp_indices = [i[0] for i in sim_scores]
 
         rec = rcp.iloc[rcp_indices].reset_index(drop=True)
 
         for idx, row in rec.iterrows():
-            res += str(row['id'])+' '
-            #print(row['name'])
-"""
+            res += str(row['id']) + ' '
+            print(row['name'])
+        """
+        return res
+
 model=Word2v()
-rated=[1392396,1579505,1727182,1792320,6955523,6953368,6946695,6945181,6935370]     #cookies
+rated=[1392396,1579505,1792320,6955523,6953368,6945181,6935370]     #cookies
+#rated=1392396
 res=model.recommendations(rated)
 print(res)
 
