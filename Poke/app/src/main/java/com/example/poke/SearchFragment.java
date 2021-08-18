@@ -1,7 +1,9 @@
 package com.example.poke;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -41,6 +43,8 @@ public class SearchFragment extends Fragment implements TextWatcher {
     EditText editText;
     String uid;
     ImageView clear_btn;
+    ProgressDialog progressDialog;
+    Handler handler = new Handler();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,35 +55,63 @@ public class SearchFragment extends Fragment implements TextWatcher {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.search, container, false);
 
-        String[] test_ids = {"6900699", "6880252","6903806", "6901559", "6883872", "6886282",
-                "6883047", "6948903", "6893957", "6893869", "6891643", "6947127"};
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        for(int i =0;i<test_ids.length; i++) {
-            DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
-            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    String rcp_id = documentSnapshot.getData().get("id").toString();
-                    String title = documentSnapshot.getData().get("name").toString();
-                    String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                    Recipe_get r = new Recipe_get(rcp_id,thumbnail, title);
-                    searchList.add(r);
-                    adapter.notifyDataSetChanged();
-                }
-            });
-        }
+        progressDialog = new ProgressDialog(getActivity());
 
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent
+        );
+        progressDialog.setCancelable(false);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.search_rv);
-        recyclerView.setHasFixedSize(true);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String[] test_ids = {"1011256", "6867464", "6867464","6867464", "6867464", "6867464", "1166652",
+                                "6867464", "6867464", "6867464", "6867464", "6867464", "6867464"};
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        for(int i =0;i<test_ids.length; i++) {
+                            DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
+                            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    String rcp_id = documentSnapshot.getData().get("id").toString();
+                                    String title = documentSnapshot.getData().get("name").toString();
+                                    String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
+                                    Recipe_get r = new Recipe_get(rcp_id,thumbnail, title);
+                                    searchList.add(r);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+                        }
+
+                        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.search_rv);
+                        recyclerView.setHasFixedSize(true);
+                        //원래 위치
+//                        editText = (EditText) view.findViewById(R.id.rec_search);
+//                        editText.addTextChangedListener(this);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        adapter = new SearchAdapter(searchList);
+                        recyclerView.setAdapter(adapter);
+                        clear_btn = (ImageView) view.findViewById(R.id.clear_btn);
+                        clearText();
+
+                        new android.os.Handler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.dismiss();
+                            }
+                        });
+                    }
+                });
+            }
+        });
         editText = (EditText) view.findViewById(R.id.rec_search);
         editText.addTextChangedListener(this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new SearchAdapter(searchList);
-        recyclerView.setAdapter(adapter);
-        clear_btn = (ImageView) view.findViewById(R.id.clear_btn);
-        clearText();
-
+        thread.start();
         ArrayList<Object> filteredList = new ArrayList<>();
 
         return view;

@@ -1,7 +1,9 @@
 package com.example.poke;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,11 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuItemCompat;
@@ -35,8 +36,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import static android.util.Log.d;
-
 public class FridgeFragment extends Fragment{
     private IngredientAdapter ingredientAdapter;
     private RecyclerView recyclerView;
@@ -51,6 +50,8 @@ public class FridgeFragment extends Fragment{
     private int pos;
     private ImageButton addButton;
     private SearchView searchView;
+    Handler handler1 = new Handler();
+    ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -58,37 +59,68 @@ public class FridgeFragment extends Fragment{
         View view=inflater.inflate(R.layout.fragment_fridge,container,false);
         setHasOptionsMenu(true);
         ((MainActivity)getActivity()).getSupportActionBar().setElevation(0);
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent
+        );
+        progressDialog.setCancelable(false);
+
         tabLayout = view.findViewById(R.id.fridgeTab);
         addButton = view.findViewById(R.id.ingredientAddBtn);
         searchView = view.findViewById(R.id.menu_search);
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         if(user != null)
             uid=user.getUid();
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.fridgeTab);
-        int betweenSpace = 30;
-        ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
-        for (int i=0; i<slidingTabStrip.getChildCount()-1; i++) {
-            View v = slidingTabStrip.getChildAt(i);
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            params.rightMargin = betweenSpace;
-        }
-
-        recyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
-        layoutManager = new GridLayoutManager(getActivity(),1);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
         tabArrayList = new ArrayList<>();
         ingredientArrayList = new ArrayList<>();
 
-        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.fridgeTab);
+        int betweenSpace = 30;
 
+        recyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
         ingredientAdapter = new IngredientAdapter(tabArrayList);
         ingredientAdapter.setOnItemClickListener(onItemClickListener);
         addButton.setOnClickListener(addClickListener);
-        recyclerView.setAdapter(ingredientAdapter);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handler1.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        layoutManager = new GridLayoutManager(getActivity(),1);
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setLayoutManager(layoutManager);
+
+                        ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
+                        for (int i=0; i<slidingTabStrip.getChildCount()-1; i++) {
+                            View v = slidingTabStrip.getChildAt(i);
+                            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+                            params.rightMargin = betweenSpace;
+                        }
+
+                        recyclerView.setAdapter(ingredientAdapter);
+                        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
+
+                        new android.os.Handler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.dismiss();
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+        thread.start();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -97,9 +129,6 @@ public class FridgeFragment extends Fragment{
                     case 0:
                         cate = tab.getText().toString();
                         update(cate, ingredientArrayList, tabArrayList);
-//                        ingredientAdapter = new IngredientAdapter(ingredientArrayList);
-//                        ingredientAdapter.setOnItemClickListener(onItemClickListener);
-//                        recyclerView.setAdapter(ingredientAdapter);
                         break;
                     case 1:
                         cate = tab.getText().toString();
@@ -255,7 +284,7 @@ public class FridgeFragment extends Fragment{
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.id:
-                Collections.sort(ingredientArrayList, new Comparator<UserIngredient>() {
+                Collections.sort(tabArrayList, new Comparator<UserIngredient>() {
                     @Override
                     public int compare(UserIngredient o1, UserIngredient o2) {
                         return o1.getIngredientTitle().compareTo(o2.getIngredientTitle());
@@ -265,7 +294,7 @@ public class FridgeFragment extends Fragment{
                 break;
 
             case R.id.day:
-                Collections.sort(ingredientArrayList, new Comparator<UserIngredient>() {
+                Collections.sort(tabArrayList, new Comparator<UserIngredient>() {
                     @Override
                     public int compare(UserIngredient o1, UserIngredient o2) {
                         return o1.getExpirationDate().compareTo(o2.getExpirationDate());
@@ -310,9 +339,6 @@ public class FridgeFragment extends Fragment{
         }
         @Override
         public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-//            UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-//            ingredientArrayList.remove(ingredient.getIngredientTitle());
-//            ingredientAdapter.notifyDataSetChanged();
         }
         @Override
         public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)  {}
@@ -333,9 +359,6 @@ public class FridgeFragment extends Fragment{
                 }
             }
         }
-//        ingredientAdapter = new IngredientAdapter(tab);
-//        ingredientAdapter.setOnItemClickListener(onItemClickListener);
-//        recyclerView.setAdapter(ingredientAdapter);
         ingredientAdapter.notifyDataSetChanged();
     }
 
@@ -344,18 +367,11 @@ public class FridgeFragment extends Fragment{
         public void onItemClick(View v, int position) {
             Bundle args = new Bundle();
             pos = position;
-//            if(cate.equals("전체")){
-//                args.putString("title",ingredientArrayList.get(position).getIngredientTitle());
-//                args.putString("category", ingredientArrayList.get(position).getCategory());
-//                args.putString("date", ingredientArrayList.get(position).getExpirationDate());
-//                args.putString("key",ingredientArrayList.get(position).getIngredientKey());
-//            }
-//            else{
+
                 args.putString("title",tabArrayList.get(position).getIngredientTitle());
                 args.putString("category", tabArrayList.get(position).getCategory());
                 args.putString("date", tabArrayList.get(position).getExpirationDate());
                 args.putString("key", tabArrayList.get(position).getIngredientKey());
-//            }
 
             IngredientDialog dialog = new IngredientDialog();
             dialog.setArguments(args); // 데이터 전달
@@ -373,6 +389,4 @@ public class FridgeFragment extends Fragment{
             dialog.show(getActivity().getSupportFragmentManager(),"tag");
         }
     };
-
-
 }

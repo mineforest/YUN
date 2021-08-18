@@ -54,6 +54,7 @@ public class DipsFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.dips_rv);
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager(getContext());
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
         dibsList = new ArrayList<>();
 

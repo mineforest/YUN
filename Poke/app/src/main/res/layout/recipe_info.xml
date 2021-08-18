@@ -41,6 +41,16 @@
                 android:background="@color/background"
                 android:orientation="vertical">
 
+<!--                <ProgressBar-->
+<!--                    android:id="@+id/recipe_info_progress"-->
+<!--                    style="?android:attr/progressBarStyle"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="84dp"-->
+<!--                    android:layout_marginEnd="160dp"-->
+<!--                    app:layout_constraintEnd_toEndOf="@+id/cardView2"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/title_txt" />-->
+
                 <TextView
                     android:id="@+id/view4"
                     android:layout_width="wrap_content"
@@ -57,6 +67,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/title_txt" />
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView2"
                     android:layout_width="175dp"
                     android:layout_height="171dp"
                     android:layout_marginTop="15dp"
@@ -69,7 +80,7 @@
                         android:id="@+id/rcpinfo_thumbnail"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
+                        android:scaleType="fitXY"
                         tools:srcCompat="@tools:sample/backgrounds/scenic" />
                 </androidx.cardview.widget.CardView>
 

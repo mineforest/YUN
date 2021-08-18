@@ -1,7 +1,9 @@
 package com.example.poke;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -44,9 +46,10 @@ public class MainRecyclerViewFragment extends Fragment{
     private DatabaseReference mDatabase;
     private String uid;
     FirebaseUser user;
-
     private ViewPager2 viewPager;
     private MainViewpageAdapter adapter2;
+    Handler handler = new Handler();
+    ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,64 +68,98 @@ public class MainRecyclerViewFragment extends Fragment{
         user = mAuth.getCurrentUser();
         uid = user.getUid();
 
-        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
+        progressDialog = new ProgressDialog(getActivity());
 
-        //테스트용 레시피 id들
-        String[] test_ids = {"12345678", "6900699", "6880252","6903806", "6901559", "6883872", "6886282",
-                "6883047", "6948903", "6893957", "6893869", "6891643", "6947127"};
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        for(int i =0;i<test_ids.length; i++){
-            DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
-            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    int cnt=0;
-                    String rcp_id = documentSnapshot.getData().get("id").toString();
-                    String title = documentSnapshot.getData().get("name").toString();
-                    String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                    String cook_time = documentSnapshot.getData().get("time").toString();
-                    List<String> tags = (List<String>) documentSnapshot.get("tag");
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent
+        );
+        progressDialog.setCancelable(false);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
+                        mDatabase.onDisconnect();
+                        Handler handler1 = new Handler();
+                        handler1.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                //테스트용 레시피 id들
+                                String[] test_ids = {"1011256", "6867464", "6867464","6867464", "6867464", "6867464", "1166652",
+                                        "6867464", "6867464", "6867464", "6867464", "6867464", "6867464"};
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                for(int i =0;i<test_ids.length; i++){
+                                    DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
+                                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            int cnt=0;
+                                            String rcp_id = documentSnapshot.getData().get("id").toString();
+                                            String title = documentSnapshot.getData().get("name").toString();
+                                            String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
+                                            String cook_time = documentSnapshot.getData().get("time").toString();
+                                            List<String> tags = (List<String>) documentSnapshot.get("tag");
 //                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
-                    List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
+                                            List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
 
-                        for(int k=0; k<ingre_list.size(); k++){
-                            if(myIngreList.contains(ingre_list.get(k).get("ingre_name"))){
-                                cnt++;
+                                            for(int k=0; k<ingre_list.size(); k++){
+                                                if(myIngreList.contains(ingre_list.get(k).get("ingre_name"))){
+                                                    cnt++;
+                                                }
+                                            }
+
+                                            long rate = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
+
+                                            Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, rate, tags);
+                                            Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
+                                            if(rr.getId().equals("1011256")){
+                                                rcps_siyeonyong.add(rr);
+                                            }
+                                            else {
+                                                rcps.add(rr);
+                                            }
+                                            adapter.notifyDataSetChanged();
+                                            adapter2.notifyDataSetChanged();
+                                        }
+                                    });
+                                }
+
+                                RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
+                                recyclerView.setHasFixedSize(true);
+                                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
+                                adapter = new CustomAdapter(rcps);
+                                recyclerView.setAdapter(adapter);
+                                int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
+                                int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
+                                recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
+
+                                viewPager = view.findViewById(R.id.main_pager);
+                                adapter2 = new MainViewpageAdapter(rcps_siyeonyong);
+                                viewPager.setAdapter(adapter2);
+
+                                new android.os.Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        progressDialog.dismiss();
+                                    }
+                                }, 1000);
+
                             }
-                        }
+                        });
 
-                    long dd = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
-
-                    Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, dd, tags);
-                    Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
-                    if(rr.getId().equals("12345678")){
-                        rcps_siyeonyong.add(rr);
                     }
-                    else {
-                        rcps.add(rr);
-                    }
-                    adapter.notifyDataSetChanged();
-                    adapter2.notifyDataSetChanged();
-                }
-            });
-        }
-
-        RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
-        adapter = new CustomAdapter(rcps);
-        recyclerView.setAdapter(adapter);
-        int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
-        int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
-        recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
-
-        viewPager = view.findViewById(R.id.main_pager);
-        adapter2 = new MainViewpageAdapter(rcps_siyeonyong);
-        viewPager.setAdapter(adapter2);
+                },500);
+            }
+        });
+        thread.start();
 
         return view;
     }
-
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -160,12 +197,12 @@ public class MainRecyclerViewFragment extends Fragment{
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
+                myIngreList.add(ingredient.getIngredientTitle());
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
             }
 
             @Override

@@ -2,6 +2,7 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    //4개 이상일 경우 이미지만 보이기
     <item
         android:id="@+id/nav_info"
         android:title="마이페이지"

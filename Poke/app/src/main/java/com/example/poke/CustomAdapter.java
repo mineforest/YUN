@@ -66,6 +66,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
                 public void onClick(View v) {
                     intent = new Intent(v.getContext(), Recipe_Info.class);
                     intent.putExtra("rcp_id", mRcplist.get(position).getId());
+                    intent.putExtra("my_rate", mRcplist.get(position).getRate());
                     v.getContext().startActivity(intent);
                 }
             });

@@ -1,12 +1,15 @@
 package com.example.poke;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +47,8 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     Button dipsButton;
     Button allergyButton;
     static HistoryFragment historyFragment;
+    ProgressDialog progressDialog;
+    Handler handler = new Handler();
 
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -60,6 +65,14 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         if(user != null)
             uid = user.getUid();
 
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent
+        );
+        progressDialog.setCancelable(false);
+
         historyFragment = new HistoryFragment();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         profileView=(ImageView)view.findViewById(R.id.Profileimage);
@@ -73,16 +86,35 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         historyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.info_btn));
         mDatabase.addValueEventListener(allergyListener);
 
-       getChildFragmentManager().beginTransaction().add(R.id.InfoFrame,new HistoryFragment()).commit();
-        recyclerView = (RecyclerView)view.findViewById(R.id.history_rv);
-        recyclerView.setHasFixedSize(true);
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        getChildFragmentManager().beginTransaction().add(R.id.InfoFrame,new HistoryFragment()).commit();
+                        recyclerView = (RecyclerView)view.findViewById(R.id.history_rv);
+                        recyclerView.setHasFixedSize(true);
+                        linearLayoutManager = new LinearLayoutManager(getActivity());
+                        recyclerView.setLayoutManager(linearLayoutManager);
 
-        historyList = new ArrayList<>();
-        mDatabase.addValueEventListener(userValueEventListener);
-        mainAdapter = new HistoryAdapter(historyList);
-        recyclerView.setAdapter(mainAdapter);
+                        historyList = new ArrayList<>();
+                        mDatabase.addValueEventListener(userValueEventListener);
+                        mainAdapter = new HistoryAdapter(historyList);
+                        recyclerView.setAdapter(mainAdapter);
+
+                        new android.os.Handler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.dismiss();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        thread.start();
+
 
         return view;
     }
@@ -90,9 +122,9 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     ValueEventListener allergyListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            historyButton.setText("평가한 요리\n"+Long.toString(dataSnapshot.child("allergy").child(uid).getChildrenCount()));
+            historyButton.setText("평가한 요리\n"+Long.toString(dataSnapshot.child("history").child(uid).getChildrenCount()));
             dipsButton.setText("찜한요리\n"+Long.toString(dataSnapshot.child("dips").child(uid).getChildrenCount()));
-            allergyButton.setText("알러지/기피\n"+Long.toString(dataSnapshot.child("history").child(uid).getChildrenCount()));
+            allergyButton.setText("알러지/기피\n"+Long.toString(dataSnapshot.child("allergy").child(uid).getChildrenCount()));
         }
 
         @Override
