@@ -73,9 +73,8 @@ class Word2v:
         return res
 
 model=Word2v()
-#rated=[1392396,1579505,1792320,6955523,6953368,6945181,6935370]     #cookies
-rated=[1392396]
+rated=[1392396,1579505,1792320,6955523,6953368,6945181,6935370]
+#rated=[1392396]
 res=model.recommendations(rated)
-print(res)
 
 print("time :", time.time() - s_time)
