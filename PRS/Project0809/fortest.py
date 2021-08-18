@@ -6,8 +6,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 class Word2v:
     def __init__(self):
-        self.df = pd.read_csv('0728rcp.csv', encoding='utf-8')
-        self.word2vec_model = KeyedVectors.load('0728w2v.model')
+        self.df = pd.read_csv('doritos/0728rcp.csv', encoding='utf-8')
+        self.word2vec_model = KeyedVectors.load('w2v/w2v.model')
         self.document_embedding_list = self.vectors(self.df['cleand'])
         self.cosine_sim = cosine_similarity(self.document_embedding_list, self.document_embedding_list)
 
@@ -47,3 +47,6 @@ class Word2v:
             res += str(row['id'])+' '
             print(row['name'])
         return res
+
+model=Word2v()
+res=model.recommendations(1392396)
