@@ -1,6 +1,7 @@
 from collections import defaultdict
 
 from gensim.models.keyedvectors import load_word2vec_format
+import numpy as np
 import pandas as pd
 from gensim.models import Word2Vec, word2vec
 from gensim.models import KeyedVectors
@@ -34,11 +35,10 @@ class Word2v:
                 document_embedding_list.append(doc2vec)
         return document_embedding_list
 
-    def merge(*dict_args):
-        res={}
-        for dict in dict_args:
-            result.update(dict)
-        return res
+    def merge(self,dict,obj):
+        for j, value in obj:
+            dict[j]+=value
+        return dict
 
     def recommendations(self, id):
         rcp = self.df[['id', 'name']]
@@ -48,29 +48,33 @@ class Word2v:
 
         idx = indices.loc[id]
         #print(idx)
-
+        candidates = defaultdict(float)
         for i in idx:
             sim_scores = list(enumerate(self.cosine_sim[i]))
             sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-            sim_scores = sim_scores[1:51]
-            print(sim_scores)
+            sim_scores = sim_scores[1:51]                                       # 각 레시피별 뽑을 상위 추천레시피 수
 
-        """
-        
+            candidates=self.merge(candidates,sim_scores)
 
-        rcp_indices = [i[0] for i in sim_scores]
+            #print(candidates)
 
+        #print(candidates)
+        candidates=sorted(candidates.items(), key=lambda x: x[1],reverse=True)
+        candidates = candidates[1:21]                                              # 최종으로 뽑을 상위 추천레시피 수
+        print(candidates)
+
+        rcp_indices = [i[0] for i in candidates]
         rec = rcp.iloc[rcp_indices].reset_index(drop=True)
 
         for idx, row in rec.iterrows():
             res += str(row['id']) + ' '
             print(row['name'])
-        """
+
         return res
 
 model=Word2v()
-rated=[1392396,1579505,1792320,6955523,6953368,6945181,6935370]     #cookies
-#rated=1392396
+#rated=[1392396,1579505,1792320,6955523,6953368,6945181,6935370]     #cookies
+rated=[1392396]
 res=model.recommendations(rated)
 print(res)
 
