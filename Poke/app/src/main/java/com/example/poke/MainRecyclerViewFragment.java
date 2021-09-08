@@ -3,8 +3,6 @@ package com.example.poke;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,11 +12,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -48,7 +44,6 @@ public class MainRecyclerViewFragment extends Fragment{
     FirebaseUser user;
     private ViewPager2 viewPager;
     private MainViewpageAdapter adapter2;
-    Handler handler = new Handler();
     ProgressDialog progressDialog;
 
     @Override
@@ -67,97 +62,71 @@ public class MainRecyclerViewFragment extends Fragment{
         mDatabase = FirebaseDatabase.getInstance().getReference();
         user = mAuth.getCurrentUser();
         uid = user.getUid();
-
         progressDialog = new ProgressDialog(getActivity());
 
-        handler.postDelayed(new Runnable() {
+        //HONG
+        W2vHttpConn w2v = new W2vHttpConn();
+        new Thread(){
             @Override
             public void run() {
+                String[] test_ids = w2v.getData("6905019");
+
                 mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
                 mDatabase.onDisconnect();
-                Handler handler1 = new Handler();
-                handler1.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Handler handler2 = new Handler();
-                        handler2.post(new Runnable() {
-                            @Override
-                            public void run() {
 
-                                progressDialog.show();
-                                progressDialog.setContentView(R.layout.progress_dialog);
-                                progressDialog.getWindow().setBackgroundDrawableResource(
-                                        android.R.color.transparent
-                                );
-                                progressDialog.setCancelable(false);
-
-                            }
-                        });
-
-                        //테스트용 레시피 id들
-                        String[] test_ids = {"1011256", "6867464", "6867464","6867464", "6867464", "6867464", "1166652",
-                                "6867464", "6867464", "6867464", "6867464", "6867464", "6867464"};
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        for(int i =0;i<test_ids.length; i++){
-                            DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
-                            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    int cnt=0;
-                                    String rcp_id = documentSnapshot.getData().get("id").toString();
-                                    String title = documentSnapshot.getData().get("name").toString();
-                                    String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                                    String cook_time = documentSnapshot.getData().get("time").toString();
-                                    List<String> tags = (List<String>) documentSnapshot.get("tag");
+                //테스트용 레시피 id들
+//                String[] test_ids = {"1011256", "6867464", "6867464","6867464", "6867464", "6867464", "1166652",
+//                        "6867464", "6867464", "6867464", "6867464", "6867464", "6867464"};
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                for(int i =0;i<test_ids.length; i++){
+                    DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
+                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            int cnt=0;
+                            String rcp_id = documentSnapshot.getData().get("id").toString();
+                            String title = documentSnapshot.getData().get("name").toString();
+                            String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
+                            String cook_time = documentSnapshot.getData().get("time").toString();
+                            List<String> tags = (List<String>) documentSnapshot.get("tag");
 //                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
-                                    List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
+                            List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
 
-                                    for(int k=0; k<ingre_list.size(); k++){
-                                        if(myIngreList.contains(ingre_list.get(k).get("ingre_name"))){
-                                            cnt++;
-                                        }
-                                    }
-
-                                    long rate = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
-
-                                    Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, rate, tags);
-                                    Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
-                                    if(rr.getId().equals("1011256")){
-                                        rcps_siyeonyong.add(rr);
-                                    }
-                                    else {
-                                        rcps.add(rr);
-                                    }
-                                    adapter.notifyDataSetChanged();
-                                    adapter2.notifyDataSetChanged();
+                            for(int k=0; k<ingre_list.size(); k++){
+                                if(myIngreList.contains(ingre_list.get(k).get("ingre_name"))){
+                                    cnt++;
                                 }
-                            });
-                        }
-
-                        RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
-                        adapter = new CustomAdapter(rcps);
-                        recyclerView.setAdapter(adapter);
-                        int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
-                        int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
-                        recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
-
-                        viewPager = view.findViewById(R.id.main_pager);
-                        adapter2 = new MainViewpageAdapter(rcps_siyeonyong);
-                        viewPager.setAdapter(adapter2);
-
-                        new android.os.Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
                             }
-                        },1000);
-                    }
-                });
 
+                            long rate = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
+
+                            Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, rate, tags);
+                            if(rr.getId().equals("1011256")){
+                                rcps_siyeonyong.add(rr);
+                            }
+                            else {
+                                rcps.add(rr);
+                            }
+                            adapter.notifyDataSetChanged();
+                            adapter2.notifyDataSetChanged();
+                        }
+                    });
+                }
             }
-        },500);
+        }.start();
+
+        RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
+        adapter = new CustomAdapter(rcps);
+        recyclerView.setAdapter(adapter);
+        int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
+        recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
+
+        viewPager = view.findViewById(R.id.main_pager);
+        adapter2 = new MainViewpageAdapter(rcps_siyeonyong);
+        viewPager.setAdapter(adapter2);
 
         return view;
     }
@@ -227,13 +196,6 @@ public class MainRecyclerViewFragment extends Fragment{
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        if(childEventListener != null)
-//            mDatabase.removeEventListener(childEventListener);
-//    }
 
     private void revokeAccess() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
