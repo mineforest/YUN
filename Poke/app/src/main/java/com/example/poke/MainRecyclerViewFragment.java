@@ -127,7 +127,6 @@ public class MainRecyclerViewFragment extends Fragment{
         viewPager = view.findViewById(R.id.main_pager);
         adapter2 = new MainViewpageAdapter(rcps_siyeonyong);
         viewPager.setAdapter(adapter2);
-
         return view;
     }
 
