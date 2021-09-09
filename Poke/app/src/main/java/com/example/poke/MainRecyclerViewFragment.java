@@ -66,55 +66,10 @@ public class MainRecyclerViewFragment extends Fragment{
         uid = user.getUid();
         progressDialog = new ProgressDialog(getActivity());
 
-        //HONG
-        W2vHttpConn w2v = new W2vHttpConn();
-        new Thread(){
-            @Override
-            public void run() {
-                mDatabase = FirebaseDatabase.getInstance().getReference();
-                mDatabase.child("history").child(uid).addListenerForSingleValueEvent(historyListener);
-                mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
-                mDatabase.onDisconnect();
-
-                String[] r_ids = w2v.getData("6905019");
-
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                for(int i =0;i<r_ids.length; i++){
-                    DocumentReference docRef = db.collection("recipe").document(r_ids[i]);
-                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            int cnt=0;
-                            String rcp_id = documentSnapshot.getData().get("id").toString();
-                            String title = documentSnapshot.getData().get("name").toString();
-                            String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                            String cook_time = documentSnapshot.getData().get("time").toString();
-                            List<String> tags = (List<String>) documentSnapshot.get("tag");
-//                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
-                            List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
-
-                            for(int k=0; k<ingre_list.size(); k++){
-                                if(myIngreList.contains(ingre_list.get(k).get("ingre_name"))){
-                                    cnt++;
-                                }
-                            }
-
-                            long rate = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
-
-                            Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, rate, tags);
-                            if(rr.getId().equals("1011256")){
-                                rcps_siyeonyong.add(rr);
-                            }
-                            else {
-                                rcps.add(rr);
-                            }
-                            adapter.notifyDataSetChanged();
-                            adapter2.notifyDataSetChanged();
-                        }
-                    });
-                }
-            }
-        }.start();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("history").child(uid).addValueEventListener(historyListener);
+        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
+        mDatabase.onDisconnect();
 
         RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
         recyclerView.setHasFixedSize(true);
@@ -188,13 +143,72 @@ public class MainRecyclerViewFragment extends Fragment{
     ValueEventListener historyListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-            Log.d("ZZZZZZZZ","hi");
             if (snapshot.exists()) {
-                UserHistory history = snapshot.getValue(UserHistory.class);
-                if (history != null) {
-                    historyList.add(new UserHistory(history.getRcp_id(), history.getRecipeTitle(), history.getRecipeImage(), history.getDate(), history.getRate()));
+                for (DataSnapshot ridSnapshot : snapshot.getChildren()) {
+                    UserHistory history = ridSnapshot.getValue(UserHistory.class);
+                    if (history != null) {
+                        historyList.add(new UserHistory(history.getRcp_id(), history.getRecipeTitle(), history.getRecipeImage(), history.getDate(), history.getRate()));
+                    }
                 }
             }
+            StringBuilder rids = new StringBuilder();
+            for (UserHistory hist : historyList) {
+                rids.append(hist.getRcp_id()).append("+");
+            }
+            rids.deleteCharAt(rids.lastIndexOf("+"));
+            Log.d("HHHHHH", rids.toString());
+            W2vHttpConn w2v = new W2vHttpConn();
+
+            new Thread(){
+                @Override
+                public void run() {
+
+                    String[] r_ids;
+
+                    if (rids == null ){
+                        r_ids = w2v.getData("6905019");
+                    }else {
+                        r_ids = w2v.getData(rids.toString());
+                    }
+                    //String[] r_ids = w2v.getData("6905019");
+
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    for(int i =0;i<r_ids.length; i++){
+                        DocumentReference docRef = db.collection("recipe").document(r_ids[i]);
+                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                int cnt=0;
+                                String rcp_id = documentSnapshot.getData().get("id").toString();
+                                String title = documentSnapshot.getData().get("name").toString();
+                                String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
+                                String cook_time = documentSnapshot.getData().get("time").toString();
+                                List<String> tags = (List<String>) documentSnapshot.get("tag");
+//                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
+                                List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
+
+                                for(int k=0; k<ingre_list.size(); k++){
+                                    if(myIngreList.contains(ingre_list.get(k).get("ingre_name"))){
+                                        cnt++;
+                                    }
+                                }
+
+                                long rate = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
+
+                                Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, rate, tags);
+                                if(rr.getId().equals("1011256")){
+                                    rcps_siyeonyong.add(rr);
+                                }
+                                else {
+                                    rcps.add(rr);
+                                }
+                                adapter.notifyDataSetChanged();
+                                adapter2.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }
+            }.start();
         }
 
         @Override
