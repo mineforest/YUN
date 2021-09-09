@@ -1,8 +1,11 @@
 package com.example.poke;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,9 +13,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +36,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +71,8 @@ public class MainRecyclerViewFragment extends Fragment{
         user = mAuth.getCurrentUser();
         uid = user.getUid();
         progressDialog = new ProgressDialog(getActivity());
+
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("history").child(uid).addValueEventListener(historyListener);
@@ -165,12 +173,12 @@ public class MainRecyclerViewFragment extends Fragment{
                 public void run() {
                     String[] r_ids= w2v.getData(rids.toString());
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    for(int i =0;i<r_ids.length; i++){
-                        DocumentReference docRef = db.collection("recipe").document(r_ids[i]);
+                    for (String r_id : r_ids) {
+                        DocumentReference docRef = db.collection("recipe").document(r_id);
                         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                int cnt=0;
+                                int cnt = 0;
                                 String rcp_id = documentSnapshot.getData().get("id").toString();
                                 String title = documentSnapshot.getData().get("name").toString();
                                 String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
@@ -179,19 +187,18 @@ public class MainRecyclerViewFragment extends Fragment{
 //                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
                                 List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
 
-                                for(int k=0; k<ingre_list.size(); k++){
-                                    if(myIngreList.contains(ingre_list.get(k).get("ingre_name"))){
+                                for (int k = 0; k < ingre_list.size(); k++) {
+                                    if (myIngreList.contains(ingre_list.get(k).get("ingre_name"))) {
                                         cnt++;
                                     }
                                 }
 
-                                long rate = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
+                                long rate = Math.round((double) cnt / (double) ingre_list.size() * 100.0);
 
                                 Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, rate, tags);
-                                if(rr.getId().equals("1011256")){
+                                if (rr.getId().equals("1011256")) {
                                     rcps_siyeonyong.add(rr);
-                                }
-                                else {
+                                } else {
                                     rcps.add(rr);
                                 }
                                 adapter.notifyDataSetChanged();
@@ -229,4 +236,25 @@ public class MainRecyclerViewFragment extends Fragment{
 
         mAuth.getCurrentUser().delete();
     }
+
+    class ExceptionHandler implements Thread.UncaughtExceptionHandler {
+        @Override
+        public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
+            Intent intent = new Intent(getContext(), CrashedActivity.class);
+            startActivity(intent);
+//            new Thread() {
+//                @Override
+//                public void run() {
+//                    Looper.prepare();
+//                    Toast.makeText(getContext(), "Application crashed", Toast.LENGTH_LONG).show();
+//                    Looper.loop();
+//                }
+//            }.start();
+//            try {
+//                Thread.sleep(4000); // Let the Toast display before app will get shutdown
+//            } catch (InterruptedException ed) {// Ignored.
+//            }
+        }
+    }
+
 }
