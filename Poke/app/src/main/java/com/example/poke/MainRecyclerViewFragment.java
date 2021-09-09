@@ -43,7 +43,7 @@ public class MainRecyclerViewFragment extends Fragment{
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private String uid;
-    ArrayList<UserHistory> historyList = new ArrayList<>();
+    ArrayList<UserHistory> historyList;
     FirebaseUser user;
     private ViewPager2 viewPager;
     private MainViewpageAdapter adapter2;
@@ -143,35 +143,27 @@ public class MainRecyclerViewFragment extends Fragment{
     ValueEventListener historyListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
+            StringBuilder rids = new StringBuilder();
+            rids.append("6905019");
+            W2vHttpConn w2v = new W2vHttpConn();
+
             if (snapshot.exists()) {
+                rcps.clear();
+                rids.setLength(0);
+                historyList = new ArrayList<>();
                 for (DataSnapshot ridSnapshot : snapshot.getChildren()) {
                     UserHistory history = ridSnapshot.getValue(UserHistory.class);
-                    if (history != null) {
-                        historyList.add(new UserHistory(history.getRcp_id(), history.getRecipeTitle(), history.getRecipeImage(), history.getDate(), history.getRate()));
-                    }
+                    historyList.add(new UserHistory(history.getRcp_id(), history.getRecipeTitle(), history.getRecipeImage(), history.getDate(), history.getRate()));
+                    rids.append(history.getRcp_id()).append("+");
                 }
+                rids.deleteCharAt(rids.lastIndexOf("+"));
             }
-            StringBuilder rids = new StringBuilder();
-            for (UserHistory hist : historyList) {
-                rids.append(hist.getRcp_id()).append("+");
-            }
-            rids.deleteCharAt(rids.lastIndexOf("+"));
             Log.d("HHHHHH", rids.toString());
-            W2vHttpConn w2v = new W2vHttpConn();
 
             new Thread(){
                 @Override
                 public void run() {
-
-                    String[] r_ids;
-
-                    if (rids == null ){
-                        r_ids = w2v.getData("6905019");
-                    }else {
-                        r_ids = w2v.getData(rids.toString());
-                    }
-                    //String[] r_ids = w2v.getData("6905019");
-
+                    String[] r_ids= w2v.getData(rids.toString());
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     for(int i =0;i<r_ids.length; i++){
                         DocumentReference docRef = db.collection("recipe").document(r_ids[i]);
