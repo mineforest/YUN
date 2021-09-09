@@ -3,6 +3,7 @@ package com.example.poke;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,6 +43,7 @@ public class MainRecyclerViewFragment extends Fragment{
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private String uid;
+    ArrayList<UserHistory> historyList = new ArrayList<>();
     FirebaseUser user;
     private ViewPager2 viewPager;
     private MainViewpageAdapter adapter2;
@@ -59,7 +62,6 @@ public class MainRecyclerViewFragment extends Fragment{
         ((MainActivity)getActivity()).getSupportActionBar().setElevation(0);
         myIngreList = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         user = mAuth.getCurrentUser();
         uid = user.getUid();
         progressDialog = new ProgressDialog(getActivity());
@@ -69,17 +71,16 @@ public class MainRecyclerViewFragment extends Fragment{
         new Thread(){
             @Override
             public void run() {
-                String[] test_ids = w2v.getData("6905019");
-
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+                mDatabase.child("history").child(uid).addListenerForSingleValueEvent(historyListener);
                 mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
                 mDatabase.onDisconnect();
 
-                //테스트용 레시피 id들
-//                String[] test_ids = {"1011256", "6867464", "6867464","6867464", "6867464", "6867464", "1166652",
-//                        "6867464", "6867464", "6867464", "6867464", "6867464", "6867464"};
+                String[] r_ids = w2v.getData("6905019");
+
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                for(int i =0;i<test_ids.length; i++){
-                    DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
+                for(int i =0;i<r_ids.length; i++){
+                    DocumentReference docRef = db.collection("recipe").document(r_ids[i]);
                     docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -183,6 +184,24 @@ public class MainRecyclerViewFragment extends Fragment{
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
+
+    ValueEventListener historyListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            Log.d("ZZZZZZZZ","hi");
+            if (snapshot.exists()) {
+                UserHistory history = snapshot.getValue(UserHistory.class);
+                if (history != null) {
+                    historyList.add(new UserHistory(history.getRcp_id(), history.getRecipeTitle(), history.getRecipeImage(), history.getDate(), history.getRate()));
+                }
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    };
 
     @Override
     public void onDestroy() {
