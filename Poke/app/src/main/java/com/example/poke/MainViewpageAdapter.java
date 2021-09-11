@@ -51,7 +51,6 @@ public class MainViewpageAdapter  extends RecyclerView.Adapter<MainViewpageViewh
             holder.keyword.setText("오늘의 저녁");
             holder.rcp_title.setText(rcp.getName());
             holder.rcp_cooktime.setText(rcp.getTime()+"분");
-            holder.rate.setText((rcp.getRate())+"%");
 
             int paddingDp = (int) TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, 15,
@@ -85,7 +84,6 @@ public class MainViewpageAdapter  extends RecyclerView.Adapter<MainViewpageViewh
                 public void onClick(View v) {
                     intent = new Intent(v.getContext(), Recipe_Info.class);
                     intent.putExtra("rcp_id", mRcplist.get(position).getId());
-                    intent.putExtra("my_rate", mRcplist.get(position).getRate());
                     v.getContext().startActivity(intent);
                 }
             });

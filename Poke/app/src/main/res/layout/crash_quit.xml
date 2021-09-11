@@ -21,11 +21,19 @@
         app:srcCompat="@drawable/dh" />
 
     <TextView
+        android:id="@+id/textView11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="제가 대신 먹어드릴게요"
+        android:gravity="center"
+        android:textSize="20sp"/>
+
+    <TextView
         android:id="@+id/textView15"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="5초 후에 다시 시작할게요."
+        android:text="아니면 5초 기다리세요"
         android:gravity="center"
-        android:textSize="20sp"/>
+        android:textSize="15sp"/>
 
 </LinearLayout>

@@ -16,6 +16,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,13 +30,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     private final ArrayList<Recipe_get> mRcplist;
     private Intent intent;
-
+    private DatabaseReference mDatabase;
+    String uid;
     CustomAdapter(ArrayList<Recipe_get> rcp_list) {
         this.mRcplist = rcp_list;
     }
@@ -55,7 +63,38 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
             Recipe_get rcp = mRcplist.get(position);
             holder.rcp_title.setText(rcp.getName());
             holder.rcp_cooktime.setText(rcp.getTime()+"분");
-            holder.rate.setText((rcp.getRate())+"%");
+
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+            mDatabase.child("ingredient").child(uid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    List<String> myIngreList = new ArrayList<>();
+                    int cnt = 0;
+                    if (snapshot.exists()) {
+                        for (DataSnapshot ridSnapshot : snapshot.getChildren()) {
+                            UserIngredient ingres = ridSnapshot.getValue(UserIngredient.class);
+                            myIngreList.add(ingres.getIngredientTitle());
+                        }
+                    }
+                    for (String myIngre : myIngreList) {
+                        for (Map<String, String> tmpIngre : rcp.getIngre_list()) {
+                            if (tmpIngre.containsValue(myIngre)) {
+                                Log.d("HAPPENED?", cnt+"");
+                                cnt++;
+                            }
+                        }
+                    }
+                    Long rate = Math.round((double) cnt / (double) rcp.getIngre_list().size() * 100.0);
+                    holder.rate.setText(rate + "%");
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
             Glide.with(holder.itemView)
                     .load(rcp.getThumbnail())
@@ -66,7 +105,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
                 public void onClick(View v) {
                     intent = new Intent(v.getContext(), Recipe_Info.class);
                     intent.putExtra("rcp_id", mRcplist.get(position).getId());
-                    intent.putExtra("my_rate", mRcplist.get(position).getRate());
                     v.getContext().startActivity(intent);
                 }
             });

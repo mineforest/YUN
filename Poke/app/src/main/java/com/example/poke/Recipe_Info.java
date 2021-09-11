@@ -47,7 +47,6 @@ import java.util.concurrent.CountDownLatch;
 public class Recipe_Info extends AppCompatActivity {
     private Recipe_get rcp;
     private String recipe_id;
-    private long myIngre_rate;
     private ImageView recipe_image;
     private TextView recipe_title_tv;
     private TextView recipe_time_tv;
@@ -130,11 +129,9 @@ public class Recipe_Info extends AppCompatActivity {
         recipe_image = findViewById(R.id.rcpinfo_thumbnail);
         recipe_title_tv = findViewById(R.id.title_txt);
         recipe_time_tv = findViewById(R.id.timeText);
-        recipe_rate_tv = findViewById(R.id.rateText);
 
         Intent intent = getIntent();
         recipe_id = intent.getStringExtra("rcp_id");
-        myIngre_rate = intent.getLongExtra("my_rate",0);
 
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -184,7 +181,6 @@ public class Recipe_Info extends AppCompatActivity {
 
                                     Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
                                     recipe_title_tv.setText(rcp.getName());
-                                    recipe_rate_tv.setText(myIngre_rate + "%");
                                     recipe_time_tv.setText("약 " + rcp.getTime() + "분");
 
                                     RecyclerView recyclerView = findViewById(R.id.ingre_recyclerView);

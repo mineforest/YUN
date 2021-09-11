@@ -76,7 +76,6 @@ public class MainRecyclerViewFragment extends Fragment{
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("history").child(uid).addValueEventListener(historyListener);
-        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
         mDatabase.onDisconnect();
 
         RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
@@ -121,38 +120,11 @@ public class MainRecyclerViewFragment extends Fragment{
         return super.onOptionsItemSelected(item);
     }
 
-    ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-                myIngreList.add(ingredient.getIngredientTitle());
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-                myIngreList.add(ingredient.getIngredientTitle());
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        };
-
     ValueEventListener historyListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             StringBuilder rids = new StringBuilder();
-            rids.append("6905019");
+            rids.append("6905019"); // 히스토리없을때 default값
             W2vHttpConn w2v = new W2vHttpConn();
 
             if (snapshot.exists()) {
@@ -178,24 +150,14 @@ public class MainRecyclerViewFragment extends Fragment{
                         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                int cnt = 0;
                                 String rcp_id = documentSnapshot.getData().get("id").toString();
                                 String title = documentSnapshot.getData().get("name").toString();
                                 String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
                                 String cook_time = documentSnapshot.getData().get("time").toString();
                                 List<String> tags = (List<String>) documentSnapshot.get("tag");
-//                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
                                 List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
 
-                                for (int k = 0; k < ingre_list.size(); k++) {
-                                    if (myIngreList.contains(ingre_list.get(k).get("ingre_name"))) {
-                                        cnt++;
-                                    }
-                                }
-
-                                long rate = Math.round((double) cnt / (double) ingre_list.size() * 100.0);
-
-                                Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, rate, tags);
+                                Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, ingre_list, tags);
                                 if (rr.getId().equals("1011256")) {
                                     rcps_siyeonyong.add(rr);
                                 } else {
@@ -216,11 +178,11 @@ public class MainRecyclerViewFragment extends Fragment{
         }
     };
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mDatabase.removeEventListener(childEventListener);
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        mDatabase.removeEventListener(childEventListener);
+//    }
 
     private void myStartActivity(Class c){
         Intent intent = new Intent(getActivity(),c);
