@@ -1,6 +1,6 @@
 package com.example.poke;
 
-import android.app.ProgressDialog;
+import  android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -72,12 +71,6 @@ public class FridgeFragment extends Fragment{
         addButton = view.findViewById(R.id.ingredientAddBtn);
         searchView = view.findViewById(R.id.menu_search);
 
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        if(user != null)
-            uid=user.getUid();
-
         tabArrayList = new ArrayList<>();
         ingredientArrayList = new ArrayList<>();
 
@@ -89,38 +82,47 @@ public class FridgeFragment extends Fragment{
         ingredientAdapter.setOnItemClickListener(onItemClickListener);
         addButton.setOnClickListener(addClickListener);
 
-        Thread thread = new Thread(new Runnable() {
+        layoutManager = new GridLayoutManager(getActivity(), 1);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+
+        ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
+        for (int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
+            View v = slidingTabStrip.getChildAt(i);
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            params.rightMargin = betweenSpace;
+        }
+
+        class StartRunnable implements Runnable{
             @Override
             public void run() {
-                handler1.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        layoutManager = new GridLayoutManager(getActivity(),1);
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setLayoutManager(layoutManager);
-
-                        ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
-                        for (int i=0; i<slidingTabStrip.getChildCount()-1; i++) {
-                            View v = slidingTabStrip.getChildAt(i);
-                            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-                            params.rightMargin = betweenSpace;
-                        }
-
-                        recyclerView.setAdapter(ingredientAdapter);
-                        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
-
-                        new android.os.Handler().post(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
-                            }
-                        });
-
+                try {
+                    while (!Thread.currentThread().isInterrupted()) {
+                        mAuth = FirebaseAuth.getInstance();
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        mDatabase = FirebaseDatabase.getInstance().getReference();
+                        if (user != null)
+                            uid = user.getUid();
                     }
-                });
+                }catch (Exception e){
+                }finally {
+                    progressDialog.dismiss();
+                    mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
+                    recyclerView.setAdapter(ingredientAdapter);
+                }
             }
-        });
-        thread.start();
+        }
+
+        StartRunnable sr = new StartRunnable();
+        Thread stop = new Thread(sr);
+        stop.start();
+
+        try{
+            Thread.sleep(1000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        stop.interrupt();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

@@ -23,7 +23,6 @@ public class LoadingActivity extends Activity {
     }
 
     private class MyAsyncTask extends AsyncTask<Void, Void, Integer>{
-        ProgressDialog asyncDialog = new ProgressDialog(LoadingActivity.this);
 
         @Override
         protected void onPreExecute() {
@@ -33,8 +32,6 @@ public class LoadingActivity extends Activity {
             }catch (Exception e){
                 e.printStackTrace();
             }
-            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.show();
 
             super.onPreExecute();
         }
@@ -57,7 +54,6 @@ public class LoadingActivity extends Activity {
 
         @Override
         protected void onPostExecute(Integer integer) {
-            if(asyncDialog.isShowing()) asyncDialog.dismiss();
 
             try{
                 Thread.sleep(1000);
@@ -73,7 +69,6 @@ public class LoadingActivity extends Activity {
         protected void onCancelled() {
             super.onCancelled();
 
-            if(asyncDialog.isShowing()) asyncDialog.dismiss();
         }
     }
 }

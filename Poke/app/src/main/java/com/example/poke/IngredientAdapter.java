@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,6 +40,7 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     long date;
     TextView textView;
+    FirebaseMessagingService firebaseMessagingService = new FirebaseMessagingService();
 
     private OnItemClickListener mlistener = null;
 
@@ -84,15 +86,16 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
 //        Glide.with(holder.itemView)
 //                .load(ingredientsList.get(position).getCategory())
 //                .into(holder.image);
+        date /= 86400000;
 
         holder.title.setText(String.valueOf(ingredientsList.get(position).getIngredientTitle()));
-        if(date/86400000 < 0){
-            holder.day.setText(("D+" + Long.toString(Math.abs(date/86400000))));
+        if(date < 0){
+            holder.day.setText(("D+" + Long.toString(Math.abs(date))));
         }
         else {
-            holder.day.setText(("D-" + Long.toString(date / 86400000)));
+            holder.day.setText(("D-" + Long.toString(date)));
         }
-        if(date/86400000 <= 3 ) {
+        if(date <= 3) {
             holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
         }
         else{

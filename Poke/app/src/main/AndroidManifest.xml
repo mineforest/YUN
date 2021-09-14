@@ -58,6 +58,33 @@
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
         <!-- 팝업 Activity -->
+        <service
+            android:name=".FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".FirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+<!--        <receiver android:name=".AlarmRecevier"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="false">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.BOOT_COMPLETED"/>-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
+
     </application>
+
+
+<!--    <meta-data-->
+<!--        android:name="com.google.firebase.messaging.default_notification_icon"-->
+<!--        android:resource="@drawable/ic_launcher_image" />-->
 
 </manifest>

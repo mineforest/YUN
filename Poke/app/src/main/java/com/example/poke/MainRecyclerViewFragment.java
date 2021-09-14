@@ -1,5 +1,6 @@
 package com.example.poke;
 
+import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +33,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +70,10 @@ public class MainRecyclerViewFragment extends Fragment{
         mDatabase = FirebaseDatabase.getInstance().getReference();
         user = mAuth.getCurrentUser();
         uid = user.getUid();
+
+//        FirebaseMessaging.getInstance().subscribeToTopic("news");
+        FirebaseInstanceId.getInstance().getToken();
+
 
         progressDialog = new ProgressDialog(getActivity());
 
