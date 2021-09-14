@@ -34,16 +34,11 @@ public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapte
 
     private DatabaseReference mDatabase;
     private final List<Map<String, String>> list;
-    private int count = 0;
-    int average = 0;
 
     public RecipeIngre_Adapter(List<Map<String, String>> list) {
         this.list = list;
     }
 
-    public int get_count() {
-        this.notifyDataSetChanged();
-        return count;}
     Context context;
 
     @Override
@@ -74,9 +69,6 @@ public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapte
                     holder.checkBox.setChecked(true);
                 } else {
                     holder.checkBox.setChecked(false);
-                    if(holder.checkBox.isChecked()) {
-                        count++;
-                    }
                 }
             }
 

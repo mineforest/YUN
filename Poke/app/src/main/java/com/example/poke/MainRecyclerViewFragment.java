@@ -1,10 +1,12 @@
 package com.example.poke;
 
 import android.app.Notification;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,14 +14,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,12 +32,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,10 +52,10 @@ public class MainRecyclerViewFragment extends Fragment{
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private String uid;
+    ArrayList<UserHistory> historyList;
     FirebaseUser user;
     private ViewPager2 viewPager;
     private MainViewpageAdapter adapter2;
-    Handler handler = new Handler();
     ProgressDialog progressDialog;
 
     @Override
@@ -67,104 +71,31 @@ public class MainRecyclerViewFragment extends Fragment{
         ((MainActivity)getActivity()).getSupportActionBar().setElevation(0);
         myIngreList = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         user = mAuth.getCurrentUser();
         uid = user.getUid();
 
 //        FirebaseMessaging.getInstance().subscribeToTopic("news");
         FirebaseInstanceId.getInstance().getToken();
-
-
         progressDialog = new ProgressDialog(getActivity());
 
-        progressDialog.show();
-        progressDialog.setContentView(R.layout.progress_dialog);
-        progressDialog.getWindow().setBackgroundDrawableResource(
-                android.R.color.transparent
-        );
-        progressDialog.setCancelable(false);
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
-                        mDatabase.onDisconnect();
-                        Handler handler1 = new Handler();
-                        handler1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                //테스트용 레시피 id들
-                                String[] test_ids = {"1011256", "6867464", "6867464","6867464", "6867464", "6867464", "1166652",
-                                        "6867464", "6867464", "6867464", "6867464", "6867464", "6867464"};
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                for(int i =0;i<test_ids.length; i++){
-                                    DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
-                                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            int cnt=0;
-                                            String rcp_id = documentSnapshot.getData().get("id").toString();
-                                            String title = documentSnapshot.getData().get("name").toString();
-                                            String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                                            String cook_time = documentSnapshot.getData().get("time").toString();
-                                            List<String> tags = (List<String>) documentSnapshot.get("tag");
-//                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
-                                            List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("history").child(uid).addValueEventListener(historyListener);
+        mDatabase.onDisconnect();
 
-                                            for(int k=0; k<ingre_list.size(); k++){
-                                                if(myIngreList.contains(ingre_list.get(k).get("ingre_name"))){
-                                                    cnt++;
-                                                }
-                                            }
+        RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
+        adapter = new CustomAdapter(rcps);
+        recyclerView.setAdapter(adapter);
+        int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
+        recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
 
-                                            long rate = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
-
-                                            Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, rate, tags);
-                                            Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
-                                            if(rr.getId().equals("1011256")){
-                                                rcps_siyeonyong.add(rr);
-                                            }
-                                            else {
-                                                rcps.add(rr);
-                                            }
-                                            adapter.notifyDataSetChanged();
-                                            adapter2.notifyDataSetChanged();
-                                        }
-                                    });
-                                }
-
-                                RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
-                                recyclerView.setHasFixedSize(true);
-                                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
-                                adapter = new CustomAdapter(rcps);
-                                recyclerView.setAdapter(adapter);
-                                int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
-                                int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
-                                recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
-
-                                viewPager = view.findViewById(R.id.main_pager);
-                                adapter2 = new MainViewpageAdapter(rcps_siyeonyong);
-                                viewPager.setAdapter(adapter2);
-
-                                new android.os.Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        progressDialog.dismiss();
-                                    }
-                                }, 1000);
-
-                            }
-                        });
-
-                    }
-                },500);
-            }
-        });
-        thread.start();
-
+        viewPager = view.findViewById(R.id.main_pager);
+        adapter2 = new MainViewpageAdapter(rcps_siyeonyong);
+        viewPager.setAdapter(adapter2);
         return view;
     }
 
@@ -195,51 +126,75 @@ public class MainRecyclerViewFragment extends Fragment{
         return super.onOptionsItemSelected(item);
     }
 
-    ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-                myIngreList.add(ingredient.getIngredientTitle());
+    ValueEventListener historyListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            StringBuilder rids = new StringBuilder();
+            rids.append("6905019"); // 히스토리없을때 default값
+            W2vHttpConn w2v = new W2vHttpConn();
+
+            if (snapshot.exists()) {
+                rcps.clear();
+                rids.setLength(0);
+                historyList = new ArrayList<>();
+                for (DataSnapshot ridSnapshot : snapshot.getChildren()) {
+                    UserHistory history = ridSnapshot.getValue(UserHistory.class);
+                    historyList.add(new UserHistory(history.getRcp_id(), history.getRecipeTitle(), history.getRecipeImage(), history.getDate(), history.getRate()));
+                    rids.append(history.getRcp_id()).append("+");
+                }
+                rids.deleteCharAt(rids.lastIndexOf("+"));
             }
+            Log.d("HHHHHH", rids.toString());
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-                myIngreList.add(ingredient.getIngredientTitle());
-            }
+            new Thread(){
+                @Override
+                public void run() {
+                    String[] r_ids= w2v.getData(rids.toString());
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    for (String r_id : r_ids) {
+                        DocumentReference docRef = db.collection("recipe").document(r_id);
+                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                String rcp_id = documentSnapshot.getData().get("id").toString();
+                                String title = documentSnapshot.getData().get("name").toString();
+                                String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
+                                String cook_time = documentSnapshot.getData().get("time").toString();
+                                List<String> tags = (List<String>) documentSnapshot.get("tag");
+                                List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-            }
+                                Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, ingre_list, tags);
+                                if (rr.getId().equals("1011256")) {
+                                    rcps_siyeonyong.add(rr);
+                                } else {
+                                    rcps.add(rr);
+                                }
+                                adapter.notifyDataSetChanged();
+                                adapter2.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }
+            }.start();
+        }
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
 
-            }
+        }
+    };
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        };
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mDatabase.removeEventListener(childEventListener);
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        mDatabase.removeEventListener(childEventListener);
+//    }
 
     private void myStartActivity(Class c){
         Intent intent = new Intent(getActivity(),c);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        if(childEventListener != null)
-//            mDatabase.removeEventListener(childEventListener);
-//    }
 
     private void revokeAccess() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -249,4 +204,25 @@ public class MainRecyclerViewFragment extends Fragment{
 
         mAuth.getCurrentUser().delete();
     }
+
+    class ExceptionHandler implements Thread.UncaughtExceptionHandler {
+        @Override
+        public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
+            Intent intent = new Intent(getContext(), CrashedActivity.class);
+            startActivity(intent);
+//            new Thread() {
+//                @Override
+//                public void run() {
+//                    Looper.prepare();
+//                    Toast.makeText(getContext(), "Application crashed", Toast.LENGTH_LONG).show();
+//                    Looper.loop();
+//                }
+//            }.start();
+//            try {
+//                Thread.sleep(4000); // Let the Toast display before app will get shutdown
+//            } catch (InterruptedException ed) {// Ignored.
+//            }
+        }
+    }
+
 }

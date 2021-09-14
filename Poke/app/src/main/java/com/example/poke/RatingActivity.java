@@ -166,7 +166,7 @@ public class RatingActivity extends AppCompatActivity {
                 now = form.format(date);
                 long l = (long)ratingBar.getRating();
                 userHistory = new UserHistory(recipeList.get(0), recipeList.get(1), recipeList.get(2), now, l);
-                mDatabase.child("history").child(uid).push().setValue(userHistory);
+                mDatabase.child("history").child(uid).child(recipeList.get(0)).setValue(userHistory);
                 deleteIngredient();
                 onBackPressed();
             }
