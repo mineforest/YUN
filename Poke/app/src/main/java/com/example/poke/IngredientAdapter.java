@@ -1,36 +1,21 @@
 package com.example.poke;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
     private ArrayList<UserIngredient> ingredientsList;
@@ -101,6 +86,8 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
         else{
             holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_green));
         }
+
+
     }
 
     @Override
@@ -131,7 +118,12 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
                     //  this.image = itemView.findViewById(R.id.categoryView);
             this.title = itemView.findViewById(R.id.ingredientTitleView);
             this.day = itemView.findViewById(R.id.dDay);
+
+
         }
 
     }
+
+
+
 }

@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -85,6 +86,22 @@ public class FridgeFragment extends Fragment{
         layoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                ingredientArrayList.remove(viewHolder.getLayoutPosition());
+                ingredientAdapter.notifyItemRemoved(viewHolder.getLayoutPosition());
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
         ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
         for (int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
@@ -391,4 +408,7 @@ public class FridgeFragment extends Fragment{
             dialog.show(getActivity().getSupportFragmentManager(),"tag");
         }
     };
+
+
+
 }

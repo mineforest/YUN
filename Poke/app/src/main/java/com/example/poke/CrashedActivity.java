@@ -5,6 +5,8 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.poke.R;
+
 public class CrashedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

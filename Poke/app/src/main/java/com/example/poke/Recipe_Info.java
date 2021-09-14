@@ -11,7 +11,6 @@ import android.view.View;
 
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,6 +61,7 @@ public class Recipe_Info extends AppCompatActivity {
     private Button doneButton;
     ProgressDialog progressDialog;
     Handler handler = new Handler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
