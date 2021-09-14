@@ -179,12 +179,6 @@ public class MainRecyclerViewFragment extends Fragment{
         }
     };
 
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        mDatabase.removeEventListener(childEventListener);
-//    }
-
     private void myStartActivity(Class c){
         Intent intent = new Intent(getActivity(),c);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
