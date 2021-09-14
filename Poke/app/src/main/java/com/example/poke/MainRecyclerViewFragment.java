@@ -36,9 +36,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
-
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,8 +71,6 @@ public class MainRecyclerViewFragment extends Fragment{
         user = mAuth.getCurrentUser();
         uid = user.getUid();
 
-//        FirebaseMessaging.getInstance().subscribeToTopic("news");
-        FirebaseInstanceId.getInstance().getToken();
         progressDialog = new ProgressDialog(getActivity());
 
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
