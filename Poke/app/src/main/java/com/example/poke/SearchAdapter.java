@@ -18,6 +18,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.poke.R;
+import com.example.poke.Recipe_Info;
+import com.example.poke.Recipe_get;
+import com.example.poke.SearchViewHolder;
 import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;

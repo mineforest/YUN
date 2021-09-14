@@ -1,21 +1,15 @@
 package com.example.poke;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,16 +27,11 @@ public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapte
 
     private DatabaseReference mDatabase;
     private final List<Map<String, String>> list;
-    private int count = 0;
-    int average = 0;
 
     public RecipeIngre_Adapter(List<Map<String, String>> list) {
         this.list = list;
     }
 
-    public int get_count() {
-        this.notifyDataSetChanged();
-        return count;}
     Context context;
 
     @Override
@@ -74,9 +62,6 @@ public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapte
                     holder.checkBox.setChecked(true);
                 } else {
                     holder.checkBox.setChecked(false);
-                    if(holder.checkBox.isChecked()) {
-                        count++;
-                    }
                 }
             }
 

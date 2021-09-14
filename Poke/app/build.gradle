@@ -38,6 +38,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.8.0')
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.github.mmin18:realtimeblurview:1.2.1'
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'

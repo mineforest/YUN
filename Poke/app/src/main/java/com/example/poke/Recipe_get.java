@@ -1,6 +1,18 @@
 package com.example.poke;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,7 +42,6 @@ public class Recipe_get {
     List<String> recipe;
     List<String> recipe_img;
     List<String> tag;
-    long rate;
 
     public Recipe_get() {};
 
@@ -55,38 +66,14 @@ public class Recipe_get {
         this.tag = tag;
     }
 
-    public Recipe_get(String rcp_id, String title, String thumbnail, String cook_time) {
+    public Recipe_get(String rcp_id, String title, String thumbnail, String cook_time, List<Map<String, String>> ingre_list, List<String> tag) {
         this.id = rcp_id;
         this.name = title;
         this.thumbnail = thumbnail;
         this.time = cook_time;
-    }
-
-    public Recipe_get(String rcp_id, String title, String thumbnail, String cook_time,  long rate) {
-        this.id = rcp_id;
-        this.name = title;
-        this.thumbnail = thumbnail;
-        this.time = cook_time;
-        this.rate = rate;
-    }
-
-    public Recipe_get(String rcp_id, String title, String thumbnail, String cook_time,  long rate, List<String> tag) {
-        this.id = rcp_id;
-        this.name = title;
-        this.thumbnail = thumbnail;
-        this.time = cook_time;
-        this.rate = rate;
+        this.ingre_list = ingre_list;
         this.tag = tag;
     }
-
-    public void setRate(long rate) {
-        this.rate = rate;
-    }
-
-    public long getRate() {
-        return rate;
-    }
-
     public String getId() {
         return id;
     }

@@ -10,7 +10,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -98,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+
     }
 
     public void loading() {

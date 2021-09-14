@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Map;
 
 public class RecipeStep_Adapter extends RecyclerView.Adapter<RecipeStep_Adapter.CustomViewHolder> {
 

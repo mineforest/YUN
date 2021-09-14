@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +20,6 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,7 +41,7 @@ public class MainRecyclerViewFragment extends Fragment{
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private String uid;
-    ArrayList<UserHistory> historyList = new ArrayList<>();
+    ArrayList<UserHistory> historyList;
     FirebaseUser user;
     private ViewPager2 viewPager;
     private MainViewpageAdapter adapter2;
@@ -64,57 +62,14 @@ public class MainRecyclerViewFragment extends Fragment{
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         uid = user.getUid();
+
         progressDialog = new ProgressDialog(getActivity());
 
-        //HONG
-        W2vHttpConn w2v = new W2vHttpConn();
-        new Thread(){
-            @Override
-            public void run() {
-                mDatabase = FirebaseDatabase.getInstance().getReference();
-                mDatabase.child("history").child(uid).addListenerForSingleValueEvent(historyListener);
-                mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
-                mDatabase.onDisconnect();
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
 
-                String[] r_ids = w2v.getData("6905019");
-
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                for(int i =0;i<r_ids.length; i++){
-                    DocumentReference docRef = db.collection("recipe").document(r_ids[i]);
-                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            int cnt=0;
-                            String rcp_id = documentSnapshot.getData().get("id").toString();
-                            String title = documentSnapshot.getData().get("name").toString();
-                            String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                            String cook_time = documentSnapshot.getData().get("time").toString();
-                            List<String> tags = (List<String>) documentSnapshot.get("tag");
-//                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
-                            List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
-
-                            for(int k=0; k<ingre_list.size(); k++){
-                                if(myIngreList.contains(ingre_list.get(k).get("ingre_name"))){
-                                    cnt++;
-                                }
-                            }
-
-                            long rate = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
-
-                            Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, rate, tags);
-                            if(rr.getId().equals("1011256")){
-                                rcps_siyeonyong.add(rr);
-                            }
-                            else {
-                                rcps.add(rr);
-                            }
-                            adapter.notifyDataSetChanged();
-                            adapter2.notifyDataSetChanged();
-                        }
-                    });
-                }
-            }
-        }.start();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("history").child(uid).addValueEventListener(historyListener);
+        mDatabase.onDisconnect();
 
         RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
         recyclerView.setHasFixedSize(true);
@@ -158,43 +113,56 @@ public class MainRecyclerViewFragment extends Fragment{
         return super.onOptionsItemSelected(item);
     }
 
-    ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-                myIngreList.add(ingredient.getIngredientTitle());
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-                myIngreList.add(ingredient.getIngredientTitle());
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        };
-
     ValueEventListener historyListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-            Log.d("ZZZZZZZZ","hi");
+            StringBuilder rids = new StringBuilder();
+            rids.append("6905019"); // 히스토리없을때 default값
+            W2vHttpConn w2v = new W2vHttpConn();
+
             if (snapshot.exists()) {
-                UserHistory history = snapshot.getValue(UserHistory.class);
-                if (history != null) {
+                rcps.clear();
+                rids.setLength(0);
+                historyList = new ArrayList<>();
+                for (DataSnapshot ridSnapshot : snapshot.getChildren()) {
+                    UserHistory history = ridSnapshot.getValue(UserHistory.class);
                     historyList.add(new UserHistory(history.getRcp_id(), history.getRecipeTitle(), history.getRecipeImage(), history.getDate(), history.getRate()));
+                    rids.append(history.getRcp_id()).append("+");
                 }
+                rids.deleteCharAt(rids.lastIndexOf("+"));
             }
+            Log.d("HHHHHH", rids.toString());
+
+            new Thread(){
+                @Override
+                public void run() {
+                    String[] r_ids= w2v.getData(rids.toString());
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    for (String r_id : r_ids) {
+                        DocumentReference docRef = db.collection("recipe").document(r_id);
+                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                String rcp_id = documentSnapshot.getData().get("id").toString();
+                                String title = documentSnapshot.getData().get("name").toString();
+                                String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
+                                String cook_time = documentSnapshot.getData().get("time").toString();
+                                List<String> tags = (List<String>) documentSnapshot.get("tag");
+                                List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
+
+                                Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, ingre_list, tags);
+                                if (rr.getId().equals("1011256")) {
+                                    rcps_siyeonyong.add(rr);
+                                } else {
+                                    rcps.add(rr);
+                                }
+                                adapter.notifyDataSetChanged();
+                                adapter2.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }
+            }.start();
         }
 
         @Override
@@ -202,12 +170,6 @@ public class MainRecyclerViewFragment extends Fragment{
 
         }
     };
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mDatabase.removeEventListener(childEventListener);
-    }
 
     private void myStartActivity(Class c){
         Intent intent = new Intent(getActivity(),c);
@@ -223,4 +185,25 @@ public class MainRecyclerViewFragment extends Fragment{
 
         mAuth.getCurrentUser().delete();
     }
+
+    class ExceptionHandler implements Thread.UncaughtExceptionHandler {
+        @Override
+        public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
+            Intent intent = new Intent(getContext(), CrashedActivity.class);
+            startActivity(intent);
+//            new Thread() {
+//                @Override
+//                public void run() {
+//                    Looper.prepare();
+//                    Toast.makeText(getContext(), "Application crashed", Toast.LENGTH_LONG).show();
+//                    Looper.loop();
+//                }
+//            }.start();
+//            try {
+//                Thread.sleep(4000); // Let the Toast display before app will get shutdown
+//            } catch (InterruptedException ed) {// Ignored.
+//            }
+        }
+    }
+
 }

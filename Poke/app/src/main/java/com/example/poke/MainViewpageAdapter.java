@@ -3,7 +3,6 @@ package com.example.poke;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.chip.Chip;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainViewpageAdapter  extends RecyclerView.Adapter<MainViewpageViewholder> {
 
@@ -51,7 +47,6 @@ public class MainViewpageAdapter  extends RecyclerView.Adapter<MainViewpageViewh
             holder.keyword.setText("오늘의 저녁");
             holder.rcp_title.setText(rcp.getName());
             holder.rcp_cooktime.setText(rcp.getTime()+"분");
-            holder.rate.setText((rcp.getRate())+"%");
 
             int paddingDp = (int) TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, 15,
@@ -85,7 +80,6 @@ public class MainViewpageAdapter  extends RecyclerView.Adapter<MainViewpageViewh
                 public void onClick(View v) {
                     intent = new Intent(v.getContext(), Recipe_Info.class);
                     intent.putExtra("rcp_id", mRcplist.get(position).getId());
-                    intent.putExtra("my_rate", mRcplist.get(position).getRate());
                     v.getContext().startActivity(intent);
                 }
             });

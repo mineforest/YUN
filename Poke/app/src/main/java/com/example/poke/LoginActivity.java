@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.loginButton).setOnClickListener(onClickListener);
         findViewById(R.id.gotoSignUpButton).setOnClickListener(onClickListener);
         findViewById(R.id.googleSignInButton).setOnClickListener(onClickListener);
+
     }
 
     @Override
@@ -127,9 +128,9 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startToast("로그인에 성공하였습니다.");
+
                                 myStartActivity(MainActivity.class);
                             } else {
                                 if (task.getException() != null)
