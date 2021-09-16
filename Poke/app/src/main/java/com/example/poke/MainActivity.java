@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setTitle("POKE");
         //로그인 되어 있지 않으면 로그인 화면으로
 
         if(user == null) {

@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -115,10 +117,11 @@ public class MainRecyclerViewFragment extends Fragment{
         recyclerView2.setAdapter(adapter3);
         recyclerView2.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
 
-
         viewPager = view.findViewById(R.id.main_pager);
         adapter2 = new MainViewpageAdapter(rcps_siyeonyong);
         viewPager.setAdapter(adapter2);
+        TextView tv_foryou = view.findViewById(R.id.tv_foryou);
+        TextView tv_donow = view.findViewById(R.id.tv_donow);
 
         ImageView more_view1 = view.findViewById(R.id.more_rcp_thumbnail);
         more_view1.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +129,7 @@ public class MainRecyclerViewFragment extends Fragment{
             public void onClick(View v) {
                 intent = new Intent(v.getContext(), MainMoreViewActivity.class);
                 intent.putExtra("rcp",rcps);
+                intent.putExtra("more_title", tv_foryou.getText());
                 v.getContext().startActivity(intent);
             }
         });
@@ -136,6 +140,7 @@ public class MainRecyclerViewFragment extends Fragment{
             public void onClick(View v) {
                 intent = new Intent(v.getContext(), MainMoreViewActivity.class);
                 intent.putExtra("rcp",sorted_rcps);
+                intent.putExtra("more_title", tv_donow.getText());
                 v.getContext().startActivity(intent);
             }
         });

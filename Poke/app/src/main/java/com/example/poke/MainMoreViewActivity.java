@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +27,9 @@ public class MainMoreViewActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         rcps = intent.getParcelableArrayListExtra("rcp");
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(intent.getCharSequenceExtra("more_title"));
 
         recyclerView = findViewById(R.id.more_recyclerview);
         recyclerView.setHasFixedSize(true);

@@ -22,10 +22,12 @@
         </androidx.viewpager2.widget.ViewPager2>
 
         <TextView
-            android:id="@+id/textView19"
+            android:id="@+id/tv_foryou"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="회원님을 위한 맞춤레시피" />
+            android:text="회원님을 위한 맞춤레시피"
+            android:textSize="24sp"
+            android:layout_marginTop="10dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_recylerView"
@@ -77,10 +79,12 @@
 
 
         <TextView
-            android:id="@+id/textView20"
+            android:id="@+id/tv_donow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="지금 할 수 있는 레시피" />
+            android:text="지금 할 수 있는 레시피"
+            android:textSize="24sp"
+            android:layout_marginTop="10dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_recylerView2"
