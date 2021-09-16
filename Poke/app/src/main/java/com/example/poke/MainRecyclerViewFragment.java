@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,6 +54,7 @@ public class MainRecyclerViewFragment extends Fragment{
     private MainViewpageAdapter adapter2;
     ProgressDialog progressDialog;
     Intent intent;
+    ShimmerFrameLayout shimmerFrameLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,7 @@ public class MainRecyclerViewFragment extends Fragment{
                     rcp.setRate(myIngreList);
                 }
                 adapter.notifyDataSetChanged();
+                adapter3.notifyDataSetChanged();
             }
 
             @Override
@@ -100,6 +103,9 @@ public class MainRecyclerViewFragment extends Fragment{
         });
 
         mDatabase.onDisconnect();
+
+        shimmerFrameLayout = view.findViewById(R.id.sfl);
+        shimmerFrameLayout.startShimmer();
 
         RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
         recyclerView.setHasFixedSize(true);
@@ -215,8 +221,11 @@ public class MainRecyclerViewFragment extends Fragment{
                                 Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, ingre_list, tags);
                                 rr.setRate(myIngreList);
                                 rcps.add(rr);
-
-                                adapter.notifyDataSetChanged();
+                                if (rcps.size() == 8) {
+                                    shimmerFrameLayout.stopShimmer();
+                                    shimmerFrameLayout.setVisibility(View.GONE);
+                                    adapter.notifyDataSetChanged();
+                                }
                             }
                         });
                     }
@@ -235,16 +244,17 @@ public class MainRecyclerViewFragment extends Fragment{
                                 Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, ingre_list, tags);
                                 rr.setRate(myIngreList);
                                 sorted_rcps.add(rr);
-                                sorted_rcps.sort(new Comparator<Recipe_get>(){
-                                    @Override
-                                    public int compare(Recipe_get o1, Recipe_get o2) {
-                                        if (o1.getRate() < o2.getRate()) return 1;
-                                        if (o1.getRate() > o2.getRate()) return -1;
-                                        return 0;
-                                    }
-                                });
-
-                                adapter3.notifyDataSetChanged();
+                                if (sorted_rcps.size() == r_ids.length) {
+                                    sorted_rcps.sort(new Comparator<Recipe_get>(){
+                                        @Override
+                                        public int compare(Recipe_get o1, Recipe_get o2) {
+                                            if (o1.getRate() < o2.getRate()) return 1;
+                                            if (o1.getRate() > o2.getRate()) return -1;
+                                            return 0;
+                                        }
+                                    });
+                                    adapter3.notifyDataSetChanged();
+                                }
                             }
                         });
                     }

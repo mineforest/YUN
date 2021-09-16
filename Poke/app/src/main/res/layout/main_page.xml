@@ -7,7 +7,6 @@
     android:background="@color/background"
     android:fillViewport="true"
     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -28,6 +27,13 @@
             android:text="회원님을 위한 맞춤레시피"
             android:textSize="24sp"
             android:layout_marginTop="10dp"/>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/sfl">
+            <include layout="@layout/shimmer_item"></include>
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_recylerView"
@@ -131,7 +137,6 @@
                     android:gravity="center"
                     android:layout_centerInParent="true"/>
             </RelativeLayout>
-
         </FrameLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

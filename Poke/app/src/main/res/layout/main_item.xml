@@ -5,13 +5,12 @@
     android:id="@+id/main_card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/layout_bottom"
+    android:background="@color/gray"
     app:cardPreventCornerOverlap="true">
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        >
+        android:layout_height="150dp">
 
         <ImageView
             android:id="@+id/rcp_thumbnail"

@@ -74,7 +74,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (mRcplist.size() > 6) return 8;
-        return (mRcplist != null ? mRcplist.size() : 0);
+        if (mRcplist.size() >= 8) return 8;
+        else return (mRcplist != null ? mRcplist.size() : 0);
     }
 }
