@@ -24,7 +24,7 @@ public class MainViewpageViewholder extends RecyclerView.ViewHolder {
         rcp_title = itemView.findViewById(R.id.main_pager_title);
         rcp_cooktime = itemView.findViewById(R.id.main_pager_time);
         rate = itemView.findViewById(R.id.main_pager_rate);
-        keyword = itemView.findViewById(R.id.useless);
-        chipGroup = itemView.findViewById(R.id.tagGroup1);
+//        keyword = itemView.findViewById(R.id.useless);
+//        chipGroup = itemView.findViewById(R.id.tagGroup1);
     }
 }

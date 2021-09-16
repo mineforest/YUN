@@ -37,11 +37,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     private final ArrayList<Recipe_get> mRcplist;
     private Intent intent;
-    private DatabaseReference mDatabase;
-    String uid;
-    CustomAdapter(ArrayList<Recipe_get> rcp_list) {
-        this.mRcplist = rcp_list;
-    }
+    CustomAdapter(ArrayList<Recipe_get> rcp_list) {this.mRcplist = rcp_list;}
 
     Context context;
 
@@ -53,7 +49,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
     @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_test, parent, false);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item, parent, false);
         return new CardViewHolder(layoutView);
     }
 
@@ -63,38 +59,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
             Recipe_get rcp = mRcplist.get(position);
             holder.rcp_title.setText(rcp.getName());
             holder.rcp_cooktime.setText(rcp.getTime()+"분");
-
-            mDatabase = FirebaseDatabase.getInstance().getReference();
-            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-            mDatabase.child("ingredient").child(uid).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    List<String> myIngreList = new ArrayList<>();
-                    int cnt = 0;
-                    if (snapshot.exists()) {
-                        for (DataSnapshot ridSnapshot : snapshot.getChildren()) {
-                            UserIngredient ingres = ridSnapshot.getValue(UserIngredient.class);
-                            myIngreList.add(ingres.getIngredientTitle());
-                        }
-                    }
-                    for (String myIngre : myIngreList) {
-                        for (Map<String, String> tmpIngre : rcp.getIngre_list()) {
-                            if (tmpIngre.containsValue(myIngre)) {
-                                Log.d("HAPPENED?", cnt+"");
-                                cnt++;
-                            }
-                        }
-                    }
-                    Long rate = Math.round((double) cnt / (double) rcp.getIngre_list().size() * 100.0);
-                    holder.rate.setText(rate + "%");
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+            holder.rate.setText(rcp.getRate() + "%");
 
             Glide.with(holder.itemView)
                     .load(rcp.getThumbnail())
@@ -113,6 +78,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     @Override
     public int getItemCount() {
+        if (mRcplist.size() > 6) return 8;
         return (mRcplist != null ? mRcplist.size() : 0);
     }
 }
