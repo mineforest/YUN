@@ -1,6 +1,5 @@
 package com.example.poke;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,7 +19,6 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class PreferenceFragment extends Fragment {
     private ArrayList<String> preList = new ArrayList<>();
