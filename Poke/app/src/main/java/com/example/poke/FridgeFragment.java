@@ -4,6 +4,7 @@ import  android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +33,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,6 +51,7 @@ public class FridgeFragment extends Fragment{
     private TabLayout tabLayout;
     private String cate="전체";
     private int pos;
+    private int swipePos;
     private ImageButton addButton;
     private SearchView searchView;
     Handler handler1 = new Handler();
@@ -79,6 +83,9 @@ public class FridgeFragment extends Fragment{
         int betweenSpace = 30;
 
         recyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
+        FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.ingredientAddBtn);
+        fab.attachToRecyclerView(recyclerView);
+
         ingredientAdapter = new IngredientAdapter(tabArrayList);
         ingredientAdapter.setOnItemClickListener(onItemClickListener);
         addButton.setOnClickListener(addClickListener);
@@ -86,19 +93,6 @@ public class FridgeFragment extends Fragment{
         layoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-
-        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                ingredientArrayList.remove(viewHolder.getLayoutPosition());
-                ingredientAdapter.notifyItemRemoved(viewHolder.getLayoutPosition());
-            }
-        };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
@@ -140,6 +134,18 @@ public class FridgeFragment extends Fragment{
             e.printStackTrace();
         }
         stop.interrupt();
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if(dy<0){
+                    fab.show();
+                }
+                else if(dy>0){
+                    fab.hide();
+                }
+            }
+        });
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -257,6 +263,7 @@ public class FridgeFragment extends Fragment{
                 }
             }
             });
+
         return view;
     }
 
@@ -325,39 +332,68 @@ public class FridgeFragment extends Fragment{
         return super.onOptionsItemSelected(item);
     }
 
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            swipePos = viewHolder.getLayoutPosition();
+            mDatabase.child("ingredient").child(uid).child(tabArrayList.get(swipePos).getIngredientKey()).setValue(null);
+            startToast(tabArrayList.get(swipePos).getIngredientTitle() + " 삭제 ");
+        }
+    };
+
     ChildEventListener childEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
+                        UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
 
-                ingredientArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
+                        ingredientArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
 
-                if(cate.equals("전체") || cate.equals(ingredient.getCategory())){
-                    tabArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
-                }
+                        if(cate.equals("전체") || cate.equals(ingredient.getCategory())){
+                            tabArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
+                        }
 
-                ingredientAdapter.notifyDataSetChanged();
+                        ingredientAdapter.notifyDataSetChanged();
         }
 
         @Override
         public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-            ingredient = new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(), snapshot.getKey());
+                    UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
+                    ingredient = new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(), snapshot.getKey());
 
-            if(cate.equals("전체") || cate.equals(ingredient.getCategory())){
-                tabArrayList.set(pos, ingredient);
-            }
-
-                for(int i=0; i<ingredientArrayList.size(); i++){
-                    if(snapshot.getKey().equals(ingredientArrayList.get(i).getIngredientKey())){
-                        ingredientArrayList.set(i,ingredient);
+                    if (cate.equals("전체") || cate.equals(ingredient.getCategory())) {
+                        tabArrayList.set(pos, ingredient);
                     }
-                }
 
-            ingredientAdapter.notifyDataSetChanged();
+                    for (int i = 0; i < ingredientArrayList.size(); i++) {
+                        if (snapshot.getKey().equals(ingredientArrayList.get(i).getIngredientKey())) {
+                            ingredientArrayList.set(i, ingredient);
+                        }
+                    }
+
+                    ingredientAdapter.notifyDataSetChanged();
         }
         @Override
         public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                    UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
+                    ingredient = new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(), snapshot.getKey());
+
+                    if (cate.equals("전체") || cate.equals(ingredient.getCategory())) {
+                        tabArrayList.remove(swipePos);
+                    }
+
+                    for (int i = 0; i < ingredientArrayList.size(); i++) {
+                        if (snapshot.getKey().equals(ingredientArrayList.get(i).getIngredientKey())) {
+                            ingredientArrayList.remove(i);
+                        }
+                    }
+
+                    ingredientAdapter.notifyItemRemoved(swipePos);
+                    ingredientAdapter.notifyItemRangeChanged(swipePos, tabArrayList.size());
         }
         @Override
         public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)  {}
@@ -409,6 +445,7 @@ public class FridgeFragment extends Fragment{
         }
     };
 
-
-
+    private void startToast(String msg){
+        Toast.makeText(getActivity(), msg,Toast.LENGTH_SHORT).show();
+    }
 }

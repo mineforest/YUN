@@ -146,36 +146,29 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <View
-            android:id="@+id/view3"
-            android:layout_width="30dp"
-            android:layout_height="27dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="13dp"
-            android:background="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/ingredientAddBtn"
-            app:layout_constraintEnd_toEndOf="@+id/ingredientAddBtn" />
-
-        <ImageButton
+        <com.melnykov.fab.FloatingActionButton
             android:id="@+id/ingredientAddBtn"
-            android:layout_width="66dp"
-            android:layout_height="56dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="68dp"
-            android:background="#00000000"
+            android:layout_width="120dp"
+            android:layout_height="104dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/ic_add_circle_black_24dp"
+            app:fab_shadow="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_add_circle_black_24dp" />
+            app:fab_colorNormal="@color/black"/>
 
-        <!--        <ProgressBar-->
-<!--            android:id="@+id/fridge_progress"-->
-<!--            style="?android:attr/progressBarStyle"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="196dp"-->
-<!--            android:layout_marginEnd="180dp"-->
-<!--            app:layout_constraintEnd_toEndOf="@+id/ingredientRecyclerView"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/ingredientRecyclerView" />-->
+        <!--        <ImageButton-->
+<!--        android:id="@+id/ingredientAddBtn"-->
+<!--        android:layout_width="66dp"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:layout_marginEnd="32dp"-->
+<!--        android:layout_marginBottom="68dp"-->
+<!--        android:background="#00000000"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:srcCompat="@drawable/ic_add_circle_black_24dp" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
