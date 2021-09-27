@@ -25,7 +25,6 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     long date;
     TextView textView;
-    FirebaseMessagingService firebaseMessagingService = new FirebaseMessagingService();
 
     private OnItemClickListener mlistener = null;
 
