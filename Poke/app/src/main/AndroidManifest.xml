@@ -75,8 +75,13 @@
 
         <activity android:name=".CrashedActivity">
         </activity>
+
         <activity android:name=".MainMoreViewActivity">
         </activity>
+
+
+
     </application>
+
 
 </manifest>

@@ -27,6 +27,7 @@ import com.google.firestore.v1.WriteResult;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -49,10 +50,11 @@ public class Recipe_get implements Parcelable {
 
     public Recipe_get() {};
 
-    public Recipe_get(String rcp_id,String thumbnail, String name) {
+    public Recipe_get(String rcp_id,String thumbnail, String name, List<String> tag) {
         this.id = rcp_id;
         this.thumbnail = thumbnail;
         this.name = name;
+        this.tag = tag;
     }
 
 
@@ -94,6 +96,7 @@ public class Recipe_get implements Parcelable {
             rate = in.readLong();
         }
     }
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
