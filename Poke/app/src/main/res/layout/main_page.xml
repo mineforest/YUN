@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/white"
     android:fillViewport="true"
     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
     <LinearLayout
@@ -25,8 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="회원님을 위한 맞춤레시피"
+            android:textColor="#476E4C"
+            android:textStyle="bold"
             android:textSize="24sp"
-            android:fontFamily="@font/pretendard_b"
+            android:layout_marginStart="3dp"
             android:layout_marginTop="10dp"/>
 
         <com.facebook.shimmer.ShimmerFrameLayout
@@ -90,9 +92,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="지금 할 수 있는 레시피"
-            android:fontFamily="@font/pretendard_b"
+            android:textStyle="bold"
+            android:layout_marginStart="3dp"
             android:textSize="24sp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:textColor="#476E4C"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_recylerView2"

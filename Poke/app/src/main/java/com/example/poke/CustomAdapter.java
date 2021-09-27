@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.example.poke.R;
 import com.example.poke.Recipe_Info;
 import com.example.poke.Recipe_get;
 import com.example.poke.UserIngredient;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,6 +59,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
             holder.rcp_cooktime.setText(rcp.getTime()+"분");
             holder.rate.setText(rcp.getRate() + "%");
 
+            holder.materialCardView.setRadius(10);
+            if (rcp.getRate() < 20) holder.materialCardView.setBackgroundColor(context.getColor(R.color.match1));
+            else if (rcp.getRate() < 40 ) holder.materialCardView.setBackgroundColor(context.getColor(R.color.match2));
+            else if (rcp.getRate() < 60 ) holder.materialCardView.setBackgroundColor(context.getColor(R.color.match3));
+            else if (rcp.getRate() < 80 ) holder.materialCardView.setBackgroundColor(context.getColor(R.color.match4));
+            else holder.materialCardView.setBackgroundColor(context.getColor(R.color.match5));
             Glide.with(holder.itemView)
                     .load(rcp.getThumbnail())
                     .into(holder.rcp_thumbnail);

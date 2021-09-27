@@ -9,4 +9,13 @@
     <color name="green">#00FF7F</color>
     <color name="gray">#8C8B8A</color>
     <color name="background">#FAFAFA</color>
+
+
+    <!-- 메인 반응 색상표 -->
+    <color name="match1">#ECE8F2</color>
+    <color name="match2">#F9EDEF</color>
+    <color name="match3">#F6F4EE</color>
+    <color name="match4">#E6EDF2</color>
+    <color name="match5">#ECF4F2</color>
+
 </resources>

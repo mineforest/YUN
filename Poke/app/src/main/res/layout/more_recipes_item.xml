@@ -46,11 +46,12 @@
                 android:id="@+id/cook_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rcp_title"
                 android:text="THIS IS TIME"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true" />
 
             <TextView
                 android:id="@+id/rate"
@@ -59,7 +60,7 @@
                 android:text="THIS IS RATE"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"/>
         </RelativeLayout>
 

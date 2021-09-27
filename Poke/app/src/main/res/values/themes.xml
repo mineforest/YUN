@@ -2,20 +2,20 @@
     <!-- Base application theme. -->
     <style name="Theme.Poke" parent="Theme.MaterialComponents.Light">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/background</item>
+        <item name="colorPrimary">#25C575</item>
         <item name="colorPrimaryVariant">@color/green</item>
-        <item name="colorOnPrimary">@color/background</item>
+        <item name="colorOnPrimary">#25C575</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/background</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:statusBarColor" tools:targetApi="l">#1D9A5B</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
         <!-- Customize your theme here. -->
-        <item name="colorControlNormal">#000000</item> <!--홈/뒤로가기 버튼의 색상-->
-        <item name="android:textColorPrimary">@color/gray</item>
-        <item name="actionMenuTextColor">@color/black</item> <!--액션 메뉴의 텍스트 색상-->
+        <item name="colorControlNormal">#FFFFFF</item> <!--홈/뒤로가기 버튼의 색상-->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="actionMenuTextColor">@color/white</item> <!--액션 메뉴의 텍스트 색상-->
         <!--custom font-family 적용-->
         <item name="fontFamily">@font/pretendard_r</item>
 
