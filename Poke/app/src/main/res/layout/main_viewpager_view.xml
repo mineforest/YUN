@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:text="THIS IS TITLE"
             android:textColor="#FFFFFF"
+            android:fontFamily="@font/test"
             android:textSize="22sp"
             android:textStyle="bold"
             android:background="#7100FF7F"/>
@@ -36,6 +37,7 @@
             android:layout_below="@id/main_pager_title"
             android:text="THIS IS TIME"
             android:textColor="#FFFFFF"
+            android:fontFamily="@font/test"
             android:textSize="18sp"
             android:textStyle="italic"
             android:background="#7100FF7F"/>
@@ -46,6 +48,7 @@
             android:layout_height="wrap_content"
             android:text="THIS IS RATE"
             android:textColor="#FFFFFF"
+            android:fontFamily="@font/test"
             android:textSize="16sp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"

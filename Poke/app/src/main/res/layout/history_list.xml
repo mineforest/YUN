@@ -1,84 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/border_bottom">
+    android:layout_marginVertical="5dp"
+    android:layout_marginHorizontal="10dp"
+    android:background="@drawable/round_white">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/history_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentStart="true"
+        android:layout_margin="10dp"
+        android:scaleType="centerCrop"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#20948B">
+
+    </de.hdodenhof.circleimageview.CircleImageView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/history_image"
+        android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/history_image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="10dp"
-            android:scaleType="centerCrop"
-            app:civ_border_width="2dp">
-
-        </de.hdodenhof.circleimageview.CircleImageView>
-
-        <LinearLayout
-            android:layout_width="181dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/history_rec"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/noto_sans"
-                android:text="요리이름"
-                android:textSize="14sp">
-
-            </TextView>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="14dp" />
-
-            <TextView
-                android:id="@+id/history_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/noto_sans"
-                android:text="날짜"
-                android:textSize="14sp">
-
-            </TextView>
-
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="149dp"
-            android:layout_height="match_parent">
-
-            <RatingBar
-                android:id="@+id/history_rate"
-                style="@style/Widget.AppCompat.RatingBar.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="55dp"
-                android:layout_marginBottom="20dp"
-                android:isIndicator="true"
-                android:max="5"
-                android:numStars="5"
-                android:rating="0.0"
-                android:stepSize="1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.231"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <TextView
+            android:id="@+id/history_rec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="요리이름"
+            android:layout_marginEnd="10dp"
+            android:textColor="#6BB4AE"
+            android:textSize="18sp"
+            android:maxLines="1"
+            android:ellipsize="end">
+        </TextView>
+        <TextView
+            android:id="@+id/history_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="날짜"
+            android:textColor="#719B98"
+            android:textSize="12sp">
+        </TextView>
     </LinearLayout>
 
+    <RatingBar
+        android:id="@+id/history_rate"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
+        android:isIndicator="true"
+        android:max="5"
+        android:numStars="5"
+        android:rating="0.0"
+        android:stepSize="1"/>
 
-</LinearLayout>
+</RelativeLayout>
