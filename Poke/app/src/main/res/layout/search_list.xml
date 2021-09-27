@@ -44,7 +44,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/noto_sans"
                 android:gravity="center|left"
                 android:padding="10dp"
                 android:text="test"

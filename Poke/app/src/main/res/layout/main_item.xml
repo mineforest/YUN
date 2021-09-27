@@ -38,7 +38,6 @@
                 android:layout_height="wrap_content"
                 android:text="THIS IS TITLE"
                 android:textColor="#FFFFFF"
-                android:fontFamily="@font/test"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -49,7 +48,6 @@
                 android:layout_below="@id/rcp_title"
                 android:text="THIS IS TIME"
                 android:textColor="#FFFFFF"
-                android:fontFamily="@font/test"
                 android:textSize="14sp"
                 android:textStyle="italic" />
 
@@ -59,7 +57,6 @@
                 android:layout_height="wrap_content"
                 android:text="THIS IS RATE"
                 android:textColor="#FFFFFF"
-                android:fontFamily="@font/test"
                 android:textSize="12sp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"/>

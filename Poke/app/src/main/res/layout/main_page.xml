@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:fillViewport="true"
-    android:fontFamily="@font/test"
     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
     <LinearLayout
         android:orientation="vertical"
@@ -25,9 +24,9 @@
             android:id="@+id/tv_foryou"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/test"
             android:text="회원님을 위한 맞춤레시피"
             android:textSize="24sp"
+            android:fontFamily="@font/pretendard_b"
             android:layout_marginTop="10dp"/>
 
         <com.facebook.shimmer.ShimmerFrameLayout
@@ -76,7 +75,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="더 보기"
-                    android:fontFamily="@font/test"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -91,8 +89,8 @@
             android:id="@+id/tv_donow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/test"
             android:text="지금 할 수 있는 레시피"
+            android:fontFamily="@font/pretendard_b"
             android:textSize="24sp"
             android:layout_marginTop="10dp"/>
 
@@ -135,7 +133,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="더 보기"
-                    android:fontFamily="@font/test"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"

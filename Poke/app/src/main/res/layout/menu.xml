@@ -15,7 +15,6 @@
             android:id="@+id/preButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/noto_sans"
             android:textColor="@color/black"
             android:text="선호도" />
 
@@ -23,7 +22,6 @@
             android:id="@+id/revokeButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/noto_sans"
             android:textColor="@color/black"
             android:text="회원탈퇴" />
 
@@ -31,7 +29,6 @@
             android:id="@+id/myInfoButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/noto_sans"
             android:textColor="@color/black"
             android:text="내정보" />
 
@@ -39,7 +36,6 @@
             android:id="@+id/starButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/noto_sans"
             android:textColor="@color/black"
             android:text="평점" />
 
@@ -47,7 +43,6 @@
             android:id="@+id/logoutButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/noto_sans"
             android:textColor="@color/black"
             android:text="로그아웃" />
 
@@ -55,7 +50,6 @@
             android:id="@+id/gotoPasswordResetButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/noto_sans"
             android:textColor="@color/black"
             android:text="비밀번호 재설정" />
 
@@ -63,7 +57,6 @@
             android:id="@+id/barcode_scan_Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/noto_sans"
             android:textColor="@color/black"
             android:text="바코드스캔" />
 
@@ -71,7 +64,6 @@
             android:id="@+id/dips_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/noto_sans"
             android:textColor="@color/black"
             android:text="찜하기" />
 

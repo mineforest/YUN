@@ -23,7 +23,6 @@
             android:background="@drawable/search_radius"
             android:drawableLeft="@drawable/ic_search"
             android:ems="10"
-            android:fontFamily="@font/noto_sans"
             android:hint="검색어를 입력해주세요."
             android:inputType="textPersonName"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />

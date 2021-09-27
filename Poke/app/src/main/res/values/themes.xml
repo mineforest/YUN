@@ -16,6 +16,9 @@
         <item name="colorControlNormal">#000000</item> <!--홈/뒤로가기 버튼의 색상-->
         <item name="android:textColorPrimary">@color/gray</item>
         <item name="actionMenuTextColor">@color/black</item> <!--액션 메뉴의 텍스트 색상-->
+        <!--custom font-family 적용-->
+        <item name="fontFamily">@font/pretendard_r</item>
+
     </style>
 
     <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
@@ -57,5 +60,4 @@
     <style name="SplashTheme" parent="@android:style/Theme.Light.NoTitleBar">
         <item name="android:windowBackground">@drawable/loading_image</item>
     </style>
-
 </resources>
