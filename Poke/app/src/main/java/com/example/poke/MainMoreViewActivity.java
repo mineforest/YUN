@@ -35,8 +35,8 @@ public class MainMoreViewActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         populateRcp();
         adapter = new MainMoreRecipeAdapter(sub_rcps);
-        int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
-        int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
+        int largePadding = getResources().getDimensionPixelSize(R.dimen.more_view_spacing);
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.more_view_spacing_small);
         recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
         recyclerView.setAdapter(adapter);
         initScrollListener();

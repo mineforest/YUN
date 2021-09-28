@@ -17,7 +17,7 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="actionMenuTextColor">@color/white</item> <!--액션 메뉴의 텍스트 색상-->
         <!--custom font-family 적용-->
-        <item name="fontFamily">@font/pretendard_r</item>
+        <item name="fontFamily">@font/pretendard_b</item>
 
     </style>
 

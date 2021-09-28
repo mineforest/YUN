@@ -13,23 +13,35 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="?attr/actionBarSize">
 
-        <androidx.viewpager2.widget.ViewPager2
+        <LinearLayout
             android:id="@+id/main_pager"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="100dp"
+            android:background="@color/green"
+            android:orientation="horizontal">
 
-        </androidx.viewpager2.widget.ViewPager2>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_foryou"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="회원님을 위한 맞춤레시피"
-            android:textColor="#476E4C"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="10dp"/>
+            android:padding="10dp">
+            <TextView
+                android:id="@+id/tv_foryou"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="취향 맞춤 레시피"
+                android:textSize="20sp"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="더 보기"
+                android:textSize="14sp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignBaseline="@id/tv_foryou"/>
+        </RelativeLayout>
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:layout_width="match_parent"
@@ -42,61 +54,31 @@
             android:id="@+id/main_recylerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background"
+            android:background="@color/white"
             tools:listitem="@layout/main_item">
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_margin="1dp"
-            >
-
-            <ImageView
-                android:id="@+id/more_rcp_thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/more" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#70000000"
-                />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="더 보기"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:layout_centerInParent="true"/>
-            </RelativeLayout>
-
-        </FrameLayout>
-
-
-        <TextView
-            android:id="@+id/tv_donow"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="지금 할 수 있는 레시피"
-            android:textStyle="bold"
-            android:layout_marginStart="3dp"
-            android:textSize="24sp"
-            android:layout_marginTop="10dp"
-            android:textColor="#476E4C"/>
+            android:padding="10dp">
+            <TextView
+                android:id="@+id/tv_donow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="재료 충족 레시피"
+                android:textSize="20sp"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="더 보기"
+                android:textSize="14sp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignBaseline="@id/tv_donow"/>
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_recylerView2"
@@ -106,43 +88,5 @@
             tools:listitem="@layout/main_item">
 
         </androidx.recyclerview.widget.RecyclerView>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_margin="1dp"
-            >
-
-            <ImageView
-                android:id="@+id/more_rcp_thumbnail2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/more" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#70000000"
-                />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="더 보기"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:layout_centerInParent="true"/>
-            </RelativeLayout>
-        </FrameLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -17,7 +17,6 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
     public TextView rcp_title;
     public TextView rcp_cooktime;
     public TextView rate;
-    public MaterialCardView materialCardView;
 
     public CardViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -25,6 +24,5 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
         rcp_title = itemView.findViewById(R.id.rcp_title);
         rcp_cooktime = itemView.findViewById(R.id.cook_time);
         rate = itemView.findViewById(R.id.rate);
-        materialCardView = itemView.findViewById(R.id.main_card);
     }
 }

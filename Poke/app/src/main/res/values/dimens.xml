@@ -3,5 +3,8 @@
     <dimen name="shr_product_grid_spacing">5dp</dimen>
     <dimen name="shr_product_grid_spacing_small">5dp</dimen>
 
+    <dimen name="more_view_spacing">2dp</dimen>
+    <dimen name="more_view_spacing_small">2dp</dimen>
+
     <!-- Dimens for staggered asymmetric grid layout cards-->
 </resources>

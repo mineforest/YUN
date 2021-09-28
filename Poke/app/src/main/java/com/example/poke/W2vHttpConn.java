@@ -20,7 +20,7 @@ public class W2vHttpConn {
 
     public String[] getData(String rid) {
             //Request request = new Request.Builder().url("http://34.64.118.37/"+rid).addHeader("Connection", "close").build();
-            Request request = new Request.Builder().url("http://192.168.200.154:5000/"+rid).addHeader("Connection", "close").build();
+            Request request = new Request.Builder().url("http://192.168.200.142:5000/"+rid).addHeader("Connection", "close").build();
             try {
                 Response response = client.newCall(request).execute();
                 return response.body().string().split(" ");
