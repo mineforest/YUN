@@ -1,14 +1,12 @@
-from gensim.models.keyedvectors import load_word2vec_format
 import pandas as pd
-from gensim.models import Word2Vec, word2vec
 from gensim.models import KeyedVectors
 from sklearn.metrics.pairwise import cosine_similarity
 
 class Word2v:
     def __init__(self, hist):
         self.hist=hist
-        self.df = pd.read_csv('0728rcp.csv', encoding='utf-8')
-        self.word2vec_model = KeyedVectors.load('0728w2v.model')
+        self.df = pd.read_csv('1001rcp.csv', encoding='utf-8')
+        self.word2vec_model = KeyedVectors.load('1001w2v.model')
         self.document_embedding_list, self.obj = self.vectors(self.df['cleand'])
         self.cosine_sim = cosine_similarity(self.document_embedding_list, self.document_embedding_list)
 
@@ -34,25 +32,20 @@ class Word2v:
                 document_embedding_list.append(doc2vec)
         return document_embedding_list, obj
 
-    def recommendations(self, id):
+    def recommendations(self):
         rcp = self.df[['id','name']]
-        res = ''
+        res = {}
 
-        #indices = pd.Series(self.df.index, index=self.df['id']).drop_duplicates()
-        #idx = indices[int(id)]
         idx=self.obj
         sim_scores = list(enumerate(self.cosine_sim[idx]))
         sim_scores = sorted(sim_scores, key= lambda x:x[1], reverse=True)
 
         sim_scores = [i for i in sim_scores if not i[0] in self.hist]
         sim_scores = sim_scores[0:500]
-       
         rcp_indices = [i[0] for i in sim_scores]
         
         rec = rcp.iloc[rcp_indices].reset_index(drop=True)
-
         for idx, row in rec.iterrows():
-            res += str(row['id'])+' '
-            print(row['name'])
-       
+            res[int(idx)]={'id':row['id'],'score':int(sim_scores[idx][1]*100)}
+        print("치명적 오류 발생안함")
         return res

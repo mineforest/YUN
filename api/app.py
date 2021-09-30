@@ -1,23 +1,30 @@
 from flask import Flask
 from w2v import Word2v
-
+from getData import FirebaseConnect
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
     return 'Hello, Everyone. Im TechnoHong, Nice to meet you. I want a piece of Salmon of course, raw fish. but im not bear, im tcnk... P.S. : test recipe id is 6905019 Good LUCK :D'
 
-@app.route('/<rid>', methods = ['GET'])
+@app.route('/rcp/<rid>', methods = ['GET'])
 def sim_rcp(rid):
     param=rid.split('+')
     w3v = Word2v(list(map(int, param)))
-    res = w3v.recommendations(0)
+    res = w3v.recommendations()
     return res
 
 
-@app.route('/user')
-def hello_user():
-    return 'Hello user'
+@app.route('/user/<uid>', methods = ['GET'])
+def user_hist_base(uid):
+    fbc = FirebaseConnect(uid)
+    forRateRcp=fbc.getDataa()
+    param=[]
+    for i in forRateRcp:              
+        param=param+[i[0] for j in range(i[1]-2) if i[1]>2]
+    w3v = Word2v(list(map(int, param)))
+    res = w3v.recommendations()    
+    return res
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port="5000")
