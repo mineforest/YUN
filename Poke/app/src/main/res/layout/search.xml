@@ -16,25 +16,125 @@
 
         <EditText
             android:id="@+id/rec_search"
-            android:layout_width="350dp"
+            android:layout_width="wrap_content"
             android:layout_height="37dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/search_radius"
             android:drawableLeft="@drawable/ic_search"
             android:ems="10"
-            android:fontFamily="@font/noto_sans"
             android:hint="검색어를 입력해주세요."
             android:inputType="textPersonName"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-        <ImageView
-            android:id="@+id/clear_btn"
+        <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/clear_btn"
+            android:layout_width="56dp"
+            android:layout_height="37dp"
             android:layout_gravity="center"
+            android:background="@drawable/search_radius"
+            android:backgroundTint="@color/cardview_dark_background"
+            app:icon="@drawable/ic_dialog_close_light"
+            app:iconTint="@color/black"
             app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/searchTab"
+            style="@style/CustomTabStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/background"
+            android:contextClickable="false"
+            app:tabIndicatorHeight="0dp"
+            app:tabMinWidth="80dp"
+            app:tabMode="scrollable"
+            app:tabPaddingEnd="10dp"
+            app:tabPaddingStart="10dp"
+            app:tabTextColor="@color/black">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/allTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전체"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/GangTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="강정"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/zzimTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="찜"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/goobTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="구이"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/zorimTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="조림"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/cakeTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="케이크"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/chickenTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="치킨"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/bokTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="볶음"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                />
+
+        </com.google.android.material.tabs.TabLayout>
     </LinearLayout>
 
     <FrameLayout
@@ -50,4 +150,5 @@
 
         </androidx.recyclerview.widget.RecyclerView>
     </FrameLayout>
+
 </LinearLayout>

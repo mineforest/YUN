@@ -78,9 +78,9 @@
 
                     <ImageView
                         android:id="@+id/rcpinfo_thumbnail"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         tools:srcCompat="@tools:sample/backgrounds/scenic" />
                 </androidx.cardview.widget.CardView>
 
@@ -90,7 +90,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
-                    android:fontFamily="@font/noto_sans"
                     android:gravity="center|left"
                     android:text="TextView"
                     android:textColor="@color/black"
@@ -148,7 +147,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
-                    android:fontFamily="@font/noto_sans"
                     android:text="재료"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -181,6 +179,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/sauce_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
@@ -192,7 +191,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
-                    android:fontFamily="@font/noto_sans"
                     android:gravity="center"
                     android:text="양념"
                     android:textSize="16sp"
@@ -218,7 +216,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
-                    android:fontFamily="@font/noto_sans"
                     android:gravity="center"
                     android:text="조리법"
                     android:textSize="16sp"

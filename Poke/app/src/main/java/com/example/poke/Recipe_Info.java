@@ -11,6 +11,7 @@ import android.view.View;
 
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -143,17 +144,7 @@ public class Recipe_Info extends AppCompatActivity {
                             Log.d("error","errorror");
                         } else {
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            CountDownLatch done = new CountDownLatch(1);
-
                             DocumentReference docRef = db.collection("recipe").document(recipe_id);
-
-                            done.countDown();
-
-                            try {
-                                done.await();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
 
                             docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
@@ -189,11 +180,17 @@ public class Recipe_Info extends AppCompatActivity {
                                     adapter = new RecipeIngre_Adapter(rcp.getIngre_list());
                                     recyclerView.setAdapter(adapter);
 
-                                    RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);
-                                    recyclerView2.setHasFixedSize(true);
-                                    recyclerView2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                                    adapter = new RecipeIngre_Adapter(rcp.getSauce_list());
-                                    recyclerView2.setAdapter(adapter);
+                                    if (rcp.getSauce_list().isEmpty()) {
+                                        LinearLayout linearLayout = findViewById(R.id.sauce_layout);
+                                        linearLayout.setVisibility(View.INVISIBLE);
+                                    }
+                                    else {
+                                        RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);
+                                        recyclerView2.setHasFixedSize(true);
+                                        recyclerView2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                        adapter = new RecipeIngre_Adapter(rcp.getSauce_list());
+                                        recyclerView2.setAdapter(adapter);
+                                    }
 
                                     RecyclerView recyclerView3 = findViewById(R.id.recipe_recyclerView);
                                     recyclerView3.setHasFixedSize(true);

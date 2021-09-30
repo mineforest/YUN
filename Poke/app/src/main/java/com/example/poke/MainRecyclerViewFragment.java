@@ -3,23 +3,18 @@ package com.example.poke;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
-
-import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,14 +28,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 public class MainRecyclerViewFragment extends Fragment{
     ArrayList<Recipe_get> rcps = new ArrayList<>();
-    ArrayList<Recipe_get> rcps_siyeonyong = new ArrayList<>();
     ArrayList<Recipe_get> sorted_rcps = new ArrayList<>();
     ArrayList<String> myIngreList;
     CustomAdapter adapter;
@@ -50,11 +43,11 @@ public class MainRecyclerViewFragment extends Fragment{
     private String uid;
     ArrayList<UserHistory> historyList;
     FirebaseUser user;
-    private ViewPager2 viewPager;
-    private MainViewpageAdapter adapter2;
     ProgressDialog progressDialog;
     Intent intent;
     ShimmerFrameLayout shimmerFrameLayout;
+    RecyclerView recyclerView;
+    RecyclerView recyclerView2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,30 +100,27 @@ public class MainRecyclerViewFragment extends Fragment{
         shimmerFrameLayout = view.findViewById(R.id.sfl);
         shimmerFrameLayout.startShimmer();
 
-        RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
+        recyclerView = view.findViewById(R.id.main_recylerView);
+        recyclerView.setVisibility(View.INVISIBLE);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1, RecyclerView.VERTICAL, false));
         adapter = new CustomAdapter(rcps);
         recyclerView.setAdapter(adapter);
         int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
         recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
 
-        RecyclerView recyclerView2 = view.findViewById(R.id.main_recylerView2);
+        recyclerView2 = view.findViewById(R.id.main_recylerView2);
         recyclerView2.setHasFixedSize(true);
-        recyclerView2.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
+        recyclerView2.setLayoutManager(new GridLayoutManager(getContext(), 1, RecyclerView.VERTICAL, false));
         adapter3 = new CustomAdapter(sorted_rcps);
         recyclerView2.setAdapter(adapter3);
         recyclerView2.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
 
-        viewPager = view.findViewById(R.id.main_pager);
-        adapter2 = new MainViewpageAdapter(rcps_siyeonyong);
-        viewPager.setAdapter(adapter2);
         TextView tv_foryou = view.findViewById(R.id.tv_foryou);
         TextView tv_donow = view.findViewById(R.id.tv_donow);
 
-        ImageView more_view1 = view.findViewById(R.id.more_rcp_thumbnail);
-        more_view1.setOnClickListener(new View.OnClickListener() {
+        tv_foryou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(v.getContext(), MainMoreViewActivity.class);
@@ -140,8 +130,7 @@ public class MainRecyclerViewFragment extends Fragment{
             }
         });
 
-        ImageView more_view2 = view.findViewById(R.id.more_rcp_thumbnail2);
-        more_view2.setOnClickListener(new View.OnClickListener() {
+        tv_donow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(v.getContext(), MainMoreViewActivity.class);
@@ -225,6 +214,7 @@ public class MainRecyclerViewFragment extends Fragment{
                                     shimmerFrameLayout.stopShimmer();
                                     shimmerFrameLayout.setVisibility(View.GONE);
                                     adapter.notifyDataSetChanged();
+                                    recyclerView.setVisibility(View.VISIBLE);
                                 }
                             }
                         });

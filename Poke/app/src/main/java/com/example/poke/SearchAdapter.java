@@ -1,5 +1,6 @@
 package com.example.poke;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.Tag;
@@ -55,7 +56,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder>  {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SearchViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if (searchList != null && position < searchList.size()) {
             Recipe_get recipe_get = searchList.get(position);
             holder.search_title.setText(recipe_get.getName());

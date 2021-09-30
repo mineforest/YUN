@@ -1,6 +1,9 @@
 package com.example.poke;
 
+import android.app.Application;
 import  android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuItemCompat;
@@ -54,8 +58,8 @@ public class FridgeFragment extends Fragment{
     private int swipePos;
     private ImageButton addButton;
     private SearchView searchView;
-    Handler handler1 = new Handler();
     ProgressDialog progressDialog;
+    FridgeSwipeController fridgeSwipeController;
 
     @Nullable
     @Override
@@ -94,8 +98,30 @@ public class FridgeFragment extends Fragment{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+//        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+//        fridgeSwipeController = new FridgeSwipeController(new FridgeSwipeControllerActions() {
+//            @Override
+//            public void onRightClicked(int position) {
+//                swipePos = position;
+//                mDatabase.child("ingredient").child(uid).child(tabArrayList.get(swipePos).getIngredientKey()).setValue(null);
+//                startToast(tabArrayList.get(swipePos).getIngredientTitle() + " 삭제 ");
+//            }
+//        });
+
+        FridgeSwipe fridgeSwipeController = new FridgeSwipe();
+        fridgeSwipeController.setClamp(200f);
+
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(fridgeSwipeController);
+        itemTouchhelper.attachToRecyclerView(recyclerView);
+
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                fridgeSwipeController.onDraw(c);
+            }
+        });
 
         ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
         for (int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
@@ -332,19 +358,19 @@ public class FridgeFragment extends Fragment{
         return super.onOptionsItemSelected(item);
     }
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            return false;
-        }
-
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            swipePos = viewHolder.getLayoutPosition();
-            mDatabase.child("ingredient").child(uid).child(tabArrayList.get(swipePos).getIngredientKey()).setValue(null);
-            startToast(tabArrayList.get(swipePos).getIngredientTitle() + " 삭제 ");
-        }
-    };
+//    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+//        @Override
+//        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//            return false;
+//        }
+//
+//        @Override
+//        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//            swipePos = viewHolder.getLayoutPosition();
+//            mDatabase.child("ingredient").child(uid).child(tabArrayList.get(swipePos).getIngredientKey()).setValue(null);
+//            startToast(tabArrayList.get(swipePos).getIngredientTitle() + " 삭제 ");
+//        }
+//    };
 
     ChildEventListener childEventListener = new ChildEventListener() {
         @Override
@@ -447,5 +473,10 @@ public class FridgeFragment extends Fragment{
 
     private void startToast(String msg){
         Toast.makeText(getActivity(), msg,Toast.LENGTH_SHORT).show();
+    }
+
+    public static int dp2px(Context ctx, float dp) {
+        final float scale = ctx.getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
     }
 }

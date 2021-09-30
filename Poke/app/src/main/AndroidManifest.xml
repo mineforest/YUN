@@ -4,6 +4,9 @@
     package="com.example.poke">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
         android:allowBackup="true"
@@ -41,8 +44,6 @@
         </activity>
         <activity android:name=".MemberInitActivity">
         </activity>
-<!--        <activity android:name=".MyInfoActivity">-->
-<!--        </activity>-->
         <activity android:name=".CheckAllergyActivity">
         </activity>
         <activity android:name=".IngredientAddActivity">
@@ -75,8 +76,21 @@
 
         <activity android:name=".CrashedActivity">
         </activity>
+
         <activity android:name=".MainMoreViewActivity">
         </activity>
+
+
+        <receiver android:name=".DeviceBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".AlarmReceiver" />
+
     </application>
+
 
 </manifest>

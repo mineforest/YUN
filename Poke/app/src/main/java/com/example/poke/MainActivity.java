@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private String uid;
     ProgressDialog progressDialog;
+    private final String DEFAULT = "DEFAULT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +101,9 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-
     }
+
+
 
     public void loading() {
         new android.os.Handler().postDelayed(
@@ -157,4 +160,7 @@ public class MainActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+
+
 }
+

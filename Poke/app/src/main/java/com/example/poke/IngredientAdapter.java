@@ -1,6 +1,13 @@
 package com.example.poke;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +32,6 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     long date;
     TextView textView;
-    FirebaseMessagingService firebaseMessagingService = new FirebaseMessagingService();
 
     private OnItemClickListener mlistener = null;
 
@@ -82,6 +88,7 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
         }
         if(date <= 3) {
             holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
+            diaryNotification(String.valueOf(ingredientsList.get(position).getIngredientTitle()));
         }
         else{
             holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_green));
@@ -89,7 +96,36 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
 
 
     }
+    public void diaryNotification(String name)
+    {
+        Boolean dailyNotify = true; // 무조건 알람을 사용
+        Calendar c = Calendar.getInstance();
+//        String ingre = name;
+        c.set(Calendar.HOUR_OF_DAY, 20);
+        c.set(Calendar.MINUTE, 55);
+        c.set(Calendar.SECOND, 00);
+        PackageManager pm = this.context.getPackageManager();
+        ComponentName receiver = new ComponentName(context, DeviceBootReceiver.class);
+        Intent alarmIntent = new Intent(context, AlarmReceiver.class);
+//        alarmIntent.putExtra("ingre",ingre);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        // 사용자가 매일 알람을 허용했다면
+        if (dailyNotify) {
+            if (alarmManager != null) {
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
+                        AlarmManager.INTERVAL_DAY, pendingIntent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+                }
+            }
+            // 부팅 후 실행되는 리시버 사용가능하게 설정
+            pm.setComponentEnabledSetting(receiver,
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
 
+        }
+    }
     @Override
     public int getItemCount() {
         return (ingredientsList != null ? ingredientsList.size() : 0);
