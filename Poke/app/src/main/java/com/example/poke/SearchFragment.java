@@ -1,29 +1,29 @@
 package com.example.poke;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SearchRecentSuggestionsProvider;
 import android.os.Bundle;
 
-import android.content.Context;
-import android.content.Intent;
-import android.nfc.Tag;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.provider.Settings;
+import android.provider.SearchRecentSuggestions;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.AutoCompleteTextView;
+import android.widget.SearchView;
 
-import androidx.activity.result.ActivityResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.solver.widgets.Helper;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,10 +38,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class SearchFragment extends Fragment implements TextWatcher {
+public class SearchFragment extends Fragment {
     private static final String TAG = "tag";
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -53,15 +52,18 @@ public class SearchFragment extends Fragment implements TextWatcher {
     SearchAdapter adapter;
     private String cate="전체";
     private ArrayList<Recipe_get> SearchArrayList = new ArrayList<>();
-    EditText editText;
+    private List<String> slist;
+    AutoCompleteTextView editText;
+    SearchView searchView;
     String uid;
     Button clear_btn;
     private TabLayout tabLayout;
     ProgressDialog progressDialog;
-    private SearchAdapter SearchAdapter;
+    private SearchAdapter SearchAdapter = new SearchAdapter(searchList);
 
     public SearchFragment() {
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,10 +73,9 @@ public class SearchFragment extends Fragment implements TextWatcher {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.search, container, false);
-        editText = (EditText) view.findViewById(R.id.rec_search);
-        editText.addTextChangedListener(this);
-        clear_btn = (Button) view.findViewById(R.id.clear_btn);
+        searchView = (SearchView) view.findViewById(R.id.rec_search);
         tabLayout = view.findViewById(R.id.searchTab);
+
         //SearchAdapter = new SearchAdapter(tabArrayList);
         ArrayList<Object> filteredList = new ArrayList<>();
 
@@ -104,14 +105,14 @@ public class SearchFragment extends Fragment implements TextWatcher {
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                Log.d("dadf",editText.getText().toString());
+                                Log.d("dadf",searchView.getQuery().toString());
                                 if (error != null) {
                                     Log.w(TAG, "Oh ~ no ~");
                                     return;
                                 }
 
                                 for (QueryDocumentSnapshot doc : value) {
-                                    if(doc.getData().get("name").toString().contains(editText.getText().toString()))
+                                    if(doc.getData().get("name").toString().contains(searchView.getQuery().toString()))
                                     {
                                         String rcp_id = doc.getData().get("id").toString();
                                         String title = doc.getData().get("name").toString();
@@ -127,12 +128,43 @@ public class SearchFragment extends Fragment implements TextWatcher {
 
             }
         }.start();
+
+        //editText.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, slist));
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.search_rv);
         recyclerView.setHasFixedSize(true);
-        clearText();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new SearchAdapter(searchList);
         recyclerView.setAdapter(adapter);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i(TAG, searchView.getQuery().toString());
+                SearchRecentSuggestions suggestions = new SearchRecentSuggestions(getActivity(),
+                        MySuggestionProvider.AUTHORITY,
+                        MySuggestionProvider.MODE);
+
+
+                suggestions.saveRecentQuery(query, null);
+
+//                SearchView searchView = (SearchView)menu.findItem(R.id.menu_search).getActionView();
+
+                displaySearchResults(query);
+
+                hideKeyboard(getActivity());
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                String searchText = searchView.getQuery().toString();
+                searchFilter(searchText);
+                return false;
+            }
+        });
+
+
 
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -140,32 +172,36 @@ public class SearchFragment extends Fragment implements TextWatcher {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
-                        editText.setText("");
-//                        update(cate, searchList);
+                        searchView.setQuery("",false);
                         break;
                     case 1:
-                        editText.setText("강정");
-//                        cate = tab.getText().toString();
-//                        Log.d("dadf",tab.getText().toString());
-//                        update(cate, searchList);
+                        cate = tab.getText().toString();
+                        Log.d("dadf",tab.getText().toString());
+                        clicktag(cate, SearchArrayList);
                         break;
                     case 2:
-                        editText.setText("찜");
+                        cate = tab.getText().toString();
+                        clicktag(cate, SearchArrayList);
                         break;
                     case 3:
-                        editText.setText("구이");;
+                        cate = tab.getText().toString();
+                        clicktag(cate, SearchArrayList);
                         break;
                     case 4:
-                        editText.setText("조림");
+                        cate = tab.getText().toString();
+                        clicktag(cate, SearchArrayList);
                         break;
                     case 5:
-                        editText.setText("케이크");
+                        cate = tab.getText().toString();
+                        clicktag(cate, SearchArrayList);
                         break;
                     case 6:
-                        editText.setText("치킨");
+                        cate = tab.getText().toString();
+                        clicktag(cate, SearchArrayList);
                         break;
                     case 7:
-                        editText.setText("볶음");
+                        cate = tab.getText().toString();
+                        clicktag(cate, SearchArrayList);
                         break;
 
                 }
@@ -179,28 +215,28 @@ public class SearchFragment extends Fragment implements TextWatcher {
             public void onTabReselected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
-                        editText.setText("");
+                        searchView.setQuery("",false);
                         break;
                     case 1:
-                        editText.setText("강정");
+                        searchView.setQuery("강정",false);
                         break;
                     case 2:
-                        editText.setText("찜");
+                        searchView.setQuery("찜",false);
                         break;
                     case 3:
-                        editText.setText("구이");;
+                        searchView.setQuery("구이",false);
                         break;
                     case 4:
-                        editText.setText("조림");
+                        searchView.setQuery("조림",false);
                         break;
                     case 5:
-                        editText.setText("케이크");
+                        searchView.setQuery("케이크",false);
                         break;
                     case 6:
-                        editText.setText("치킨");
+                        searchView.setQuery("치킨",false);
                         break;
                     case 7:
-                        editText.setText("볶음");
+                        searchView.setQuery("볶음",false);
                         break;
 
 
@@ -210,25 +246,11 @@ public class SearchFragment extends Fragment implements TextWatcher {
         return view;
     }
 
-
-
-    @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    private void displaySearchResults(String query) {
 
     }
 
-    @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-    }
-
-    @Override
-    public void afterTextChanged(Editable editable) {
-
-        String searchText = editText.getText().toString();
-        searchFilter(searchText);
-
-    }
     public void searchFilter(String searchText) {
         searchedList.clear();
 
@@ -246,33 +268,39 @@ public class SearchFragment extends Fragment implements TextWatcher {
     }
 
 
-    private void clearText() {
-        clear_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(v==clear_btn)
-                {
-                    editText.setText(null);
-                }
-            }
-        });
-    }
-
-    public void update(String cate, ArrayList<Recipe_get> al){
+    public void clicktag(@NonNull String cate, ArrayList<Recipe_get> al) {
         //String[] tags = al.toArray(new String[al.size()]);
 
-        if(!cate.equals("전체")){
-            SearchArrayList.clear();
-            for (Recipe_get rcp : al) {
+        SearchArrayList.clear();
+
+        if(cate.equals("전체"))
+        {
+            SearchArrayList.addAll(searchList);
+            Log.d(TAG, "clicktag: done");
+        }
+        else {
+            for (Recipe_get rcp : new ArrayList<>(al)) {
                 if (rcp.getTag().contains(cate)) {
-                    //al.add(al.get(i));
                     SearchArrayList.add(rcp);
                     SearchAdapter.notifyDataSetChanged();
+                    Log.d("dadf",rcp.getTag().toString());
                 }
             }
         }
 
-
     }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+
+
 
 }
