@@ -18,4 +18,10 @@ class FirebaseConnect:
     def getAllergying(self):
         allergy = db.reference('allergy').child(self.key).get()
         return [i['allergy'] for i in allergy.values()]
-        
+    
+    def getPrefer(self):
+        prefer = db.reference('preference').child(self.key).get()
+        return [i['preference'] for i in prefer.values()]
+
+#fc = FirebaseConnect("1XzkdnzZGaeSdt2KBXPiKNoftnA2")
+#print(fc.getPrefer())

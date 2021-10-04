@@ -15,13 +15,19 @@ class Word2v:
     def vectors(self):
         document_embedding_list = []
         obj=len(self.df)
-        
-        token = self.df[self.df['id'].isin(self.hist)]['cleand'].sum()
-        if type(token)==int: token=''
-        self.df=self.df.append({'id' : str(obj) , 'cleand' : token+' '+' '.join(self.pref)},ignore_index=True)                
+        #print(self.df)
+        self.df=self.df.append({'id' : str(obj) , 'cleand' : ' '.join(self.pref) },ignore_index=True)
 
+        self.df=self.df.append({'id' : str(obj+2) , 'cleand' : self.df[self.df['id'].isin(self.hist)]['cleand'].sum()},ignore_index=True)
+        self.df=self.df.append({'id' : str(obj+1) , 'cleand' : self.df[self.df['id'].isin(self.hist)]['cleand'].sum()},ignore_index=True)
+        
+        obj=obj+2
         document_list=self.df['cleand']
-        self.hist=self.df.index[self.df['id'].isin(self.hist)].tolist()        
+        print(self.df)
+
+        self.hist=self.df.index[self.df['id'].isin(self.hist)].tolist()
+        self.hist.append(obj-2)
+        self.hist.append(obj-1)
         self.hist.append(obj)        
 
         for line in document_list:
@@ -49,7 +55,7 @@ class Word2v:
         rcp = self.df[['id','name']]
         res = {'recipe':[]}
         
-        sim_scores = list(enumerate(self.cosine_sim[self.obj]))   # 제일 마지막 애에 대한 값을 구하라.
+        sim_scores = list(enumerate(self.cosine_sim[self.obj]))
         sim_scores = sorted(sim_scores, key= lambda x:x[1], reverse=True)
         sim_scores = sim_scores[0:1000]
         
@@ -59,17 +65,18 @@ class Word2v:
         
         rcp_indices = [i[0] for i in sim_scores]     
         rec = rcp.iloc[rcp_indices].reset_index(drop=True)
-        
-        for idx, row in rec.iterrows():            
+        jdx=0
+        for idx, row in rec.iterrows():
+            #same = row['cleand']
             res['recipe'].append({'id':row['id'],'score':int(sim_scores[idx][1]*100)})
-
+            jdx=jdx+1
         print("치명적 오류 발생안함")
         return res
 
 
-#w3v = Word2v(list(map(int, [6948903,1894779,1978049,2803587])),['닭가슴살샐러드','브라우니'])
+w3v = Word2v(list(map(int, [6948903,1894779,1978049,2803587])),['닭가슴살샐러드','브라우니'],['김치','토마토'])
 #res = w3v.recommendations()    
-#print(w3v.recommendations())
+print(w3v.recommendations())
 
 # 기피재료 제거
 # 1. set(l1).isdisjoint(set(l2))
