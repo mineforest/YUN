@@ -1,19 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_card"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray"
-    android:padding="10dp">
-    <TextView
-        android:id="@+id/shimmer_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LOADING..."
-        android:textColor="#FFFFFF"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:background="#424242"
-        android:layout_gravity="center"
-        android:gravity="center"/>
-</FrameLayout>
+    android:layout_height="130dp"
+    android:layout_marginVertical="5dp"
+    android:layout_marginHorizontal="3dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:cardPreventCornerOverlap="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sfl_image_card"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:id="@+id/sfl_rcp_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/shimmer_color"
+                android:scaleType="centerCrop" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/sfl_rcp_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/sfl_image_card"
+            android:background="@color/shimmer_color"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="5dp"
+            android:text="THIS IS TITLE THIS IS TITLE"
+            android:textColor="@color/shimmer_color"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:id="@+id/sfl_time_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/sfl_rate_layout"
+            android:background="@drawable/round_white"
+            android:backgroundTint="@color/shimmer_color"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/sfl_time_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/ic_schedule_black_24dp"
+                app:tint="@color/background" />
+
+            <TextView
+                android:id="@+id/sfl_cook_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sfl_time_icon"
+                android:layout_centerHorizontal="true"
+                android:background="@color/shimmer_color"
+                android:text="BLAH"
+                android:textColor="@color/shimmer_color"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/sfl_rate_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/round_white"
+            android:backgroundTint="@color/shimmer_color"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/sfl_rate_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/ic_ingredient"
+                app:tint="@color/background" />
+
+            <TextView
+                android:id="@+id/sfl_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sfl_rate_icon"
+                android:layout_centerHorizontal="true"
+                android:background="@color/shimmer_color"
+                android:text="BLAH"
+                android:textColor="@color/shimmer_color"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/sfl_score_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/sfl_time_layout"
+            android:background="@drawable/round_white"
+            android:backgroundTint="@color/shimmer_color"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/sfl_score_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/outline_task_alt_24"
+                app:tint="@color/background" />
+
+            <TextView
+                android:id="@+id/sfl_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sfl_score_icon"
+                android:layout_centerHorizontal="true"
+                android:background="@color/shimmer_color"
+                android:text="BLAH"
+                android:textColor="@color/shimmer_color"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>
 

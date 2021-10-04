@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class W2vHttpConn {
     OkHttpClient client = new OkHttpClient();
-    String ip_addr = "http://192.168.200.133:5000/";
+    String ip_addr = "http://192.168.200.118:5000/";
 
     public ArrayList<Recipe_get> getRcp(String id, int flag) {
         String dir = "rcp/";

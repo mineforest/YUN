@@ -9,6 +9,7 @@
     <color name="green">#00FF7F</color>
     <color name="gray">#8C8B8A</color>
     <color name="background">#FAFAFA</color>
+    <color name="shimmer_color">#BCBCBC</color>
 
 
     <!-- 메인 반응 색상표 -->
