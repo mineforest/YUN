@@ -14,15 +14,15 @@ def sim_rcp(rid):
     res = w3v.recommendations()
     return res
 
-
 @app.route('/user/<uid>', methods = ['GET'])
 def user_hist_base(uid):
     fbc = FirebaseConnect(uid)
-    forRateRcp=fbc.getDataa()
+    Allergyings=fbc.getAllergying()
+    forRateRcp=fbc.getHistory()
     param=[]
     for i in forRateRcp:              
         param=param+[i[0] for j in range(i[1]-2) if i[1]>2]
-    w3v = Word2v(list(map(int, param)))
+    w3v = Word2v(list(map(int, param)),Allergyings)
     res = w3v.recommendations()    
     return res
 

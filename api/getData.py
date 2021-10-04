@@ -10,8 +10,12 @@ firebase_admin.initialize_app(cred,{
 class FirebaseConnect:
     def __init__(self, key):
         self.key=key
-                    
-    def getDataa(self):
+           
+    def getHistory(self):
         dict = db.reference('history').child(self.key).get()
         return [(i['rcp_id'],i['rate']) for i in dict.values()]
     
+    def getAllergying(self):
+        allergy = db.reference('allergy').child(self.key).get()
+        return [i['allergy'] for i in allergy.values()]
+        
