@@ -3,20 +3,26 @@ from gensim.models import KeyedVectors
 from sklearn.metrics.pairwise import cosine_similarity
 
 class Word2v:
-    def __init__(self, hist,allergying):
+    def __init__(self, hist,allergying,pref):
         self.hist=hist
+        self.pref=pref
         self.allergying=allergying
         self.df = pd.read_csv('1001rcp.csv', encoding='utf-8')
         self.word2vec_model = KeyedVectors.load('1001w2v.model')
-        self.document_embedding_list, self.obj = self.vectors(self.df['cleand'])
+        self.document_embedding_list, self.obj = self.vectors()
         self.cosine_sim = cosine_similarity(self.document_embedding_list, self.document_embedding_list)
-
-    def vectors(self, document_list):
+    
+    def vectors(self):
         document_embedding_list = []
-        obj = len(document_list)
-        document_list.loc[obj] = self.df[self.df['id'].isin(self.hist)]['cleand'].sum()
-        self.hist=self.df.index[self.df['id'].isin(self.hist)].tolist()
-        self.hist.append(obj)
+        obj=len(self.df)
+        
+        token = self.df[self.df['id'].isin(self.hist)]['cleand'].sum()
+        if type(token)==int: token=''
+        self.df=self.df.append({'id' : str(obj) , 'cleand' : token+' '+' '.join(self.pref)},ignore_index=True)                
+
+        document_list=self.df['cleand']
+        self.hist=self.df.index[self.df['id'].isin(self.hist)].tolist()        
+        self.hist.append(obj)        
 
         for line in document_list:
             doc2vec = None
@@ -33,7 +39,7 @@ class Word2v:
                 document_embedding_list.append(doc2vec)
         return document_embedding_list, obj
 
-    def isContained(self,l1):
+    def isExcepted(self,l1):
         for i in self.allergying:
             if i in l1:
                 return False
@@ -41,21 +47,20 @@ class Word2v:
 
     def recommendations(self):
         rcp = self.df[['id','name']]
-        res = []
-
-        idx=self.obj
-        sim_scores = list(enumerate(self.cosine_sim[idx]))
+        res = {'recipe':[]}
+        
+        sim_scores = list(enumerate(self.cosine_sim[self.obj]))   # 제일 마지막 애에 대한 값을 구하라.        
         sim_scores = sorted(sim_scores, key= lambda x:x[1], reverse=True)
         sim_scores = sim_scores[0:1000]
-        sim_scores = [i for i in sim_scores if (not i[0] in self.hist) and self.isContained((self.df.iloc[i[0]]['cleand']))]
+        
+        sim_scores = [i for i in sim_scores if (not i[0] in self.hist) and self.isExcepted((self.df.iloc[i[0]]['cleand']))]
         
         sim_scores = sim_scores[0:500]
         
         rcp_indices = [i[0] for i in sim_scores]     
         rec = rcp.iloc[rcp_indices].reset_index(drop=True)
-        for idx, row in rec.iterrows():
-            #same = row['cleand']
-            res.append({'id':row['id'],'score':int(sim_scores[idx][1]*100)})
+        for idx, row in rec.iterrows():            
+            res['recipe'].append({'id':row['id'],'score':int(sim_scores[idx][1]*100)})
         print("치명적 오류 발생안함")
         return res
 

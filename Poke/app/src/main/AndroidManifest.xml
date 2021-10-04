@@ -17,7 +17,8 @@
         android:theme="@style/Theme.Poke"
         android:usesCleartextTraffic="true"
         android:name = ".MyApplication"
-        android:hardwareAccelerated="true">
+        android:hardwareAccelerated="true"
+        >
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1"/>
@@ -89,6 +90,11 @@
         </receiver>
 
         <receiver android:name=".AlarmReceiver" />
+
+        <provider
+            android:name="com.example.poke.MySuggestionProvider"
+            android:authorities="com.example.poke.MySuggestionProvider" />
+
 
     </application>
 

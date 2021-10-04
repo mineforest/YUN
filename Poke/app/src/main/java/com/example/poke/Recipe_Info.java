@@ -63,7 +63,6 @@ public class Recipe_Info extends AppCompatActivity {
     ProgressDialog progressDialog;
     Handler handler = new Handler();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,91 +133,81 @@ public class Recipe_Info extends AppCompatActivity {
         Intent intent = getIntent();
         recipe_id = intent.getStringExtra("rcp_id");
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
+        class StartRunnable implements Runnable{
                     @Override
                     public void run() {
-                        if (recipe_id == null) {
-                            Log.d("error","errorror");
-                        } else {
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            DocumentReference docRef = db.collection("recipe").document(recipe_id);
+                        try {
+                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                    DocumentReference docRef= db.collection("recipe").document(recipe_id);
 
-                            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    String title = documentSnapshot.getData().get("name").toString();
-                                    String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                                    String cook_time = documentSnapshot.getData().get("time").toString();
-                                    List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
-                                    List<Map<String, String>> sauce_list = (List<Map<String, String>>) documentSnapshot.get("sauce_list");
-                                    String url = documentSnapshot.getData().get("url").toString();
-                                    List<Long> ingredient_ids = (List<Long>) documentSnapshot.get("ingredient_ids");
-                                    List<String> recipe_list = (List<String>) documentSnapshot.get("recipe");
-                                    List<String> recipe_img = (List<String>) documentSnapshot.get("recipe_img");
-                                    List<String> tags = (List<String>) documentSnapshot.get("tag");
-
-                                    rcp = new Recipe_get(recipe_id, title, thumbnail, url, ingredient_ids, cook_time, ingre_list, sauce_list, recipe_list, recipe_img, tags);
-
-                                    String[] string;
-                                    for(String t : tags){
-                                        string = (t.split(","));
-                                        for(String s : string){
-                                            addChip(s);
-                                        }
-                                    }
-
-                                    Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
-                                    recipe_title_tv.setText(rcp.getName());
-                                    recipe_time_tv.setText("약 " + rcp.getTime() + "분");
-
-                                    RecyclerView recyclerView = findViewById(R.id.ingre_recyclerView);
-                                    recyclerView.setHasFixedSize(true);
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                                    adapter = new RecipeIngre_Adapter(rcp.getIngre_list());
-                                    recyclerView.setAdapter(adapter);
-
-                                    if (rcp.getSauce_list().isEmpty()) {
-                                        LinearLayout linearLayout = findViewById(R.id.sauce_layout);
-                                        linearLayout.setVisibility(View.INVISIBLE);
-                                    }
-                                    else {
-                                        RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);
-                                        recyclerView2.setHasFixedSize(true);
-                                        recyclerView2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                                        adapter = new RecipeIngre_Adapter(rcp.getSauce_list());
-                                        recyclerView2.setAdapter(adapter);
-                                    }
-
-                                    RecyclerView recyclerView3 = findViewById(R.id.recipe_recyclerView);
-                                    recyclerView3.setHasFixedSize(true);
-                                    recyclerView3.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                                    adapter2 = new RecipeStep_Adapter(rcp.getRecipe_img(), rcp.getRecipe());
-                                    recyclerView3.setAdapter(adapter2);
-                                }
-                            })
-                                    .addOnFailureListener(new OnFailureListener() {
+                                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.d("ddddddddddddd", "실패~");
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            String title = documentSnapshot.getData().get("name").toString();
+                                            String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
+                                            String cook_time = documentSnapshot.getData().get("time").toString();
+                                            List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
+                                            List<Map<String, String>> sauce_list = (List<Map<String, String>>) documentSnapshot.get("sauce_list");
+                                            String url = documentSnapshot.getData().get("url").toString();
+                                            List<Long> ingredient_ids = (List<Long>) documentSnapshot.get("ingredient_ids");
+                                            List<String> recipe_list = (List<String>) documentSnapshot.get("recipe");
+                                            List<String> recipe_img = (List<String>) documentSnapshot.get("recipe_img");
+                                            List<String> tags = (List<String>) documentSnapshot.get("tag");
+
+                                            rcp = new Recipe_get(recipe_id, title, thumbnail, url, ingredient_ids, cook_time, ingre_list, sauce_list, recipe_list, recipe_img, tags);
+
+                                            String[] string;
+                                            for (String t : tags) {
+                                                string = (t.split(","));
+                                                for (String s : string) {
+                                                    addChip(s);
+                                                }
+                                            }
+
+                                            Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
+                                            recipe_title_tv.setText(rcp.getName());
+                                            recipe_time_tv.setText("약 " + rcp.getTime() + "분");
+
+                                            RecyclerView recyclerView = findViewById(R.id.ingre_recyclerView);
+                                            recyclerView.setHasFixedSize(true);
+                                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                            adapter = new RecipeIngre_Adapter(rcp.getIngre_list());
+                                            recyclerView.setAdapter(adapter);
+
+                                            if (rcp.getSauce_list().isEmpty()) {
+                                                LinearLayout linearLayout = findViewById(R.id.sauce_layout);
+                                                linearLayout.setVisibility(View.INVISIBLE);
+                                            } else {
+                                                RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);
+                                                recyclerView2.setHasFixedSize(true);
+                                                recyclerView2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                                adapter = new RecipeIngre_Adapter(rcp.getSauce_list());
+                                                recyclerView2.setAdapter(adapter);
+                                            }
+                                            RecyclerView recyclerView3 = findViewById(R.id.recipe_recyclerView);
+                                            recyclerView3.setHasFixedSize(true);
+                                            recyclerView3.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                            adapter2 = new RecipeStep_Adapter(rcp.getRecipe_img(), rcp.getRecipe());
+                                            recyclerView3.setAdapter(adapter2);
                                         }
                                     });
+                        }catch (Exception e){
+                        }finally {
+                            progressDialog.dismiss();
                         }
-
-                        new android.os.Handler().post(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
-                            }
-                        });
-
                     }
-                });
             }
-        });
-        thread.start();
+
+        StartRunnable sr = new StartRunnable();
+        Thread stop = new Thread(sr);
+        stop.start();
+
+        try{
+            Thread.sleep(1000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        stop.interrupt();
 
     }
 //
