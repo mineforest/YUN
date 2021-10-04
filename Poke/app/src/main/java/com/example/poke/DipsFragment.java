@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,7 +26,6 @@ import java.util.ArrayList;
 public class DipsFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private ArrayList<UserDibs> dibsList;
@@ -47,15 +47,11 @@ public class DipsFragment extends Fragment {
           uid = user.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         recyclerView = (RecyclerView) view.findViewById(R.id.dips_rv);
-        LinearLayoutManager linearLayoutManager
-                = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         dibsList = new ArrayList<>();
 
         database = FirebaseDatabase.getInstance();
-
-
 
         mDatabase.child("dips").child(uid).addChildEventListener(dipsChildEventListener);
 
@@ -70,7 +66,7 @@ public class DipsFragment extends Fragment {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
             UserDibs dibs = snapshot.getValue(UserDibs.class);
-            dibsList.add(new UserDibs(dibs.getDipsImage(),dibs.getDipsTitle()));
+            dibsList.add(new UserDibs(dibs.getRcp_id(),dibs.getDipsImage(),dibs.getDipsTitle()));
             adapter.notifyDataSetChanged();
         }
 

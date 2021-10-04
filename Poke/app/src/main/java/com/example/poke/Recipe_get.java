@@ -47,8 +47,14 @@ public class Recipe_get implements Parcelable {
     List<String> recipe_img;
     List<String> tag;
     Long rate;
+    String score;
 
     public Recipe_get() {};
+
+    public Recipe_get(String rcp_id, String score) {
+        this.id = rcp_id;
+        this.score = score;
+    }
 
     public Recipe_get(String rcp_id,String thumbnail, String name, List<String> tag) {
         this.id = rcp_id;
@@ -235,5 +241,13 @@ public class Recipe_get implements Parcelable {
 
     public Long getRate() {
         return this.rate;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 }

@@ -37,17 +37,11 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     TextView nickNameTextView;
     ImageView profileView;
     private DatabaseReference mDatabase;
-    private ArrayList<UserHistory> historyList;
-    private HistoryAdapter mainAdapter;
-    private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
     String uid;
     Button historyButton;
     Button dipsButton;
     Button allergyButton;
     static HistoryFragment historyFragment;
-    ProgressDialog progressDialog;
-    Handler handler = new Handler();
 
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -59,18 +53,9 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_myinfo,container,false);
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null)
             uid = user.getUid();
-
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.show();
-        progressDialog.setContentView(R.layout.progress_dialog);
-        progressDialog.getWindow().setBackgroundDrawableResource(
-                android.R.color.transparent
-        );
-        progressDialog.setCancelable(false);
 
         historyFragment = new HistoryFragment();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -85,36 +70,7 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         historyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.info_btn));
         mDatabase.addValueEventListener(allergyListener);
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        getChildFragmentManager().beginTransaction().add(R.id.InfoFrame,new HistoryFragment()).commit();
-                        recyclerView = (RecyclerView)view.findViewById(R.id.history_rv);
-                        recyclerView.setHasFixedSize(true);
-                        linearLayoutManager = new LinearLayoutManager(getActivity());
-                        recyclerView.setLayoutManager(linearLayoutManager);
-
-                        historyList = new ArrayList<>();
-                        mDatabase.addValueEventListener(userValueEventListener);
-                        mainAdapter = new HistoryAdapter(historyList);
-                        recyclerView.setAdapter(mainAdapter);
-
-                        new android.os.Handler().post(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
-                            }
-                        });
-                    }
-                });
-            }
-        });
-        thread.start();
-
-
+        getChildFragmentManager().beginTransaction().add(R.id.InfoFrame,new HistoryFragment()).commit();
         return view;
     }
 
@@ -128,23 +84,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-
-        }
-    };
-
-    ValueEventListener userValueEventListener = new ValueEventListener() {
-        private ArrayList<String> userInfoArrayList = new ArrayList<>();
-
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.child("users").child(uid).getChildren()) {
-                    userInfoArrayList.add(dataSnapshot.getValue().toString());
-                }
-            nickNameTextView.setText(userInfoArrayList.get(3));
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
 
         }
     };

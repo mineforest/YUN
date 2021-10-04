@@ -33,19 +33,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
 
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(View v,int position);
-    }
-
-    private OnItemClickListener mListener = null;
-
-
-
-    // OnItemClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mListener = listener ;
-    }
-
     @Override
     public void onAttachedToRecyclerView(@NonNull @NotNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
@@ -78,8 +65,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
                 intent = new Intent(v.getContext(), Recipe_Info.class);
                 intent.putExtra("rcp_id", historyList.get(position).getRcp_id());
                 v.getContext().startActivity(intent);
-                Toast.makeText(v.getContext(), historyList.get(position).getRcp_id(),Toast.LENGTH_SHORT).show();
-
             }
         });
     }

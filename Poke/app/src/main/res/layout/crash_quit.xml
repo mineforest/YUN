@@ -17,7 +17,7 @@
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="500dp"
         app:srcCompat="@drawable/dh_fatale" />
 
     <TextView

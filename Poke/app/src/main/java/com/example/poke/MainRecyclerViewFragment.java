@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainRecyclerViewFragment extends Fragment{
+    ArrayList<Recipe_get> first_rcps = new ArrayList<>();
     ArrayList<Recipe_get> rcps = new ArrayList<>();
     ArrayList<Recipe_get> sorted_rcps = new ArrayList<>();
     ArrayList<String> myIngreList;
@@ -41,7 +42,6 @@ public class MainRecyclerViewFragment extends Fragment{
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private String uid;
-    ArrayList<UserHistory> historyList;
     FirebaseUser user;
     ProgressDialog progressDialog;
     Intent intent;
@@ -173,74 +173,47 @@ public class MainRecyclerViewFragment extends Fragment{
     ValueEventListener historyListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-            StringBuilder rids = new StringBuilder();
-            rids.append("6905019"); // 히스토리없을때 default값
             W2vHttpConn w2v = new W2vHttpConn();
-
-            if (snapshot.exists()) {
-                rcps.clear();
-                rids.setLength(0);
-                historyList = new ArrayList<>();
-                for (DataSnapshot ridSnapshot : snapshot.getChildren()) {
-                    UserHistory history = ridSnapshot.getValue(UserHistory.class);
-                    historyList.add(new UserHistory(history.getRcp_id(), history.getRecipeTitle(), history.getRecipeImage(), history.getDate(), history.getRate()));
-                    rids.append(history.getRcp_id()).append("+");
-                }
-                rids.deleteCharAt(rids.lastIndexOf("+"));
-            }
 
             new Thread(){
                 @Override
                 public void run() {
-                    String[] r_ids= w2v.getData(rids.toString());
+                    first_rcps = w2v.getRcp(uid, 1);
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    for (int i = 0 ; i < 50 ; i++) {
-                        String r_id = r_ids[i];
+                    for (Recipe_get recipe_get : first_rcps) {
+                        String r_id = recipe_get.getId();
                         DocumentReference docRef = db.collection("recipe").document(r_id);
                         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                String rcp_id = documentSnapshot.getData().get("id").toString();
-                                String title = documentSnapshot.getData().get("name").toString();
-                                String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                                String cook_time = documentSnapshot.getData().get("time").toString();
-                                List<String> tags = (List<String>) documentSnapshot.get("tag");
-                                List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
+                                recipe_get.setName(documentSnapshot.getData().get("name").toString());
+                                recipe_get.setThumbnail(documentSnapshot.getData().get("thumbnail").toString());
+                                recipe_get.setTime(documentSnapshot.getData().get("time").toString());
+                                recipe_get.setIngre_list((List<Map<String, String>>) documentSnapshot.get("ingre_list"));
+                                recipe_get.setRate(myIngreList);
+                                rcps.add(recipe_get);
+                                sorted_rcps.add(recipe_get);
 
-                                Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, ingre_list, tags);
-                                rr.setRate(myIngreList);
-                                rcps.add(rr);
-                                if (rcps.size() == 8) {
+                                if(rcps.size() == first_rcps.size()) {
+                                    rcps.sort(new Comparator<Recipe_get>() {
+                                        @Override
+                                        public int compare(Recipe_get o1, Recipe_get o2) {
+                                            int sc1 = Integer.parseInt(o1.getScore());
+                                            int sc2 = Integer.parseInt(o2.getScore());
+                                            return Integer.compare(sc2, sc1);
+                                        }
+                                    });
                                     shimmerFrameLayout.stopShimmer();
                                     shimmerFrameLayout.setVisibility(View.GONE);
                                     adapter.notifyDataSetChanged();
                                     recyclerView.setVisibility(View.VISIBLE);
                                 }
-                            }
-                        });
-                    }
 
-                    for (String r_id : r_ids) {
-                        DocumentReference docRef = db.collection("recipe").document(r_id);
-                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                            @Override
-                            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                String rcp_id = documentSnapshot.getData().get("id").toString();
-                                String title = documentSnapshot.getData().get("name").toString();
-                                String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                                String cook_time = documentSnapshot.getData().get("time").toString();
-                                List<String> tags = (List<String>) documentSnapshot.get("tag");
-                                List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
-                                Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, ingre_list, tags);
-                                rr.setRate(myIngreList);
-                                sorted_rcps.add(rr);
-                                if (sorted_rcps.size() == r_ids.length) {
+                                if (sorted_rcps.size() == first_rcps.size()) {
                                     sorted_rcps.sort(new Comparator<Recipe_get>(){
                                         @Override
                                         public int compare(Recipe_get o1, Recipe_get o2) {
-                                            if (o1.getRate() < o2.getRate()) return 1;
-                                            if (o1.getRate() > o2.getRate()) return -1;
-                                            return 0;
+                                            return o2.getRate().compareTo(o1.getRate());
                                         }
                                     });
                                     adapter3.notifyDataSetChanged();

@@ -101,6 +101,36 @@
                 android:textColor="#94D6D0"
                 android:textSize="14sp" />
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/score_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/time_layout"
+            android:padding="10dp"
+            android:background="@drawable/round_white">
+
+            <ImageView
+                android:id="@+id/score_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/outline_task_alt_24"
+                app:tint="#6BB4AE" />
+
+            <TextView
+                android:id="@+id/score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/score_icon"
+                android:layout_centerHorizontal="true"
+                android:text="THIS IS SCORE"
+                android:textColor="#94D6D0"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

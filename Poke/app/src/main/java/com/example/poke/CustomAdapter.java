@@ -58,13 +58,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
             holder.rcp_title.setText(rcp.getName());
             holder.rcp_cooktime.setText(rcp.getTime()+"분");
             holder.rate.setText(rcp.getRate() + "%");
+            holder.score.setText(rcp.getScore() + "점");
 
-//            holder.materialCardView.setRadius(10);
-//            if (rcp.getRate() < 20) holder.materialCardView.setBackgroundColor(context.getColor(R.color.match1));
-//            else if (rcp.getRate() < 40 ) holder.materialCardView.setBackgroundColor(context.getColor(R.color.match2));
-//            else if (rcp.getRate() < 60 ) holder.materialCardView.setBackgroundColor(context.getColor(R.color.match3));
-//            else if (rcp.getRate() < 80 ) holder.materialCardView.setBackgroundColor(context.getColor(R.color.match4));
-//            else holder.materialCardView.setBackgroundColor(context.getColor(R.color.match5));
             Glide.with(holder.itemView)
                     .load(rcp.getThumbnail())
                     .into(holder.rcp_thumbnail);

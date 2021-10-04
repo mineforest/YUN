@@ -41,7 +41,7 @@ class Word2v:
 
     def recommendations(self):
         rcp = self.df[['id','name']]
-        res = {}
+        res = []
 
         idx=self.obj
         sim_scores = list(enumerate(self.cosine_sim[idx]))
@@ -53,11 +53,9 @@ class Word2v:
         
         rcp_indices = [i[0] for i in sim_scores]     
         rec = rcp.iloc[rcp_indices].reset_index(drop=True)
-        jdx=0
         for idx, row in rec.iterrows():
             #same = row['cleand']
-            res[jdx]={'id':row['id'],'score':int(sim_scores[idx][1]*100)}
-            jdx=jdx+1
+            res.append({'id':row['id'],'score':int(sim_scores[idx][1]*100)})
         print("치명적 오류 발생안함")
         return res
 
