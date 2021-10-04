@@ -3,7 +3,11 @@ package com.example.poke;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
+import android.graphics.Xfermode;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -20,13 +24,23 @@ import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE;
 
 public class FridgeSwipe extends ItemTouchHelper.Callback{
     private FridgeSwipeController.ButtonsState buttonShowedState = FridgeSwipeController.ButtonsState.GONE;
-    private static final float buttonWidth = 300;
     private RectF buttonInstance;
+    private static final float buttonWidth = 300;
     private RecyclerView.ViewHolder currentItemViewHolder = null;
     private int currentPosition = -1;
     private int previousPosition = -1;
     private float currentDx = 0f;
     private float clamp = 0f;
+    private FridgeSwipeControllerActions buttonsActions = null;
+    Paint p;
+    private boolean swipeBack = false;
+
+    public FridgeSwipe(){
+    }
+
+    public FridgeSwipe(FridgeSwipeControllerActions buttonsActions) {
+        this.buttonsActions = buttonsActions;
+    }
 
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
@@ -49,16 +63,15 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
         previousPosition = viewHolder.getAdapterPosition();
 
         if (viewHolder != null) {
-            final View foregroundView = ((IngredientAdapter.ViewHolder) viewHolder).itemView;
+            final View foregroundView = ((FridgeAdapter.ViewHolder) viewHolder).itemView;
             getDefaultUIUtil().clearView(foregroundView);
         }
     }
 
     @Override
     public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
-
         if (viewHolder != null) {
-            final View foregroundView = ((IngredientAdapter.ViewHolder) viewHolder).itemView;
+            final View foregroundView = ((FridgeAdapter.ViewHolder) viewHolder).itemView;
             currentPosition = viewHolder.getAdapterPosition();
             getDefaultUIUtil().onSelected(foregroundView);
         }
@@ -73,6 +86,9 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
             this.currentDx = x;
             ItemTouchHelper.Callback.getDefaultUIUtil().onDraw(c, recyclerView, view, x, dY, actionState, isCurrentlyActive);
         }
+        else {
+            setTouchListener(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        }
         currentItemViewHolder = viewHolder;
     }
 
@@ -81,10 +97,6 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
             drawButtons(c, currentItemViewHolder);
         }
     }
-
-    //    private View getView (RecyclerView.ViewHolder viewHolder){
-//        return (IngredientAdapter.SwipeViewHolder viewHolder).itemView.swipe_view
-//    }
 
     private void drawButtons(Canvas c, RecyclerView.ViewHolder viewHolder) {
         float buttonWidthWithoutPadding = buttonWidth - 20;
@@ -99,7 +111,6 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
         drawText("DELETE", c, rightButton, p);
 
         buttonInstance = null;
-
         if (buttonShowedState == FridgeSwipeController.ButtonsState.RIGHT_VISIBLE) {
             buttonInstance = rightButton;
         }
@@ -114,6 +125,81 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
         float textWidth = p.measureText(text);
         c.drawText(text, button.centerX() - (textWidth / 2), button.centerY() + (textSize / 2), p);
     }
+    private void setTouchListener(Canvas c,
+                                  RecyclerView recyclerView,
+                                  RecyclerView.ViewHolder viewHolder,
+                                  float dX, float dY,
+                                  int actionState, boolean isCurrentlyActive) {
+
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                swipeBack = event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP;
+
+                if(swipeBack) {
+                    if (dX < -buttonWidth)
+                        buttonShowedState = FridgeSwipeController.ButtonsState.RIGHT_VISIBLE;
+
+                    if (buttonShowedState != FridgeSwipeController.ButtonsState.GONE) {
+                        setTouchDownListener(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                        setItemsClickable(recyclerView, false);
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    private void setTouchDownListener(final Canvas c,
+                                      final RecyclerView recyclerView,
+                                      final RecyclerView.ViewHolder viewHolder,
+                                      final float dX, final float dY,
+                                      final int actionState, final boolean isCurrentlyActive) {
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    setTouchUpListener(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                }
+                return false;
+            }
+        });
+    }
+
+    private void setTouchUpListener(final Canvas c, final RecyclerView recyclerView, final RecyclerView.ViewHolder viewHolder, final float dX, final float dY, final int actionState, final boolean isCurrentlyActive) {
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    onChildDraw(c, recyclerView, viewHolder, 0F, dY, actionState, isCurrentlyActive);
+                    recyclerView.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            return false;
+                        }
+                    });
+                    setItemsClickable(recyclerView, true);
+
+                    if (buttonsActions != null && buttonInstance != null && buttonInstance.contains(event.getX(), event.getY())) {
+                         if (buttonShowedState == FridgeSwipeController.ButtonsState.RIGHT_VISIBLE) {
+                            buttonsActions.onRightClicked(viewHolder.getAdapterPosition());
+                        }
+                    }
+                    buttonShowedState = FridgeSwipeController.ButtonsState.GONE;
+                    currentItemViewHolder = null;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void setItemsClickable(RecyclerView recyclerView,
+                                   boolean isClickable) {
+        for (int i = 0; i < recyclerView.getChildCount(); ++i) {
+            recyclerView.getChildAt(i).setClickable(isClickable);
+        }
+    }
+
 
     @Override
     public float getSwipeEscapeVelocity(float defaultValue) {
@@ -128,11 +214,7 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
     }
 
     private final float clampViewPositionHorizontal(View view, float dX, boolean isClamped, boolean isCurrentlyActive) {
-        float min = -((float)view.getWidth()) / (float)2;
-        float max = 0.0F;
-        float x = isClamped ? (isCurrentlyActive ? dX - this.clamp : -this.clamp) : dX;
-        float var10 = Math.max(min, x);
-        return Math.min(var10, max);
+        return dX = Math.min(dX, -buttonWidth);
     }
 
     private final void setTag(RecyclerView.ViewHolder viewHolder, boolean isClamped) {
@@ -150,37 +232,32 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
         return (Boolean)var2 != null ? (Boolean)var2 : false;
     }
 
-    private final View getView(RecyclerView.ViewHolder viewHolder) {
-        if (viewHolder == null) {
-            throw new TypeCastException("null cannot be cast to non-null type com.example.poke.IngredientAdapter.ViewHolder");
-        } else {
-            View var10000 = ((com.example.poke.IngredientAdapter.ViewHolder)viewHolder).itemView;
-            return var10000;
-        }
+    private View getView(RecyclerView.ViewHolder viewHolder) {
+            return viewHolder.itemView;
     }
 
     public final void setClamp(float clamp) {
         this.clamp = clamp;
     }
 
-    public final void removePreviousClamp(@NotNull RecyclerView recyclerView) {
-        if (!Intrinsics.areEqual(this.currentPosition, this.previousPosition)) {
-            Integer var10000 = this.previousPosition;
-            if (var10000 != null) {
-                Integer var2 = var10000;
-                int it = ((Number)var2).intValue();
-                RecyclerView.ViewHolder var8 = recyclerView.findViewHolderForAdapterPosition(it);
-                if (var8 == null) {
-                    return;
-                }
+    public void clearCanvas() {
+        Paint p = new Paint();
+        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 
-                RecyclerView.ViewHolder viewHolder = var8;
-                this.getView(viewHolder).setTranslationX(0.0F);
-                this.setTag(viewHolder, false);
-                this.previousPosition = (Integer)null;
-            }
+        Canvas c = new Canvas();
+        c.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR);
+    }
 
+    public final void removePreviousClamp(RecyclerView recyclerView) {
+        if(currentPosition == previousPosition) return;
+
+        if(previousPosition != -1){
+            RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(previousPosition);
+            this.getView(viewHolder).setTranslationX(0.0F);
+            this.setTag(viewHolder, false);
+            this.previousPosition = -1;
         }
+        else return;
     }
 
 }

@@ -1,17 +1,15 @@
 package com.example.poke;
 
-import android.app.Application;
 import  android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -20,7 +18,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuItemCompat;
@@ -44,7 +41,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class FridgeFragment extends Fragment{
-    private IngredientAdapter ingredientAdapter;
+    private FridgeAdapter ingredientAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<UserIngredient> ingredientArrayList;
@@ -59,7 +56,7 @@ public class FridgeFragment extends Fragment{
     private ImageButton addButton;
     private SearchView searchView;
     ProgressDialog progressDialog;
-    FridgeSwipeController fridgeSwipeController;
+    FridgeSwipe fridgeSwipe;
 
     @Nullable
     @Override
@@ -90,7 +87,7 @@ public class FridgeFragment extends Fragment{
         FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.ingredientAddBtn);
         fab.attachToRecyclerView(recyclerView);
 
-        ingredientAdapter = new IngredientAdapter(tabArrayList);
+        ingredientAdapter = new FridgeAdapter(tabArrayList);
         ingredientAdapter.setOnItemClickListener(onItemClickListener);
         addButton.setOnClickListener(addClickListener);
 
@@ -98,33 +95,35 @@ public class FridgeFragment extends Fragment{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-//        itemTouchHelper.attachToRecyclerView(recyclerView);
+        fridgeSwipe = new FridgeSwipe(new FridgeSwipeControllerActions() {
+            @Override
+            public void onRightClicked(int position) {
+                swipePos = position;
+                mDatabase.child("ingredient").child(uid).child(tabArrayList.get(swipePos).getIngredientKey()).setValue(null);
+                startToast(tabArrayList.get(swipePos).getIngredientTitle() + " 삭제 ");
+            }
+        });
 
-//        fridgeSwipeController = new FridgeSwipeController(new FridgeSwipeControllerActions() {
-//            @Override
-//            public void onRightClicked(int position) {
-//                swipePos = position;
-//                mDatabase.child("ingredient").child(uid).child(tabArrayList.get(swipePos).getIngredientKey()).setValue(null);
-//                startToast(tabArrayList.get(swipePos).getIngredientTitle() + " 삭제 ");
-//            }
-//        });
-
-        FridgeSwipe fridgeSwipeController = new FridgeSwipe();
-        fridgeSwipeController.setClamp(200f);
-
-        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(fridgeSwipeController);
+        fridgeSwipe.setClamp(200f);
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(fridgeSwipe);
         itemTouchhelper.attachToRecyclerView(recyclerView);
 
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-                fridgeSwipeController.onDraw(c);
+                fridgeSwipe.onDraw(c);
+                recyclerView.setOnTouchListener(new View.OnTouchListener() {
+                   @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        fridgeSwipe.removePreviousClamp(recyclerView);
+                        return false;
+                    }
+                });
             }
         });
 
         ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
-        for (int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
+        for(int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
             View v = slidingTabStrip.getChildAt(i);
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
             params.rightMargin = betweenSpace;
@@ -143,9 +142,9 @@ public class FridgeFragment extends Fragment{
                     }
                 }catch (Exception e){
                 }finally {
-                    progressDialog.dismiss();
                     mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
                     recyclerView.setAdapter(ingredientAdapter);
+                    progressDialog.dismiss();
                 }
             }
         }
@@ -443,7 +442,7 @@ public class FridgeFragment extends Fragment{
         ingredientAdapter.notifyDataSetChanged();
     }
 
-    IngredientAdapter.OnItemClickListener onItemClickListener =new IngredientAdapter.OnItemClickListener() {
+    FridgeAdapter.OnItemClickListener onItemClickListener =new FridgeAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
             Bundle args = new Bundle();
