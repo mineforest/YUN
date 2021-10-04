@@ -49,7 +49,8 @@ class Word2v:
         rcp = self.df[['id','name']]
         res = {'recipe':[]}
         
-        sim_scores = list(enumerate(self.cosine_sim[self.obj]))   # 제일 마지막 애에 대한 값을 구하라.
+        sim_scores = list(enumerate(self.cosine_sim[self.obj]))   # 제일 마지막 애에 대한 값을 구하라.        
+        
         sim_scores = sorted(sim_scores, key= lambda x:x[1], reverse=True)
         sim_scores = sim_scores[0:1000]
         
