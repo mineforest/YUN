@@ -15,9 +15,8 @@ def sim_rcp(rid):
     return res
 
 @app.route('/user/<uid>', methods = ['GET'])
-def user_hist_base(uid):
-    fbc = FirebaseConnect("1XzkdnzZGaeSdt2KBXPiKNoftnA2")
-    #fbc = FirebaseConnect(uid)
+def user_hist_base(uid):    
+    fbc = FirebaseConnect(uid)
     forRateRcp=fbc.getHistory()
     param=[]
     for i in forRateRcp:

@@ -22,6 +22,3 @@ class FirebaseConnect:
     def getPrefer(self):
         prefer = db.reference('preference').child(self.key).get()
         return [i['preference'] for i in prefer.values()]
-
-#fc = FirebaseConnect("1XzkdnzZGaeSdt2KBXPiKNoftnA2")
-#print(fc.getPrefer())
