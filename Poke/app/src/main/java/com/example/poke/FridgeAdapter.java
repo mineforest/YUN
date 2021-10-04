@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
+public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolder> {
     private ArrayList<UserIngredient> ingredientsList;
     Context context;
     Calendar today = Calendar.getInstance();
@@ -43,7 +41,7 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
         this.mlistener = listener;
     }
 
-    public IngredientAdapter(ArrayList<UserIngredient> list) {
+    public FridgeAdapter(ArrayList<UserIngredient> list) {
         this.ingredientsList = list;
     }
 
@@ -56,9 +54,9 @@ public class IngredientAdapter extends  RecyclerView.Adapter<IngredientAdapter.V
     @NonNull
     @NotNull
     @Override
-    public IngredientAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public FridgeAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_recyclerview,parent,false);
-        IngredientAdapter.ViewHolder holder = new IngredientAdapter.ViewHolder(view);
+        FridgeAdapter.ViewHolder holder = new FridgeAdapter.ViewHolder(view);
 
         return holder;
     }

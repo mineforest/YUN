@@ -6,25 +6,17 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent notificationIntent = new Intent(context, IngredientAdapter.class);
+        Intent notificationIntent = new Intent(context, FridgeAdapter.class);
         String getingre = notificationIntent.getStringExtra("ingre");
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
