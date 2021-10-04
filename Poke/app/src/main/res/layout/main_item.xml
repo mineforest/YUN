@@ -11,8 +11,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/round_white">
+        android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/image_card"
@@ -51,7 +50,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="5dp"
             android:layout_toStartOf="@+id/rate_layout"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:background="@drawable/round_white">
 
             <ImageView
                 android:id="@+id/time_icon"
@@ -80,7 +80,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="5dp"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:background="@drawable/round_white">
 
             <ImageView
                 android:id="@+id/rate_icon"
