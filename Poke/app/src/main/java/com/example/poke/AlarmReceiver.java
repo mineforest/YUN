@@ -16,23 +16,19 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent notificationIntent = new Intent(context, FridgeAdapter.class);
-        String getingre = notificationIntent.getStringExtra("ingre");
+        Intent notificationIntent = new Intent(context, MainActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         PendingIntent pendingI = PendingIntent.getActivity(context, 0,
                 notificationIntent, 0);
 
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "default");
-
 
         //OREO API 26 이상에서는 채널 필요
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
             builder.setSmallIcon(R.mipmap.ic_launcher_image); //mipmap 사용시 Oreo 이상에서 시스템 UI 에러남
-
 
             String channelName ="매일 알람 채널";
             String description = "매일 정해진 시간에 알람합니다.";
@@ -47,13 +43,11 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
         }else builder.setSmallIcon(R.mipmap.ic_launcher_image); // Oreo 이하에서 mipmap 사용하지 않으면 Couldn't create icon: StatusBarIcon 에러남
 
-
         builder.setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
-
                 .setContentTitle("POKE")
-                .setContentText(getingre+"의 유통기한이 얼마 남지 않았습니다")
+                .setContentText("유통기한이 얼마 남지 않은 재료가 있습니다")
                 .setContentInfo("INFO")
                 .setContentIntent(pendingI);
 
@@ -61,11 +55,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 
             // 노티피케이션 동작시킴
             notificationManager.notify(1234, builder.build());
-
             Calendar nextNotifyTime = Calendar.getInstance();
 
             // 내일 같은 시간으로 알람시간 결정
-            nextNotifyTime.add(Calendar.DATE, 1);
+            nextNotifyTime.add(Calendar.DATE, 2);
 
             //  Preference에 설정한 값 저장
 //            SharedPreferences.Editor editor = context.getSharedPreferences("daily alarm", MODE_PRIVATE).edit();

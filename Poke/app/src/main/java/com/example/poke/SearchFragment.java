@@ -10,6 +10,7 @@ import android.provider.SearchRecentSuggestions;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +20,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.AutoCompleteTextView;
+import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -28,6 +31,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.mmin18.widget.RealtimeBlurView;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -50,16 +56,23 @@ public class SearchFragment extends Fragment {
     private ArrayList<Recipe_get> searchedList = new ArrayList<>();
     private FirebaseAuth mAuth;
     SearchAdapter adapter;
+    RecentAdapter recentAdapter;
     private String cate="전체";
     private ArrayList<Recipe_get> SearchArrayList = new ArrayList<>();
     private List<String> slist;
     AutoCompleteTextView editText;
-    SearchView searchView;
+    public static SearchView searchView;
+    private Chip chip;
     String uid;
     Button clear_btn;
+    private ChipGroup tag_chip;
     private TabLayout tabLayout;
+    private RecyclerView recentView;
     ProgressDialog progressDialog;
+    private FrameLayout frameLayout;
     private SearchAdapter SearchAdapter = new SearchAdapter(searchList);
+    private RealtimeBlurView rtv;
+   // private RecentAdapter RecentAdapter = new RecentAdapter(searchedList);
 
     public SearchFragment() {
     }
@@ -75,6 +88,12 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.search, container, false);
         searchView = (SearchView) view.findViewById(R.id.rec_search);
         tabLayout = view.findViewById(R.id.searchTab);
+        tag_chip = (ChipGroup) view.findViewById(R.id.search_tag);
+        recentView = view.findViewById(R.id.RecentView);
+        recentView.setVisibility(view.INVISIBLE);
+        frameLayout = view.findViewById(R.id.frame);
+        rtv = view.findViewById(R.id.rtv);
+        rtv.setVisibility(view.INVISIBLE);
 
         //SearchAdapter = new SearchAdapter(tabArrayList);
         ArrayList<Object> filteredList = new ArrayList<>();
@@ -117,8 +136,18 @@ public class SearchFragment extends Fragment {
                                         String rcp_id = doc.getData().get("id").toString();
                                         String title = doc.getData().get("name").toString();
                                         String thumbnail = doc.getData().get("thumbnail").toString();
-                                        List<String> tag = (List<String>) doc.get("tag");
-                                        Recipe_get r = new Recipe_get(rcp_id, thumbnail, title, tag);
+                                        List<String> tags = (List<String>) doc.get("tag");
+                                        Recipe_get r = new Recipe_get(rcp_id, thumbnail, title, tags);
+
+//                                        String[] string;
+//                                        for (String t : tags) {
+//                                            string = (t.split(","));
+//                                            for (String s : string) {
+//                                                Log.w(TAG, s);
+//                                                addChip(s);
+//                                            }
+//                                        }
+
                                         searchList.add(r);
                                         adapter.notifyDataSetChanged();
                                     }
@@ -129,29 +158,34 @@ public class SearchFragment extends Fragment {
             }
         }.start();
 
-        //editText.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, slist));
+        ArrayList<String> recent = new ArrayList<>();
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.search_rv);
+        RecyclerView recyclerView2 = view.findViewById(R.id.RecentView) ;
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView2.setHasFixedSize(true);
         adapter = new SearchAdapter(searchList);
         recyclerView.setAdapter(adapter);
+        recentAdapter = new RecentAdapter(recent);
+        recyclerView2.setAdapter(recentAdapter);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.i(TAG, searchView.getQuery().toString());
-                SearchRecentSuggestions suggestions = new SearchRecentSuggestions(getActivity(),
-                        MySuggestionProvider.AUTHORITY,
-                        MySuggestionProvider.MODE);
 
+                recentView.bringToFront();
 
-                suggestions.saveRecentQuery(query, null);
+                recentView.setVisibility(view.VISIBLE);
 
-//                SearchView searchView = (SearchView)menu.findItem(R.id.menu_search).getActionView();
-
-                displaySearchResults(query);
+                rtv.setVisibility(view.VISIBLE);
 
                 hideKeyboard(getActivity());
+
+                recent.add(query.toString());
+
+                recentAdapter.notifyDataSetChanged();
 
                 return true;
             }
@@ -160,6 +194,8 @@ public class SearchFragment extends Fragment {
             public boolean onQueryTextChange(String s) {
                 String searchText = searchView.getQuery().toString();
                 searchFilter(searchText);
+                recentView.setVisibility(View.INVISIBLE);
+                rtv.setVisibility(view.INVISIBLE);
                 return false;
             }
         });
@@ -246,10 +282,6 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
-    private void displaySearchResults(String query) {
-
-    }
-
 
     public void searchFilter(String searchText) {
         searchedList.clear();
@@ -300,7 +332,18 @@ public class SearchFragment extends Fragment {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-
-
+    public void addChip(String text){
+        int paddingDp = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 15,
+                getResources().getDisplayMetrics()
+        );
+        chip =(Chip) this.getLayoutInflater().inflate(R.layout.tag_chip, null, false);
+        chip.setText(text);
+        chip.setClickable(false);
+        chip.setPadding(paddingDp, 0, paddingDp, 0);
+        chip.setCheckable(false);
+        Log.d("dadf",chip.getText().toString());
+        tag_chip.addView(chip);
+    }
 
 }

@@ -93,9 +93,6 @@
 
         <receiver android:name=".AlarmReceiver" />
 
-        <provider
-            android:name="com.example.poke.MySuggestionProvider"
-            android:authorities="com.example.poke.MySuggestionProvider" />
 
 
     </application>

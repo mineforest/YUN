@@ -1,40 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:elevation="1dp"
     android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="77dp"
-        android:background="@drawable/layout_radius_bottom"
+        android:layout_height="85dp"
+        android:background="@drawable/bg_item_gradient"
         android:elevation="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
 
         <SearchView
             android:id="@+id/rec_search"
             android:layout_width="match_parent"
             android:layout_height="37dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/search_radius"
+            android:background="@android:color/transparent"
+            android:closeIcon="@drawable/ic_dialog_close_dark"
             android:ems="10"
             android:queryHint="검색어를 입력해주세요."
+            android:searchHintIcon="@drawable/ic_search"
+            android:searchIcon="@drawable/ic_search"
             android:searchSuggestAuthority="com.example.poke.MySuggestionProvider"
             android:searchSuggestSelection=" ?"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="16dp">
+
+        </SearchView>
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecentView"
+        android:layout_width="403dp"
+        android:layout_height="114dp"
+        android:background="@drawable/menu_shadow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
     <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        tools:ignore="MissingConstraints">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/searchTab"
@@ -54,14 +73,13 @@
             app:tabPaddingStart="10dp"
             app:tabTextColor="@color/black">
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/allTag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="전체"
-            android:textAlignment="center"
-            android:textSize="15sp"
-            />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/allTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전체"
+                android:textAlignment="center"
+                android:textSize="15sp" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/GangTag"
@@ -69,64 +87,68 @@
                 android:layout_height="wrap_content"
                 android:text="강정"
                 android:textAlignment="center"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/zzimTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="찜"
                 android:textAlignment="center"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/goobTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="구이"
                 android:textAlignment="center"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/zorimTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="조림"
                 android:textAlignment="center"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/cakeTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="케이크"
                 android:textAlignment="center"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/chickenTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="치킨"
                 android:textAlignment="center"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/bokTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="볶음"
                 android:textAlignment="center"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
 
         </com.google.android.material.tabs.TabLayout>
     </LinearLayout>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="15dp">
+        android:id="@+id/frame"
+        android:layout_width="404dp"
+        android:layout_height="439dp"
+        android:background="@color/background"
+        android:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_rv"
@@ -135,6 +157,14 @@
             android:layout_marginBottom="?attr/actionBarSize">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <com.github.mmin18.widget.RealtimeBlurView
+            android:id="@+id/rtv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:realtimeBlurRadius="5dp"
+            app:realtimeOverlayColor="#7000" />
+
     </FrameLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

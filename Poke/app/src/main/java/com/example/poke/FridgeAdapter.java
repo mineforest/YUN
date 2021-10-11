@@ -30,6 +30,7 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     long date;
     TextView textView;
+    private boolean alarm_flag = true;
 
     private OnItemClickListener mlistener = null;
 
@@ -76,7 +77,6 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
 //                .load(ingredientsList.get(position).getCategory())
 //                .into(holder.image);
         date /= 86400000;
-
         holder.title.setText(String.valueOf(ingredientsList.get(position).getIngredientTitle()));
         if(date < 0){
             holder.day.setText(("D+" + Long.toString(Math.abs(date))));
@@ -86,7 +86,10 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         }
         if(date <= 3) {
             holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
-            diaryNotification(String.valueOf(ingredientsList.get(position).getIngredientTitle()));
+            if(alarm_flag==true){
+                diaryNotification();
+                alarm_flag = false;
+            }
         }
         else{
             holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_green));
@@ -94,18 +97,16 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
 
 
     }
-    public void diaryNotification(String name)
+    public void diaryNotification()
     {
         Boolean dailyNotify = true; // 무조건 알람을 사용
         Calendar c = Calendar.getInstance();
-//        String ingre = name;
-        c.set(Calendar.HOUR_OF_DAY, 20);
-        c.set(Calendar.MINUTE, 55);
+        c.set(Calendar.HOUR_OF_DAY, 17);
+        c.set(Calendar.MINUTE, 8);
         c.set(Calendar.SECOND, 00);
         PackageManager pm = this.context.getPackageManager();
         ComponentName receiver = new ComponentName(context, DeviceBootReceiver.class);
         Intent alarmIntent = new Intent(context, AlarmReceiver.class);
-//        alarmIntent.putExtra("ingre",ingre);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         // 사용자가 매일 알람을 허용했다면
