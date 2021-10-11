@@ -17,3 +17,4 @@ public class SearchViewHolder extends RecyclerView.ViewHolder {
         search_title = itemView.findViewById(R.id.search_title);
     }
 }
+
