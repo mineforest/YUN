@@ -1,12 +1,9 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-
-    <solid android:color="@color/green" /> //배경색
-
-
+    <gradient
+        android:angle="0"
+        android:startColor="#57EB6B"
+        android:endColor="#CCFB63"
+        android:type="linear"/>
     <corners
-       android:radius="30dp"  />
-    <size android:width="205dp"
-        android:height="59dp">
-    </size>
-
+       android:radius="300dp"/>
 </shape>

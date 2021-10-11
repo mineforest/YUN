@@ -8,11 +8,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -31,25 +34,24 @@ import java.util.Date;
 import java.util.List;
 
 public class RatingActivity extends AppCompatActivity {
+    private Recipe_get rcp;
     private SearchView searchView;
     private Button doneButton;
     private RatingBar ratingBar;
-    private ChipGroup chipGroup;
-    private Chip chip;
-    private ArrayList<String> arrayList;
-    private ArrayList<String> recipeList;
+    private ArrayList<String> ingreList;
     private List dbList;
     private ArrayList<String> dbArrayList;
-    private ArrayList<String> chipArrayList;
+    private ArrayList<String> deleteList;
     private ListView listView;
     private IngredientListAdapter adapter;
     private UserHistory userHistory;
     private SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
     private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
     private Date date;
     private String now;
     private String uid;
+    private DassnIngreCheckAdapter dassnIngreCheckAdapter;
+    private RecyclerView recyclerView;
     int cnt;
 
     @Override
@@ -57,49 +59,62 @@ public class RatingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        rcp = intent.getParcelableExtra("rcp");
+        ingreList = intent.getStringArrayListExtra("ingre");
 
         cnt=0;
-        mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         uid = user.getUid();
-        arrayList = new ArrayList<>();
         userHistory = new UserHistory();
-        recipeList = new ArrayList<>();
-        chipArrayList = new ArrayList<>();
         dbList = new ArrayList<String>();
         dbArrayList = new ArrayList<>();
-        searchView =(SearchView)findViewById(R.id.searchView);
-        doneButton =(Button) findViewById(R.id.doneButton2);
-        ratingBar = (RatingBar)findViewById(R.id.ratingBar2);
-        chipGroup = (ChipGroup)findViewById(R.id.ratingGroup);
-        listView = (ListView)findViewById(R.id.listView);
-
-        arrayList.addAll(intent.getStringArrayListExtra("ingre"));
-        recipeList.addAll(intent.getStringArrayListExtra("recipe"));
+        deleteList = new ArrayList<>();
+        searchView =findViewById(R.id.searchView);
+        doneButton = findViewById(R.id.doneButton2);
+        ratingBar = findViewById(R.id.ratingBar2);
+        listView = findViewById(R.id.listView);
+        recyclerView = findViewById(R.id.dassn_rv);
         searchView.setQueryHint("재료 검색");
-        searchView.setIconified(false);
         searchView.onActionViewExpanded();
+        searchView.setIconifiedByDefault(false);
+        searchView.setIconified(true);
+        searchView.clearFocus();
         searchView.setQuery(null,false);
         searchView.setOnQueryTextListener(onQueryTextListener);
 
         mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
 
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        dassnIngreCheckAdapter = new DassnIngreCheckAdapter(ingreList);
+        dassnIngreCheckAdapter.setOnItemClickListener(new DassnIngreCheckAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                String ingre_name = ingreList.get(position);
+                if (deleteList.contains(ingre_name)) {
+                    deleteList.remove(ingre_name);
+                }
+                else deleteList.add(ingre_name);
+            }
+        });
+        recyclerView.setAdapter(dassnIngreCheckAdapter);
+
         adapter = new IngredientListAdapter(dbList, this);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(itemClickListener);
         doneButton.setOnClickListener(clickListener);
-        for(int i =0; i<arrayList.size(); i++) {
-            addChip(arrayList.get(i));
-        }
     }
 
     AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if(!chipArrayList.contains(dbList.get(position).toString())) {
-                addChip(dbList.get(position).toString());
+            if(!ingreList.contains(dbList.get(position).toString())) {
+                ingreList.add(dbList.get(position).toString());
+                dassnIngreCheckAdapter.notifyDataSetChanged();
+                searchView.setQuery(null,false);
             }
         }
     };
@@ -158,44 +173,21 @@ public class RatingActivity extends AppCompatActivity {
                 date = new Date();
                 now = form.format(date);
                 long l = (long)ratingBar.getRating();
-                userHistory = new UserHistory(recipeList.get(0), recipeList.get(1), recipeList.get(2), now, l);
-                mDatabase.child("history").child(uid).child(recipeList.get(0)).setValue(userHistory);
+                userHistory = new UserHistory(rcp.getId(), rcp.getName(), rcp.getThumbnail(), now, l);
+                mDatabase.child("history").child(uid).child(rcp.getId()).setValue(userHistory);
                 deleteIngredient();
-                onBackPressed();
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //스택 제거
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); //메인화면 재사용
+                startActivity(intent);
+                finish();
             }
         };
-
-    public void addChip(String text){
-        int paddingDp = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 15,
-                getResources().getDisplayMetrics()
-        );
-            chip =(Chip) this.getLayoutInflater().inflate(R.layout.history_chip, null, false);
-            chip.setText(text);
-            chipArrayList.add(text);
-            chip.setPadding(paddingDp, 0, paddingDp, 0);
-            chip.setCheckable(false);
-            chip.setOnCloseIconClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    handleChipCloseIconClicked((Chip)v);
-                }
-            });
-            chipGroup.addView(chip);
-    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    private void handleChipCloseIconClicked(Chip chip) {
-        ChipGroup parent = (ChipGroup) chip.getParent();
-        for(int i =0; i<chipArrayList.size(); i++){
-            if(chipArrayList.get(i).equals(chip.getText().toString()))
-                chipArrayList.remove(i);
-        }
-        parent.removeView(chip);
     }
 
     public void deleteIngredient() {
@@ -204,7 +196,7 @@ public class RatingActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        if (chipArrayList.contains(dataSnapshot.child("ingredientTitle").getValue(String.class))) {
+                        if (ingreList.contains(dataSnapshot.child("ingredientTitle").getValue(String.class))) {
                             dataSnapshot.getRef().removeValue();
                         }
                     }

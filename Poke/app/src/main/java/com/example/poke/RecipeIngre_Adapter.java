@@ -1,10 +1,13 @@
 package com.example.poke;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -59,9 +62,7 @@ public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapte
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if (snapshot != null && snapshot.getChildren() != null && snapshot.getChildren().iterator().hasNext()) {
-                    holder.checkBox.setChecked(true);
-                } else {
-                    holder.checkBox.setChecked(false);
+                    holder.check_icon.setColorFilter(Color.GREEN);
                 }
             }
 
@@ -85,13 +86,13 @@ public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapte
     public static class CustomViewHolder extends RecyclerView.ViewHolder {
         public TextView i_name;
         public TextView i_amount;
-        public CheckBox checkBox;
+        public ImageView check_icon;
 
         public CustomViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             this.i_name = itemView.findViewById(R.id.i_name_txt);
             this.i_amount = itemView.findViewById(R.id.i_amount_txt);
-            this.checkBox = itemView.findViewById(R.id.check);
+            this.check_icon = itemView.findViewById(R.id.check_icon);
         }
     }
 }

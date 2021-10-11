@@ -10,13 +10,9 @@
     <color name="gray">#8C8B8A</color>
     <color name="background">#FAFAFA</color>
     <color name="shimmer_color">#BCBCBC</color>
-
-
-    <!-- 메인 반응 색상표 -->
-    <color name="match1">#ECE8F2</color>
-    <color name="match2">#F9EDEF</color>
-    <color name="match3">#F6F4EE</color>
-    <color name="match4">#E6EDF2</color>
-    <color name="match5">#ECF4F2</color>
+    <color name="red">#FF0000</color>
+    <color name="ButtonTextColor">#08300A</color>
+    <color name="emptystar">#909090</color>
+    <color name="filledstar">#00FF7F</color>
 
 </resources>
