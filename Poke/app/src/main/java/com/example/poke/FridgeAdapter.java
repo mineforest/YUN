@@ -1,5 +1,6 @@
 package com.example.poke;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -8,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.WorkManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,10 +42,15 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
     Calendar cal = Calendar.getInstance();
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     long date;
-    private boolean alarm_flag = true;
+    public boolean alarm_flag = true;
+    public boolean check_flag = true;
     private DatabaseReference mDatabase;
 
     private OnItemClickListener mlistener = null;
+
+    Bundle bundle = ((Activity) context).getIntent().getExtras();
+    final boolean flag=bundle.getBoolean("flag");
+
 
     public interface OnItemClickListener {
         void onItemClick(View v, int position);
@@ -117,46 +125,43 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         else {
             holder.day.setText(("D-" + Long.toString(date)));
         }
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 22);
+        c.set(Calendar.MINUTE, 00);
+        c.set(Calendar.SECOND, 00);
+
         if(date <= 3) {
             holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
-            if(alarm_flag==true){
-                diaryNotification();
-                alarm_flag = false;
+            if(alarm_flag==true&&flag!=true){
+                setAlarm(c.getTimeInMillis());
+                alarm_flag=false;
             }
         }
         else{
             holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_green));
         }
+        checkDate(date);
     }
 
-    public void diaryNotification()
-    {
-        Boolean dailyNotify = true; // 무조건 알람을 사용
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, 17);
-        c.set(Calendar.MINUTE, 8);
-        c.set(Calendar.SECOND, 00);
-        PackageManager pm = this.context.getPackageManager();
-        ComponentName receiver = new ComponentName(context, DeviceBootReceiver.class);
-        Intent alarmIntent = new Intent(context, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        // 사용자가 매일 알람을 허용했다면
-        if (dailyNotify) {
-            if (alarmManager != null) {
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(),
-                        AlarmManager.INTERVAL_DAY, pendingIntent);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
-                }
-            }
-            // 부팅 후 실행되는 리시버 사용가능하게 설정
-            pm.setComponentEnabledSetting(receiver,
-                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                    PackageManager.DONT_KILL_APP);
-
+    public void checkDate(long date){
+        if(date<=3){
+            check_flag=false;
+        }
+        else
+            check_flag=true;
+        if(check_flag==true){
+            WorkManager workmanager=WorkManager.getInstance();
+            workmanager.cancelAllWork();
         }
     }
+
+    public void setAlarm(long time) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, MyAlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+    }
+
     @Override
     public int getItemCount() {
         return (ingredientsList != null ? ingredientsList.size() : 0);

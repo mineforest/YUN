@@ -13,12 +13,18 @@ class FirebaseConnect:
            
     def getHistory(self):
         dict = db.reference('history').child(self.key).get()
+        if dict==None:
+            return []
         return [(i['rcp_id'],i['rate']) for i in dict.values()]
     
     def getAllergying(self):
         allergy = db.reference('allergy').child(self.key).get()
+        if allergy==None:
+            return []
         return [i['allergy'] for i in allergy.values()]
     
     def getPrefer(self):
         prefer = db.reference('preference').child(self.key).get()
+        if prefer==None:
+            return []
         return [i['preference'] for i in prefer.values()]

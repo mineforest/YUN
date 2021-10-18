@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,7 +17,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="527dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -26,18 +27,18 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="닉네임"
-            android:textColorHint="@color/gray"
             android:inputType="textPersonName"
-            android:privateImeOptions="defaultInputmode=korean" />
+            android:privateImeOptions="defaultInputmode=korean"
+            android:textColorHint="@color/gray" />
 
         <EditText
             android:id="@+id/ageEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textColorHint="@color/gray"
             android:hint="나이"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:textColorHint="@color/gray" />
 
         <EditText
             android:id="@+id/birthDayEditText"
@@ -53,16 +54,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textColorHint="@color/gray"
             android:hint="성별"
-            android:inputType="textPostalAddress" />
+            android:inputType="textPostalAddress"
+            android:textColorHint="@color/gray" />
 
         <Button
             android:id="@+id/checkButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="확인" />
+            android:text="확인"
+            android:textColor="@color/black" />
 
     </LinearLayout>
 
