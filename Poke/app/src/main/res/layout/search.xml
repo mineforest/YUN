@@ -42,7 +42,7 @@
         android:id="@+id/RecentView"
         android:layout_width="403dp"
         android:layout_height="114dp"
-        android:background="@drawable/menu_shadow"
+        android:background="@drawable/shadow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
