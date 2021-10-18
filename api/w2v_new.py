@@ -2,6 +2,8 @@ import pandas as pd
 import gensim
 from gensim.models import KeyedVectors
 from sklearn.metrics.pairwise import cosine_similarity
+pd.set_option('display.max_colwidth', -1)
+
 
 class Word2v:
     def __init__(self, hist,allergying,pref):
@@ -22,7 +24,8 @@ class Word2v:
         self.df=self.df.append({'id' : str(obj) , 'cleand' : token+' '+' '.join(self.pref)},ignore_index=True)                
 
         document_list=self.df['cleand']
-        self.hist=self.df.index[self.df['id'].isin(self.hist)].tolist()        
+        print(self.df['cleand'].tail)
+        self.hist=self.df.index[self.df['id'].isin(self.hist)].tolist()
         self.hist.append(obj)        
         ddx=0
         for line in document_list:
@@ -40,8 +43,7 @@ class Word2v:
                 document_embedding_list.append(doc2vec)
             if doc2vec is None:
                 print(line)
-                ddx=ddx+1
-        print(ddx)          
+                ddx=ddx+1        
         return document_embedding_list, obj
 
     def isExcepted(self,l1):
@@ -74,8 +76,9 @@ class Word2v:
 
 
 #w3v = Word2v(list(map(int, [6948903,1978049,2803587])),['닭가슴살샐러드','브라우니'],['김치'])
-#w3v = Word2v(list(map(int, [])),['파스타'],['파스타'])
 #닭가슴살샐러드, 두부메이플브라우니, 스터프트에그
+#w3v = Word2v(list(map(int, [1564712])),[],['파스타','파스타','파스타','파스타','파스타','파스타','파스타','파스타','파스타','파스타'])
+#초콜릿케이크
 #res = w3v.recommendations()    
 #print(w3v.recommendations())
 

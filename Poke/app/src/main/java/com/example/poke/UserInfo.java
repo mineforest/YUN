@@ -15,6 +15,11 @@ public class UserInfo {
     public UserInfo() {
     }
 
+
+    public UserInfo(String nickName){
+        this.nickName = nickName;
+    }
+
     public UserInfo(String nickName, String age, String birthDay, String gender){
         this.nickName = nickName;
         this.age = age;
