@@ -44,35 +44,27 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
     private static final String TAG = "tag";
-    private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
-    private FirebaseDatabase database;
-    private DatabaseReference mDatabase;
     private ArrayList<Recipe_get> searchList = new ArrayList<>();
     private ArrayList<Recipe_get> searchedList = new ArrayList<>();
-    private FirebaseAuth mAuth;
     SearchAdapter adapter;
     RecentAdapter recentAdapter;
     private String cate="전체";
     private ArrayList<Recipe_get> SearchArrayList = new ArrayList<>();
-    private List<String> slist;
-    AutoCompleteTextView editText;
     public static SearchView searchView;
     private Chip chip;
-    String uid;
-    Button clear_btn;
     private ChipGroup tag_chip;
     private TabLayout tabLayout;
     private RecyclerView recentView;
-    ProgressDialog progressDialog;
     private FrameLayout frameLayout;
     private SearchAdapter SearchAdapter = new SearchAdapter(searchList);
     private RealtimeBlurView rtv;
-   // private RecentAdapter RecentAdapter = new RecentAdapter(searchedList);
+    private HashMap<String,List<Integer>> tagset = new HashMap<>();
 
     public SearchFragment() {
     }
@@ -95,18 +87,7 @@ public class SearchFragment extends Fragment {
         rtv = view.findViewById(R.id.rtv);
         rtv.setVisibility(view.INVISIBLE);
 
-        //SearchAdapter = new SearchAdapter(tabArrayList);
         ArrayList<Object> filteredList = new ArrayList<>();
-
-
-//        progressDialog = new ProgressDialog(getActivity());
-//
-//        progressDialog.show();
-//        progressDialog.setContentView(R.layout.progress_dialog);
-//        progressDialog.getWindow().setBackgroundDrawableResource(
-//                android.R.color.transparent
-//        );
-//        progressDialog.setCancelable(false);
 
         ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
         for (int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
@@ -120,7 +101,6 @@ public class SearchFragment extends Fragment {
             public void run() {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("recipe")
-                       // .whereEqualTo("name",editText.getText().toString())
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -138,17 +118,17 @@ public class SearchFragment extends Fragment {
                                         String thumbnail = doc.getData().get("thumbnail").toString();
                                         List<String> tags = (List<String>) doc.get("tag");
                                         Recipe_get r = new Recipe_get(rcp_id, thumbnail, title, tags);
-
-//                                        String[] string;
-//                                        for (String t : tags) {
-//                                            string = (t.split(","));
-//                                            for (String s : string) {
-//                                                Log.w(TAG, s);
-//                                                addChip(s);
-//                                            }
-//                                        }
-
                                         searchList.add(r);
+                                        for (String tag : tags){
+                                            if(!tagset.containsKey(tag)){
+                                                List<Integer> idxList = new ArrayList<>();
+                                                idxList.add(searchList.size());
+                                                tagset.put(tag, idxList);
+                                            }
+                                            else {
+                                                tagset.get(tag).add(searchList.size());
+                                            }
+                                        }
                                         adapter.notifyDataSetChanged();
                                     }
                                 }

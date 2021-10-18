@@ -4,129 +4,166 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp">
+    android:background="@drawable/bg_rating">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:background="#C6C2C2"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:iconifiedByDefault="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dassn_sub_tv"
-        android:layout_marginVertical="10dp">
-
-    </androidx.appcompat.widget.SearchView>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_rating2"
+        android:elevation="10dp"
         android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchView">
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="36dp"
+            android:layout_marginVertical="10dp"
+            android:background="#C6C2C2"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:iconifiedByDefault="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dassn_sub_tv">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
+        </androidx.appcompat.widget.SearchView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/dassn_rv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/dassn_ingre_item"
-                android:background="@color/green"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/trash_rv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/guideline_vertical"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/dassn_ingre_item"
-                android:background="@color/red"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <ListView
-            android:id="@+id/listView"
+        <FrameLayout
             android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="10dp"
+            app:layout_constraintBottom_toTopOf="@id/doneButton2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchView">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="재료 목록"
+                    app:layout_constraintEnd_toEndOf="@id/dassn_rv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="모두의 마블"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/trash_rv"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/dassn_rv"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="10dp"
+                    android:background="#C8E6C9"
+                    android:overScrollMode="never"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView16"
+                    tools:listitem="@layout/dassn_ingre_item" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/trash_rv"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="10dp"
+                    android:background="#FFCDD2"
+                    android:overScrollMode="never"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+                    app:layout_constraintTop_toBottomOf="@id/textView17"
+                    tools:listitem="@layout/dassn_ingre_item" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray"
+                android:divider="#FF999999"
+                android:dividerHeight="1dp" />
+        </FrameLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/doneButton2"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:background="@color/gray"
-            android:divider="#FF999999"
-            android:dividerHeight="1dp" />
-    </FrameLayout>
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/btn_shape"
+            android:text="완료"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/doneButton2"
-        android:layout_width="90dp"
-        android:layout_height="wrap_content"
-        android:background="#B3ACAC"
-        android:text="완료"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <RatingBar
+            android:id="@+id/ratingBar2"
+            style="@style/Widget.AppCompat.RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginVertical="30dp"
+            android:numStars="5"
+            android:stepSize="1"
+            android:theme="@style/CustomRatingBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rating_subtitle_tv"
+            tools:layout_constraintStart_toStartOf="parent" />
 
-    <RatingBar
-        android:id="@+id/ratingBar2"
-        style="@style/Widget.AppCompat.RatingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:numStars="5"
-        android:stepSize="1"
-        android:theme="@style/CustomRatingBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rating_subtitle_tv"
-        tools:layout_constraintStart_toStartOf="parent"
-        android:layout_marginVertical="30dp"/>
+        <TextView
+            android:id="@+id/ratingtitletv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="레시피를 평가하세요."
+            android:textSize="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/ratingtitletv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="레시피를 평가하세요."
-        android:textSize="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+            android:id="@+id/rating_subtitle_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="평가 결과는 더욱 나은 레시피를 제공합니다."
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ratingtitletv" />
 
-    <TextView
-        android:id="@+id/rating_subtitle_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="평가 결과는 더욱 나은 레시피를 제공합니다."
-        app:layout_constraintTop_toBottomOf="@id/ratingtitletv"
-        app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/dassn_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="거덜난 재료를 선택하세요."
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ratingBar2" />
 
-    <TextView
-        android:id="@+id/dassn_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="거덜난 재료를 선택하세요."
-        android:textSize="32sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ratingBar2" />
+        <TextView
+            android:id="@+id/dassn_sub_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이 외에 삭제할 재료는 냉장고에서 검색해보세요."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dassn_tv" />
 
-    <TextView
-        android:id="@+id/dassn_sub_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="이 외에 삭제할 재료는 냉장고에서 검색해보세요."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dassn_tv" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
