@@ -52,16 +52,11 @@ public class DassnIngreCheckAdapter extends RecyclerView.Adapter<DassnIngreCheck
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
             this.textView = itemView.findViewById(R.id.dassn_item_tv);
-            textView.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    int pos = getBindingAdapterPosition();
-                    if (pos != RecyclerView.NO_POSITION) {
-                        if(onItemClickListener != null){
-                            if(textView.getPaintFlags() == 0) textView.setPaintFlags(textView.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-                            else textView.setPaintFlags(0);
-                            onItemClickListener.onItemClick(v, pos);
-                        }
+            itemView.setOnClickListener(v -> {
+                int pos = getBindingAdapterPosition();
+                if (pos != RecyclerView.NO_POSITION) {
+                    if(onItemClickListener != null){
+                        onItemClickListener.onItemClick(v, pos);
                     }
                 }
             });
