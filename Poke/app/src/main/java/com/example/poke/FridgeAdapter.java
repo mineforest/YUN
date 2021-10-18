@@ -48,10 +48,6 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
 
     private OnItemClickListener mlistener = null;
 
-    Bundle bundle = ((Activity) context).getIntent().getExtras();
-    final boolean flag=bundle.getBoolean("flag");
-
-
     public interface OnItemClickListener {
         void onItemClick(View v, int position);
     }
@@ -132,7 +128,7 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
 
         if(date <= 3) {
             holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
-            if(alarm_flag==true&&flag!=true){
+            if(alarm_flag==true){
                 setAlarm(c.getTimeInMillis());
                 alarm_flag=false;
             }
