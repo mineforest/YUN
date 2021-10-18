@@ -2,8 +2,6 @@ import pandas as pd
 import gensim
 from gensim.models import KeyedVectors
 from sklearn.metrics.pairwise import cosine_similarity
-pd.set_option('display.max_colwidth', -1)
-
 
 class Word2v:
     def __init__(self, hist,allergying,pref):
@@ -24,7 +22,6 @@ class Word2v:
         self.df=self.df.append({'id' : str(obj) , 'cleand' : token+' '+' '.join(self.pref)},ignore_index=True)                
 
         document_list=self.df['cleand']
-        print(self.df['cleand'].tail)
         self.hist=self.df.index[self.df['id'].isin(self.hist)].tolist()
         self.hist.append(obj)        
         ddx=0
