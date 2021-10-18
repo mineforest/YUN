@@ -1,10 +1,10 @@
 package com.example.poke;
 
 import  android.app.ProgressDialog;
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -148,7 +148,7 @@ public class FridgeFragment extends Fragment{
                 }
             }
         }
-
+        
         StartRunnable sr = new StartRunnable();
         Thread stop = new Thread(sr);
         stop.start();
@@ -412,14 +412,12 @@ public class FridgeFragment extends Fragment{
                     }
 
                     for (int i = 0; i < ingredientArrayList.size(); i++) {
-                        if (snapshot.getKey().equals(ingredientArrayList.get(i).getIngredientKey())) {
+                        if (ingredientArrayList.contains(snapshot.getKey())) {
                             ingredientArrayList.remove(i);
                         }
                     }
-
-                    ingredientAdapter.notifyItemRemoved(swipePos);
-                    ingredientAdapter.notifyItemRangeChanged(swipePos, tabArrayList.size());
         }
+
         @Override
         public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)  {}
         @Override
@@ -441,6 +439,7 @@ public class FridgeFragment extends Fragment{
         }
         ingredientAdapter.notifyDataSetChanged();
     }
+
 
     FridgeAdapter.OnItemClickListener onItemClickListener =new FridgeAdapter.OnItemClickListener() {
         @Override
@@ -474,8 +473,8 @@ public class FridgeFragment extends Fragment{
         Toast.makeText(getActivity(), msg,Toast.LENGTH_SHORT).show();
     }
 
-    public static int dp2px(Context ctx, float dp) {
-        final float scale = ctx.getResources().getDisplayMetrics().density;
-        return (int) (dp * scale + 0.5f);
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getResources().getDisplayMetrics());
     }
 }

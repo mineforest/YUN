@@ -4,17 +4,27 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -29,8 +39,8 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
     Calendar cal = Calendar.getInstance();
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     long date;
-    TextView textView;
     private boolean alarm_flag = true;
+    private DatabaseReference mDatabase;
 
     private OnItemClickListener mlistener = null;
 
@@ -66,6 +76,29 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String[] dday=ingredientsList.get(position).getExpirationDate().split("-");
 
+        holder.deleteImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialog);
+                builder.setMessage("재료를 삭제 하겠습니까?");
+                builder.setPositiveButton("네", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        mDatabase = FirebaseDatabase.getInstance().getReference();
+                        String uid = user.getUid();
+                        mDatabase.child("ingredient").child(uid).child(ingredientsList.get(position).getIngredientKey()).setValue(null);
+                        Toast.makeText(context,ingredientsList.get(position).getIngredientTitle() + " 삭제 ", Toast.LENGTH_SHORT).show();
+                        ingredientsList.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, ingredientsList.size());
+                    }
+                });
+                builder.setNegativeButton("아니오",null);
+                builder.create().show();
+            }
+        });
+
         int[] days=new int[3];
         for(int i=0;i<3;i++){
             days[i]=Integer.parseInt(dday[i]);
@@ -94,9 +127,8 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         else{
             holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_green));
         }
-
-
     }
+
     public void diaryNotification()
     {
         Boolean dailyNotify = true; // 무조건 알람을 사용
@@ -134,6 +166,7 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         //ImageView image;
         TextView title;
         TextView day;
+        ImageView deleteImage;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -153,12 +186,11 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
                     //  this.image = itemView.findViewById(R.id.categoryView);
             this.title = itemView.findViewById(R.id.ingredientTitleView);
             this.day = itemView.findViewById(R.id.dDay);
-
+            this.deleteImage = itemView.findViewById(R.id.deleteImage);
 
         }
 
     }
-
 
 
 }

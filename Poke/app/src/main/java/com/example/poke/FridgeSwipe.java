@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Xfermode;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -14,11 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.jetbrains.annotations.NotNull;
-
-import kotlin.TypeCastException;
-import kotlin.jvm.internal.Intrinsics;
 
 import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE;
 
@@ -34,9 +30,6 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
     private FridgeSwipeControllerActions buttonsActions = null;
     Paint p;
     private boolean swipeBack = false;
-
-    public FridgeSwipe(){
-    }
 
     public FridgeSwipe(FridgeSwipeControllerActions buttonsActions) {
         this.buttonsActions = buttonsActions;
@@ -61,11 +54,8 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
     public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         currentDx = 0f;
         previousPosition = viewHolder.getAdapterPosition();
-
-        if (viewHolder != null) {
-            final View foregroundView = ((FridgeAdapter.ViewHolder) viewHolder).itemView;
-            getDefaultUIUtil().clearView(foregroundView);
-        }
+        final View foregroundView = ((FridgeAdapter.ViewHolder) viewHolder).itemView;
+        getDefaultUIUtil().clearView(foregroundView);
     }
 
     @Override
@@ -85,10 +75,9 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
             float x = this.clampViewPositionHorizontal(view, dX, isClamped, isCurrentlyActive);
             this.currentDx = x;
             ItemTouchHelper.Callback.getDefaultUIUtil().onDraw(c, recyclerView, view, x, dY, actionState, isCurrentlyActive);
-        }
-        else {
             setTouchListener(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
+
         currentItemViewHolder = viewHolder;
     }
 
@@ -110,10 +99,8 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
         c.drawRoundRect(rightButton, corners, corners, p);
         drawText("DELETE", c, rightButton, p);
 
-        buttonInstance = null;
-        if (buttonShowedState == FridgeSwipeController.ButtonsState.RIGHT_VISIBLE) {
-            buttonInstance = rightButton;
-        }
+        buttonInstance = rightButton;
+
     }
 
     private void drawText(String text, Canvas c, RectF button, Paint p) {
@@ -125,6 +112,7 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
         float textWidth = p.measureText(text);
         c.drawText(text, button.centerX() - (textWidth / 2), button.centerY() + (textSize / 2), p);
     }
+
     private void setTouchListener(Canvas c,
                                   RecyclerView recyclerView,
                                   RecyclerView.ViewHolder viewHolder,
@@ -135,16 +123,9 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 swipeBack = event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP;
+                setTouchDownListener(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                setItemsClickable(recyclerView, false);
 
-                if(swipeBack) {
-                    if (dX < -buttonWidth)
-                        buttonShowedState = FridgeSwipeController.ButtonsState.RIGHT_VISIBLE;
-
-                    if (buttonShowedState != FridgeSwipeController.ButtonsState.GONE) {
-                        setTouchDownListener(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-                        setItemsClickable(recyclerView, false);
-                    }
-                }
                 return false;
             }
         });
@@ -180,18 +161,39 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
                     });
                     setItemsClickable(recyclerView, true);
 
-                    if (buttonsActions != null && buttonInstance != null && buttonInstance.contains(event.getX(), event.getY())) {
-                         if (buttonShowedState == FridgeSwipeController.ButtonsState.RIGHT_VISIBLE) {
-                            buttonsActions.onRightClicked(viewHolder.getAdapterPosition());
-                        }
-                    }
-                    buttonShowedState = FridgeSwipeController.ButtonsState.GONE;
+                    buttonsActions.onRightClicked(viewHolder.getAdapterPosition());
                     currentItemViewHolder = null;
                 }
                 return false;
             }
         });
     }
+
+//    private void setTouchListener(Canvas c,
+//                                  RecyclerView recyclerView,
+//                                  RecyclerView.ViewHolder viewHolder,
+//                                  float dX, float dY,
+//                                  int actionState, boolean isCurrentlyActive) {
+//
+//        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//
+//                if(event.getAction() == MotionEvent.ACTION_DOWN ||
+//                        event.getAction() == MotionEvent.ACTION_UP ||
+//                        event.getAction() == MotionEvent.ACTION_MOVE) {
+//
+//                    FridgeSwipe.super.onChildDraw(c, recyclerView, viewHolder, 0F, dY, actionState, isCurrentlyActive);
+//                    setItemsClickable(recyclerView, true);
+//
+//                    buttonsActions.onRightClicked(viewHolder.getAdapterPosition());
+//
+//                    currentItemViewHolder = null;
+//                }
+//                return false;
+//            }
+//        });
+//    }
 
     private void setItemsClickable(RecyclerView recyclerView,
                                    boolean isClickable) {
@@ -200,6 +202,14 @@ public class FridgeSwipe extends ItemTouchHelper.Callback{
         }
     }
 
+    @Override
+    public int convertToAbsoluteDirection(int flags, int layoutDirection) {
+        if (swipeBack) {
+            swipeBack = false;
+            return 0;
+        }
+        return super.convertToAbsoluteDirection(flags, layoutDirection);
+    }
 
     @Override
     public float getSwipeEscapeVelocity(float defaultValue) {
