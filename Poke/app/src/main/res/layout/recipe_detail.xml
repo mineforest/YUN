@@ -93,10 +93,12 @@
 
         <LinearLayout
             android:id="@+id/ingre_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_margin="20dp"
             android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/doneButton"
+            app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/time_layout">
 
@@ -111,16 +113,24 @@
                 android:id="@+id/ingre_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/recipe_ingre_itemview" />
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:scrollbarFadeDuration="0"
+                android:scrollbarSize="5dp"
+                android:scrollbarThumbVertical="@color/scorll"
+                android:scrollbars="vertical"
+                tools:listitem="@layout/recipe_ingre_itemview"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/sauce_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/doneButton"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideline_vertical"
             app:layout_constraintTop_toTopOf="@id/ingre_layout">
 
@@ -135,6 +145,10 @@
                 android:id="@+id/sauce_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:scrollbarFadeDuration="0"
+                android:scrollbarSize="5dp"
+                android:scrollbarThumbVertical="@color/shimmer_color"
+                android:scrollbars="vertical"
                 tools:listitem="@layout/recipe_ingre_itemview" />
 
         </LinearLayout>

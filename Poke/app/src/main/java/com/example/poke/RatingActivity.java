@@ -2,6 +2,7 @@ package com.example.poke;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,7 +52,9 @@ public class RatingActivity extends AppCompatActivity {
     private String now;
     private String uid;
     private DassnIngreCheckAdapter dassnIngreCheckAdapter;
+    private DassnIngreCheckAdapter trash_adapter;
     private RecyclerView recyclerView;
+    private RecyclerView trash_rv;
     int cnt;
 
     @Override
@@ -75,6 +78,7 @@ public class RatingActivity extends AppCompatActivity {
         ratingBar = findViewById(R.id.ratingBar2);
         listView = findViewById(R.id.listView);
         recyclerView = findViewById(R.id.dassn_rv);
+        trash_rv = findViewById(R.id.trash_rv);
         searchView.setQueryHint("재료 검색");
         searchView.onActionViewExpanded();
         searchView.setIconifiedByDefault(false);
@@ -90,17 +94,36 @@ public class RatingActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         dassnIngreCheckAdapter = new DassnIngreCheckAdapter(ingreList);
+        recyclerView.setAdapter(dassnIngreCheckAdapter);
+
+        trash_rv.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
+        linearLayoutManager2.setOrientation(RecyclerView.VERTICAL);
+        trash_rv.setLayoutManager(linearLayoutManager2);
+        trash_adapter = new DassnIngreCheckAdapter(deleteList);
+        trash_rv.setAdapter(trash_adapter);
+
         dassnIngreCheckAdapter.setOnItemClickListener(new DassnIngreCheckAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 String ingre_name = ingreList.get(position);
-                if (deleteList.contains(ingre_name)) {
-                    deleteList.remove(ingre_name);
-                }
-                else deleteList.add(ingre_name);
+                deleteList.add(0,ingre_name);
+                ingreList.remove(ingre_name);
+                dassnIngreCheckAdapter.notifyItemRemoved(position);
+                trash_adapter.notifyDataSetChanged();
             }
         });
-        recyclerView.setAdapter(dassnIngreCheckAdapter);
+
+        trash_adapter.setOnItemClickListener(new DassnIngreCheckAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                String ingre_name = deleteList.get(position);
+                ingreList.add(0, ingre_name);
+                deleteList.remove(ingre_name);
+                trash_adapter.notifyItemRemoved(position);
+                dassnIngreCheckAdapter.notifyDataSetChanged();
+            }
+        });
 
         adapter = new IngredientListAdapter(dbList, this);
         listView.setAdapter(adapter);
@@ -111,7 +134,7 @@ public class RatingActivity extends AppCompatActivity {
     AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if(!ingreList.contains(dbList.get(position).toString())) {
+            if(!ingreList.contains(dbList.get(position).toString()) & !deleteList.contains(dbList.get(position).toString())) {
                 ingreList.add(dbList.get(position).toString());
                 dassnIngreCheckAdapter.notifyDataSetChanged();
                 searchView.setQuery(null,false);
@@ -196,7 +219,7 @@ public class RatingActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        if (ingreList.contains(dataSnapshot.child("ingredientTitle").getValue(String.class))) {
+                        if (deleteList.contains(dataSnapshot.child("ingredientTitle").getValue(String.class))) {
                             dataSnapshot.getRef().removeValue();
                         }
                     }

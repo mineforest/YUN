@@ -13,7 +13,7 @@
         android:src="@drawable/round_check_20"
         android:layout_alignParentStart="true"
         android:layout_marginStart="5dp"
-        app:tint="@color/red" />
+        app:tint="@color/gray" />
 
     <TextView
         android:id="@+id/i_name_txt"

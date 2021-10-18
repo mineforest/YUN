@@ -14,5 +14,6 @@
     <color name="ButtonTextColor">#08300A</color>
     <color name="emptystar">#909090</color>
     <color name="filledstar">#00FF7F</color>
+    <color name="scorll">#AE00AB55</color>
 
 </resources>
