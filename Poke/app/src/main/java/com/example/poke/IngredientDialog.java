@@ -1,11 +1,13 @@
 package com.example.poke;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -25,6 +27,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class IngredientDialog extends DialogFragment implements AdapterView.OnItemSelectedListener {
     private Fragment fragment;
     private Button okBtn;
@@ -41,7 +48,7 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
     private ImageButton barcode_btn;
     Spinner spinner;
     String ingre_item[];
-
+    private ImageButton calendar_btn;
 
     @Nullable
     @Override
@@ -63,6 +70,9 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
         cancelBtn = view.findViewById(R.id.dialogCancelBtn);
         cancelBtn.setOnClickListener(onClickListener);
         registerForContextMenu(cateText);
+        calendar_btn = view.findViewById(R.id.calendarButton);
+        calendar_btn.setOnClickListener(calendarListener);
+        dateText.setFocusableInTouchMode(false);
 
         if(args != null) {
             title = args.getString("title");
@@ -86,7 +96,6 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
         return view;
     }
 
-
     //@Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long L){
         cateText.setText(ingre_item[i]);
@@ -97,11 +106,30 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
         cateText.setText("");
     }
 
+    View.OnClickListener calendarListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            long now = System.currentTimeMillis();
+            Date date = Calendar.getInstance().getTime();
 
+            SimpleDateFormat sdf_year = new SimpleDateFormat("yyyy");
+            SimpleDateFormat sdf_month = new SimpleDateFormat("mm");
+            SimpleDateFormat sdf_day = new SimpleDateFormat("dd");
+            String now_year =sdf_year.format(date);
+            String now_month = sdf_month.format(date);
+            String now_day =sdf_day.format(date);
 
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    dateText.setText(String.format("%d-%02d-%02d",year,month+1,dayOfMonth));
+                }
+            },Integer.parseInt(now_year), Integer.parseInt(now_month), Integer.parseInt(now_day));
 
-
-
+            datePickerDialog.setMessage("메시지");
+            datePickerDialog.show();
+        }
+    };
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -112,7 +140,7 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
                 date = dateText.getText().toString();
                 UserIngredient userIngredient;
 
-                if(title.length() >=2 && cate.length() >=2 ){
+                if(title.length() >=2 && cate.length() >=2 && date.length()>=9){
                     if(key != null){
                         userIngredient = new UserIngredient(title, date, cate);
                         mDatabase.child("ingredient").child(uid).child(key).setValue(userIngredient);

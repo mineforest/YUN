@@ -1,8 +1,10 @@
 package com.example.poke;
 
+import android.app.DatePickerDialog;
 import  android.app.ProgressDialog;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -400,7 +403,6 @@ public class FridgeFragment extends Fragment{
         }
         ingredientAdapter.notifyDataSetChanged();
     }
-
 
     FridgeAdapter.OnItemClickListener onItemClickListener =new FridgeAdapter.OnItemClickListener() {
         @Override
