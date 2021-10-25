@@ -47,19 +47,9 @@ public class MemberInitActivity extends AppCompatActivity {
         mBtn.setChecked(true);
         bool = false;
 
-        mBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bool = false;
-            }
-        });
+        mBtn.setOnClickListener(v -> bool = false);
 
-        wBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bool = true;
-            }
-        });
+        wBtn.setOnClickListener(v -> bool = true);
 
         findViewById(R.id.checkButton).setOnClickListener(onClickListener);
     }
@@ -73,14 +63,9 @@ public class MemberInitActivity extends AppCompatActivity {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
-    View.OnClickListener onClickListener = new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.checkButton:
-                    profileUpdate();
-                    break;
-            }
+    View.OnClickListener onClickListener = v -> {
+        if (v.getId() == R.id.checkButton) {
+            profileUpdate();
         }
     };
 
@@ -97,14 +82,13 @@ public class MemberInitActivity extends AppCompatActivity {
             String now_month = sdf_month.format(date);
             String now_day =sdf_day.format(date);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(getApplicationContext(), new DatePickerDialog.OnDateSetListener() {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(MemberInitActivity.this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     birthET.setText(String.format("%d-%02d-%02d",year,month+1,dayOfMonth));
                 }
-            },1997, 06, 30);
+            },1997, 6, 30);
 
-            datePickerDialog.setMessage("메시지");
             datePickerDialog.show();
         }
     };
@@ -128,19 +112,11 @@ public class MemberInitActivity extends AppCompatActivity {
             UserInfo userInfo = new UserInfo(nickName, age, birthDay, gender);
             if(user != null){
                 mDatabase.child("users").child(uid).setValue(userInfo)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                startToast("회원정보 등록을 성공하였습니다.");
-                                myStartActivity(PreferenceActivity.class);
-                            }
+                        .addOnSuccessListener(aVoid -> {
+                            startToast("회원정보 등록을 성공하였습니다.");
+                            myStartActivity(PreferenceActivity.class);
                         })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                startToast("회원정보 등록에 실패하였습니다.");
-                            }
-                        });
+                        .addOnFailureListener(e -> startToast("회원정보 등록에 실패하였습니다."));
             }
         } else{
             startToast("회원정보를 입력해주세요.");

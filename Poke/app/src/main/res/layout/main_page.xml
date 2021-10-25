@@ -21,8 +21,8 @@
             <LinearLayout
                 android:id="@+id/main_pager"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@drawable/bg_item_gradient"
+                android:layout_height="60dp"
+                android:background="@drawable/bg_curved"
                 android:orientation="horizontal">
 
             </LinearLayout>
