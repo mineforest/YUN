@@ -118,14 +118,6 @@
         android:layout_marginBottom="?attr/actionBarSize"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/history_rv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:overScrollMode="never">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
     </FrameLayout>
 
 

@@ -13,8 +13,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,6 +53,7 @@ public class MainRecyclerViewFragment extends Fragment{
     ShimmerFrameLayout shimmerFrameLayout;
     RecyclerView recyclerView;
     RecyclerView recyclerView2;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,12 @@ public class MainRecyclerViewFragment extends Fragment{
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         uid = user.getUid();
+
+        swipeRefreshLayout = view.findViewById(R.id.swipe_layout);
+        swipeRefreshLayout.setOnRefreshListener(() -> view.postDelayed(() -> {
+            reload();
+            swipeRefreshLayout.setRefreshing(false);
+        },500));
 
         progressDialog = new ProgressDialog(getActivity());
 
@@ -244,6 +256,16 @@ public class MainRecyclerViewFragment extends Fragment{
         mDatabase.child("users").child(uid).removeValue();
 
         mAuth.getCurrentUser().delete();
+    }
+
+    private void reload() {
+        Intent intent = getActivity().getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        getActivity().overridePendingTransition(0,0);
+        getActivity().finish();
+        getActivity().overridePendingTransition(0,0);
+        startActivity(intent);
     }
 
     class ExceptionHandler implements Thread.UncaughtExceptionHandler {

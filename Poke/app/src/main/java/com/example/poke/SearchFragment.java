@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.ArraySet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.solver.widgets.Helper;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,35 +46,22 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SearchFragment extends Fragment {
     private static final String TAG = "tag";
-    private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
-    private FirebaseDatabase database;
-    private DatabaseReference mDatabase;
     private ArrayList<Recipe_get> searchList = new ArrayList<>();
     private ArrayList<Recipe_get> searchedList = new ArrayList<>();
-    private FirebaseAuth mAuth;
-    SearchAdapter adapter;
-    RecentAdapter recentAdapter;
-    private String cate="전체";
+    private TagsAdapter adapter;
     private ArrayList<Recipe_get> SearchArrayList = new ArrayList<>();
-    private List<String> slist;
-    AutoCompleteTextView editText;
     public static SearchView searchView;
-    private Chip chip;
-    String uid;
-    Button clear_btn;
-    private ChipGroup tag_chip;
-    private TabLayout tabLayout;
-    private RecyclerView recentView;
-    ProgressDialog progressDialog;
     private FrameLayout frameLayout;
     private SearchAdapter SearchAdapter = new SearchAdapter(searchList);
-    private RealtimeBlurView rtv;
-   // private RecentAdapter RecentAdapter = new RecentAdapter(searchedList);
+    private ArrayList<String> tag_names = new ArrayList<>();
+    private ArrayList<ArrayList<Recipe_get>> tag_contents = new ArrayList<>();
 
     public SearchFragment() {
     }
@@ -87,40 +76,15 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.search, container, false);
         searchView = (SearchView) view.findViewById(R.id.rec_search);
-        tabLayout = view.findViewById(R.id.searchTab);
-        tag_chip = (ChipGroup) view.findViewById(R.id.search_tag);
-        recentView = view.findViewById(R.id.RecentView);
-        recentView.setVisibility(view.INVISIBLE);
         frameLayout = view.findViewById(R.id.frame);
-        rtv = view.findViewById(R.id.rtv);
-        rtv.setVisibility(view.INVISIBLE);
-
-        //SearchAdapter = new SearchAdapter(tabArrayList);
-        ArrayList<Object> filteredList = new ArrayList<>();
-
-
-//        progressDialog = new ProgressDialog(getActivity());
-//
-//        progressDialog.show();
-//        progressDialog.setContentView(R.layout.progress_dialog);
-//        progressDialog.getWindow().setBackgroundDrawableResource(
-//                android.R.color.transparent
-//        );
-//        progressDialog.setCancelable(false);
-
-        ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
-        for (int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
-            View v = slidingTabStrip.getChildAt(i);
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            params.rightMargin = 30;
-        }
+        tag_names.add("전체");
+        tag_contents.add(new ArrayList<Recipe_get>());
 
         new Thread() {
             @Override
             public void run() {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("recipe")
-                       // .whereEqualTo("name",editText.getText().toString())
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -138,18 +102,23 @@ public class SearchFragment extends Fragment {
                                         String thumbnail = doc.getData().get("thumbnail").toString();
                                         List<String> tags = (List<String>) doc.get("tag");
                                         Recipe_get r = new Recipe_get(rcp_id, thumbnail, title, tags);
-
-//                                        String[] string;
-//                                        for (String t : tags) {
-//                                            string = (t.split(","));
-//                                            for (String s : string) {
-//                                                Log.w(TAG, s);
-//                                                addChip(s);
-//                                            }
-//                                        }
-
                                         searchList.add(r);
+                                        for (String tag : tags.get(0).split(", ")){
+                                            int idx=tag_names.indexOf(tag);
+                                            if(idx==-1){
+                                                ArrayList<Recipe_get> rcp = new ArrayList<>();
+                                                rcp.add(r);
+                                                tag_names.add(tag);
+                                                tag_contents.add(rcp);
+                                            }
+                                            else {
+                                                ArrayList<Recipe_get> rcps=tag_contents.get(idx);
+                                                rcps.add(r);
+                                                tag_contents.set(idx,rcps);
+                                            }
+                                        }
                                         adapter.notifyDataSetChanged();
+                                        Log.d("DFDFDF",adapter.getItemCount()+"");
                                     }
                                 }
                             }
@@ -158,35 +127,18 @@ public class SearchFragment extends Fragment {
             }
         }.start();
 
-        ArrayList<String> recent = new ArrayList<>();
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.search_rv);
-        RecyclerView recyclerView2 = view.findViewById(R.id.RecentView) ;
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView2.setHasFixedSize(true);
-        adapter = new SearchAdapter(searchList);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        adapter = new TagsAdapter(tag_names,tag_contents);
         recyclerView.setAdapter(adapter);
-        recentAdapter = new RecentAdapter(recent);
-        recyclerView2.setAdapter(recentAdapter);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.i(TAG, searchView.getQuery().toString());
 
-                recentView.bringToFront();
-
-                recentView.setVisibility(view.VISIBLE);
-
-                rtv.setVisibility(view.VISIBLE);
-
                 hideKeyboard(getActivity());
-
-                recent.add(query.toString());
-
-                recentAdapter.notifyDataSetChanged();
-
                 return true;
             }
 
@@ -194,89 +146,7 @@ public class SearchFragment extends Fragment {
             public boolean onQueryTextChange(String s) {
                 String searchText = searchView.getQuery().toString();
                 searchFilter(searchText);
-                recentView.setVisibility(View.INVISIBLE);
-                rtv.setVisibility(view.INVISIBLE);
                 return false;
-            }
-        });
-
-
-
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        searchView.setQuery("",false);
-                        break;
-                    case 1:
-                        cate = tab.getText().toString();
-                        Log.d("dadf",tab.getText().toString());
-                        clicktag(cate, SearchArrayList);
-                        break;
-                    case 2:
-                        cate = tab.getText().toString();
-                        clicktag(cate, SearchArrayList);
-                        break;
-                    case 3:
-                        cate = tab.getText().toString();
-                        clicktag(cate, SearchArrayList);
-                        break;
-                    case 4:
-                        cate = tab.getText().toString();
-                        clicktag(cate, SearchArrayList);
-                        break;
-                    case 5:
-                        cate = tab.getText().toString();
-                        clicktag(cate, SearchArrayList);
-                        break;
-                    case 6:
-                        cate = tab.getText().toString();
-                        clicktag(cate, SearchArrayList);
-                        break;
-                    case 7:
-                        cate = tab.getText().toString();
-                        clicktag(cate, SearchArrayList);
-                        break;
-
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        searchView.setQuery("",false);
-                        break;
-                    case 1:
-                        searchView.setQuery("강정",false);
-                        break;
-                    case 2:
-                        searchView.setQuery("찜",false);
-                        break;
-                    case 3:
-                        searchView.setQuery("구이",false);
-                        break;
-                    case 4:
-                        searchView.setQuery("조림",false);
-                        break;
-                    case 5:
-                        searchView.setQuery("케이크",false);
-                        break;
-                    case 6:
-                        searchView.setQuery("치킨",false);
-                        break;
-                    case 7:
-                        searchView.setQuery("볶음",false);
-                        break;
-
-
-                }
             }
         });
         return view;
@@ -291,8 +161,6 @@ public class SearchFragment extends Fragment {
                 searchedList.add(searchList.get(i));
             }
         }
-
-        adapter.filterList(searchedList);
     }
     @Override
     public void onResume() {
@@ -301,8 +169,6 @@ public class SearchFragment extends Fragment {
 
 
     public void clicktag(@NonNull String cate, ArrayList<Recipe_get> al) {
-        //String[] tags = al.toArray(new String[al.size()]);
-
         SearchArrayList.clear();
 
         if(cate.equals("전체"))
@@ -331,19 +197,4 @@ public class SearchFragment extends Fragment {
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
-    public void addChip(String text){
-        int paddingDp = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 15,
-                getResources().getDisplayMetrics()
-        );
-        chip =(Chip) this.getLayoutInflater().inflate(R.layout.tag_chip, null, false);
-        chip.setText(text);
-        chip.setClickable(false);
-        chip.setPadding(paddingDp, 0, paddingDp, 0);
-        chip.setCheckable(false);
-        Log.d("dadf",chip.getText().toString());
-        tag_chip.addView(chip);
-    }
-
 }

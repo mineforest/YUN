@@ -201,8 +201,9 @@ public class RatingActivity extends AppCompatActivity {
                 deleteIngredient();
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //스택 제거
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); //메인화면 재사용
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //스택 제거
+//                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); //메인화면 재사용
                 startActivity(intent);
                 finish();
             }

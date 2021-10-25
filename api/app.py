@@ -1,5 +1,5 @@
 from flask import Flask
-from w2v_new import Word2v
+from w2v import Word2v
 from getData import FirebaseConnect
 app = Flask(__name__)
 
