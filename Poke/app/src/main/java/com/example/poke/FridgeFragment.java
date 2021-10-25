@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,6 +32,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -57,6 +60,7 @@ public class FridgeFragment extends Fragment{
     private int pos;
     private ImageButton addButton;
     private SearchView searchView;
+    private TextInputLayout textInputLayout;
     ProgressDialog progressDialog;
 
     @Nullable
@@ -76,7 +80,25 @@ public class FridgeFragment extends Fragment{
 
         tabLayout = view.findViewById(R.id.fridgeTab);
         addButton = view.findViewById(R.id.ingredientAddBtn);
-        searchView = view.findViewById(R.id.menu_search);
+
+        textInputLayout = view.findViewById(R.id.input_box);
+        textInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                searchFilter(textInputLayout.getEditText().getText().toString());
+            }
+        });
+
 
         tabArrayList = new ArrayList<>();
         ingredientArrayList = new ArrayList<>();
@@ -266,44 +288,24 @@ public class FridgeFragment extends Fragment{
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.ingredient_sort, menu);
-        MenuItem searchItem = menu.findItem(R.id.menu_search);
-        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setQueryHint("냉장고 속 재료를 찾아보세요.");
-        searchView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_radius));
-        searchView.setIconifiedByDefault(false);
-        searchView.setSubmitButtonEnabled(true);
-        searchView.setOnQueryTextListener(onQueryTextListener);
-        searchView.setQuery(null,false);
-        EditText editText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
-        editText.setTextColor(Color.parseColor("#6E7377"));
-        editText.setHintTextColor(Color.parseColor("#6E7377"));
+
+    public void onCreateOptionsMenu(Menu menu,MenuInflater inflater){
+        super.onCreateOptionsMenu(menu,inflater);
+        inflater.inflate(R.menu.ingredient_sort,menu);
     }
 
-    SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-            return false;
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+    public void searchFilter(String searchText) {
+        tabArrayList.clear();
+        for (UserIngredient userIngredient : ingredientArrayList) {
+            if ((cate.equals("전체") || userIngredient.getCategory().equals(cate)) && userIngredient.getIngredientTitle().contains(searchText)) tabArrayList.add(userIngredient);
         }
+        ingredientAdapter.filterList(tabArrayList);
 
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            tabArrayList.clear();
-            for (int i = 0; i < ingredientArrayList.size(); i++) {
-                String t = ingredientArrayList.get(i).getIngredientTitle();
-                String c = ingredientArrayList.get(i).getCategory();
-                if ((cate.equals("전체") || c.equals(cate)) && t.toLowerCase().contains(newText.toLowerCase())) {
-                    tabArrayList.add(ingredientArrayList.get(i));
-                }
-            }
-
-            ingredientAdapter.notifyDataSetChanged();
-            return false;
-        }
-    };
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

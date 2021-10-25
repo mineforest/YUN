@@ -1,5 +1,6 @@
 package com.example.poke;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -28,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.auth.User;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -51,7 +53,6 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
     public interface OnItemClickListener {
         void onItemClick(View v, int position);
     }
-
     public void setOnItemClickListener(OnItemClickListener listener){
         this.mlistener = listener;
     }
@@ -77,7 +78,7 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String[] dday=ingredientsList.get(position).getExpirationDate().split("-");
 
         holder.deleteImage.setOnClickListener(new View.OnClickListener() {
@@ -163,6 +164,11 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         return (ingredientsList != null ? ingredientsList.size() : 0);
     }
 
+    public void filterList(ArrayList<UserIngredient> filteredList) {
+        ingredientsList = filteredList;
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         //ImageView image;
         TextView title;
@@ -173,16 +179,16 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
             super(itemView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                int pos = getAdapterPosition();
-                                                if(pos != RecyclerView.NO_POSITION){
-                                                    if(mlistener != null){
-                                                        mlistener.onItemClick(v, pos);
-                                                    }
-                                                }
-                                            }
-                                        });
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION){
+                        if(mlistener != null){
+                            mlistener.onItemClick(v, pos);
+                        }
+                    }
+                }
+            });
 
                     //  this.image = itemView.findViewById(R.id.categoryView);
             this.title = itemView.findViewById(R.id.ingredientTitleView);
