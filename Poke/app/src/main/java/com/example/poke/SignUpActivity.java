@@ -55,8 +55,12 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                                 //형식에 맞지 않을 때 파이어베이스에서 제공
                                 else {
-                                    if(task.getException() != null)
-                                        startToast(task.getException().toString());
+                                    if(password.length() < 6) {
+                                        startToast("비밀번호는 6자리 이상으로 입력해주세요.");
+                                    }
+                                    else {
+                                        startToast("이메일을 다시 입력해주세요");
+                                    }
                                 }
                             }
                         });

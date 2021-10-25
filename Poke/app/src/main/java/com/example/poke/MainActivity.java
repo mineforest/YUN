@@ -45,15 +45,12 @@ public class MainActivity extends AppCompatActivity {
         actionbar.setTitle("POKE");
         //로그인 되어 있지 않으면 로그인 화면으로
 
-        if(user == null) {
-            myStartActivity(LoginActivity.class);
-        }
+
         //회원정보가 없으면 회원등록 화면 나옴
-        else {
-            mDatabase = FirebaseDatabase.getInstance().getReference();
-            uid = user.getUid();
-            nullStartActivity(uid,"preference");
-            nullStartActivity(uid,"users");
+//            mDatabase = FirebaseDatabase.getInstance().getReference();
+//            uid = user.getUid();
+//            nullStartActivity(uid,"users");
+//            nullStartActivity(uid,"preference");
 
             viewPager2 = findViewById(R.id.pager);
             pagerAdapter = new MainPagerAdapter(this);
@@ -99,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             });
-        }
+
     }
 
     public void loading() {
@@ -128,29 +125,33 @@ public class MainActivity extends AppCompatActivity {
             mBottomNavigationView.getMenu().getItem(position).setChecked(true);
         }
     };
-
-    private void nullStartActivity(String uid, String child){
-        mDatabase.child(child).child(uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DataSnapshot dataSnapshot = task.getResult();
-                    if(dataSnapshot != null) {
-                        if (dataSnapshot.exists()) {
-                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                        } else {
-                            if(child.equals("preference")){
-                                myStartActivity(PreferenceActivity.class);
-                            }
-                        }
-                    }
-                }
-                else {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-            }
-        });
-    }
+//
+//    private void nullStartActivity(String uid, String child){
+//        mDatabase.child(child).child(uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    DataSnapshot dataSnapshot = task.getResult();
+//                    if(dataSnapshot != null) {
+//                        if (dataSnapshot.exists()) {
+//                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
+//                        } else {
+//                            if(child.equals("users")){
+//                                myStartActivity(MemberInitActivity.class);
+//                            }
+//                            else if(child.equals("preference")){
+//                                myStartActivity(PreferenceActivity.class);
+//                            }
+//                        }
+//                        myStartActivity(MainActivity.class);
+//                    }
+//                }
+//                else {
+//                    Log.e("firebase", "Error getting data", task.getException());
+//                }
+//            }
+//        });
+//    }
 
     private void myStartActivity(Class c){
         Intent intent = new Intent(getApplicationContext(),c);

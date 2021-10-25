@@ -1,17 +1,7 @@
 package com.example.poke;
 
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -21,12 +11,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 public class W2vHttpConn {
     OkHttpClient client = new OkHttpClient();
-    String ip_addr = "http://192.168.200.164:5000/";
+    String ip_addr = "http://192.168.200.172:5000/";
 
     public ArrayList<Recipe_get> getRcp(String id, int flag) {
         String dir = "rcp/";

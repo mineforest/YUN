@@ -3,6 +3,7 @@ package com.example.poke;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,6 @@ import com.google.zxing.integration.android.IntentResult;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class IngredientDialog extends DialogFragment implements AdapterView.OnItemSelectedListener {
     private Fragment fragment;
@@ -70,7 +70,7 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
         cancelBtn = view.findViewById(R.id.dialogCancelBtn);
         cancelBtn.setOnClickListener(onClickListener);
         registerForContextMenu(cateText);
-        calendar_btn = view.findViewById(R.id.calendarButton);
+        calendar_btn = view.findViewById(R.id.ingreCalendarButton);
         calendar_btn.setOnClickListener(calendarListener);
         dateText.setFocusableInTouchMode(false);
 
@@ -126,6 +126,8 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
                 }
             },Integer.parseInt(now_year), Integer.parseInt(now_month), Integer.parseInt(now_day));
 
+            Log.d("현재날짜", now_year +" " + now_month + " " + now_day );
+
             datePickerDialog.setMessage("메시지");
             datePickerDialog.show();
         }
@@ -140,7 +142,7 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
                 date = dateText.getText().toString();
                 UserIngredient userIngredient;
 
-                if(title.length() >=2 && cate.length() >=2 && date.length()>=9){
+                if(title.length() >=1 && cate.length() >=2 && date.length()>=9){
                     if(key != null){
                         userIngredient = new UserIngredient(title, date, cate);
                         mDatabase.child("ingredient").child(uid).child(key).setValue(userIngredient);
