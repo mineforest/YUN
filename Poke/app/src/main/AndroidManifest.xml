@@ -82,6 +82,7 @@
 
         <activity android:name=".MainMoreViewActivity">
         </activity>
+        <activity android:name=".SearchMoreViewActivity" />
 
 
         <receiver android:name=".MyAlarmReceiver"

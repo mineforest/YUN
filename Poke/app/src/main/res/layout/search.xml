@@ -7,37 +7,6 @@
     android:elevation="1dp"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="85dp"
-        android:background="@drawable/bg_item_gradient"
-        android:elevation="10dp"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints">
-
-        <SearchView
-            android:id="@+id/rec_search"
-            android:layout_width="match_parent"
-            android:layout_height="37dp"
-            android:background="@android:color/transparent"
-            android:closeIcon="@drawable/ic_dialog_close_dark"
-            android:ems="10"
-            android:queryHint="검색어를 입력해주세요."
-            android:searchHintIcon="@drawable/ic_search"
-            android:searchIcon="@drawable/ic_search"
-            android:searchSuggestAuthority="com.example.poke.MySuggestionProvider"
-            android:searchSuggestSelection=" ?"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="16dp">
-
-        </SearchView>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
@@ -47,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout4">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_rv"
