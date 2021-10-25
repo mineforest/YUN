@@ -72,23 +72,13 @@ public class MemberInitActivity extends AppCompatActivity {
     View.OnClickListener calendarListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            long now = System.currentTimeMillis();
-            Date date = Calendar.getInstance().getTime();
-
-            SimpleDateFormat sdf_year = new SimpleDateFormat("yyyy");
-            SimpleDateFormat sdf_month = new SimpleDateFormat("mm");
-            SimpleDateFormat sdf_day = new SimpleDateFormat("dd");
-            String now_year =sdf_year.format(date);
-            String now_month = sdf_month.format(date);
-            String now_day =sdf_day.format(date);
-
+            Calendar calendar = Calendar.getInstance();
             DatePickerDialog datePickerDialog = new DatePickerDialog(MemberInitActivity.this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     birthET.setText(String.format("%d-%02d-%02d",year,month+1,dayOfMonth));
                 }
-            },1997, 6, 30);
-
+            },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE));
             datePickerDialog.show();
         }
     };
