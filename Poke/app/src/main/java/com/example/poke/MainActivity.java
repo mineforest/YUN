@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,15 +26,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
-    private FragmentManager fragmentManager;
     private BottomNavigationView mBottomNavigationView;
     private ViewPager2 viewPager2;
     private FragmentStateAdapter pagerAdapter;
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
-    private String uid;
-    ProgressDialog progressDialog;
-    private final String DEFAULT = "DEFAULT";
+    private long backKey = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +40,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle("POKE");
-        //로그인 되어 있지 않으면 로그인 화면으로
-
-
-        //회원정보가 없으면 회원등록 화면 나옴
-//            mDatabase = FirebaseDatabase.getInstance().getReference();
-//            uid = user.getUid();
-//            nullStartActivity(uid,"users");
-//            nullStartActivity(uid,"preference");
 
             viewPager2 = findViewById(R.id.pager);
             pagerAdapter = new MainPagerAdapter(this);
@@ -64,11 +53,9 @@ public class MainActivity extends AppCompatActivity {
             //첫 화면 띄우기
             mBottomNavigationView.setSelectedItemId(R.id.nav_home);
 
-            //case 함수를 통해 클릭 받을 때마다 화면 변경하기
             mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     switch (item.getItemId()){
                         case R.id.nav_info :
                             actionbar.hide();
@@ -99,25 +86,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void loading() {
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        progressDialog.dismiss();
-                    }
-                }, 100);
-    }
-
     @Override
     public void onBackPressed() {
-        if (viewPager2.getCurrentItem() == 0) {
-            super.onBackPressed();
+        if(System.currentTimeMillis() > backKey + 2000) {
+            backKey = System.currentTimeMillis();
+            Toast.makeText(MainActivity.this,"한번 더 눌러 종료합니다.", Toast.LENGTH_SHORT).show();
         } else {
-            viewPager2.setCurrentItem(viewPager2.getCurrentItem() - 1);
+            super.onBackPressed();
         }
     }
-
     ViewPager2.OnPageChangeCallback pageChangeCallback = new ViewPager2.OnPageChangeCallback() {
         @Override
         public void onPageSelected(int position) {
@@ -125,40 +102,5 @@ public class MainActivity extends AppCompatActivity {
             mBottomNavigationView.getMenu().getItem(position).setChecked(true);
         }
     };
-//
-//    private void nullStartActivity(String uid, String child){
-//        mDatabase.child(child).child(uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DataSnapshot dataSnapshot = task.getResult();
-//                    if(dataSnapshot != null) {
-//                        if (dataSnapshot.exists()) {
-//                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
-//                        } else {
-//                            if(child.equals("users")){
-//                                myStartActivity(MemberInitActivity.class);
-//                            }
-//                            else if(child.equals("preference")){
-//                                myStartActivity(PreferenceActivity.class);
-//                            }
-//                        }
-//                        myStartActivity(MainActivity.class);
-//                    }
-//                }
-//                else {
-//                    Log.e("firebase", "Error getting data", task.getException());
-//                }
-//            }
-//        });
-//    }
-
-    private void myStartActivity(Class c){
-        Intent intent = new Intent(getApplicationContext(),c);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
-
-
 }
 
