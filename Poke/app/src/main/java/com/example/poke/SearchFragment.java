@@ -3,6 +3,7 @@ package com.example.poke;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SearchRecentSuggestionsProvider;
 import android.os.Bundle;
 
@@ -33,6 +34,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.arasthel.spannedgridlayoutmanager.SpanSize;
+import com.arasthel.spannedgridlayoutmanager.SpannedGridLayoutManager;
 import com.github.mmin18.widget.RealtimeBlurView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -51,21 +54,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import kotlin.jvm.functions.Function1;
+
 public class SearchFragment extends Fragment {
-    private static final String TAG = "tag";
     private ArrayList<Recipe_get> searchList = new ArrayList<>();
-    private ArrayList<Recipe_get> searchedList = new ArrayList<>();
     private TagsAdapter adapter;
-    private ArrayList<Recipe_get> SearchArrayList = new ArrayList<>();
-    public static SearchView searchView;
-    private FrameLayout frameLayout;
-    private SearchAdapter SearchAdapter = new SearchAdapter(searchList);
     private ArrayList<String> tag_names = new ArrayList<>();
     private ArrayList<ArrayList<Recipe_get>> tag_contents = new ArrayList<>();
-
-    public SearchFragment() {
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,10 +70,8 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.search, container, false);
-        searchView = (SearchView) view.findViewById(R.id.rec_search);
-        frameLayout = view.findViewById(R.id.frame);
         tag_names.add("전체");
-        tag_contents.add(new ArrayList<Recipe_get>());
+        tag_contents.add(searchList);
 
         new Thread() {
             @Override
@@ -88,38 +81,28 @@ public class SearchFragment extends Fragment {
                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                Log.d("dadf",searchView.getQuery().toString());
-                                if (error != null) {
-                                    Log.w(TAG, "Oh ~ no ~");
-                                    return;
-                                }
-
                                 for (QueryDocumentSnapshot doc : value) {
-                                    if(doc.getData().get("name").toString().contains(searchView.getQuery().toString()))
-                                    {
-                                        String rcp_id = doc.getData().get("id").toString();
-                                        String title = doc.getData().get("name").toString();
-                                        String thumbnail = doc.getData().get("thumbnail").toString();
-                                        List<String> tags = (List<String>) doc.get("tag");
-                                        Recipe_get r = new Recipe_get(rcp_id, thumbnail, title, tags);
-                                        searchList.add(r);
-                                        for (String tag : tags.get(0).split(", ")){
-                                            int idx=tag_names.indexOf(tag);
-                                            if(idx==-1){
-                                                ArrayList<Recipe_get> rcp = new ArrayList<>();
-                                                rcp.add(r);
-                                                tag_names.add(tag);
-                                                tag_contents.add(rcp);
-                                            }
-                                            else {
-                                                ArrayList<Recipe_get> rcps=tag_contents.get(idx);
-                                                rcps.add(r);
-                                                tag_contents.set(idx,rcps);
-                                            }
+                                    String rcp_id = doc.getData().get("id").toString();
+                                    String title = doc.getData().get("name").toString();
+                                    String thumbnail = doc.getData().get("thumbnail").toString();
+                                    List<String> tags = (List<String>) doc.get("tag");
+                                    Recipe_get r = new Recipe_get(rcp_id, thumbnail, title, tags);
+                                    searchList.add(r);
+                                    for (String tag : tags.get(0).split(", ")){
+                                        int idx=tag_names.indexOf(tag);
+                                        if(idx==-1){
+                                            ArrayList<Recipe_get> rcp = new ArrayList<>();
+                                            rcp.add(r);
+                                            tag_names.add(tag);
+                                            tag_contents.add(rcp);
                                         }
-                                        adapter.notifyDataSetChanged();
-                                        Log.d("DFDFDF",adapter.getItemCount()+"");
+                                        else {
+                                            ArrayList<Recipe_get> rcps=tag_contents.get(idx);
+                                            rcps.add(r);
+                                            tag_contents.set(idx,rcps);
+                                        }
                                     }
+                                    adapter.notifyDataSetChanged();
                                 }
                             }
                         });
@@ -127,74 +110,26 @@ public class SearchFragment extends Fragment {
             }
         }.start();
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.search_rv);
+        RecyclerView recyclerView = view.findViewById(R.id.search_rv);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        SpannedGridLayoutManager spannedGridLayoutManager = new SpannedGridLayoutManager(SpannedGridLayoutManager.Orientation.VERTICAL, 4);
+        spannedGridLayoutManager.setItemOrderIsStable(true);
+        spannedGridLayoutManager.setSpanSizeLookup(new SpannedGridLayoutManager.SpanSizeLookup(position -> {
+            if(position%7 == 0) return new SpanSize(2,2);
+            return new SpanSize(1, 1);
+        }));
+        recyclerView.setLayoutManager(spannedGridLayoutManager);
         adapter = new TagsAdapter(tag_names,tag_contents);
         recyclerView.setAdapter(adapter);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.i(TAG, searchView.getQuery().toString());
-
-                hideKeyboard(getActivity());
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                String searchText = searchView.getQuery().toString();
-                searchFilter(searchText);
-                return false;
-            }
+        adapter.setOnItemClickListener((v, position) -> {
+            String tname = tag_names.get(position);
+            ArrayList<Recipe_get> trcps = tag_contents.get(position);
+            Intent intent = new Intent(v.getContext(), SearchMoreViewActivity.class);
+            intent.putExtra("t_name",tname);
+            intent.putExtra("t_rcps",trcps);
+            v.getContext().startActivity(intent);
         });
         return view;
-    }
-
-
-    public void searchFilter(String searchText) {
-        searchedList.clear();
-
-        for (int i = 0; i < searchList.size(); i++) {
-            if (searchList.get(i).getName().toLowerCase().contains(searchText.toLowerCase())) {
-                searchedList.add(searchList.get(i));
-            }
-        }
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-
-    public void clicktag(@NonNull String cate, ArrayList<Recipe_get> al) {
-        SearchArrayList.clear();
-
-        if(cate.equals("전체"))
-        {
-            SearchArrayList.addAll(searchList);
-            Log.d(TAG, "clicktag: done");
-        }
-        else {
-            for (Recipe_get rcp : new ArrayList<>(al)) {
-                if (rcp.getTag().contains(cate)) {
-                    SearchArrayList.add(rcp);
-                    SearchAdapter.notifyDataSetChanged();
-                    Log.d("dadf",rcp.getTag().toString());
-                }
-            }
-        }
-
-    }
-
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        View view = activity.getCurrentFocus();
-
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
