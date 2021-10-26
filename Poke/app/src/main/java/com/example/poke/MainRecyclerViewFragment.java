@@ -34,6 +34,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -207,13 +208,10 @@ public class MainRecyclerViewFragment extends Fragment{
                                 sorted_rcps.add(recipe_get);
 
                                 if(rcps.size() == first_rcps.size()) {
-                                    rcps.sort(new Comparator<Recipe_get>() {
-                                        @Override
-                                        public int compare(Recipe_get o1, Recipe_get o2) {
-                                            int sc1 = Integer.parseInt(o1.getScore());
-                                            int sc2 = Integer.parseInt(o2.getScore());
-                                            return Integer.compare(sc2, sc1);
-                                        }
+                                    rcps.sort((o1, o2) -> {
+                                        int sc1 = Integer.parseInt(o1.getScore());
+                                        int sc2 = Integer.parseInt(o2.getScore());
+                                        return Integer.compare(sc2, sc1);
                                     });
                                     shimmerFrameLayout.stopShimmer();
                                     shimmerFrameLayout.setVisibility(View.GONE);
@@ -222,12 +220,7 @@ public class MainRecyclerViewFragment extends Fragment{
                                 }
 
                                 if (sorted_rcps.size() == first_rcps.size()) {
-                                    sorted_rcps.sort(new Comparator<Recipe_get>(){
-                                        @Override
-                                        public int compare(Recipe_get o1, Recipe_get o2) {
-                                            return o2.getRate().compareTo(o1.getRate());
-                                        }
-                                    });
+                                    sorted_rcps.sort((o1, o2) -> o2.getRate().compareTo(o1.getRate()));
                                     adapter3.notifyDataSetChanged();
                                 }
                             }
@@ -273,18 +266,6 @@ public class MainRecyclerViewFragment extends Fragment{
         public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
             Intent intent = new Intent(getContext(), CrashedActivity.class);
             startActivity(intent);
-//            new Thread() {
-//                @Override
-//                public void run() {
-//                    Looper.prepare();
-//                    Toast.makeText(getContext(), "Application crashed", Toast.LENGTH_LONG).show();
-//                    Looper.loop();
-//                }
-//            }.start();
-//            try {
-//                Thread.sleep(4000); // Let the Toast display before app will get shutdown
-//            } catch (InterruptedException ed) {// Ignored.
-//            }
         }
     }
 

@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.btm_nav);
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
         ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle("POKE");
 
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
             viewPager2.setAdapter(pagerAdapter);
             viewPager2.registerOnPageChangeCallback(pageChangeCallback);
             viewPager2.setUserInputEnabled(false);
-            FragmentManager fragmentManager = getSupportFragmentManager();
             mBottomNavigationView=findViewById(R.id.bottom_navigation);
 
             viewPager2.setCurrentItem(1);
@@ -58,23 +56,19 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()){
                         case R.id.nav_info :
-                            actionbar.hide();
                             viewPager2.setCurrentItem(0);
 
                             //  fragmentTransaction.replace(R.id.frame_container,new MyInfoActivity()).commit();
                             break;
                         case R.id.nav_home:
-                            actionbar.show();
                             viewPager2.setCurrentItem(1);
                             // fragmentTransaction.replace(R.id.frame_container,new MainActivity()).commit();
                             break;
                         case R.id.nav_ingredient:
-                            actionbar.show();
                             viewPager2.setCurrentItem(2);
                             //fragmentTransaction.replace(R.id.frame_container,new FridgeFragment()).commit();
                             break;
                         case R.id.nav_search:
-                            actionbar.hide();
                             viewPager2.setCurrentItem(3);
                             //fragmentTransaction.replace(R.id.frame_container,new Frag4()).commit();
                             break;

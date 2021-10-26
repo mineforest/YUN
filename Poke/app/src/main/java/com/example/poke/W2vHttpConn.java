@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class W2vHttpConn {
     OkHttpClient client = new OkHttpClient();
-    String ip_addr = "http://192.168.200.182:5000/";
+    String ip_addr = "http://34.64.161.86/";
 
     public ArrayList<Recipe_get> getRcp(String id, int flag) {
         String dir = "rcp/";
@@ -28,8 +28,8 @@ public class W2vHttpConn {
             JSONArray jsonArray = jsonObject.getJSONArray("recipe");
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject object = jsonArray.getJSONObject(i);
-                    Recipe_get recipe_get = new Recipe_get(object.getString("id"), object.getString("score"));
-                    arrayList.add(recipe_get);
+                Recipe_get recipe_get = new Recipe_get(object.getString("id"), object.getString("score"));
+                arrayList.add(recipe_get);
             }
             return arrayList;
         } catch (IOException | JSONException e) {

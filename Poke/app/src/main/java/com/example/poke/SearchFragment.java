@@ -1,5 +1,6 @@
 package com.example.poke;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -78,32 +79,29 @@ public class SearchFragment extends Fragment {
             public void run() {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("recipe")
-                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                for (QueryDocumentSnapshot doc : value) {
-                                    String rcp_id = doc.getData().get("id").toString();
-                                    String title = doc.getData().get("name").toString();
-                                    String thumbnail = doc.getData().get("thumbnail").toString();
-                                    List<String> tags = (List<String>) doc.get("tag");
-                                    Recipe_get r = new Recipe_get(rcp_id, thumbnail, title, tags);
-                                    searchList.add(r);
-                                    for (String tag : tags.get(0).split(", ")){
-                                        int idx=tag_names.indexOf(tag);
-                                        if(idx==-1){
-                                            ArrayList<Recipe_get> rcp = new ArrayList<>();
-                                            rcp.add(r);
-                                            tag_names.add(tag);
-                                            tag_contents.add(rcp);
-                                        }
-                                        else {
-                                            ArrayList<Recipe_get> rcps=tag_contents.get(idx);
-                                            rcps.add(r);
-                                            tag_contents.set(idx,rcps);
-                                        }
+                        .addSnapshotListener((value, error) -> {
+                            for (QueryDocumentSnapshot doc : value) {
+                                String rcp_id = doc.getData().get("id").toString();
+                                String title = doc.getData().get("name").toString();
+                                String thumbnail = doc.getData().get("thumbnail").toString();
+                                List<String> tags = (List<String>) doc.get("tag");
+                                Recipe_get r = new Recipe_get(rcp_id, thumbnail, title, tags);
+                                searchList.add(r);
+                                for (String tag : tags.get(0).split(", ")){
+                                    int idx=tag_names.indexOf(tag);
+                                    if(idx==-1){
+                                        ArrayList<Recipe_get> rcp = new ArrayList<>();
+                                        rcp.add(r);
+                                        tag_names.add(tag);
+                                        tag_contents.add(rcp);
                                     }
-                                    adapter.notifyDataSetChanged();
+                                    else {
+                                        ArrayList<Recipe_get> rcps=tag_contents.get(idx);
+                                        rcps.add(r);
+                                        tag_contents.set(idx,rcps);
+                                    }
                                 }
+                                adapter.notifyDataSetChanged();
                             }
                         });
 
@@ -126,8 +124,14 @@ public class SearchFragment extends Fragment {
             String tname = tag_names.get(position);
             ArrayList<Recipe_get> trcps = tag_contents.get(position);
             Intent intent = new Intent(v.getContext(), SearchMoreViewActivity.class);
+            if(position == 0) {
+                Singleton_global_recipe singleton_global_recipe = Singleton_global_recipe.getInstance();
+                singleton_global_recipe.setData(trcps);
+            }
+            else{
+                intent.putExtra("t_rcps",trcps);
+            }
             intent.putExtra("t_name",tname);
-            intent.putExtra("t_rcps",trcps);
             v.getContext().startActivity(intent);
         });
         return view;

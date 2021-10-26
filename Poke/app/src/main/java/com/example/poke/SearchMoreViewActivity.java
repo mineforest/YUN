@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -31,7 +32,13 @@ public class SearchMoreViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.more_recipes_insearch);
         Intent intent = getIntent();
-        rcps = intent.getParcelableArrayListExtra("t_rcps");
+        if (intent.getCharSequenceExtra("t_name").equals("전체")) {
+            Singleton_global_recipe singleton_global_recipe = Singleton_global_recipe.getInstance();
+            rcps = singleton_global_recipe.getData();
+        }
+        else{
+            rcps = intent.getParcelableArrayListExtra("t_rcps");
+        }
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();

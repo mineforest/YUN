@@ -98,21 +98,10 @@ public class Recipe_Info extends AppCompatActivity {
                                     docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            String title = documentSnapshot.getData().get("name").toString();
-                                            String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                                            String cook_time = documentSnapshot.getData().get("time").toString();
-                                            List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
-                                            List<Map<String, String>> sauce_list = (List<Map<String, String>>) documentSnapshot.get("sauce_list");
-                                            String url = documentSnapshot.getData().get("url").toString();
-                                            List<Long> ingredient_ids = (List<Long>) documentSnapshot.get("ingredient_ids");
-                                            List<String> recipe_list = (List<String>) documentSnapshot.get("recipe");
-                                            List<String> recipe_img = (List<String>) documentSnapshot.get("recipe_img");
-                                            List<String> tags = (List<String>) documentSnapshot.get("tag");
-
-                                            rcp = new Recipe_get(recipe_id, title, thumbnail, url, ingredient_ids, cook_time, ingre_list, sauce_list, recipe_list, recipe_img, tags);
+                                            rcp = documentSnapshot.toObject(Recipe_get.class);
 
                                             String[] string;
-                                            for (String t : tags) {
+                                            for (String t : rcp.getTag()) {
                                                 string = (t.split(","));
                                                 for (String s : string) {
                                                     addChip(s);
