@@ -11,7 +11,6 @@ public class UserInfo {
     String age;
     String gender;
 
-
     public UserInfo() {
     }
 

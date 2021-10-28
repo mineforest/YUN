@@ -3,42 +3,27 @@ package com.example.poke;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.poke.R;
-import com.example.poke.Recipe_Info;
-import com.example.poke.Recipe_get;
-import com.example.poke.SearchViewHolder;
-import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-public class TagsAdapter extends RecyclerView.Adapter<SearchViewHolder>  {
+public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.SearchViewHolder>  {
 
     private Intent intent;
 
     private ArrayList<String> tagset;
-    private ArrayList<ArrayList<Recipe_get>>  tag_contents;
+    private ArrayList<ArrayList<Recipe_get>> tag_contents;
 
     public TagsAdapter(ArrayList<String> tagset, ArrayList<ArrayList<Recipe_get>> tag_contents) {
 
@@ -47,6 +32,15 @@ public class TagsAdapter extends RecyclerView.Adapter<SearchViewHolder>  {
     }
 
     Context context;
+
+    public interface OnItemClickListener {
+        void onItemClick(View v, int position);
+    }
+    private TagsAdapter.OnItemClickListener onItemClickListener = null;
+
+    public void setOnItemClickListener(TagsAdapter.OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
 
     @Override
     public void onAttachedToRecyclerView(@NonNull @NotNull RecyclerView recyclerView) {
@@ -66,12 +60,47 @@ public class TagsAdapter extends RecyclerView.Adapter<SearchViewHolder>  {
         if (tagset != null && position < tagset.size()) {
             String tag = tagset.get(position);
             holder.search_title.setText(tag);
+            if(tag_contents.get(position).size() < 10) holder.cnt_tv.setText("1+");
+            else if(tag_contents.get(position).size() < 50) holder.cnt_tv.setText("10+");
+            else if(tag_contents.get(position).size() < 100) holder.cnt_tv.setText("50+");
+            else if(tag_contents.get(position).size() < 500) holder.cnt_tv.setText("100+");
+            else if(tag_contents.get(position).size() < 1000) holder.cnt_tv.setText("500+");
+            else holder.cnt_tv.setText("1,000++");
+            if(tag_contents.get(position).size() != 0){
+                Glide.with(holder.itemView)
+                        .load(tag_contents.get(position).get(0).getThumbnail())
+                        .into(holder.search_thumbnail);
+            }
         }
+
     }
 
     @Override
     public int getItemCount() {
         return (tagset != null ? tagset.size() : 0);
+    }
+
+    public class SearchViewHolder extends RecyclerView.ViewHolder {
+
+        public ImageView search_thumbnail;
+        public TextView search_title;
+        public TextView cnt_tv;
+
+        public SearchViewHolder(@NonNull View itemView) {
+            super(itemView);
+            search_title = itemView.findViewById(R.id.search_title);
+            search_thumbnail = itemView.findViewById(R.id.tag_imageView);
+            cnt_tv = itemView.findViewById(R.id.count_tv);
+
+            itemView.setOnClickListener(v -> {
+                int pos = getBindingAdapterPosition();
+                if(pos != RecyclerView.NO_POSITION){
+                    if(onItemClickListener != null) {
+                        onItemClickListener.onItemClick(v, pos);
+                    }
+                }
+            });
+        }
     }
 
 }

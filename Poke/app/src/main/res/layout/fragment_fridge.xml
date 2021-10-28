@@ -9,6 +9,20 @@
     android:orientation="vertical"
     android:verticalScrollbarPosition="right">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/input_box"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="검색어를 입력하세요"
+        app:endIconMode="clear_text"
+        app:startIconDrawable="@drawable/ic_search_black_24dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/fridgeTab"
         style="@style/CustomTabStyle"

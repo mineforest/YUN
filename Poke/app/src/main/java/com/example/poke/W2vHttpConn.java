@@ -1,17 +1,7 @@
 package com.example.poke;
 
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -21,7 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 public class W2vHttpConn {
@@ -39,8 +28,8 @@ public class W2vHttpConn {
             JSONArray jsonArray = jsonObject.getJSONArray("recipe");
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject object = jsonArray.getJSONObject(i);
-                    Recipe_get recipe_get = new Recipe_get(object.getString("id"), object.getString("score"));
-                    arrayList.add(recipe_get);
+                Recipe_get recipe_get = new Recipe_get(object.getString("id"), object.getString("score"));
+                arrayList.add(recipe_get);
             }
             return arrayList;
         } catch (IOException | JSONException e) {

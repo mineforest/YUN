@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                                 myStartActivity(MainActivity.class);
                             } else {
                                 if (task.getException() != null)
-                                    startToast(task.getException().toString());
+                                    startToast("로그인에 실패하였습니다.");
                             }
                         }
                     });

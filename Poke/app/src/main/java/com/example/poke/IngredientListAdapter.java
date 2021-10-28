@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.poke.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class IngredientListAdapter extends BaseAdapter {
@@ -62,9 +63,12 @@ public class IngredientListAdapter extends BaseAdapter {
         return convertView;
     }
 
+
     class ViewHolder{
         public TextView label;
     }
+
+
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
