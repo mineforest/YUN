@@ -52,7 +52,6 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
     public boolean alarm_flag = true;
     public boolean check_flag = false;
     private DatabaseReference mDatabase;
-    final SharedPreferences sharedPreferences = context.getSharedPreferences("bibleNotify",MODE_PRIVATE);
 
     private OnItemClickListener mlistener = null;
 
@@ -79,10 +78,7 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
     public FridgeAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_recyclerview,parent,false);
         FridgeAdapter.ViewHolder holder = new FridgeAdapter.ViewHolder(view);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("SetTimeH", 15);
-        editor.putInt("SetTimeM", 40);
-        editor.commit();
+
 
         return holder;
     }
@@ -91,6 +87,11 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String[] dday=ingredientsList.get(position).getExpirationDate().split("-");
         boolean mainflag =((MainActivity)MainActivity.mContext).alarm;
+        SharedPreferences sharedPreferences = context.getSharedPreferences("bibleNotify",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("SetTimeH", 15);
+        editor.putInt("SetTimeM", 40);
+        editor.commit();
 
         holder.deleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
