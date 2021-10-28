@@ -35,7 +35,9 @@
         </activity>
         <activity android:name=".LoginActivity">
         </activity>
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".RatingActivity">
         </activity>
@@ -49,7 +51,9 @@
         </activity>
         <activity android:name=".IngredientAddActivity">
         </activity>
-        <activity android:name=".PreferenceActivity">
+        <activity
+            android:name=".PreferenceActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".Adddips">
         </activity>
