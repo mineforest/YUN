@@ -71,7 +71,7 @@ public class DipsAdapter extends RecyclerView.Adapter<DipsAdapter.CustomViewHold
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialog);
                 builder.setMessage("찜 목록에서 지울까요?");
-                builder.setPositiveButton("ㅇㅇ", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -85,7 +85,7 @@ public class DipsAdapter extends RecyclerView.Adapter<DipsAdapter.CustomViewHold
                         notifyItemRangeChanged(position, dipsList.size());
                     }
                 });
-                builder.setNegativeButton("ㄴㄴ",null);
+                builder.setNegativeButton("취소",null);
                 builder.create().show();
             }
         });
