@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private String uid;
     ProgressDialog progressDialog;
     private final String DEFAULT = "DEFAULT";
-
+    public static boolean alarm = false;
+    public static Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle("POKE");
         //로그인 되어 있지 않으면 로그인 화면으로
+
+        Intent alarmintent1 = getIntent();
+        alarm = alarmintent1.getBooleanExtra("flag",false);
+        mContext = this;
 
         if(user == null) {
             myStartActivity(LoginActivity.class);
