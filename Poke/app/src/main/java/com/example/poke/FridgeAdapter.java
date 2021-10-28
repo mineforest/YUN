@@ -10,6 +10,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -130,20 +132,28 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         holder.title.setText(String.valueOf(ingredientsList.get(position).getIngredientTitle()));
         if(date < 0){
             holder.day.setText(("D+" + Long.toString(Math.abs(date))));
+            holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_gray));
         }
         else {
             holder.day.setText(("D-" + Long.toString(date)));
+            if(date<=3) holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
+            else holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_green));
         }
 
         if(date <= 3) {
-            holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
+            if(date<0) holder.fridgeImage.setImageTintList(ColorStateList.valueOf(Color.parseColor("#BAC4CC")));
+            else holder.fridgeImage.setImageTintList(ColorStateList.valueOf(Color.parseColor("#E60000")));
+
+            //holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
             if(alarm_flag==true&&mainflag==false){
                 setAlarm.startAlarmBroadcastReceiver(context, sharedPreferences);
+
                 alarm_flag=false;
             }
         }
         else{
-            holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_green));
+            holder.fridgeImage.setImageTintList(ColorStateList.valueOf(Color.parseColor("#29D67E")));
+            //holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_green));
         }
         checkDate(date);
     }
@@ -173,6 +183,7 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         TextView title;
         TextView day;
         ImageView deleteImage;
+        ImageView fridgeImage;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -193,7 +204,7 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
             this.title = itemView.findViewById(R.id.ingredientTitleView);
             this.day = itemView.findViewById(R.id.dDay);
             this.deleteImage = itemView.findViewById(R.id.deleteImage);
-
+            this.fridgeImage = itemView.findViewById(R.id.categoryView);
         }
 
     }
