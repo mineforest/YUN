@@ -13,25 +13,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
-            android:background="@drawable/allergy_shadow"
-            android:elevation="50dp"
+            android:background="@drawable/diet_shadow"
             android:orientation="vertical"
             app:behavior_hideable="false"
             app:behavior_peekHeight="399dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
 
-                <View
-                    android:id="@+id/view2"
-                    android:layout_width="392dp"
-                    android:layout_height="209dp"
-                    android:layout_marginLeft="13dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/diet_shadow" />
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="114dp"
-                    android:layout_marginTop="-200dp"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/menu_shadow">
 
                         <Button

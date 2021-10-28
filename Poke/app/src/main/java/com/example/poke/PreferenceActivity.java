@@ -3,6 +3,7 @@ package com.example.poke;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -20,11 +21,11 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import java.util.ArrayList;
 
-public class PreferenceActivity extends AppCompatActivity implements AllergyFragment.AllergyListener, PreferenceFragment.PreListener, DietFragment.DietListener {
+public class PreferenceActivity extends AppCompatActivity implements AllergyFragment.AllergyListener, PreferenceFragment.PreListener{
     private FragmentManager fragmentManager;
     private DatabaseReference mDatabase;
     private String uid;
-    private ArrayList<String> preList, dietList, allergyList = new ArrayList<>();
+    private ArrayList<String> preList, allergyList = new ArrayList<>();
     private ViewPager2 viewPager2;
     private FragmentStateAdapter pagerAdapter;
     private DotsIndicator dotsIndicator;
@@ -47,7 +48,7 @@ public class PreferenceActivity extends AppCompatActivity implements AllergyFrag
         viewPager2.registerOnPageChangeCallback(pageChangeCallback);
         startFragment = new StartFragment();
         fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.frame_container2,startFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.frame_container2,startFragment).commit();
         viewPager2.setUserInputEnabled(false);
     }
 
@@ -68,17 +69,16 @@ public void next(int page){
                         break;
 
                     case 2:
-                        viewPager2.setCurrentItem(2);
-                        break;
-
-                    case 3:
-                        for(String list : preList)
-                            mDatabase.child("preference").child(uid).push().setValue(new UserPreference(list));
-                        for(String list : dietList)
-                            mDatabase.child("diet").child(uid).push().setValue(new UserDiet(list));
-                        for(String list : allergyList)
-                            mDatabase.child("allergy").child(uid).push().setValue(new UserAllergy(list));
-                        myStartActivity(MainActivity.class);
+                        if(preList.size() <= 1){
+                           startToast("좋아하는 음식을 2가지 이상 선택해주세요.");
+                        }
+                        else {
+                            for (String list : preList)
+                                mDatabase.child("preference").child(uid).push().setValue(new UserPreference(list));
+                            for (String list : allergyList)
+                                mDatabase.child("allergy").child(uid).push().setValue(new UserAllergy(list));
+                            myStartActivity(MainActivity.class);
+                        }
                 }
 }
 
@@ -87,21 +87,13 @@ public void pre(int page){
                 case 0:
                     viewPager2.setCurrentItem(0);
                     break;
-                case 1:
-                    viewPager2.setCurrentItem(1);
-                    break;
                 case -1:
                     dotsIndicator.setVisibility(View.GONE);
                     viewPager2.setAdapter(null);
-                    fragmentManager.beginTransaction().add(R.id.frame_container2,startFragment).commit();
+                    fragmentManager.beginTransaction().replace(R.id.frame_container2,startFragment).commit();
                     break;
             }
         }
-
-    @Override
-    public void dietListener(ArrayList diet) {
-        dietList = diet;
-    }
 
     @Override
     public void allergyListener(ArrayList allergy) {
@@ -123,18 +115,22 @@ public void pre(int page){
     public void onBackPressed() {
         int vp =viewPager2.getCurrentItem();
         if (vp == 0) {
+            super.onBackPressed();
             dotsIndicator.setVisibility(View.GONE);
             viewPager2.setAdapter(null);
-            fragmentManager.beginTransaction().add(R.id.frame_container2,startFragment).commit();
-        } else if(vp == 1 || vp == 2) {
+//            fragmentManager.beginTransaction().replace(R.id.frame_container2,startFragment).commit();
+            moveTaskToBack(true);
+            finish();
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+        } else if(vp == 1 ) {
             viewPager2.setCurrentItem(viewPager2.getCurrentItem() - 1);
         }
         else{
 //            myStartActivity(MainActivity.class);
 //            super.onBackPressed();
 //            moveTaskToBack(true);
-//            android.os.Process.killProcess(android.os.Process.myPid());
-//            System.exit(1);
+
         }
     }
 
@@ -144,4 +140,8 @@ public void pre(int page){
             super.onPageSelected(position);
         }
     };
+
+    private void startToast(String msg){
+        Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
+    }
 }

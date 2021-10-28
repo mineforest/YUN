@@ -86,8 +86,6 @@ public class MemberInitActivity extends AppCompatActivity {
     private void profileUpdate(){
         String nickName=((EditText)findViewById(R.id.nickNameEditText)).getText().toString();
         String birthDay=((EditText)findViewById(R.id.birthDayEditText)).getText().toString();
-        int birthage=Integer.parseInt(birthDay.substring(2,3));
-        String age= Integer.toString((birthage > 21 ? (22+100-birthage):(22-birthage)));
 
         String gender;
         if(bool)
@@ -95,7 +93,9 @@ public class MemberInitActivity extends AppCompatActivity {
         else
             gender = "woman";
 
-        if(nickName.length() > 1 && age.length() > 0 && birthDay.length() > 5 ) {
+        if(nickName.length() > 1 && birthDay.length() > 8 ) {
+            int birthage=Integer.parseInt(birthDay.substring(2,3));
+            String age= Integer.toString((birthage > 21 ? (22+100-birthage):(22-birthage)));
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             mDatabase = FirebaseDatabase.getInstance().getReference();
             String uid = user.getUid();
