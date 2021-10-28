@@ -99,7 +99,6 @@ public class FridgeFragment extends Fragment{
             }
         });
 
-
         tabArrayList = new ArrayList<>();
         ingredientArrayList = new ArrayList<>();
 

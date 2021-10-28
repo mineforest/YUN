@@ -176,6 +176,7 @@ public class MainRecyclerViewFragment extends Fragment{
 
             case R.id.revoke_menu:
                 revokeAccess();
+                
                 myStartActivity(LoginActivity.class);
                 break;
         }
@@ -243,12 +244,30 @@ public class MainRecyclerViewFragment extends Fragment{
     }
 
     private void revokeAccess() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(uid).removeValue();
+        class StartRunnable implements Runnable{
+            @Override
+            public void run() {
+                try {
+                    while (!Thread.currentThread().isInterrupted()) {
+                        mDatabase.child("users").child(uid).removeValue();
+                        mAuth.getCurrentUser().delete();
+                    }
+                }catch (Exception e){
+                }
+            }
+        }
 
-        mAuth.getCurrentUser().delete();
+        StartRunnable sr = new StartRunnable();
+        Thread stop = new Thread(sr);
+        stop.start();
+
+        try{
+            Thread.sleep(100);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        stop.interrupt();
+
     }
 
     private void reload() {

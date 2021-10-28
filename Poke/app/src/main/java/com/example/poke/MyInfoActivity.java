@@ -86,8 +86,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     nlist.add(snapshot.getValue().toString());
                 }
-
-
             }
 
             @Override
