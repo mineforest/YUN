@@ -1,21 +1,28 @@
 package com.example.poke;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
-import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.mut_jaeryo.circletimer.CircleTimer;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 import java.util.ArrayList;
@@ -33,6 +40,11 @@ public class Recipe_step_Activity extends AppCompatActivity {
     private TextToSpeech tts;
     private Boolean isTTS = false;
     private ImageView ttsBtn;
+    private ImageView timerBtn;
+    private Dialog dialog;
+    private TextView timer_minimi;
+    private CountDownTimer timer;
+    private long milliLeft;
     private HashMap<String, String> map = new HashMap<>();
 
     @Override
@@ -47,7 +59,18 @@ public class Recipe_step_Activity extends AppCompatActivity {
         nextbutton = findViewById(R.id.nextButton);
         viewPager = findViewById(R.id.recipe_viewpager);
         ttsBtn = findViewById(R.id.tts_btn);
+        timer_minimi = findViewById(R.id.timer_minimi);
 
+        timerBtn = findViewById(R.id.timer_btn);
+        milliLeft = 180000;
+
+        dialog = new Dialog(Recipe_step_Activity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.timer_dialog);
+
+        SoundPlayer.initSounds(Recipe_step_Activity.this);
+
+        timerBtn.setOnClickListener(timerButtonClickListener);
         ttsBtn.setOnClickListener(ttsButtonClickListener);
         nextbutton.setOnClickListener(nextButtonClickListener);
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -141,6 +164,97 @@ public class Recipe_step_Activity extends AppCompatActivity {
             }
         }
     };
+
+    View.OnClickListener timerButtonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showDialog();
+        }
+    };
+
+    CircleTimer.baseTimerEndedListener baseTimerEndedListener = new CircleTimer.baseTimerEndedListener() {
+        @Override
+        public void OnEnded() {
+            SoundPlayer.play(SoundPlayer.DING_DONG);
+        }
+    };
+
+    public void showDialog() {
+        dialog.show();
+        TextView timer_tv = dialog.findViewById(R.id.timer_timer);
+        Button start_btn = dialog.findViewById(R.id.timer_start);
+        Button bonus_btn = dialog.findViewById(R.id.timer_plus);
+        Button minus_btn = dialog.findViewById(R.id.timer_minus);
+
+        start_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(start_btn.getText().equals("START")) {
+                    timerStart(milliLeft, timer_tv);
+                    start_btn.setText("PAUSE");
+                    timerBtn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#E60000")));
+                    start_btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8C8B8A")));
+                }
+                else if(start_btn.getText().equals("PAUSE")) {
+                    timerPause();
+                    start_btn.setText("START");
+                    timerBtn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+                    start_btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#29D67E")));
+                }
+            }
+        });
+        bonus_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timerPause();
+                milliLeft += 15000;
+                long min = (milliLeft / (1000 * 60));
+                long sec = ((milliLeft / 1000) - min * 60);
+                timer_tv.setText(min + ":" + sec);
+                timer_minimi.setText(min + ":" + sec);
+                start_btn.setText("START");
+                start_btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#29D67E")));
+            }
+        });
+        minus_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(milliLeft > 15000) {
+                    timerPause();
+                    milliLeft -= 15000;
+                    long min = (milliLeft / (1000 * 60));
+                    long sec = ((milliLeft / 1000) - min * 60);
+                    timer_tv.setText(min + ":" + sec);
+                    timer_minimi.setText(min + ":" + sec);
+                    start_btn.setText("START");
+                    start_btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#29D67E")));
+                }
+            }
+        });
+    }
+
+    public void timerStart(long timeLengthMilli, TextView timer_tv) {
+        timer = new CountDownTimer(timeLengthMilli, 1000) {
+            @Override
+            public void onTick(long milliTillFinish) {
+                milliLeft = milliTillFinish;
+                long min = (milliTillFinish / (1000 * 60));
+                long sec = ((milliTillFinish / 1000) - min * 60);
+                timer_tv.setText(min + ":" + sec);
+                timer_minimi.setText(min + ":" + sec);
+            }
+            @Override
+            public void onFinish() {
+                SoundPlayer.play(SoundPlayer.DING_DONG);
+                timer_tv.setText("완료");
+                timer_minimi.setText("완료");
+            }
+        };
+        timer.start();
+    }
+    public void timerPause() {
+        timer.cancel();
+    }
 
     @Override
     protected void onDestroy() {

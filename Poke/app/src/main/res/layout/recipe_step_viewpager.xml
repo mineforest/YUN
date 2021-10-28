@@ -60,4 +60,27 @@
         app:layout_constraintTop_toBottomOf="@id/recipe_viewpager"
         app:srcCompat="@drawable/ic_volume_up_black_24dp" />
 
+
+    <ImageView
+        android:id="@+id/timer_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_timer_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/tts_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/nextButton"
+        app:layout_constraintTop_toTopOf="@id/tts_btn"/>
+
+    <TextView
+        android:id="@+id/timer_minimi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="TIMER"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@id/timer_btn"
+        app:layout_constraintStart_toStartOf="@id/timer_btn"
+        app:layout_constraintTop_toBottomOf="@id/timer_btn" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
