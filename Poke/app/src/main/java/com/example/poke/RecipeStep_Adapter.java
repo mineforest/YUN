@@ -66,12 +66,15 @@ public class RecipeStep_Adapter extends RecyclerView.Adapter<RecipeStep_Adapter.
     public static class CustomViewHolder extends RecyclerView.ViewHolder {
         public ImageView rcp_img;
         public TextView rcp_step_txt;
+        public ImageView tts_active;
         private TextToSpeech tts;
+        private Boolean isTTS = false;
 
         public CustomViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             this.rcp_img = itemView.findViewById(R.id.step_img);
             this.rcp_step_txt = itemView.findViewById(R.id.step_txt);
+            this.tts_active = itemView.findViewById(R.id.tts_active);
             //TTS 관련코드
             tts = new TextToSpeech(itemView.getContext(), new TextToSpeech.OnInitListener() {
                 @Override
@@ -80,17 +83,25 @@ public class RecipeStep_Adapter extends RecyclerView.Adapter<RecipeStep_Adapter.
                 }
             });
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            tts_active.setOnClickListener(new View.OnClickListener() {
                 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onClick(View v) {
-                    String text = rcp_step_txt.getText().toString();
-
-                    tts.setPitch(1.0f);
-                    tts.setSpeechRate(1.0f);
-                    tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+                    if(!isTTS ) {
+                        String text = rcp_step_txt.getText().toString();
+                        tts.setPitch(1.0f);
+                        tts.setSpeechRate(1.0f);
+                        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+                        tts_active.setImageResource(R.drawable.ic_pause_black_24dp);
+                        isTTS = true;
+                    }
+                    else {
+                        tts.stop();
+                        tts_active.setImageResource(R.drawable.ic_volume_up_black_24dp);
+                        isTTS = false;
+                    }
                 }
-            }); // 여까지
+            });
         }
     }
 }

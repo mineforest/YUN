@@ -8,6 +8,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,7 +23,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.work.WorkManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +36,11 @@ import org.jetbrains.annotations.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import static android.content.Context.MODE_PRIVATE;
+
+import com.example.poke.setAlarm;
+
 
 public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolder> {
     private ArrayList<UserIngredient> ingredientsList;
@@ -45,7 +50,7 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     long date;
     public boolean alarm_flag = true;
-    public boolean check_flag = true;
+    public boolean check_flag = false;
     private DatabaseReference mDatabase;
 
     private OnItemClickListener mlistener = null;
@@ -74,12 +79,19 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_recyclerview,parent,false);
         FridgeAdapter.ViewHolder holder = new FridgeAdapter.ViewHolder(view);
 
+
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String[] dday=ingredientsList.get(position).getExpirationDate().split("-");
+        boolean mainflag =((MainActivity)MainActivity.mContext).alarm;
+        SharedPreferences sharedPreferences = context.getSharedPreferences("bibleNotify",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("SetTimeH", 15);
+        editor.putInt("SetTimeM", 40);
+        editor.commit();
 
         holder.deleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,15 +134,11 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         else {
             holder.day.setText(("D-" + Long.toString(date)));
         }
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, 22);
-        c.set(Calendar.MINUTE, 00);
-        c.set(Calendar.SECOND, 00);
 
         if(date <= 3) {
             holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
-            if(alarm_flag==true){
-                setAlarm(c.getTimeInMillis());
+            if(alarm_flag==true&&mainflag==false){
+                setAlarm.startAlarmBroadcastReceiver(context, sharedPreferences);
                 alarm_flag=false;
             }
         }
@@ -141,24 +149,15 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
     }
 
     public void checkDate(long date){
-        if(date<=3){
-            check_flag=false;
+        if(date>3){
+            check_flag=true;
         }
         else
-            check_flag=true;
+            check_flag=false;
         if(check_flag==true){
-            WorkManager workmanager=WorkManager.getInstance();
-            workmanager.cancelAllWork();
+
         }
     }
-
-    public void setAlarm(long time) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, MyAlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
-    }
-
     @Override
     public int getItemCount() {
         return (ingredientsList != null ? ingredientsList.size() : 0);

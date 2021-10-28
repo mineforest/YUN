@@ -2,10 +2,11 @@ package com.example.poke;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SearchRecentSuggestionsProvider;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.provider.SearchRecentSuggestions;
@@ -62,6 +63,7 @@ public class SearchFragment extends Fragment {
     private TagsAdapter adapter;
     private ArrayList<String> tag_names = new ArrayList<>();
     private ArrayList<ArrayList<Recipe_get>> tag_contents = new ArrayList<>();
+    ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,13 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.search, container, false);
         tag_names.add("전체");
         tag_contents.add(searchList);
+        progressDialog = new ProgressDialog(view.getContext());
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        Singleton_global_recipe singleton_global_recipe = Singleton_global_recipe.getInstance();
+
 
         new Thread() {
             @Override
@@ -101,7 +110,10 @@ public class SearchFragment extends Fragment {
                                         tag_contents.set(idx,rcps);
                                     }
                                 }
-                                adapter.notifyDataSetChanged();
+                                if(searchList.size() > 5000){ // 5000개 이상 불러왔을 때 로딩 종료
+                                    progressDialog.dismiss();
+                                    adapter.notifyDataSetChanged();
+                                }
                             }
                         });
 
@@ -125,8 +137,8 @@ public class SearchFragment extends Fragment {
             ArrayList<Recipe_get> trcps = tag_contents.get(position);
             Intent intent = new Intent(v.getContext(), SearchMoreViewActivity.class);
             if(position == 0) {
-                Singleton_global_recipe singleton_global_recipe = Singleton_global_recipe.getInstance();
-                singleton_global_recipe.setData(trcps);
+                if(singleton_global_recipe.getData() == null)
+                    singleton_global_recipe.setData(trcps);
             }
             else{
                 intent.putExtra("t_rcps",trcps);
