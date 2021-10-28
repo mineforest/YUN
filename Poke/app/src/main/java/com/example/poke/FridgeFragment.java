@@ -110,7 +110,7 @@ public class FridgeFragment extends Fragment{
         fab.attachToRecyclerView(recyclerView);
 
         ingredientAdapter = new FridgeAdapter(tabArrayList);
-        ingredientAdapter.setOnItemClickListener(onItemClickListener);
+        //ingredientAdapter.setOnItemClickListener(onItemClickListener);
         addButton.setOnClickListener(addClickListener);
 
         layoutManager = new GridLayoutManager(getActivity(), 1);
@@ -335,52 +335,52 @@ public class FridgeFragment extends Fragment{
     ChildEventListener childEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                        UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
+            UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
 
-                        ingredientArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
+            ingredientArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
 
-                        if(cate.equals("전체") || cate.equals(ingredient.getCategory())){
-                            tabArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
-                        }
+            if(cate.equals("전체") || cate.equals(ingredient.getCategory())){
+                tabArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
+            }
 
-                        ingredientAdapter.notifyDataSetChanged();
+            ingredientAdapter.notifyDataSetChanged();
         }
 
         @Override
         public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-                    ingredient = new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(), snapshot.getKey());
+            UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
+            ingredient = new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(), snapshot.getKey());
 
-                    if (cate.equals("전체") || cate.equals(ingredient.getCategory())) {
-                        tabArrayList.set(pos, ingredient);
-                    }
+            if (cate.equals("전체") || cate.equals(ingredient.getCategory())) {
+                tabArrayList.set(pos, ingredient);
+            }
 
-                    for (int i = 0; i < ingredientArrayList.size(); i++) {
-                        if (snapshot.getKey().equals(ingredientArrayList.get(i).getIngredientKey())) {
-                            ingredientArrayList.set(i, ingredient);
-                        }
-                    }
+            for (int i = 0; i < ingredientArrayList.size(); i++) {
+                if (snapshot.getKey().equals(ingredientArrayList.get(i).getIngredientKey())) {
+                    ingredientArrayList.set(i, ingredient);
+                }
+            }
 
-                    ingredientAdapter.notifyDataSetChanged();
+            ingredientAdapter.notifyDataSetChanged();
         }
         @Override
         public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                    UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-                    ingredient = new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(), snapshot.getKey());
+            UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
+            ingredient = new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(), snapshot.getKey());
 
-                    if (cate.equals("전체") || cate.equals(ingredient.getCategory())) {
-                        for (int i = 0; i < tabArrayList.size(); i++) {
-                            if (snapshot.getKey().equals(tabArrayList.get(i).getIngredientKey())) {
-                                tabArrayList.remove(i);
-                            }
-                        }
+            if (cate.equals("전체") || cate.equals(ingredient.getCategory())) {
+                for (int i = 0; i < tabArrayList.size(); i++) {
+                    if (snapshot.getKey().equals(tabArrayList.get(i).getIngredientKey())) {
+                        tabArrayList.remove(i);
                     }
+                }
+            }
 
-                    for (int i = 0; i < ingredientArrayList.size(); i++) {
-                        if (snapshot.getKey().equals(ingredientArrayList.get(i).getIngredientKey())) {
-                            ingredientArrayList.remove(i);
-                        }
-                    }
+            for (int i = 0; i < ingredientArrayList.size(); i++) {
+                if (snapshot.getKey().equals(ingredientArrayList.get(i).getIngredientKey())) {
+                    ingredientArrayList.remove(i);
+                }
+            }
         }
 
         @Override
@@ -405,23 +405,24 @@ public class FridgeFragment extends Fragment{
         ingredientAdapter.notifyDataSetChanged();
     }
 
+    /*
     FridgeAdapter.OnItemClickListener onItemClickListener =new FridgeAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
             Bundle args = new Bundle();
             pos = position;
 
-                args.putString("title",tabArrayList.get(position).getIngredientTitle());
-                args.putString("category", tabArrayList.get(position).getCategory());
-                args.putString("date", tabArrayList.get(position).getExpirationDate());
-                args.putString("key", tabArrayList.get(position).getIngredientKey());
+            args.putString("title",tabArrayList.get(position).getIngredientTitle());
+            args.putString("category", tabArrayList.get(position).getCategory());
+            args.putString("date", tabArrayList.get(position).getExpirationDate());
+            args.putString("key", tabArrayList.get(position).getIngredientKey());
 
             IngredientDialog dialog = new IngredientDialog();
             dialog.setArguments(args); // 데이터 전달
             dialog.show(getActivity().getSupportFragmentManager(),"tag");
         }
     };
-
+*/
     View.OnClickListener addClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

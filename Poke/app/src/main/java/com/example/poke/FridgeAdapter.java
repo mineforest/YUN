@@ -81,7 +81,6 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_recyclerview,parent,false);
         FridgeAdapter.ViewHolder holder = new FridgeAdapter.ViewHolder(view);
 
-
         return holder;
     }
 
@@ -130,6 +129,7 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
 //                .into(holder.image);
         date /= 86400000;
         holder.title.setText(String.valueOf(ingredientsList.get(position).getIngredientTitle()));
+        holder.reg_date.setText(ingredientsList.get(position).getExpirationDate());
         if(date < 0){
             holder.day.setText(("D+" + Long.toString(Math.abs(date))));
             holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_gray));
@@ -144,16 +144,13 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
             if(date<0) holder.fridgeImage.setImageTintList(ColorStateList.valueOf(Color.parseColor("#BAC4CC")));
             else holder.fridgeImage.setImageTintList(ColorStateList.valueOf(Color.parseColor("#E60000")));
 
-            //holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
             if(alarm_flag==true&&mainflag==false){
                 setAlarm.startAlarmBroadcastReceiver(context, sharedPreferences);
-
                 alarm_flag=false;
             }
         }
         else{
             holder.fridgeImage.setImageTintList(ColorStateList.valueOf(Color.parseColor("#29D67E")));
-            //holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_green));
         }
         checkDate(date);
     }
@@ -182,6 +179,7 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         //ImageView image;
         TextView title;
         TextView day;
+        TextView reg_date;
         ImageView deleteImage;
         ImageView fridgeImage;
 
@@ -200,8 +198,8 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
                 }
             });
 
-                    //  this.image = itemView.findViewById(R.id.categoryView);
             this.title = itemView.findViewById(R.id.ingredientTitleView);
+            this.reg_date = itemView.findViewById(R.id.textView13);
             this.day = itemView.findViewById(R.id.dDay);
             this.deleteImage = itemView.findViewById(R.id.deleteImage);
             this.fridgeImage = itemView.findViewById(R.id.categoryView);
