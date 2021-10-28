@@ -82,14 +82,12 @@
 
         <activity android:name=".MainMoreViewActivity">
         </activity>
-        <activity android:name=".SearchMoreViewActivity" />
-
-
-        <receiver android:name=".MyAlarmReceiver"
-            android:enabled="true"
-            android:exported="true"></receiver>
-
-
+        <receiver android:name=".AlarmBroadcastReceiver" />
+        <receiver android:name=".rebootReceiver" android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
