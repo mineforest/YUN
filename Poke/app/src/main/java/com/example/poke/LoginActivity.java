@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -34,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Initialize Firebase Auth
+        getSupportActionBar().hide();
+
         mAuth = FirebaseAuth.getInstance();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -43,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         findViewById(R.id.loginButton).setOnClickListener(onClickListener);
-        findViewById(R.id.gotoSignUpButton).setOnClickListener(onClickListener);
+        findViewById(R.id.gotoSignUpText).setOnClickListener(onClickListener);
         findViewById(R.id.googleSignInButton).setOnClickListener(onClickListener);
 
     }
@@ -63,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                 case R.id.loginButton:
                     login();
                     break;
-                case R.id.gotoSignUpButton:
+                case R.id.gotoSignUpText:
                     myStartActivity(SignUpActivity.class);
                     break;
                 case R.id.googleSignInButton:

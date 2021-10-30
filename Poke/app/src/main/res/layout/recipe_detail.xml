@@ -195,7 +195,6 @@
         android:src="@drawable/outline_favorite_24"
         app:layout_constraintEnd_toEndOf="@id/thumbnail_layout"
         app:layout_constraintTop_toTopOf="@id/thumbnail_layout"
-        app:tint="#8C8B8A" />
-
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

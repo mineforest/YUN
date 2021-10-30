@@ -17,12 +17,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.mut_jaeryo.circletimer.CircleTimer;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 import java.util.ArrayList;
@@ -172,13 +170,6 @@ public class Recipe_step_Activity extends AppCompatActivity {
         }
     };
 
-    CircleTimer.baseTimerEndedListener baseTimerEndedListener = new CircleTimer.baseTimerEndedListener() {
-        @Override
-        public void OnEnded() {
-            SoundPlayer.play(SoundPlayer.DING_DONG);
-        }
-    };
-
     public void showDialog() {
         dialog.show();
         TextView timer_tv = dialog.findViewById(R.id.timer_timer);
@@ -253,7 +244,7 @@ public class Recipe_step_Activity extends AppCompatActivity {
         timer.start();
     }
     public void timerPause() {
-        timer.cancel();
+        if(timer != null) timer.cancel();
     }
 
     @Override

@@ -37,6 +37,7 @@ public class MemberInitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_init);
+        getSupportActionBar().hide();
 
         mBtn = findViewById(R.id.manButton);
         wBtn = findViewById(R.id.womanButton);
@@ -44,6 +45,7 @@ public class MemberInitActivity extends AppCompatActivity {
         calendar_btn.setOnClickListener(calendarListener);
         birthET = findViewById(R.id.birthDayEditText);
         birthET.setFocusableInTouchMode(false);
+        birthET.setOnClickListener(calendarListener);
         mBtn.setChecked(true);
         bool = false;
 

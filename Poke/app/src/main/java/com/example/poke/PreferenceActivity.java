@@ -52,48 +52,48 @@ public class PreferenceActivity extends AppCompatActivity implements AllergyFrag
         viewPager2.setUserInputEnabled(false);
     }
 
-public void next(int page){
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                switch(page){
-                    case 0:
-                        fragmentManager.beginTransaction().remove(startFragment).commit();
-                        viewPager2.setAdapter(pagerAdapter);
-                        dotsIndicator.setViewPager2(viewPager2);
-                        dotsIndicator.setVisibility(View.VISIBLE);
-                        viewPager2.setCurrentItem(0);
-                        break;
+    public void next(int page){
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        switch(page){
+            case 0:
+                fragmentManager.beginTransaction().remove(startFragment).commit();
+                viewPager2.setAdapter(pagerAdapter);
+                dotsIndicator.setViewPager2(viewPager2);
+                dotsIndicator.setVisibility(View.VISIBLE);
+                viewPager2.setCurrentItem(0);
+                break;
 
-                    case 1:
-                        viewPager2.setCurrentItem(1);
-                        break;
+            case 1:
+                viewPager2.setCurrentItem(1);
+                break;
 
-                    case 2:
-                        if(preList.size() <= 1){
-                           startToast("좋아하는 음식을 2가지 이상 선택해주세요.");
-                        }
-                        else {
-                            for (String list : preList)
-                                mDatabase.child("preference").child(uid).push().setValue(new UserPreference(list));
-                            for (String list : allergyList)
-                                mDatabase.child("allergy").child(uid).push().setValue(new UserAllergy(list));
-                            myStartActivity(MainActivity.class);
-                        }
+            case 2:
+                if(preList.size() <= 1){
+                   startToast("좋아하는 음식을 2가지 이상 선택해주세요.");
                 }
-}
-
-public void pre(int page){
-            switch (page){
-                case 0:
-                    viewPager2.setCurrentItem(0);
-                    break;
-                case -1:
-                    dotsIndicator.setVisibility(View.GONE);
-                    viewPager2.setAdapter(null);
-                    fragmentManager.beginTransaction().replace(R.id.frame_container2,startFragment).commit();
-                    break;
-            }
+                else {
+                    for (String list : preList)
+                        mDatabase.child("preference").child(uid).push().setValue(new UserPreference(list));
+                    for (String list : allergyList)
+                        mDatabase.child("allergy").child(uid).push().setValue(new UserAllergy(list));
+                    myStartActivity(MainActivity.class);
+                }
         }
+    }
+
+    public void pre(int page){
+        switch (page){
+            case 0:
+                viewPager2.setCurrentItem(0);
+                break;
+            case -1:
+                dotsIndicator.setVisibility(View.GONE);
+                viewPager2.setAdapter(null);
+                fragmentManager.beginTransaction().replace(R.id.frame_container2,startFragment).commit();
+                break;
+        }
+    }
 
     @Override
     public void allergyListener(ArrayList allergy) {
