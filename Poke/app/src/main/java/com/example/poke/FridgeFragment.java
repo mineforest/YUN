@@ -156,14 +156,14 @@ public class FridgeFragment extends Fragment{
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 if(tmp == 0) {
                     super.onScrolled(recyclerView, dx, dy);
-                    fab.show();
+                    fab.setVisibility(view.GONE);
                 }
             }
 
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                fab.hide();
+                fab.setVisibility(view.VISIBLE);
                 tmp = 0;
             }
         });
