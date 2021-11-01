@@ -10,8 +10,10 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.SharedPreferences;
 import android.app.AlarmManager;
-import android.widget.Toast;
+import android.util.Log;
 import android.app.NotificationChannel;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
@@ -20,26 +22,20 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     NotificationChannel notificationChannel;
     CharSequence name = "Ingre Notify";
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
         // build and show notification
-
         try {
+            Log.d("test","show noti");
             showNotification(context);
 
         } catch (Exception e) {
-            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
         }
-
-
         // Start a new alarm
         Intent intent1 = new Intent(context, AlarmBroadcastReceiver.class);
         final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 100, intent1, 0);
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (1000 * 60 * 60 * 24), pendingIntent);
-
-
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (1000 * 60 * 60 * 24), pendingIntent);
     }
 
     // build Notification
@@ -81,8 +77,6 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             mBuilder.setChannelId(CHANNEL_ID);
         }
-
         mNotificationManager.notify(1, mBuilder.build());
-
     }
 }
