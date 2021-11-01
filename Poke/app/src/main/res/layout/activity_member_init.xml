@@ -62,40 +62,46 @@
             app:cardElevation="5dp"
             android:layout_marginVertical="20dp">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="40dp"
                     android:text="회원정보"
                     android:textColor="@color/green"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="40dp" />
 
 
                 <EditText
                     android:id="@+id/nickNameEditText"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
-                    android:layout_marginBottom="15dp"
                     android:hint="별명"
                     android:inputType="textPersonName"
                     android:maxLines="1"
-                    android:privateImeOptions="defaultInputmode=korean" />
+                    android:privateImeOptions="defaultInputmode=korean"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView3"/>
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:id="@+id/birthdayLayout"
                     android:layout_marginHorizontal="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nickNameEditText">
 
                     <EditText
                         android:id="@+id/birthDayEditText"
@@ -116,11 +122,14 @@
                 </RelativeLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/sexLayout"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal">
+                    android:layout_marginHorizontal="17dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/birthdayLayout">
 
                     <TextView
                         android:id="@+id/genderTextView"
@@ -165,10 +174,13 @@
                     android:background="@drawable/btn_shape"
                     android:text="완료 √"
                     android:textColor="@color/white"
-                    tools:textSize="20sp" />
+                    tools:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sexLayout"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
