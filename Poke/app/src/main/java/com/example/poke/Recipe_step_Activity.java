@@ -53,6 +53,8 @@ public class Recipe_step_Activity extends AppCompatActivity {
         rcp = intent.getParcelableExtra("rcp");
         ingres = intent.getStringArrayListExtra("ingre");
 
+        getSupportActionBar().hide();
+
         springDotsIndicator = findViewById(R.id.dots_indicator);
         nextbutton = findViewById(R.id.nextButton);
         viewPager = findViewById(R.id.recipe_viewpager);

@@ -3,6 +3,7 @@ package com.example.poke;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.datatransport.runtime.scheduling.jobscheduling.SchedulerConfig;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -74,7 +76,6 @@ public class MainRecyclerViewFragment extends Fragment{
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         uid = user.getUid();
-
         swipeRefreshLayout = view.findViewById(R.id.swipe_layout);
         swipeRefreshLayout.setOnRefreshListener(() -> view.postDelayed(() -> {
             reload();
@@ -86,9 +87,9 @@ public class MainRecyclerViewFragment extends Fragment{
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("history").child(uid).addValueEventListener(historyListener);
+        mDatabase.child(DataBaseCategory.history.toString()).child(uid).addValueEventListener(historyListener);
 
-        mDatabase.child("ingredient").child(uid).addValueEventListener(new ValueEventListener() {
+        mDatabase.child(DataBaseCategory.ingredient.toString()).child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 myIngreList.clear();
@@ -179,8 +180,12 @@ public class MainRecyclerViewFragment extends Fragment{
 
             case R.id.revoke_menu:
                 revokeAccess();
-                
+                startToast("회원탈퇴를 완료했습니다.");
                 myStartActivity(LoginActivity.class);
+                break;
+
+            case R.id.alarm_menu:
+                myStartActivity(AlarmActivity.class);
                 break;
         }
 
@@ -191,7 +196,6 @@ public class MainRecyclerViewFragment extends Fragment{
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             W2vHttpConn w2v = new W2vHttpConn();
-
             new Thread(){
                 @Override
                 public void run() {
@@ -247,14 +251,21 @@ public class MainRecyclerViewFragment extends Fragment{
     }
 
     private void revokeAccess() {
-        user.delete()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+            mAuth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            mDatabase.child("users").child(uid).removeValue();
-                            startToast("회원탈퇴를 완료했습니다.");
-                        }
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mDatabase.child(DataBaseCategory.allergy.toString()).child(uid).removeValue();
+                                mDatabase.child(DataBaseCategory.dips.toString()).child(uid).removeValue();
+                                mDatabase.child(DataBaseCategory.history.toString()).child(uid).removeValue();
+                                mDatabase.child(DataBaseCategory.ingredient.toString()).child(uid).removeValue();
+                                mDatabase.child(DataBaseCategory.preference.toString()).child(uid).removeValue();
+                                mDatabase.child(DataBaseCategory.users.toString()).child(uid).removeValue();
+                            }
+                        },200);
+
                     }
                 });
     }

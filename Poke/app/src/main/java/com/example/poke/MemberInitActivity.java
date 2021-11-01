@@ -32,13 +32,15 @@ public class MemberInitActivity extends AppCompatActivity {
     private static final String Tag = "UserInitActivity";
     private ImageButton calendar_btn;
     private EditText birthET;
+    private Calendar calendar;
+    private static int pickYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_init);
         getSupportActionBar().hide();
-
+        calendar = Calendar.getInstance();
         mBtn = findViewById(R.id.manButton);
         wBtn = findViewById(R.id.womanButton);
         calendar_btn = findViewById(R.id.initCalendarButton);
@@ -74,11 +76,12 @@ public class MemberInitActivity extends AppCompatActivity {
     View.OnClickListener calendarListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Calendar calendar = Calendar.getInstance();
+
             DatePickerDialog datePickerDialog = new DatePickerDialog(MemberInitActivity.this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     birthET.setText(String.format("%d-%02d-%02d",year,month+1,dayOfMonth));
+                    pickYear = year;
                 }
             },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE));
             datePickerDialog.show();
@@ -96,8 +99,8 @@ public class MemberInitActivity extends AppCompatActivity {
             gender = "woman";
 
         if(nickName.length() > 1 && birthDay.length() > 8 ) {
-            int birthage=Integer.parseInt(birthDay.substring(2,3));
-            String age= Integer.toString((birthage > 21 ? (22+100-birthage):(22-birthage)));
+            int now_year=calendar.get(Calendar.YEAR);
+            String age= Integer.toString(now_year - pickYear + 1);
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             mDatabase = FirebaseDatabase.getInstance().getReference();
             String uid = user.getUid();

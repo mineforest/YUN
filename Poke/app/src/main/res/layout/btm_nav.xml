@@ -27,10 +27,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/menu_shadow"
-        app:menu="@menu/bottom_nav"
-        app:labelVisibilityMode="labeled"
         app:itemIconTint="@color/navigation_selected"
-        app:itemTextColor="#6E7377">
+        app:itemTextColor="#6E7377"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 

@@ -46,6 +46,7 @@ public class Recipe_Info extends AppCompatActivity {
     private ImageView recipe_image;
     private TextView recipe_title_tv;
     private TextView recipe_time_tv;
+    private TextView recipe_url;
     private ChipGroup chipGroup;
     private Chip chip;
     RecipeIngre_Adapter adapter;
@@ -87,6 +88,7 @@ public class Recipe_Info extends AppCompatActivity {
         recipe_image = findViewById(R.id.rcpinfo_thumbnail);
         recipe_title_tv = findViewById(R.id.title_txt);
         recipe_time_tv = findViewById(R.id.timeText);
+        recipe_url = findViewById(R.id.rcp_url);
 
         Intent intent = getIntent();
         recipe_id = intent.getStringExtra("rcp_id");
@@ -113,6 +115,7 @@ public class Recipe_Info extends AppCompatActivity {
 
                                             Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
                                             recipe_title_tv.setText(rcp.getName());
+                                            recipe_url.setText(rcp.getUrl());
                                             recipe_time_tv.setText("약 " + rcp.getTime() + "분");
 
                                             RecyclerView recyclerView = findViewById(R.id.ingre_recyclerView);
