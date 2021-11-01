@@ -182,6 +182,10 @@ public class MainRecyclerViewFragment extends Fragment{
                 
                 myStartActivity(LoginActivity.class);
                 break;
+
+            case R.id.alarm_menu:
+                myStartActivity(AlarmActivity.class);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

@@ -45,6 +45,8 @@
         </activity>
         <activity android:name=".PasswordResetActivity">
         </activity>
+        <activity android:name=".AlarmActivity">
+        </activity>
         <activity android:name=".MemberInitActivity">
         </activity>
         <activity android:name=".CheckAllergyActivity">
