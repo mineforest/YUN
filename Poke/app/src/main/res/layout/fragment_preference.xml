@@ -29,10 +29,9 @@
             <Button
                 android:id="@+id/button1"
                 style="?android:attr/borderlessButtonStyle"
-                android:layout_width="86dp"
-                android:layout_height="43dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginBottom="-1dp"
                 android:backgroundTint="@color/white"
                 android:elevation="0dp"
                 android:text="&lt; 이전"
@@ -44,8 +43,8 @@
             <Button
                 android:id="@+id/button2"
                 style="?android:attr/borderlessButtonStyle"
-                android:layout_width="89dp"
-                android:layout_height="44dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="-1dp"
                 android:backgroundTint="@color/white"
@@ -85,10 +84,11 @@
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/preOption"
-            android:layout_width="366dp"
-            android:layout_height="331dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
+            android:layout_marginright="5dp"
             android:layout_marginTop="25dp">
 
             <com.google.android.material.chip.Chip
@@ -97,7 +97,8 @@
                 android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
-                android:text="탕"
+                android:gravity="center"
+                android:text=" 탕 "
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -107,6 +108,7 @@
                 android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
+                android:gravity="center"
                 android:text="찌개"
                 android:textAlignment="center"
                 android:textSize="15sp" />
@@ -118,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                android:text="면"
+                android:text=" 면 "
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -150,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                android:text="밥"
+                android:text=" 밥 "
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -161,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                android:text="죽"
+                android:text=" 죽 "
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -169,7 +171,7 @@
                 android:id="@+id/preChip10"
                 style="@style/CustomChipStyle"
                 android:layout_width="93dp"
-                android:layout_height="55dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
                 android:text="샐러드"
@@ -179,11 +181,11 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip8"
                 style="@style/CustomChipStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                android:text="김치젓갈장류"
+                android:text="김치젓갈장"
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -192,7 +194,7 @@
                 style="@style/CustomChipStyle"
                 android:layout_width="93dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="7dp"
                 android:gravity="center"
                 android:text="양식"
                 android:textAlignment="center"
@@ -216,7 +218,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                android:text="두류"
+                android:text=" 콩 "
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -238,7 +240,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                android:text="채소류"
+                android:text="채소"
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -249,7 +251,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                android:text="버섯류"
+                android:text="버섯"
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -260,7 +262,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                android:text="과실류"
+                android:text="과일"
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -271,7 +273,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                android:text="육류"
+                android:text="고기"
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -282,7 +284,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                android:text="난류"
+                android:text="계란"
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -293,7 +295,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                android:text="어패류"
+                android:text="조개"
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -304,7 +306,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                android:text="해조류"
+                android:text="미역"
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -315,7 +317,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                android:text="유제품류"
+                android:text="우유요거트"
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
