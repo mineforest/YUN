@@ -181,7 +181,7 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
                 dipsButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.info_btn));
                 break;
             case R.id.allergyButton:
-                fragmentTransaction.replace(R.id.InfoFrame,new Menu()).commit();
+                fragmentTransaction.replace(R.id.InfoFrame,new AddAllergy()).commit();
                 historyButton.setBackgroundColor(Color.parseColor("#00ff0000"));
                 allergyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.info_btn));
                 dipsButton.setBackgroundColor(Color.parseColor("#00ff0000"));

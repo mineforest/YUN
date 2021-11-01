@@ -28,8 +28,10 @@
                 android:layout_centerInParent="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_person_black_24dp"
-                app:civ_border_color="@color/green"
-                app:civ_border_width="5dp" />
+                app:civ_border_color="#96e6a1"
+                app:civ_border_width="3dp" />
+            app:civ_border_color="@color/green"
+            app:civ_border_width="5dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
