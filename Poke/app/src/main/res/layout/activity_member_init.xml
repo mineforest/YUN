@@ -30,20 +30,26 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/Login_poke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginVertical="45dp"
+        android:text="POKE"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/Login_poke"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginVertical="45dp"
-            android:text="POKE"
-            android:textColor="@color/white"
-            android:textSize="35sp" />
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Login_poke">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -53,7 +59,8 @@
             android:background="@color/white"
             android:elevation="5dp"
             app:cardCornerRadius="20dp"
-            app:cardElevation="5dp">
+            app:cardElevation="5dp"
+            android:layout_marginVertical="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,9 +93,9 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginHorizontal="15dp"
-                    android:layout_marginBottom="15dp">
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal">
 
                     <EditText
                         android:id="@+id/birthDayEditText"
@@ -111,9 +118,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginHorizontal="15dp"
-                    android:layout_marginBottom="15dp">
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/genderTextView"
