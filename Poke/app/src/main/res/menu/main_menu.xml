@@ -15,4 +15,9 @@
         android:id="@+id/passwrod_reset_menu"
         android:title="비밀번호재설정"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/alarm_menu"
+        android:title="알람설정"
+        app:showAsAction="never" />
 </menu>

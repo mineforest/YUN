@@ -2,6 +2,7 @@ package com.example.poke;
 
 import  android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -49,7 +50,7 @@ public class FridgeFragment extends Fragment{
     private ImageButton addButton;
     private SearchView searchView;
     private TextInputLayout textInputLayout;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -95,22 +96,14 @@ public class FridgeFragment extends Fragment{
 
         recyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
         FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.ingredientAddBtn);
-        fab.attachToRecyclerView(recyclerView);
 
         ingredientAdapter = new FridgeAdapter(tabArrayList);
-        //ingredientAdapter.setOnItemClickListener(onItemClickListener);
+        ingredientAdapter.setOnItemClickListener(onItemClickListener);
         addButton.setOnClickListener(addClickListener);
 
         layoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-
-        ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
-        for(int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
-            View v = slidingTabStrip.getChildAt(i);
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            params.rightMargin = betweenSpace;
-        }
 
         class StartRunnable implements Runnable{
             @Override
@@ -120,8 +113,22 @@ public class FridgeFragment extends Fragment{
                         mAuth = FirebaseAuth.getInstance();
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         mDatabase = FirebaseDatabase.getInstance().getReference();
+
                         if (user != null)
                             uid = user.getUid();
+
+                        new Handler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
+                                for(int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
+                                    View v = slidingTabStrip.getChildAt(i);
+                                    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+                                    params.rightMargin = betweenSpace;
+                                }
+                                fab.attachToRecyclerView(recyclerView);
+                            }
+                        });
                     }
                 }catch (Exception e){
                 }finally {
@@ -144,14 +151,20 @@ public class FridgeFragment extends Fragment{
         stop.interrupt();
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int tmp = 1;
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                if(dy<0){
-                    fab.show();
+                if(tmp == 0) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    fab.setVisibility(view.GONE);
                 }
-                else if(dy>0){
-                    fab.hide();
-                }
+            }
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                fab.setVisibility(view.VISIBLE);
+                tmp = 0;
             }
         });
 
@@ -275,7 +288,6 @@ public class FridgeFragment extends Fragment{
         return view;
     }
 
-
     public void onCreateOptionsMenu(Menu menu,MenuInflater inflater){
         super.onCreateOptionsMenu(menu,inflater);
         inflater.inflate(R.menu.ingredient_sort,menu);
@@ -291,7 +303,6 @@ public class FridgeFragment extends Fragment{
             if ((cate.equals("전체") || userIngredient.getCategory().equals(cate)) && userIngredient.getIngredientTitle().contains(searchText)) tabArrayList.add(userIngredient);
         }
         ingredientAdapter.filterList(tabArrayList);
-
     }
 
     @Override
@@ -393,7 +404,6 @@ public class FridgeFragment extends Fragment{
         ingredientAdapter.notifyDataSetChanged();
     }
 
-    /*
     FridgeAdapter.OnItemClickListener onItemClickListener =new FridgeAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
@@ -410,7 +420,7 @@ public class FridgeFragment extends Fragment{
             dialog.show(getActivity().getSupportFragmentManager(),"tag");
         }
     };
-*/
+
     View.OnClickListener addClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
