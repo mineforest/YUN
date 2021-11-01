@@ -6,90 +6,67 @@
     android:id="@+id/linearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/image_bg"
     android:clipToPadding="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/green">
 
-    <LinearLayout
-        android:id="@+id/bottomSheet1"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/top_shadow"
-        android:elevation="50dp"
-        android:orientation="vertical"
-        app:behavior_hideable="false"
-        app:behavior_peekHeight="399dp"
-        app:layout_behavior="@string/bottom_sheet_behavior">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/button1"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:backgroundTint="@color/white"
-                android:elevation="0dp"
-                android:text="&lt; 이전"
-                android:textColor="@android:color/darker_gray"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:strokeColor="@color/white" />
-
-            <Button
-                android:id="@+id/button2"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="-1dp"
-                android:backgroundTint="@color/white"
-                android:text="다음 &gt;"
-                android:textAlignment="center"
-                android:textColor="@android:color/darker_gray"
-                android:textColorLink="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:rippleColor="#FFFFFF"
-                app:strokeColor="@color/white"
-                app:strokeWidth="0dp" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/Head1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="15dp"
             android:text="어떤 음식을 좋아하나요?"
             android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/textView8"
-            android:layout_width="336dp"
+            android:id="@+id/sub_head"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
             android:text="취향에 맞게 레시피를 추천받을 수 있습니다. \n좋아하는 음식을 탭 하세요"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textColor="#08660A"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/Head1"
+            app:layout_constraintTop_toBottomOf="@id/Head1"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/imageView"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            app:lottie_fileName="chefs.json"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            app:layout_constraintTop_toBottomOf="@id/sub_head"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="15dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomSheet1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/top_shadow"
+        android:orientation="vertical"
+        app:layout_scrollFlags="noScroll"
+        app:layout_behavior="@string/bottom_sheet_behavior">
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/preOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:layout_marginright="5dp"
-            android:layout_marginTop="25dp">
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="5dp">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip1"
@@ -100,7 +77,7 @@
                 android:gravity="center"
                 android:text=" 탕 "
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip2"
@@ -111,7 +88,7 @@
                 android:gravity="center"
                 android:text="찌개"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip4"
@@ -122,7 +99,7 @@
                 android:gravity="center"
                 android:text=" 면 "
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip5"
@@ -133,7 +110,7 @@
                 android:gravity="center"
                 android:text="만두"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip3"
@@ -143,7 +120,7 @@
                 android:layout_margin="7dp"
                 android:text="디저트"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip6"
@@ -154,7 +131,7 @@
                 android:gravity="center"
                 android:text=" 밥 "
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip7"
@@ -165,7 +142,7 @@
                 android:gravity="center"
                 android:text=" 죽 "
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip10"
@@ -176,7 +153,7 @@
                 android:gravity="center"
                 android:text="샐러드"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip8"
@@ -187,7 +164,7 @@
                 android:gravity="center"
                 android:text="김치젓갈장"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip9"
@@ -198,7 +175,7 @@
                 android:gravity="center"
                 android:text="양식"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip11"
@@ -209,7 +186,7 @@
                 android:gravity="center"
                 android:text="스프"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip12"
@@ -220,7 +197,7 @@
                 android:gravity="center"
                 android:text=" 콩 "
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip13"
@@ -231,7 +208,7 @@
                 android:gravity="center"
                 android:text="견과류"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip14"
@@ -242,7 +219,7 @@
                 android:gravity="center"
                 android:text="채소"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip15"
@@ -253,7 +230,7 @@
                 android:gravity="center"
                 android:text="버섯"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip16"
@@ -264,7 +241,7 @@
                 android:gravity="center"
                 android:text="과일"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip17"
@@ -275,7 +252,7 @@
                 android:gravity="center"
                 android:text="고기"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip18"
@@ -286,7 +263,7 @@
                 android:gravity="center"
                 android:text="계란"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip19"
@@ -297,7 +274,7 @@
                 android:gravity="center"
                 android:text="조개"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip20"
@@ -308,7 +285,7 @@
                 android:gravity="center"
                 android:text="미역"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/preChip21"
@@ -319,10 +296,42 @@
                 android:gravity="center"
                 android:text="우유요거트"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
         </com.google.android.material.chip.ChipGroup>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp">
 
+            <Button
+                android:id="@+id/button1"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:text="이전"
+                android:textColor="@android:color/darker_gray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="16sp"
+                />
+
+            <Button
+                android:id="@+id/button2"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:text="다음"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:textColor="@android:color/darker_gray"
+                android:textColorLink="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

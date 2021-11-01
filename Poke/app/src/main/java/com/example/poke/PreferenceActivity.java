@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
+import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class PreferenceActivity extends AppCompatActivity implements AllergyFrag
     private ArrayList<String> preList, allergyList = new ArrayList<>();
     private ViewPager2 viewPager2;
     private FragmentStateAdapter pagerAdapter;
-    private DotsIndicator dotsIndicator;
+    private SpringDotsIndicator dotsIndicator;
     private StartFragment startFragment;
     private FragmentTransaction fragmentTransaction;
 
@@ -42,7 +43,7 @@ public class PreferenceActivity extends AppCompatActivity implements AllergyFrag
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null)
             uid = user.getUid();
-        dotsIndicator = (DotsIndicator) findViewById(R.id.dots_indicator);
+        dotsIndicator = findViewById(R.id.dots_indicator);
         viewPager2 = (ViewPager2) findViewById(R.id.pager2);
         pagerAdapter=new PreferenceFragmentAdapter(this);
         viewPager2.registerOnPageChangeCallback(pageChangeCallback);
