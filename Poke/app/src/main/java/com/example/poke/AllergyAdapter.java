@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -82,11 +83,26 @@ public class AllergyAdapter extends RecyclerView.Adapter<AllergyAdapter.CustomVi
         String uid = user.getUid();
         String rid = allergyArrayList.get(position);
 
+//        mDatabase.child("allergy").child(uid).child(rid).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+//                Log.d("onDataChange: ", snapshot.getKey());
+//                if (snapshot != null && snapshot.getKey() == rid) {
+//                    holder.checkBox.setChecked(true);
+//                } else {
+//                    holder.checkBox.setChecked(false);
+//                }
+//            }
+//
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+
 
         holder.checkBox.setText(allergyArrayList.get(position));
-        if(AddAllergy.AllergyList.equals(rid)) {
-            holder.checkBox.setChecked(true);
-        }
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -114,7 +130,8 @@ public class AllergyAdapter extends RecyclerView.Adapter<AllergyAdapter.CustomVi
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
-        CheckBox checkBox;
+        public CheckBox checkBox;
+//        CheckBox checkBox;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);

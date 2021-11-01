@@ -91,7 +91,6 @@ public class AddAllergy extends Fragment {
 
         DatabaseReference myRef = database.getReference("allergy");
 
-
         return view;
     }
 

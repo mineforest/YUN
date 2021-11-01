@@ -76,7 +76,7 @@ public class PreferenceActivity extends AppCompatActivity implements AllergyFrag
                     for (String list : preList)
                         mDatabase.child("preference").child(uid).push().setValue(new UserPreference(list));
                     for (String list : allergyList)
-                        mDatabase.child("allergy").child(uid).child(allergyList.get(Integer.parseInt(list))).setValue(new UserAllergy(list));
+                        mDatabase.child("allergy").child(uid).push().setValue(new UserAllergy(list));
                     myStartActivity(MainActivity.class);
                 }
         }
