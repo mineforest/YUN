@@ -1,12 +1,22 @@
 package com.example.poke;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.CountDownTimer;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
@@ -14,6 +24,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
 
 public class Recipe_step_Activity extends AppCompatActivity {
 
@@ -23,6 +35,15 @@ public class Recipe_step_Activity extends AppCompatActivity {
     private Button nextbutton;
     private ViewPager2 viewPager;
     private ArrayList<String> ingres;
+    private TextToSpeech tts;
+    private Boolean isTTS = false;
+    private ImageView ttsBtn;
+    private ImageView timerBtn;
+    private Dialog dialog;
+    private TextView timer_minimi;
+    private CountDownTimer timer;
+    private long milliLeft;
+    private HashMap<String, String> map = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +56,20 @@ public class Recipe_step_Activity extends AppCompatActivity {
         springDotsIndicator = findViewById(R.id.dots_indicator);
         nextbutton = findViewById(R.id.nextButton);
         viewPager = findViewById(R.id.recipe_viewpager);
+        ttsBtn = findViewById(R.id.tts_btn);
+        timer_minimi = findViewById(R.id.timer_minimi);
 
+        timerBtn = findViewById(R.id.timer_btn);
+        milliLeft = 180000;
+
+        dialog = new Dialog(Recipe_step_Activity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.timer_dialog);
+
+        SoundPlayer.initSounds(Recipe_step_Activity.this);
+
+        timerBtn.setOnClickListener(timerButtonClickListener);
+        ttsBtn.setOnClickListener(ttsButtonClickListener);
         nextbutton.setOnClickListener(nextButtonClickListener);
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -47,6 +81,33 @@ public class Recipe_step_Activity extends AppCompatActivity {
                 else {
                     nextbutton.setText("다음");
                 }
+            }
+        });
+
+        tts = new TextToSpeech(Recipe_step_Activity.this, status -> {
+            if(status!= TextToSpeech.ERROR) {
+                tts.setLanguage(Locale.KOREAN);
+                map.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "pokepoke");
+
+                tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                    @Override
+                    public void onStart(String utteranceId) {
+                        ttsBtn.setImageResource(R.drawable.ic_pause_black_24dp);
+                        isTTS = true;
+                    }
+
+                    @Override
+                    public void onDone(String utteranceId) {
+                        int curr = viewPager.getCurrentItem();
+                        viewPager.setCurrentItem(curr+1,true);
+                        ttsBtn.setImageResource(R.drawable.ic_volume_up_black_24dp);
+                    }
+
+                    @Override
+                    public void onError(String utteranceId) {
+
+                    }
+                });
             }
         });
 
@@ -83,4 +144,113 @@ public class Recipe_step_Activity extends AppCompatActivity {
             else viewPager.setCurrentItem(curr+1,true);
         }
     };
+
+    View.OnClickListener ttsButtonClickListener = new View.OnClickListener() {
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public void onClick(View v) {
+            if(!isTTS ) {
+                String text = rcp.getRecipe().get(viewPager.getCurrentItem());
+                tts.setPitch(1.0f);
+                tts.setSpeechRate(1.0f);
+                tts.speak(text, TextToSpeech.QUEUE_FLUSH, map);
+            }
+            else {
+                tts.stop();
+                ttsBtn.setImageResource(R.drawable.ic_volume_up_black_24dp);
+                isTTS = false;
+            }
+        }
+    };
+
+    View.OnClickListener timerButtonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showDialog();
+        }
+    };
+
+    public void showDialog() {
+        dialog.show();
+        TextView timer_tv = dialog.findViewById(R.id.timer_timer);
+        Button start_btn = dialog.findViewById(R.id.timer_start);
+        Button bonus_btn = dialog.findViewById(R.id.timer_plus);
+        Button minus_btn = dialog.findViewById(R.id.timer_minus);
+
+        start_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(start_btn.getText().equals("START")) {
+                    timerStart(milliLeft, timer_tv);
+                    start_btn.setText("PAUSE");
+                    timerBtn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#E60000")));
+                    start_btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#8C8B8A")));
+                }
+                else if(start_btn.getText().equals("PAUSE")) {
+                    timerPause();
+                    start_btn.setText("START");
+                    timerBtn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+                    start_btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#29D67E")));
+                }
+            }
+        });
+        bonus_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timerPause();
+                milliLeft += 15000;
+                long min = (milliLeft / (1000 * 60));
+                long sec = ((milliLeft / 1000) - min * 60);
+                timer_tv.setText(min + ":" + sec);
+                timer_minimi.setText(min + ":" + sec);
+                start_btn.setText("START");
+                start_btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#29D67E")));
+            }
+        });
+        minus_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(milliLeft > 15000) {
+                    timerPause();
+                    milliLeft -= 15000;
+                    long min = (milliLeft / (1000 * 60));
+                    long sec = ((milliLeft / 1000) - min * 60);
+                    timer_tv.setText(min + ":" + sec);
+                    timer_minimi.setText(min + ":" + sec);
+                    start_btn.setText("START");
+                    start_btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#29D67E")));
+                }
+            }
+        });
+    }
+
+    public void timerStart(long timeLengthMilli, TextView timer_tv) {
+        timer = new CountDownTimer(timeLengthMilli, 1000) {
+            @Override
+            public void onTick(long milliTillFinish) {
+                milliLeft = milliTillFinish;
+                long min = (milliTillFinish / (1000 * 60));
+                long sec = ((milliTillFinish / 1000) - min * 60);
+                timer_tv.setText(min + ":" + sec);
+                timer_minimi.setText(min + ":" + sec);
+            }
+            @Override
+            public void onFinish() {
+                SoundPlayer.play(SoundPlayer.DING_DONG);
+                timer_tv.setText("완료");
+                timer_minimi.setText("완료");
+            }
+        };
+        timer.start();
+    }
+    public void timerPause() {
+        if(timer != null) timer.cancel();
+    }
+
+    @Override
+    protected void onDestroy() {
+        tts.stop();
+        tts.shutdown();
+        super.onDestroy();
+    }
 }

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,7 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -176,6 +179,7 @@ public class MainRecyclerViewFragment extends Fragment{
 
             case R.id.revoke_menu:
                 revokeAccess();
+                
                 myStartActivity(LoginActivity.class);
                 break;
         }
@@ -243,12 +247,20 @@ public class MainRecyclerViewFragment extends Fragment{
     }
 
     private void revokeAccess() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(uid).removeValue();
+        user.delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            mDatabase.child("users").child(uid).removeValue();
+                            startToast("회원탈퇴를 완료했습니다.");
+                        }
+                    }
+                });
+    }
 
-        mAuth.getCurrentUser().delete();
+    private void startToast(String msg){
+        Toast.makeText(getContext(), msg,Toast.LENGTH_SHORT).show();
     }
 
     private void reload() {

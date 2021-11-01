@@ -14,12 +14,11 @@ public class PreferenceFragmentAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         if(position == 0 ) return new PreferenceFragment();
-        else if(position == 1) return new DietFragment();
         else return new AllergyFragment();
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 }

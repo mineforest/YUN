@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this,"한번 더 눌러 종료합니다.", Toast.LENGTH_SHORT).show();
         } else {
             super.onBackPressed();
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
         }
     }
     ViewPager2.OnPageChangeCallback pageChangeCallback = new ViewPager2.OnPageChangeCallback() {

@@ -10,8 +10,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +41,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import static android.content.Context.MODE_PRIVATE;
-
-import com.example.poke.setAlarm;
+import static com.example.poke.setAlarm.cancel;
+import static com.example.poke.setAlarm.startAlarmBroadcastReceiver;
 
 
 public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolder> {
@@ -50,7 +53,6 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     long date;
     public boolean alarm_flag = true;
-    public boolean check_flag = false;
     private DatabaseReference mDatabase;
 
     private OnItemClickListener mlistener = null;
@@ -79,7 +81,6 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_recyclerview,parent,false);
         FridgeAdapter.ViewHolder holder = new FridgeAdapter.ViewHolder(view);
 
-
         return holder;
     }
 
@@ -89,8 +90,10 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         boolean mainflag =((MainActivity)MainActivity.mContext).alarm;
         SharedPreferences sharedPreferences = context.getSharedPreferences("bibleNotify",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("SetTimeH", 15);
-        editor.putInt("SetTimeM", 40);
+        editor.putInt("SetTimeH", 21);
+        editor.putInt("SetTimeM", 41);
+        editor.putInt("count",0);
+        editor.putString("Started","yes");
         editor.commit();
 
         holder.deleteImage.setOnClickListener(new View.OnClickListener() {
@@ -128,36 +131,31 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
 //                .into(holder.image);
         date /= 86400000;
         holder.title.setText(String.valueOf(ingredientsList.get(position).getIngredientTitle()));
+        holder.reg_date.setText(ingredientsList.get(position).getExpirationDate());
         if(date < 0){
             holder.day.setText(("D+" + Long.toString(Math.abs(date))));
+            holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_gray));
         }
         else {
             holder.day.setText(("D-" + Long.toString(date)));
+            if(date<=3) holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
+            else holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_green));
         }
 
         if(date <= 3) {
-            holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
-            if(alarm_flag==true&&mainflag==false){
+            if(date<0) holder.fridgeImage.setImageTintList(ColorStateList.valueOf(Color.parseColor("#BAC4CC")));
+            else holder.fridgeImage.setImageTintList(ColorStateList.valueOf(Color.parseColor("#E60000")));
+
+            if(alarm_flag==true&&mainflag==false&&sharedPreferences.getString("Started","yes").equals("yes")){
                 setAlarm.startAlarmBroadcastReceiver(context, sharedPreferences);
                 alarm_flag=false;
             }
         }
         else{
-            holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_green));
-        }
-        checkDate(date);
-    }
-
-    public void checkDate(long date){
-        if(date>3){
-            check_flag=true;
-        }
-        else
-            check_flag=false;
-        if(check_flag==true){
-
+            holder.fridgeImage.setImageTintList(ColorStateList.valueOf(Color.parseColor("#29D67E")));
         }
     }
+
     @Override
     public int getItemCount() {
         return (ingredientsList != null ? ingredientsList.size() : 0);
@@ -172,7 +170,9 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         //ImageView image;
         TextView title;
         TextView day;
+        TextView reg_date;
         ImageView deleteImage;
+        ImageView fridgeImage;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -189,11 +189,11 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
                 }
             });
 
-                    //  this.image = itemView.findViewById(R.id.categoryView);
             this.title = itemView.findViewById(R.id.ingredientTitleView);
+            this.reg_date = itemView.findViewById(R.id.textView13);
             this.day = itemView.findViewById(R.id.dDay);
             this.deleteImage = itemView.findViewById(R.id.deleteImage);
-
+            this.fridgeImage = itemView.findViewById(R.id.categoryView);
         }
 
     }

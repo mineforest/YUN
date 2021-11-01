@@ -34,16 +34,17 @@ import java.util.Date;
 
 public class IngredientDialog extends DialogFragment implements AdapterView.OnItemSelectedListener {
     private Fragment fragment;
+    private DatabaseReference mDatabase;
+    String uid;
+
     private Button okBtn;
     private EditText nameText;
-    private EditText cateText;
+    //private EditText cateText;
     private EditText dateText;
     private String title;
     private String cate;
     private String date;
     private String key;
-    private DatabaseReference mDatabase;
-    String uid;
     private Button cancelBtn;
     private ImageButton barcode_btn;
     Spinner spinner;
@@ -63,15 +64,16 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
         Bundle args = getArguments();
         spinner = view.findViewById(R.id.ingre_spinner);
         nameText = view.findViewById(R.id.prod_name_txt);
-        cateText = view.findViewById(R.id.prod_cat_txt);
+        //cateText = view.findViewById(R.id.prod_cat_txt);
         dateText = view.findViewById(R.id.daycnt_txt);
         barcode_btn = view.findViewById(R.id.barcodeButton);
         barcode_btn.setOnClickListener(scanClickListener);
         cancelBtn = view.findViewById(R.id.dialogCancelBtn);
         cancelBtn.setOnClickListener(onClickListener);
-        registerForContextMenu(cateText);
+        registerForContextMenu(nameText);
         calendar_btn = view.findViewById(R.id.ingreCalendarButton);
         calendar_btn.setOnClickListener(calendarListener);
+        dateText.setOnClickListener(calendarListener);
         dateText.setFocusableInTouchMode(false);
 
         if(args != null) {
@@ -80,15 +82,15 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
             cate = args.getString("category");
             key = args.getString("key");
             nameText.setText(title);
-            cateText.setText(cate);
+            //cateText.setText(cate);
             dateText.setText(date);
         }
         spinner.setOnItemSelectedListener(this);
         ingre_item = new String[]{"두류","견과류","채소류","과일류","육류","알류"
         ,"어패류","해조류","유제품","음료/주류","기타"};
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, ingre_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, ingre_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(adapter);
 
         fragment = getActivity().getSupportFragmentManager().findFragmentByTag("tag");
@@ -98,12 +100,13 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
 
     //@Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long L){
-        cateText.setText(ingre_item[i]);
+        cate=ingre_item[i];
+        //cateText.setText(ingre_item[i]);
     }
 
     //@Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-        cateText.setText("");
+        cate="";
     }
 
     View.OnClickListener calendarListener = new View.OnClickListener() {
@@ -119,13 +122,12 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
             datePickerDialog.show();
         }
     };
-
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if(v.getId() == R.id.dialogOkBtn){
                 title = nameText.getText().toString();
-                cate = cateText.getText().toString();
+                //cate = cateText.getText().toString();
                 date = dateText.getText().toString();
                 UserIngredient userIngredient;
 

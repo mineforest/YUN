@@ -10,13 +10,21 @@
     android:verticalScrollbarPosition="right">
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/input_box"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:hint="검색어를 입력하세요"
+        android:hint="검색어를 입력하세요."
         app:endIconMode="clear_text"
-        app:startIconDrawable="@drawable/ic_search_black_24dp">
+        app:startIconDrawable="@drawable/ic_search_black_24dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -28,10 +36,7 @@
         style="@style/CustomTabStyle"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_margin="10dp"
         android:background="@color/background"
         android:contextClickable="false"
         app:tabIndicatorHeight="0dp"
@@ -143,7 +148,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="?attr/actionBarSize">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -161,16 +165,16 @@
 
         <com.melnykov.fab.FloatingActionButton
             android:id="@+id/ingredientAddBtn"
-            android:layout_width="120dp"
-            android:layout_height="104dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="15dp"
-            android:src="@drawable/ic_add_circle_black_24dp"
-            app:fab_shadow="false"
+            android:src="@drawable/ic_add_ingre"
+            app:fab_shadow="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:fab_colorNormal="@color/black"/>
+            app:fab_colorNormal="@color/lightgray"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

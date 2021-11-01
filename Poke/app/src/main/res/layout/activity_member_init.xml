@@ -1,102 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView3"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:gravity="center"
-        android:text="회원정보"
-        android:textColor="#000000"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:background="@drawable/login_shape_bk"
+        android:orientation="vertical"
+        tools:layout_alignParentTop="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_login_bk" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/nickNameEditText"
+        <TextView
+            android:id="@+id/Login_poke"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="45dp"
+            android:text="POKE"
+            android:textColor="@color/white"
+            android:textSize="35sp" />
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="닉네임"
-            android:inputType="textPersonName"
-            android:privateImeOptions="defaultInputmode=korean"
-            android:textColorHint="@color/gray" />
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="25dp"
+            android:background="@color/white"
+            android:elevation="5dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="5dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/birthDayEditText"
-                android:layout_width="342dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="생년월일"
-                android:inputType="date"
-                android:textColorHint="@color/gray" />
-
-            <ImageButton
-                android:id="@+id/initCalendarButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="#FFFFFF"
-                app:srcCompat="@drawable/ic_baseline_calendar_today_24" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/genderTextView"
-                android:layout_width="48dp"
-                android:layout_height="45dp"
-                android:gravity="center"
-                android:text="성별"
-                android:textSize="20sp" />
-
-            <RadioGroup
-                android:id="@+id/genderRadioGroup"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/manButton"
-                    android:layout_width="63dp"
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="남"
-                    android:textSize="18sp" />
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="40dp"
+                    android:text="회원정보"
+                    android:textColor="@color/green"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-                <RadioButton
-                    android:id="@+id/womanButton"
-                    android:layout_width="61dp"
+
+                <EditText
+                    android:id="@+id/nickNameEditText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="여"
-                    android:textSize="18sp" />
-            </RadioGroup>
-        </LinearLayout>
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="별명"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:privateImeOptions="defaultInputmode=korean" />
 
-        <Button
-            android:id="@+id/checkButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="확인"
-            android:textColor="@color/black" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginBottom="15dp">
+
+                    <EditText
+                        android:id="@+id/birthDayEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:hint="생년월일"
+                        android:inputType="date"
+                        android:maxLines="1" />
+
+                    <ImageButton
+                        android:id="@+id/initCalendarButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:backgroundTint="#FFFFFF"
+                        app:srcCompat="@drawable/ic_baseline_calendar_today_24" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginBottom="15dp">
+
+                    <TextView
+                        android:id="@+id/genderTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="성별"
+                        android:textSize="18sp" />
+
+                    <RadioGroup
+                        android:id="@+id/genderRadioGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/manButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="남"
+                            android:textSize="18sp" />
+
+                        <RadioButton
+                            android:id="@+id/womanButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:text="여"
+                            android:textSize="18sp" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/checkButton"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|end"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/btn_shape"
+                    android:text="완료 √"
+                    android:textColor="@color/white"
+                    tools:textSize="20sp" />
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
 
     </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

@@ -2,6 +2,7 @@ package com.example.poke;
 
 public class UserIngredient {
     String ingredientTitle;
+    String regist_date;
     String expirationDate;
     String category;
     String ingredientKey;

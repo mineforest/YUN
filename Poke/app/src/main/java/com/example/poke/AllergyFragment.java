@@ -75,10 +75,10 @@ public class AllergyFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.button5:
-                    preferenceActivity.pre(1);
+                    preferenceActivity.pre(0);
                     break;
                 case R.id.button6:
-                    preferenceActivity.next(3);
+                    preferenceActivity.next(2);
                     break;
             }
         }

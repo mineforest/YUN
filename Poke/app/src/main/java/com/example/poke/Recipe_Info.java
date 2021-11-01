@@ -2,6 +2,8 @@ package com.example.poke;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.TypedValue;
@@ -54,6 +56,7 @@ public class Recipe_Info extends AppCompatActivity {
     private ImageView heartButton;
     ProgressDialog progressDialog;
     Handler handler = new Handler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,10 +177,12 @@ public class Recipe_Info extends AppCompatActivity {
                     if (snapshot != null && snapshot.getChildren() != null && snapshot.getChildren().iterator().hasNext()) {
                         mDatabase.child("dips").child(uid).child(rid).removeValue();
                         Snackbar.make(v, "찜 목록에서 삭제되었습니다.", Snackbar.LENGTH_LONG).show();
+                        heartButton.setImageTintList(ColorStateList.valueOf(Color.parseColor("#8C8B8A")));
                     } else {
                         UserDibs userDibs = new UserDibs(rid, thumbnail, rtitle);
                         mDatabase.child("dips").child(uid).child(rid).setValue(userDibs);
                         Snackbar.make(v, "찜 목록에 추가되었습니다.", Snackbar.LENGTH_LONG).show();
+                        heartButton.setImageTintList(ColorStateList.valueOf(Color.parseColor("#EE9BBB")));
                     }
                 }
                 @Override

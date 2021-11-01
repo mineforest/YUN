@@ -115,10 +115,9 @@
                 android:layout_height="wrap_content"
                 android:scrollbarAlwaysDrawVerticalTrack="true"
                 android:scrollbarFadeDuration="0"
-                android:scrollbarSize="5dp"
-                android:scrollbarThumbVertical="@color/scorll"
+                android:scrollbarSize="2dp"
                 android:scrollbars="vertical"
-                tools:listitem="@layout/recipe_ingre_itemview"/>
+                tools:listitem="@layout/recipe_ingre_itemview" />
 
         </LinearLayout>
 
@@ -145,9 +144,9 @@
                 android:id="@+id/sauce_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
                 android:scrollbarFadeDuration="0"
-                android:scrollbarSize="5dp"
-                android:scrollbarThumbVertical="@color/shimmer_color"
+                android:scrollbarSize="2dp"
                 android:scrollbars="vertical"
                 tools:listitem="@layout/recipe_ingre_itemview" />
 
@@ -185,16 +184,17 @@
         android:src="@drawable/ic_arrow_back_ios_new_white_24dp"
         app:layout_constraintStart_toStartOf="@id/thumbnail_layout"
         app:layout_constraintTop_toTopOf="@id/thumbnail_layout"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:elevation="5dp"/>
 
     <ImageView
         android:id="@+id/heartButton"
         android:layout_width="36dp"
         android:layout_height="36dp"
+        android:layout_margin="10dp"
         android:src="@drawable/outline_favorite_24"
         app:layout_constraintEnd_toEndOf="@id/thumbnail_layout"
         app:layout_constraintTop_toTopOf="@id/thumbnail_layout"
-        android:layout_margin="10dp"/>
-
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
