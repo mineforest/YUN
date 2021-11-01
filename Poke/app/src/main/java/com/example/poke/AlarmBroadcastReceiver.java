@@ -25,17 +25,25 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // build and show notification
+        SharedPreferences sharedPreferences = context.getSharedPreferences("bibleNotify",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String flag = sharedPreferences.getString("Start","yes");
+        Log.d("before flag",flag);
         try {
-            Log.d("test","show noti");
-            showNotification(context);
-
+            if(flag.equals("no")){
+                Log.d("test","show noti");
+                showNotification(context);
+                // Start a new alarm
+                Intent intent1 = new Intent(context, AlarmBroadcastReceiver.class);
+                final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 100, intent1, 0);
+                final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (1000 * 60 * 5), pendingIntent);
+                editor.putString("Start","no");
+                editor.commit();
+                Log.d("after flag",sharedPreferences.getString("Start","yes"));
+            }
         } catch (Exception e) {
         }
-        // Start a new alarm
-        Intent intent1 = new Intent(context, AlarmBroadcastReceiver.class);
-        final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 100, intent1, 0);
-        final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (1000 * 60 * 60 * 24), pendingIntent);
     }
 
     // build Notification
@@ -68,6 +76,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         Notification.Builder mBuilder = NotificationBuilder;
 
         mBuilder.setSmallIcon(R.mipmap.ic_launcher_image);
+        mBuilder.setShowWhen(true);
         mBuilder.setContentTitle("POKE");
         mBuilder.setContentText("유통기한이 3일 이하인 재료가 있습니다!!");
         mBuilder.setAutoCancel(true);

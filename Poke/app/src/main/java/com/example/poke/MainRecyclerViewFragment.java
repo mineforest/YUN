@@ -183,6 +183,10 @@ public class MainRecyclerViewFragment extends Fragment{
                 startToast("회원탈퇴를 완료했습니다.");
                 myStartActivity(LoginActivity.class);
                 break;
+
+            case R.id.alarm_menu:
+                myStartActivity(AlarmActivity.class);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
