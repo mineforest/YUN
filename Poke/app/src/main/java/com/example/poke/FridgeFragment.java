@@ -129,8 +129,7 @@ public class FridgeFragment extends Fragment{
                 }catch (Exception e){
                 }finally {
                     mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
-                    recyclerView.setAdapter(ingredientAdapter);
-                    progressDialog.dismiss();
+
                 }
             }
         }
@@ -145,6 +144,9 @@ public class FridgeFragment extends Fragment{
             e.printStackTrace();
         }
         stop.interrupt();
+
+        recyclerView.setAdapter(ingredientAdapter);
+        progressDialog.dismiss();
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             int tmp = 1;

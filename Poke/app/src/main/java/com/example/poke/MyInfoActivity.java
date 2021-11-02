@@ -97,8 +97,11 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UserInfo info = dataSnapshot.getValue(UserInfo.class);
-                String nickname = info.getNickName();
-                nickNameTextView.setText(nickname);
+                try{
+                    String nickname = info.getNickName();
+                    nickNameTextView.setText(nickname);
+                }catch(NullPointerException e){
+                }
             }
 
             @Override
