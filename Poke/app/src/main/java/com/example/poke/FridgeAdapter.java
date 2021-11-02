@@ -143,11 +143,13 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         }
 
         if(date <= 3) {
+
             if(date<0) holder.fridgeImage.setImageTintList(ColorStateList.valueOf(Color.parseColor("#BAC4CC")));
             else holder.fridgeImage.setImageTintList(ColorStateList.valueOf(Color.parseColor("#E60000")));
             if(alarm_flag==true&&mainflag==false&&sharedPreferences.getString("Start","yes").equals("yes")){
                 Log.d("start alarm","start");
                 setAlarm.startAlarmBroadcastReceiver(context, sharedPreferences);
+
                 alarm_flag=false;
                 editor.putString("Start","no");
                 editor.commit();

@@ -19,6 +19,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,18 +40,13 @@ public class RatingActivity extends AppCompatActivity {
     private Recipe_get rcp;
     private SearchView searchView;
     private Button doneButton;
-    private RatingBar ratingBar;
     private ArrayList<String> ingreList;
     private List dbList;
     private ArrayList<String> dbArrayList;
     private ArrayList<String> deleteList;
     private ListView listView;
     private IngredientListAdapter adapter;
-    private UserHistory userHistory;
-    private SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
     private DatabaseReference mDatabase;
-    private Date date;
-    private String now;
     private String uid;
     private DassnIngreCheckAdapter dassnIngreCheckAdapter;
     private DassnIngreCheckAdapter trash_adapter;
@@ -74,13 +70,11 @@ public class RatingActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         uid = user.getUid();
-        userHistory = new UserHistory();
         dbList = new ArrayList<String>();
         dbArrayList = new ArrayList<>();
         deleteList = new ArrayList<>();
         searchView =findViewById(R.id.searchView);
         doneButton = findViewById(R.id.doneButton2);
-        ratingBar = findViewById(R.id.ratingBar2);
         listView = findViewById(R.id.listView);
         recyclerView = findViewById(R.id.dassn_rv);
         trash_rv = findViewById(R.id.trash_rv);
@@ -198,45 +192,17 @@ public class RatingActivity extends AppCompatActivity {
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                date = new Date();
-                now = form.format(date);
-                long l = (long)ratingBar.getRating();
-                userHistory = new UserHistory(rcp.getId(), rcp.getName(), rcp.getThumbnail(), now, l);
-                mDatabase.child("history").child(uid).child(rcp.getId()).setValue(userHistory);
-                deleteIngredient();
-
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //스택 제거
-//                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); //메인화면 재사용
-                startActivity(intent);
-                finish();
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("delList",deleteList);
+                bundle.putParcelable("rcp",rcp);
+                final RatingBottomSheetFrag ratingBottomSheetFrag = new RatingBottomSheetFrag(getApplicationContext());
+                ratingBottomSheetFrag.setArguments(bundle);
+                ratingBottomSheetFrag.show(getSupportFragmentManager(),null);
             }
         };
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    public void deleteIngredient() {
-        mDatabase.child("ingredient").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        if (deleteList.contains(dataSnapshot.child("ingredientTitle").getValue(String.class))) {
-                            dataSnapshot.getRef().removeValue();
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
     }
 }

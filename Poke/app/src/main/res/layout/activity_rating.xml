@@ -6,13 +6,41 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_rating">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <TextView
+        android:id="@+id/dassn_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="소모한 재료를 선택하세요."
+        android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="20dp"/>
+
+    <TextView
+        android:id="@+id/dassn_sub_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이 외에 삭제할 재료는 냉장고에서 검색해보세요."
+        app:layout_constraintStart_toStartOf="@id/dassn_tv"
+        app:layout_constraintTop_toBottomOf="@id/dassn_tv" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
         android:background="@drawable/bg_rating2"
         android:elevation="10dp"
         android:padding="10dp"
-        android:layout_margin="10dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
+        tools:layout_editor_absoluteX="10dp">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
@@ -24,7 +52,7 @@
             android:focusableInTouchMode="false"
             android:iconifiedByDefault="false"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dassn_sub_tv">
+            app:layout_constraintTop_toTopOf="parent">
 
         </androidx.appcompat.widget.SearchView>
 
@@ -114,54 +142,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <RatingBar
-            android:id="@+id/ratingBar2"
-            style="@style/Widget.AppCompat.RatingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_marginVertical="30dp"
-            android:numStars="5"
-            android:stepSize="1"
-            android:theme="@style/CustomRatingBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rating_subtitle_tv"
-            tools:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/ratingtitletv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="레시피를 평가하세요."
-            android:textSize="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/rating_subtitle_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="평가 결과는 더욱 나은 레시피를 제공합니다."
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ratingtitletv" />
-
-        <TextView
-            android:id="@+id/dassn_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="소모한 재료를 선택하세요."
-            android:textSize="32sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ratingBar2" />
-
-        <TextView
-            android:id="@+id/dassn_sub_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="이 외에 삭제할 재료는 냉장고에서 검색해보세요."
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dassn_tv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

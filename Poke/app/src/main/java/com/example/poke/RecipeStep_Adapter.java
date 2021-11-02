@@ -3,6 +3,7 @@ package com.example.poke;
 import android.content.Context;
 import android.os.Build;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class RecipeStep_Adapter extends RecyclerView.Adapter<RecipeStep_Adapter.
     @Override
     public void onBindViewHolder(@NonNull @NotNull RecipeStep_Adapter.CustomViewHolder holder, int position) {
         if(rcp_urls != null && position < rcp_urls.size()) {
-            Glide.with(this.context).load(rcp_urls.get(position)).into(holder.rcp_img);
+            Glide.with(this.context).load(rcp_urls.get(position)).centerInside().into(holder.rcp_img);
         }
         if(rcp_steps != null && position < rcp_steps.size()) {
             holder.rcp_step_txt.setText(rcp_steps.get(position));
@@ -66,11 +67,30 @@ public class RecipeStep_Adapter extends RecyclerView.Adapter<RecipeStep_Adapter.
     public static class CustomViewHolder extends RecyclerView.ViewHolder {
         public ImageView rcp_img;
         public TextView rcp_step_txt;
+        public ImageView img_fitting;
+        private boolean full_flag = true;
 
         public CustomViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             this.rcp_img = itemView.findViewById(R.id.step_img);
             this.rcp_step_txt = itemView.findViewById(R.id.step_txt);
+            this.img_fitting = itemView.findViewById(R.id.img_fitting);
+
+            img_fitting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(full_flag){
+                        rcp_img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        img_fitting.setImageResource(R.drawable.ic_fullscreen_black_24dp);
+                        full_flag = false;
+                    }
+                    else {
+                        rcp_img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        img_fitting.setImageResource(R.drawable.ic_fullscreen_exit_black_24dp);
+                        full_flag = true;
+                    }
+                }
+            });
         }
     }
 }

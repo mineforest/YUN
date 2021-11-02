@@ -64,15 +64,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/rcp_url"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="THIS IS URL"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@id/title_txt"
+            app:layout_constraintStart_toStartOf="@id/title_txt"
+            app:layout_constraintTop_toBottomOf="@id/title_txt" />
+
         <LinearLayout
             android:id="@+id/time_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_margin="20dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_txt">
+            app:layout_constraintTop_toBottomOf="@id/rcp_url">
 
             <ImageView
                 android:id="@+id/cook_time_icon"

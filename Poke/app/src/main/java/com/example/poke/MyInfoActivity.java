@@ -96,6 +96,9 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         myRef.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserInfo info = dataSnapshot.getValue(UserInfo.class);
+                String nickname = info.getNickName();
+                nickNameTextView.setText(nickname);
             }
 
             @Override
@@ -175,7 +178,7 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
                 dipsButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.info_btn));
                 break;
             case R.id.allergyButton:
-                fragmentTransaction.replace(R.id.InfoFrame,new Menu()).commit();
+                fragmentTransaction.replace(R.id.InfoFrame,new AddAllergy()).commit();
                 historyButton.setBackgroundColor(Color.parseColor("#00ff0000"));
                 allergyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.info_btn));
                 dipsButton.setBackgroundColor(Color.parseColor("#00ff0000"));

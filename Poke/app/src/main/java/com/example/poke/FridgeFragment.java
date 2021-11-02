@@ -167,56 +167,8 @@ public class FridgeFragment extends Fragment{
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 1:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 2:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 3:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 4:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 5:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 6:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 7:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 8:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 9:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 10:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 11:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                }
+                cate = tab.getText().toString();
+                update(cate, ingredientArrayList, tabArrayList);
             }
 
             @Override
@@ -225,61 +177,10 @@ public class FridgeFragment extends Fragment{
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-//                        ingredientAdapter = new IngredientAdapter(ingredientArrayList);
-//                        ingredientAdapter.setOnItemClickListener(onItemClickListener);
-//                        recyclerView.setAdapter(ingredientAdapter);
-                        break;
-                    case 1:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 2:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 3:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 4:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 5:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 6:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 7:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 8:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 9:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 10:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 11:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                }
+                cate = tab.getText().toString();
+                update(cate, ingredientArrayList, tabArrayList);
             }
-            });
+        });
 
         return view;
     }
