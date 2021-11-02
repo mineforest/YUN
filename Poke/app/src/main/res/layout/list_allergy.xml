@@ -2,14 +2,18 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <CheckBox
+    <TextView
         android:id="@+id/allergy_check"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/search_radius"
-        android:gravity="center"
-        android:text="CheckBox" />
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:paddingVertical="15dp"
+        android:background="@drawable/bg_rating2"
+        android:text="THISISALLERY"
+        android:textAlignment="center"
+        android:textSize="15sp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

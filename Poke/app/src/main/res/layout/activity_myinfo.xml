@@ -1,78 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA"
-    android:orientation="vertical">
+    android:background="#FAFAFA">
 
-    <LinearLayout
-        android:id="@+id/linearLayout5"
+    <androidx.constraintlayout.widget.Guideline
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="1dp"
+        android:id="@+id/guideline"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/info_constraint"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
         android:background="@drawable/bg_gradient"
-        android:elevation="1dp"
+        android:elevation="3dp"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/linearLayout"
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:background="@drawable/ic_login_bk"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/Profileimage" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/Profileimage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerInParent="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_person_black_24dp"
-                app:civ_border_color="#96e6a1"
-                app:civ_border_width="3dp" />
-            app:civ_border_color="@color/green"
-            app:civ_border_width="5dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/Profileimage"
-                android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/Profileimage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_account_circle_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/Nickname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="150dp"
-                    android:clickable="false"
-                    android:text="Michael Adams"
-                    android:maxLength="15"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Profileimage"
+            android:orientation="horizontal"
+            android:id="@+id/nickname_layout"
+            app:layout_constraintTop_toBottomOf="@id/Profileimage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-                <ImageView
-                    android:id="@+id/edit_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="30dp"
-                    app:srcCompat="@android:drawable/ic_menu_edit" />
-            </LinearLayout>
+            <EditText
+                android:id="@+id/Nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="false"
+                android:maxLength="15"
+                android:text="Michael Adams"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_head"/>
 
-        </RelativeLayout>
+            <ImageView
+                android:id="@+id/edit_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_edit_black_24dp" />
+        </LinearLayout>
+
 
         <TableLayout
             android:id="@+id/tableLayout"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:stretchColumns="0,1,2">
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:stretchColumns="0,1,2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nickname_layout">
 
             <TableRow
                 android:id="@+id/TableButton"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center">
@@ -82,17 +100,17 @@
                     android:layout_width="45dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="10dp"
-                    android:background="#00ff0000"
-                    android:gravity="center"
+                    android:layout_marginVertical="15dp"
+                    android:background="#00ffffff"
                     android:text="평가한 요리"
-                    android:textColor="#476E4C"/>
+                    android:textColor="#476E4C" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/dibsButton"
                     android:layout_width="45dp"
                     android:layout_height="50dp"
-                    android:background="#00ff0000"
-                    android:gravity="center"
+                    android:background="#00ffffff"
+                    android:layout_marginVertical="15dp"
                     android:text="찜한요리"
                     android:textColor="#476E4C" />
 
@@ -101,8 +119,8 @@
                     android:layout_width="45dp"
                     android:layout_height="50dp"
                     android:layout_marginEnd="10dp"
-                    android:background="#00ff0000"
-                    android:gravity="center"
+                    android:layout_marginVertical="15dp"
+                    android:background="#00ffffff"
                     android:text="기피 재료"
                     android:textColor="#476E4C" />
 
@@ -110,17 +128,19 @@
 
         </TableLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/InfoFrame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="?attr/actionBarSize"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline">
 
     </FrameLayout>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

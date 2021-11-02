@@ -61,11 +61,11 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         historyFragment = new HistoryFragment();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        profileView=(ImageView)view.findViewById(R.id.Profileimage);
-        nickNameTextView=(EditText) view.findViewById(R.id.Nickname);
-        historyButton = (Button) view.findViewById(R.id.historyButton);
-        dipsButton = (Button) view.findViewById(R.id.dibsButton);
-        allergyButton = (Button) view.findViewById(R.id.allergyButton);
+        profileView = view.findViewById(R.id.Profileimage);
+        nickNameTextView = view.findViewById(R.id.Nickname);
+        historyButton = view.findViewById(R.id.historyButton);
+        dipsButton = view.findViewById(R.id.dibsButton);
+        allergyButton = view.findViewById(R.id.allergyButton);
         historyButton.setOnClickListener(this);
         dipsButton.setOnClickListener(this);
         allergyButton.setOnClickListener(this);
@@ -81,8 +81,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserInfo info = dataSnapshot.getValue(UserInfo.class);
-                info = new UserInfo(info.getNickName());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     nlist.add(snapshot.getValue().toString());
                 }
@@ -126,7 +124,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
                                         break;
                                     } else {
                                         myRef.child(uid).child("nickName").setValue(getnick);
-                                        //getnick != myRef.child(uid).child("nickName").toString()
                                     }
                                 }
                                 nickNameTextView.setSelection(nickNameTextView.getText().length());
@@ -149,9 +146,9 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
     ValueEventListener allergyListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            historyButton.setText("평가한 요리\n"+Long.toString(dataSnapshot.child("history").child(uid).getChildrenCount()));
-            dipsButton.setText("찜한요리\n"+Long.toString(dataSnapshot.child("dips").child(uid).getChildrenCount()));
-            allergyButton.setText("알러지/기피\n"+Long.toString(dataSnapshot.child("allergy").child(uid).getChildrenCount()));
+            historyButton.setText("평가한 요리\n"+ dataSnapshot.child("history").child(uid).getChildrenCount());
+            dipsButton.setText("찜한요리\n"+ dataSnapshot.child("dips").child(uid).getChildrenCount());
+            allergyButton.setText("알러지/기피\n"+ dataSnapshot.child("allergy").child(uid).getChildrenCount());
         }
 
         @Override

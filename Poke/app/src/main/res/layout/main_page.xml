@@ -30,14 +30,16 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:padding="10dp">
                 <TextView
                     android:id="@+id/tv_foryou"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="취향 맞춤 레시피"
-                    android:textSize="20sp"
-                    android:layout_centerVertical="true"/>
+                    android:textSize="24sp"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/main_head"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -81,7 +83,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:nestedScrollingEnabled="false"
                 android:padding="10dp">
 
@@ -91,7 +93,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="재료 충족 레시피"
-                    android:textSize="20sp" />
+                    android:textSize="24sp"
+                    android:textColor="@color/main_head" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -99,7 +102,7 @@
                     android:layout_alignBaseline="@id/tv_donow"
                     android:layout_alignParentEnd="true"
                     android:text="더 보기"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
