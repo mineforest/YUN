@@ -105,6 +105,14 @@ public class FridgeFragment extends Fragment{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
+        ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
+        for(int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
+            View v = slidingTabStrip.getChildAt(i);
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            params.rightMargin = betweenSpace;
+        }
+        fab.attachToRecyclerView(recyclerView);
+
         class StartRunnable implements Runnable{
             @Override
             public void run() {
@@ -117,24 +125,11 @@ public class FridgeFragment extends Fragment{
                         if (user != null)
                             uid = user.getUid();
 
-                        new Handler().post(new Runnable() {
-                            @Override
-                            public void run() {
-                                ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
-                                for(int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
-                                    View v = slidingTabStrip.getChildAt(i);
-                                    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-                                    params.rightMargin = betweenSpace;
-                                }
-                                fab.attachToRecyclerView(recyclerView);
-                            }
-                        });
                     }
                 }catch (Exception e){
                 }finally {
                     mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
-                    recyclerView.setAdapter(ingredientAdapter);
-                    progressDialog.dismiss();
+
                 }
             }
         }
@@ -149,6 +144,9 @@ public class FridgeFragment extends Fragment{
             e.printStackTrace();
         }
         stop.interrupt();
+
+        recyclerView.setAdapter(ingredientAdapter);
+        progressDialog.dismiss();
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             int tmp = 1;

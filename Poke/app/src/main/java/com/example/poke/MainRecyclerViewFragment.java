@@ -254,9 +254,6 @@ public class MainRecyclerViewFragment extends Fragment{
             mAuth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
                                 mDatabase.child(DataBaseCategory.allergy.toString()).child(uid).removeValue();
                                 mDatabase.child(DataBaseCategory.dips.toString()).child(uid).removeValue();
                                 mDatabase.child(DataBaseCategory.history.toString()).child(uid).removeValue();
@@ -264,9 +261,6 @@ public class MainRecyclerViewFragment extends Fragment{
                                 mDatabase.child(DataBaseCategory.preference.toString()).child(uid).removeValue();
                                 mDatabase.child(DataBaseCategory.users.toString()).child(uid).removeValue();
                             }
-                        },200);
-
-                    }
                 });
     }
 
