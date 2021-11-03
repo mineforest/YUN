@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         Intent alarmintent1 = getIntent();
         alarm = alarmintent1.getBooleanExtra("flag",false);
         mContext = this;
-
 
         viewPager2 = findViewById(R.id.pager);
         pagerAdapter = new MainPagerAdapter(this);

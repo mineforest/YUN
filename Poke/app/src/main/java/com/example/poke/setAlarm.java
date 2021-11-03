@@ -8,8 +8,8 @@ import android.content.Context;
 import android.util.Log;
 
 public class setAlarm {
-    public static int hour = 21;
-    public static int min = 47;
+    public static int hour = 22;
+    public static int min = 10;
     public static int sec = 00;
 
     public static void startAlarmBroadcastReceiver(Context context, SharedPreferences sharedPreferences) {
@@ -30,7 +30,7 @@ public class setAlarm {
                 AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
                 alarmManager.cancel(pendingIntent);
                 //alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),1000 * 60 * 5, pendingIntent);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),1000 * 60 * 10, pendingIntent);
             }
     }
 
@@ -40,11 +40,13 @@ public class setAlarm {
         Intent _intent = new Intent(context, AlarmBroadcastReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1, _intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
+
         pendingIntent.cancel();
         alarmManager=null;
         pendingIntent=null;
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("start","no");
+        editor.commit();
     }
 
 

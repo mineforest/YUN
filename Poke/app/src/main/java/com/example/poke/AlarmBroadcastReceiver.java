@@ -27,20 +27,15 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         // build and show notification
         SharedPreferences sharedPreferences = context.getSharedPreferences("bibleNotify",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        String flag = sharedPreferences.getString("Start","yes");
-        Log.d("before flag",flag);
+        String flag = sharedPreferences.getString("start","yes");
         try {
-            if(flag.equals("no")){
-                Log.d("test","show noti");
+            if(flag.equals("yes")){
                 showNotification(context);
                 // Start a new alarm
                 Intent intent1 = new Intent(context, AlarmBroadcastReceiver.class);
                 final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 100, intent1, 0);
                 final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (1000 * 60 * 5), pendingIntent);
-                editor.putString("Start","no");
-                editor.commit();
-                Log.d("after flag",sharedPreferences.getString("Start","yes"));
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (1000 * 60 * 10), pendingIntent);
             }
         } catch (Exception e) {
         }

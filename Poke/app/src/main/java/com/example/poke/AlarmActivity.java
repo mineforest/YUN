@@ -22,7 +22,6 @@ public class AlarmActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("bibleNotify",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
         Switch switchButton = (Switch) findViewById(R.id.alarm_switch);
         switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -34,19 +33,19 @@ public class AlarmActivity extends AppCompatActivity {
                     editor.putString("start","yes");
                     editor.putString("checked","yes");
                     editor.apply();
-                    Log.d("start",sharedPreferences.getString("start","yes"));
+                    editor.commit();
                     setAlarm.startAlarmBroadcastReceiver(mContext,sharedPreferences);
                 }else{
                     Log.d("switch","off");
                     editor.putString("start","no");
                     editor.putString("checked","no");
                     editor.apply();
-                    Log.d("start",sharedPreferences.getString("start","yes"));
+                    editor.commit();
                     setAlarm.cancel(mContext,sharedPreferences);
                 }
             }
         });
-        if (sharedPreferences.getString("checked","no").equals("yes")){
+        if (sharedPreferences.getString("checked","yes").equals("yes")){
 
             switchButton.setChecked(true);
 
