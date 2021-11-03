@@ -66,7 +66,7 @@ public class DipsFragment extends Fragment {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
             UserDibs dibs = snapshot.getValue(UserDibs.class);
-            dibsList.add(new UserDibs(dibs.getRcp_id(),dibs.getDipsImage(),dibs.getDipsTitle()));
+            dibsList.add(dibs);
             adapter.notifyDataSetChanged();
         }
 

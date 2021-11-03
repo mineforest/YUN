@@ -16,6 +16,6 @@
     <color name="emptystar">#909090</color>
     <color name="filledstar">#29D67E</color>
     <color name="scorll">#AE00AB55</color>
-
+    <color name="main_head">#1D9458</color>
 
 </resources>

@@ -3,6 +3,8 @@ package com.example.poke;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -38,18 +40,15 @@ import java.util.List;
 import java.util.Map;
 
 public class AllergyAdapter extends RecyclerView.Adapter<AllergyAdapter.CustomViewHolder> {
-
     private ArrayList<String> allergyArrayList;
+    private ArrayList<Boolean> allergyMapping;
 
-    public AllergyAdapter(ArrayList<String> allergyArrayList) {
+    public AllergyAdapter(ArrayList<String> allergyArrayList, ArrayList<Boolean> allergyMapping) {
         this.allergyArrayList = allergyArrayList;
+        this.allergyMapping = allergyMapping;
     }
 
     Context context;
-    private Intent intent;
-    private DatabaseReference mDatabase;
-
-
     public interface OnItemClickListener {
         void onItemClick(View v, int position);
     }
@@ -77,51 +76,13 @@ public class AllergyAdapter extends RecyclerView.Adapter<AllergyAdapter.CustomVi
     @Override
     public void onBindViewHolder(@NonNull @NotNull AllergyAdapter.CustomViewHolder holder, int position)
     {
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        String uid = user.getUid();
-        String rid = allergyArrayList.get(position);
-
-//        mDatabase.child("allergy").child(uid).child(rid).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-//                Log.d("onDataChange: ", snapshot.getKey());
-//                if (snapshot != null && snapshot.getKey() == rid) {
-//                    holder.checkBox.setChecked(true);
-//                } else {
-//                    holder.checkBox.setChecked(false);
-//                }
-//            }
-//
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
-
-        holder.checkBox.setText(allergyArrayList.get(position));
-
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                 {
-                     if(isChecked) {
-                         mDatabase.child("allergy").child(uid).child(allergyArrayList.get(position)).setValue(new UserAllergy(rid));
-                         Snackbar.make(buttonView,"알레르기가 변경되었습니다.", Snackbar.LENGTH_LONG).show();
-                     }
-                     else {
-                         String path = mDatabase.child("allergy").child(uid).push().getKey();
-                         mDatabase.child("allergy").child(uid).child(rid).removeValue();
-                         Snackbar.make(buttonView,"알레르기가 변경되었습니다.", Snackbar.LENGTH_LONG).show();
-                     }
-
-                }
-            }
-        });
-
+        holder.allery_tv.setText(allergyArrayList.get(position));
+        if (allergyMapping.get(position)) {
+            holder.allery_tv.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E68B23")));
+        }
+        else {
+            holder.allery_tv.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#CBCBCB")));
+        }
     }
 
     @Override
@@ -130,12 +91,11 @@ public class AllergyAdapter extends RecyclerView.Adapter<AllergyAdapter.CustomVi
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
-        public CheckBox checkBox;
-//        CheckBox checkBox;
+        private TextView allery_tv;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.checkBox = itemView.findViewById(R.id.allergy_check);
+            this.allery_tv = itemView.findViewById(R.id.allergy_check);
 
             itemView.setOnClickListener(v -> {
                     int pos = getBindingAdapterPosition();
