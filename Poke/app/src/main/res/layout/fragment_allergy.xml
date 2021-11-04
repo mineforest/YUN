@@ -85,6 +85,8 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
                             android:gravity="center"
+                            app:textStartPadding="12dp"
+                            app:textEndPadding="12dp"
                             android:text="굴"
                             android:textAlignment="center"
                             android:textSize="17sp" />
@@ -96,6 +98,8 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
                             android:gravity="center"
+                            app:textStartPadding="12dp"
+                            app:textEndPadding="12dp"
                             android:text="게"
                             android:textAlignment="center"
                             android:textSize="17sp" />
@@ -174,6 +178,8 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
                             android:gravity="center"
+                            app:textStartPadding="12dp"
+                            app:textEndPadding="12dp"
                             android:text="밀"
                             android:textAlignment="center"
                             android:textSize="17sp" />
@@ -294,6 +300,8 @@
                             android:layout_width="93dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
+                            app:textStartPadding="12dp"
+                            app:textEndPadding="12dp"
                             android:text="잣"
                             android:textAlignment="center"
                             android:textSize="17sp" />
