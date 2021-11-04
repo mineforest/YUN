@@ -2,6 +2,7 @@ package com.example.poke;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -243,12 +245,17 @@ public class Recipe_step_Activity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
-//                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//                Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
-//                ringtone.play();
-                MediaPlayer player = MediaPlayer.create(Recipe_step_Activity.this, R.raw.poke_for_acapella);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Recipe_step_Activity.this);
+                if(preferences.getBoolean("timerAlarm",false)) {
+                    MediaPlayer player = MediaPlayer.create(Recipe_step_Activity.this, R.raw.poke_for_acapella);
+                    player.start();
+                }
+                else{
+                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                    Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                    ringtone.play();
+                }
                 Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                player.start();
                 vib.vibrate(2000);
                 timer_tv.setText("POKE!");
                 timer_minimi.setText("완료");
