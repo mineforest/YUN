@@ -90,10 +90,8 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         boolean mainflag =((MainActivity)MainActivity.mContext).alarm;
         SharedPreferences sharedPreferences = context.getSharedPreferences("bibleNotify",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        //editor.putInt("SetTimeH", 16);
-        //editor.putInt("SetTimeM", 33);
-       // editor.putInt("count",0);
-        //editor.commit();
+        String start =sharedPreferences.getString("start","yes");
+        String flag =sharedPreferences.getString("flag","no");
 
 
         holder.deleteImage.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +144,7 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
 
             if(date<0) holder.fridgeImage.setImageTintList(ColorStateList.valueOf(Color.parseColor("#BAC4CC")));
             else holder.fridgeImage.setImageTintList(ColorStateList.valueOf(Color.parseColor("#E60000")));
-            if(alarm_flag==true&&mainflag==false&&sharedPreferences.getString("start","yes").equals("yes")){
+            if(alarm_flag==true&&mainflag==false&&start.equals("yes")&&flag.equals("no")){
                 Log.d("start alarm","start");
                 setAlarm.startAlarmBroadcastReceiver(context, sharedPreferences);
                 alarm_flag=false;

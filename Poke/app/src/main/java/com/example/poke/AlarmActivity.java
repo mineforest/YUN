@@ -28,31 +28,32 @@ public class AlarmActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                if (sharedPreferences.getString("checked","yes").equals("yes")){
+
+                    switchButton.setChecked(true);
+
+                }else {
+
+                    switchButton.setChecked(false);
+                }
+
                 if (isChecked){
-                    Log.d("switch","on");
                     editor.putString("start","yes");
                     editor.putString("checked","yes");
                     editor.apply();
                     editor.commit();
-                    setAlarm.startAlarmBroadcastReceiver(mContext,sharedPreferences);
+                    //setAlarm.startAlarmBroadcastReceiver(mContext,sharedPreferences);
                 }else{
-                    Log.d("switch","off");
                     editor.putString("start","no");
                     editor.putString("checked","no");
+                    editor.putString("flag","no");
                     editor.apply();
                     editor.commit();
                     setAlarm.cancel(mContext,sharedPreferences);
                 }
             }
         });
-        if (sharedPreferences.getString("checked","yes").equals("yes")){
 
-            switchButton.setChecked(true);
-
-        }else {
-
-            switchButton.setChecked(false);
-        }
     }
 
 }

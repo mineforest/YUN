@@ -31,11 +31,13 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         try {
             if(flag.equals("yes")){
                 showNotification(context);
+                editor.putString("flag","yes");
+                editor.commit();
                 // Start a new alarm
                 Intent intent1 = new Intent(context, AlarmBroadcastReceiver.class);
                 final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 100, intent1, 0);
                 final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (1000 * 60 * 10), pendingIntent);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (1000 * 60 * 60 * 24), pendingIntent);
             }
         } catch (Exception e) {
         }
