@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"
@@ -45,7 +46,7 @@
         </activity>
         <activity android:name=".PasswordResetActivity">
         </activity>
-        <activity android:name=".AlarmActivity">
+        <activity android:name=".SettingActivity">
         </activity>
         <activity android:name=".MemberInitActivity">
         </activity>

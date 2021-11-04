@@ -3,21 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/logout_menu"
-        android:title="로그아웃"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/revoke_menu"
-        android:title="회원탈퇴"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/passwrod_reset_menu"
-        android:title="비밀번호재설정"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/alarm_menu"
-        android:title="알람설정"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="설정"
+        app:showAsAction="always" />
 </menu>
