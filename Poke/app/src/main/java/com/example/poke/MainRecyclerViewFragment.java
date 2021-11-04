@@ -254,12 +254,21 @@ public class MainRecyclerViewFragment extends Fragment{
             mAuth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                                mDatabase.child(DataBaseCategory.allergy.toString()).child(uid).removeValue();
-                                mDatabase.child(DataBaseCategory.dips.toString()).child(uid).removeValue();
-                                mDatabase.child(DataBaseCategory.history.toString()).child(uid).removeValue();
-                                mDatabase.child(DataBaseCategory.ingredient.toString()).child(uid).removeValue();
-                                mDatabase.child(DataBaseCategory.preference.toString()).child(uid).removeValue();
-                                mDatabase.child(DataBaseCategory.users.toString()).child(uid).removeValue();
+                                Thread t = new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mDatabase.child(DataBaseCategory.allergy.toString()).child(uid).removeValue();
+                                        mDatabase.child(DataBaseCategory.dips.toString()).child(uid).removeValue();
+                                        mDatabase.child(DataBaseCategory.history.toString()).child(uid).removeValue();
+                                        mDatabase.child(DataBaseCategory.ingredient.toString()).child(uid).removeValue();
+                                        mDatabase.child(DataBaseCategory.preference.toString()).child(uid).removeValue();
+                                        mDatabase.child(DataBaseCategory.users.toString()).child(uid).removeValue();
+                                    }
+                                });
+                                    t.start();
+                                    try{
+                                        t.sleep(500);
+                                    }catch(Exception e){}
                             }
                 });
     }

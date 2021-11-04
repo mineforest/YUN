@@ -1,62 +1,26 @@
 package com.example.poke;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SearchRecentSuggestionsProvider;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
-import android.provider.SearchRecentSuggestions;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.ArraySet;
+
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.AutoCompleteTextView;
-import android.widget.FrameLayout;
-import android.widget.ListView;
-import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.solver.widgets.Helper;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.arasthel.spannedgridlayoutmanager.SpanSize;
 import com.arasthel.spannedgridlayoutmanager.SpannedGridLayoutManager;
-import com.github.mmin18.widget.RealtimeBlurView;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import kotlin.jvm.functions.Function1;
 
 public class SearchFragment extends Fragment {
     private ArrayList<Recipe_get> searchList = new ArrayList<>();
@@ -75,13 +39,12 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.search, container, false);
         tag_names.add("전체");
         tag_contents.add(searchList);
-        progressDialog = new ProgressDialog(view.getContext());
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.show();
         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         progressDialog.setCancelable(false);
-        progressDialog.show();
 
         Singleton_global_recipe singleton_global_recipe = Singleton_global_recipe.getInstance();
-
 
         new Thread() {
             @Override
@@ -110,11 +73,19 @@ public class SearchFragment extends Fragment {
                                         tag_contents.set(idx,rcps);
                                     }
                                 }
-                                if(searchList.size() > 5000){ // 5000개 이상 불러왔을 때 로딩 종료
-                                    progressDialog.dismiss();
-                                    adapter.notifyDataSetChanged();
+                            }
+
+                            for(int i=0; i<tag_contents.size(); i++){
+                                if(tag_contents.get(i).size() < 100){
+                                    tag_contents.remove(i);
+                                    tag_names.remove(i);
+                                    i--;
+
                                 }
                             }
+
+                            adapter.notifyDataSetChanged();
+                            progressDialog.dismiss();
                         });
 
             }

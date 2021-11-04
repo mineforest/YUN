@@ -51,9 +51,8 @@ public class MemberInitActivity extends AppCompatActivity {
         mBtn.setChecked(true);
         bool = false;
 
-        mBtn.setOnClickListener(v -> bool = false);
-
-        wBtn.setOnClickListener(v -> bool = true);
+        mBtn.setOnClickListener(v -> bool = true);
+        wBtn.setOnClickListener(v -> bool = false);
 
         findViewById(R.id.checkButton).setOnClickListener(onClickListener);
     }
