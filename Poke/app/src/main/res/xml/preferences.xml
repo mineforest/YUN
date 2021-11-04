@@ -2,8 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
         android:key="bibleNotify"
-        android:defaultValue="false"
-        android:title="알람 설정"/>
+        android:defaultValue="true"
+        android:title="유통기한 알람 설정"/>
+    <SwitchPreference
+        android:key="timerAlarm"
+        android:defaultValue="true"
+        android:title="자체 타이머 음성 사용"/>
     <Preference
         android:key="logout"
         android:title="로그아웃"/>

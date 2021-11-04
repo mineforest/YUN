@@ -30,6 +30,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        uid = user.getUid();
+
         sharedPreferences = getContext().getSharedPreferences("bibleNotify", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -83,9 +86,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     };
 
     private void revokeAccess() {
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        uid = user.getUid();
-
         user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

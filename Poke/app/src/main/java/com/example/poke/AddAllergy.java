@@ -46,7 +46,7 @@ public class AddAllergy extends Fragment {
 
         allergyMapping = new ArrayList<>();
         allergyList = new ArrayList<>();
-        String kindAllery = "새우 굴 게 홍합 오징어 전복 고등어 조개 메밀 밀 대두 호두 땅콩 난류 우유 쇠고기 돼지고기 닭고기 복숭아 토마토 잣";
+        String kindAllery = "새우 굴 게 홍합 오징어 전복 고등어 조개 메밀 밀 대두 호두 땅콩 계란 우유 쇠고기 돼지고기 닭고기 복숭아 토마토 잣";
         for(String str : kindAllery.split(" ")) {
             allergyList.add(str);
             allergyMapping.add(false);
