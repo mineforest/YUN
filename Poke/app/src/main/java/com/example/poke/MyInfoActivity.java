@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,16 +34,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class MyInfoActivity extends Fragment implements View.OnClickListener{
-    EditText nickNameTextView;
+    TextView nickNameTextView;
     ImageView profileView;
     private DatabaseReference mDatabase;
     String uid;
     Button historyButton;
     Button dipsButton;
     Button allergyButton;
-    ImageView edit_nickname;
     static HistoryFragment historyFragment;
-    ArrayList<String> nlist;
 
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -71,25 +70,10 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
         allergyButton.setOnClickListener(this);
         historyButton.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.info_btn));
         mDatabase.addValueEventListener(allergyListener);
-        edit_nickname = view.findViewById(R.id.edit_name);
-        nlist = new ArrayList<String>();
 
         getChildFragmentManager().beginTransaction().add(R.id.InfoFrame,new HistoryFragment()).commit();
 
         DatabaseReference myRef = database.getReference("users");
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    nlist.add(snapshot.getValue().toString());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-            }
-        });
 
         myRef.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
@@ -106,43 +90,6 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
             public void onCancelled(DatabaseError error) {
             }
         });
-
-        nickNameTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                nickNameTextView.setClickable(true);
-                nickNameTextView.setEnabled(true);
-                edit_nickname.setVisibility(View.VISIBLE);
-                nickNameTextView.setSelection(nickNameTextView.getText().length());
-                edit_nickname.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        myRef.child(uid).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                String getnick = nickNameTextView.getText().toString();
-                                for(int i=0;i<nlist.size();i++) {
-                                    if (nlist.contains(getnick)) {
-                                        startToast("닉네임 중복입니다.");
-                                        break;
-                                    } else {
-                                        myRef.child(uid).child("nickName").setValue(getnick);
-                                    }
-                                }
-                                nickNameTextView.setSelection(nickNameTextView.getText().length());
-                                hideKeyboard(getActivity());
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError error) {
-                            }
-                        });
-                    }
-                });
-            }
-        });
-
         return view;
     }
 
@@ -185,19 +132,4 @@ public class MyInfoActivity extends Fragment implements View.OnClickListener{
                 break;
         }
     }
-
-    private void startToast(String msg){
-        Toast.makeText(getActivity(), msg,Toast.LENGTH_SHORT).show();
-    }
-
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        View view = activity.getCurrentFocus();
-
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
 }

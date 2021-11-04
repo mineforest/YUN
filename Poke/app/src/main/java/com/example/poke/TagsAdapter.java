@@ -20,8 +20,6 @@ import java.util.ArrayList;
 
 public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.SearchViewHolder>  {
 
-    private Intent intent;
-
     private ArrayList<String> tagset;
     private ArrayList<ArrayList<Recipe_get>> tag_contents;
 
@@ -60,12 +58,7 @@ public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.SearchViewHold
         if (tagset != null && position < tagset.size()) {
             String tag = tagset.get(position);
             holder.search_title.setText(tag);
-            if(tag_contents.get(position).size() < 10) holder.cnt_tv.setText("1+");
-            else if(tag_contents.get(position).size() < 50) holder.cnt_tv.setText("10+");
-            else if(tag_contents.get(position).size() < 100) holder.cnt_tv.setText("50+");
-            else if(tag_contents.get(position).size() < 500) holder.cnt_tv.setText("100+");
-            else if(tag_contents.get(position).size() < 1000) holder.cnt_tv.setText("500+");
-            else holder.cnt_tv.setText("1,000++");
+            holder.cnt_tv.setText(tag_contents.get(position).size() + "개");
             if(tag_contents.get(position).size() != 0){
                 Glide.with(holder.itemView)
                         .load(tag_contents.get(position).get(0).getThumbnail())
