@@ -2,21 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="30dp"
-    android:elevation="30dp"
-    >
+    android:padding="20dp"
+    android:background="@drawable/border_timer"
+    android:fadingEdge="vertical"
+    style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/barcodeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/prod_name_txt"
+        app:layout_constraintBottom_toTopOf="@id/ingre_spinner"
         app:srcCompat="@drawable/ic_qr_code_scanner_black_24dp" />
     <EditText
         android:id="@+id/prod_name_txt"
@@ -55,42 +56,48 @@
         app:layout_constraintTop_toBottomOf="@id/ingre_spinner"
         />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/ingreCalendarButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:backgroundTint="#FFFFFF"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/daycnt_txt"
+        app:layout_constraintTop_toBottomOf="@id/ingre_spinner"
+        app:layout_constraintBottom_toBottomOf="@id/daycnt_txt"
+        app:layout_constraintStart_toStartOf="@id/barcodeButton"
         app:srcCompat="@drawable/ic_baseline_calendar_today_24" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/dialogOkBtn"
-        android:layout_width="100dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/cancel_shape"
-        android:backgroundTint="@color/green"
-        android:text="추가"
-
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/daycnt_txt" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/dialogCancelBtn"
         android:layout_width="100dp"
         android:layout_height="47dp"
+
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/cancel_shape"
         android:text="취소"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/daycnt_txt"
         app:layout_constraintBottom_toBottomOf="parent"
+
         />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialogOkBtn"
+        android:layout_width="100dp"
+        android:layout_height="47dp"
+        android:background="@drawable/cancel_shape"
+        android:backgroundTint="@color/green"
+        android:text="추가"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/dialogCancelBtn"/>
 
     <!--// 닫기 버튼 -->
 </androidx.constraintlayout.widget.ConstraintLayout>

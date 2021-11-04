@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             startToast("로그인에 성공하였습니다.");
-                            myStartActivity(Menu.class);
+                            myStartActivity(MainActivity.class);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

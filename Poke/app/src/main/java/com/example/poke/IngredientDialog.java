@@ -2,15 +2,19 @@ package com.example.poke;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
@@ -46,15 +50,18 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
     private String date;
     private String key;
     private Button cancelBtn;
-    private ImageButton barcode_btn;
+    private ImageView barcode_btn;
     Spinner spinner;
     String ingre_item[];
-    private ImageButton calendar_btn;
+    private ImageView calendar_btn;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ingre_popup,container,false);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        view.setClipToOutline(true);
         okBtn = view.findViewById(R.id.dialogOkBtn);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();

@@ -1,6 +1,8 @@
 package com.example.poke;
 
 import  android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -322,10 +324,12 @@ public class FridgeFragment extends Fragment{
         @Override
         public void onClick(View v) {
             Bundle args = new Bundle();
-
             IngredientDialog dialog = new IngredientDialog();
             dialog.setArguments(args); // 데이터 전달
             dialog.show(getActivity().getSupportFragmentManager(),"tag");
+//            dialog.getWindow().setBackgroundDrawableResource(
+//                    android.R.color.transparent
+//            );
         }
     };
 

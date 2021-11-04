@@ -31,7 +31,22 @@
         app:layout_constraintStart_toStartOf="@id/dassn_tv"
         app:layout_constraintTop_toBottomOf="@id/dassn_tv" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="40dp"
+
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="dassn_ingre.json"
+        app:layout_constraintTop_toBottomOf="@id/dassn_sub_tv"
+        app:layout_constraintBottom_toTopOf="@id/CL"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:lottie_loop="true" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/CL"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="10dp"
@@ -47,7 +62,8 @@
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_marginVertical="10dp"
-            android:background="#C6C2C2"
+            android:layout_marginHorizontal="20dp"
+            android:background="#e2e0e0"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:iconifiedByDefault="false"
@@ -99,7 +115,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_margin="10dp"
-                    android:background="#C8E6C9"
+                    android:background="#d3f3e3"
                     android:overScrollMode="never"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
@@ -112,7 +128,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_margin="10dp"
-                    android:background="#E3E3E3"
+                    android:background="#DFEFED"
                     android:overScrollMode="never"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -56,8 +56,6 @@
             android:name=".PreferenceActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".Adddips">
-        </activity>
         <activity android:name=".Recipe_Info">
         </activity>
         <activity android:name=".Recipe_step_Activity">
