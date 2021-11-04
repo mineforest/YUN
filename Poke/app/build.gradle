@@ -79,4 +79,5 @@ dependencies {
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
     implementation 'com.arasthel:spannedgridlayoutmanager:3.0.2'
     implementation 'com.airbnb.android:lottie:4.2.0'
+    implementation 'androidx.preference:preference:1.1.0'
 }

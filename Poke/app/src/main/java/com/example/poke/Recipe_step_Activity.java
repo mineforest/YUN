@@ -262,6 +262,7 @@ public class Recipe_step_Activity extends AppCompatActivity {
     protected void onDestroy() {
         tts.stop();
         tts.shutdown();
+        timerPause();
         super.onDestroy();
     }
 }

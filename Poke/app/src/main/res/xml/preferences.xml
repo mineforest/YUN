@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="bibleNotify"
+        android:defaultValue="false"
+        android:title="알람 설정"/>
+    <Preference
+        android:key="logout"
+        android:title="로그아웃"/>
+    <Preference
+        android:key="pwReset"
+        android:title="비밀번호 재설정"/>
+    <Preference
+        android:key="memberRevoke"
+        android:title="회원탈퇴"/>
+</PreferenceScreen>

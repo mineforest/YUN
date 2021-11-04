@@ -3,14 +3,11 @@ package com.example.poke;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
 import android.app.NotificationManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.SharedPreferences;
 import android.app.AlarmManager;
-import android.util.Log;
 import android.app.NotificationChannel;
 
 import static android.content.Context.MODE_PRIVATE;
