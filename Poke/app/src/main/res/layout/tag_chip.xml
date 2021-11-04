@@ -6,6 +6,6 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:textSize="12sp"
-    app:chipBackgroundColor="#9af3a6">
+    app:chipBackgroundColor="#ddfbe1">
 
 </com.google.android.material.chip.Chip>

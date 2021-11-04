@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@drawable/border_timer"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -16,9 +17,10 @@
             android:id="@+id/timer_timer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="10dp"
             android:text="3:00"
             android:textAlignment="center"
-            android:textSize="80sp" />
+            android:textSize="70sp" />
 
     </LinearLayout>
 
@@ -26,7 +28,7 @@
         android:id="@+id/timer_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         android:backgroundTint="@color/green"
         android:text="START"
         android:textColor="@color/white"

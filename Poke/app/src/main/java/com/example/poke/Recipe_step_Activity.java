@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -71,6 +72,7 @@ public class Recipe_step_Activity extends AppCompatActivity {
 
         dialog = new Dialog(Recipe_step_Activity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.timer_dialog);
 
         timerBtn.setOnClickListener(timerButtonClickListener);
@@ -248,7 +250,7 @@ public class Recipe_step_Activity extends AppCompatActivity {
                 Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                 player.start();
                 vib.vibrate(2000);
-                timer_tv.setText("완료");
+                timer_tv.setText("POKE!");
                 timer_minimi.setText("완료");
             }
         };
