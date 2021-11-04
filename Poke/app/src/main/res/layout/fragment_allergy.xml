@@ -84,8 +84,8 @@
                             android:layout_width="93dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
-                            android:text=" 굴 "
                             android:gravity="center"
+                            android:text="굴"
                             android:textAlignment="center"
                             android:textSize="17sp" />
 
@@ -95,8 +95,8 @@
                             android:layout_width="93dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
-                            android:text=" 게 "
                             android:gravity="center"
+                            android:text="게"
                             android:textAlignment="center"
                             android:textSize="17sp" />
 
@@ -173,8 +173,8 @@
                             android:layout_width="93dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
-                            android:text=" 밀 "
                             android:gravity="center"
+                            android:text="밀"
                             android:textAlignment="center"
                             android:textSize="17sp" />
 
@@ -294,7 +294,7 @@
                             android:layout_width="93dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="7dp"
-                            android:text=" 잣 "
+                            android:text="잣"
                             android:textAlignment="center"
                             android:textSize="17sp" />
 
