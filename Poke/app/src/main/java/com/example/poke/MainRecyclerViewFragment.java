@@ -3,7 +3,6 @@ package com.example.poke;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,18 +14,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.datatransport.runtime.scheduling.jobscheduling.SchedulerConfig;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,8 +31,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -169,23 +160,8 @@ public class MainRecyclerViewFragment extends Fragment{
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.logout_menu:
-                FirebaseAuth.getInstance().signOut();
-                myStartActivity(LoginActivity.class);
-                break;
-
-            case R.id.passwrod_reset_menu:
-                myStartActivity(PasswordResetActivity.class);
-                break;
-
-            case R.id.revoke_menu:
-                revokeAccess();
-                startToast("회원탈퇴를 완료했습니다.");
-                myStartActivity(LoginActivity.class);
-                break;
-
             case R.id.alarm_menu:
-                myStartActivity(AlarmActivity.class);
+                myStartActivity(SettingActivity.class);
                 break;
         }
 
@@ -250,28 +226,6 @@ public class MainRecyclerViewFragment extends Fragment{
         startActivity(intent);
     }
 
-    private void revokeAccess() {
-            mAuth.getCurrentUser().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                                Thread t = new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mDatabase.child(DataBaseCategory.allergy.toString()).child(uid).removeValue();
-                                        mDatabase.child(DataBaseCategory.dips.toString()).child(uid).removeValue();
-                                        mDatabase.child(DataBaseCategory.history.toString()).child(uid).removeValue();
-                                        mDatabase.child(DataBaseCategory.ingredient.toString()).child(uid).removeValue();
-                                        mDatabase.child(DataBaseCategory.preference.toString()).child(uid).removeValue();
-                                        mDatabase.child(DataBaseCategory.users.toString()).child(uid).removeValue();
-                                    }
-                                });
-                                    t.start();
-                                    try{
-                                        t.sleep(500);
-                                    }catch(Exception e){}
-                            }
-                });
-    }
 
     private void startToast(String msg){
         Toast.makeText(getContext(), msg,Toast.LENGTH_SHORT).show();

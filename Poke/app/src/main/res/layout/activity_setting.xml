@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/textView18"
@@ -22,11 +21,37 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/alarm_switch"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:checked="true"
-            android:text="알람 ON/OFF" />
+            android:text="알람 ON/OFF"/>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/timerSetting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="타이머 자체 음성 사용" />
+
+        <TextView
+            android:id="@+id/logoutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="로그아웃" />
+
+        <TextView
+            android:id="@+id/pwReset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="비밀번호 재설정" />
+
+        <TextView
+            android:id="@+id/memberRevoke"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="회원탈퇴" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

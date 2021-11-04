@@ -56,13 +56,17 @@ public class Recipe_Info extends AppCompatActivity {
     private ImageView backButton;
     private ImageView heartButton;
     ProgressDialog progressDialog;
-    Handler handler = new Handler();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_detail);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        if (user != null)
+            uid = user.getUid();
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.hide();
@@ -93,56 +97,69 @@ public class Recipe_Info extends AppCompatActivity {
         Intent intent = getIntent();
         recipe_id = intent.getStringExtra("rcp_id");
 
-        class StartRunnable implements Runnable{
-                    @Override
-                    public void run() {
-                        try {
-                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                    DocumentReference docRef= db.collection("recipe").document(recipe_id);
-
-                                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            rcp = documentSnapshot.toObject(Recipe_get.class);
-
-                                            String[] string;
-                                            for (String t : rcp.getTag()) {
-                                                string = (t.split(","));
-                                                for (String s : string) {
-                                                    addChip(s);
-                                                }
-                                            }
-
-                                            Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
-                                            recipe_title_tv.setText(rcp.getName());
-                                            recipe_url.setText(rcp.getUrl());
-                                            recipe_time_tv.setText("약 " + rcp.getTime() + "분");
-
-                                            RecyclerView recyclerView = findViewById(R.id.ingre_recyclerView);
-                                            recyclerView.setHasFixedSize(true);
-                                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                                            adapter = new RecipeIngre_Adapter(rcp.getIngre_list());
-                                            recyclerView.setAdapter(adapter);
-
-                                            if (rcp.getSauce_list().isEmpty()) {
-                                                LinearLayout linearLayout = findViewById(R.id.sauce_layout);
-                                                linearLayout.setVisibility(View.INVISIBLE);
-                                            } else {
-                                                RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);
-                                                recyclerView2.setHasFixedSize(true);
-                                                recyclerView2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                                                adapter = new RecipeIngre_Adapter(rcp.getSauce_list());
-                                                recyclerView2.setAdapter(adapter);
-                                            }
-                                        }
-                                    });
-                        }catch (Exception e){
-                        }finally {
-                            progressDialog.dismiss();
-                        }
-                    }
+        mDatabase.child("dips").child(uid).child(recipe_id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                   heartButton.setImageTintList(ColorStateList.valueOf(Color.parseColor("#EE9BBB")));
+                }
             }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        class StartRunnable implements Runnable{
+            @Override
+            public void run() {
+                try {
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    DocumentReference docRef= db.collection("recipe").document(recipe_id);
+
+                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            rcp = documentSnapshot.toObject(Recipe_get.class);
+
+                            String[] string;
+                            for (String t : rcp.getTag()) {
+                                string = (t.split(","));
+                                for (String s : string) {
+                                    addChip(s);
+                                }
+                            }
+
+                            Glide.with(getApplicationContext()).load(rcp.getThumbnail()).into(recipe_image);
+                            recipe_title_tv.setText(rcp.getName());
+                            recipe_url.setText(rcp.getUrl());
+                            recipe_time_tv.setText("약 " + rcp.getTime() + "분");
+
+                            RecyclerView recyclerView = findViewById(R.id.ingre_recyclerView);
+                            recyclerView.setHasFixedSize(true);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                            adapter = new RecipeIngre_Adapter(rcp.getIngre_list());
+                            recyclerView.setAdapter(adapter);
+
+                            if (rcp.getSauce_list().isEmpty()) {
+                                LinearLayout linearLayout = findViewById(R.id.sauce_layout);
+                                linearLayout.setVisibility(View.INVISIBLE);
+                            } else {
+                                RecyclerView recyclerView2 = findViewById(R.id.sauce_recyclerView);
+                                recyclerView2.setHasFixedSize(true);
+                                recyclerView2.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                adapter = new RecipeIngre_Adapter(rcp.getSauce_list());
+                                recyclerView2.setAdapter(adapter);
+                            }
+                        }
+                    });
+                }catch (Exception e){
+                }finally {
+                    progressDialog.dismiss();
+                }
+            }
+        }
         StartRunnable sr = new StartRunnable();
         Thread stop = new Thread(sr);
         stop.start();
@@ -166,10 +183,6 @@ public class Recipe_Info extends AppCompatActivity {
     View.OnClickListener heartClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            mDatabase = FirebaseDatabase.getInstance().getReference();
-            if (user != null)
-                uid = user.getUid();
             String rid = rcp.getId();
             String thumbnail = rcp.getThumbnail();
             String rtitle = rcp.getName();

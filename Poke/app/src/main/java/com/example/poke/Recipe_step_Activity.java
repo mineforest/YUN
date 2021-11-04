@@ -4,9 +4,14 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.view.View;
@@ -67,8 +72,6 @@ public class Recipe_step_Activity extends AppCompatActivity {
         dialog = new Dialog(Recipe_step_Activity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.timer_dialog);
-
-        SoundPlayer.initSounds(Recipe_step_Activity.this);
 
         timerBtn.setOnClickListener(timerButtonClickListener);
         ttsBtn.setOnClickListener(ttsButtonClickListener);
@@ -238,7 +241,13 @@ public class Recipe_step_Activity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
-                SoundPlayer.play(SoundPlayer.DING_DONG);
+//                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//                Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
+//                ringtone.play();
+                MediaPlayer player = MediaPlayer.create(Recipe_step_Activity.this, R.raw.poke_for_acapella);
+                Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                player.start();
+                vib.vibrate(2000);
                 timer_tv.setText("완료");
                 timer_minimi.setText("완료");
             }
