@@ -1,10 +1,12 @@
 package com.example.poke;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -78,10 +80,12 @@ public class AllergyAdapter extends RecyclerView.Adapter<AllergyAdapter.CustomVi
     {
         holder.allery_tv.setText(allergyArrayList.get(position));
         if (allergyMapping.get(position)) {
-            holder.allery_tv.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#E68B23")));
+            holder.allery_tv.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#6BB4AE")));
+            holder.allery_tv.setTextColor(ColorStateList.valueOf(Color.parseColor("#DFEFED")));
         }
         else {
-            holder.allery_tv.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#CBCBCB")));
+            holder.allery_tv.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#DFEFED")));
+            holder.allery_tv.setTextColor(ColorStateList.valueOf(Color.parseColor("#6BB4AE")));
         }
     }
 
