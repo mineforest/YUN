@@ -1,6 +1,7 @@
 package com.example.poke;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,6 +53,7 @@ public class MainRecyclerViewFragment extends Fragment{
     RecyclerView recyclerView;
     RecyclerView recyclerView2;
     SwipeRefreshLayout swipeRefreshLayout;
+    TextView moreView1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,7 @@ public class MainRecyclerViewFragment extends Fragment{
             reload();
             swipeRefreshLayout.setRefreshing(false);
         },500));
+        moreView1 = view.findViewById(R.id.moreView1);
 
         progressDialog = new ProgressDialog(getActivity());
 
@@ -108,6 +112,7 @@ public class MainRecyclerViewFragment extends Fragment{
         shimmerFrameLayout = view.findViewById(R.id.sfl);
         shimmerFrameLayout.startShimmer();
 
+        moreView1.setVisibility(View.INVISIBLE);
         recyclerView = view.findViewById(R.id.main_recylerView);
         recyclerView.setVisibility(View.INVISIBLE);
         recyclerView.setHasFixedSize(true);
@@ -201,6 +206,7 @@ public class MainRecyclerViewFragment extends Fragment{
                                     shimmerFrameLayout.setVisibility(View.GONE);
                                     adapter.notifyDataSetChanged();
                                     recyclerView.setVisibility(View.VISIBLE);
+                                    moreView1.setVisibility(View.VISIBLE);
                                 }
 
                                 if (sorted_rcps.size() == first_rcps.size()) {
