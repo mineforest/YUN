@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -48,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.loginButton).setOnClickListener(onClickListener);
         findViewById(R.id.gotoSignUpText).setOnClickListener(onClickListener);
         findViewById(R.id.googleSignInButton).setOnClickListener(onClickListener);
+        findViewById(R.id.pwResetText).setOnClickListener(onClickListener);
 
     }
 
@@ -71,6 +71,9 @@ public class LoginActivity extends AppCompatActivity {
                     break;
                 case R.id.googleSignInButton:
                     signIn();
+                    break;
+                case R.id.pwResetText:
+                    myStartActivity(PasswordResetActivity.class);
                     break;
             }
         }

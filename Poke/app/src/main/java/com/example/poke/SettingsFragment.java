@@ -50,10 +50,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             myStartActivity(LoginActivity.class);
         }
 
-        if(key.equals("pwReset")) {
-            myStartActivity(PasswordResetActivity.class);
-        }
-
         if(key.equals("memberRevoke")) {
             revokeAccess();
             Toast.makeText(getContext(), "회원탈퇴를 완료했습니다.", Toast.LENGTH_SHORT).show();

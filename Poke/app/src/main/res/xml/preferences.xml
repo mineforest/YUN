@@ -12,9 +12,6 @@
         android:key="logout"
         android:title="로그아웃"/>
     <Preference
-        android:key="pwReset"
-        android:title="비밀번호 재설정"/>
-    <Preference
         android:key="memberRevoke"
         android:title="회원탈퇴"/>
 </PreferenceScreen>
