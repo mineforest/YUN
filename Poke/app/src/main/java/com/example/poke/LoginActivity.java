@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             startToast("로그인에 성공하였습니다.");
                             myStartActivity(MainActivity.class);
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -136,8 +137,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startToast("로그인에 성공하였습니다.");
-
                                 myStartActivity(MainActivity.class);
+                                finish();
                             } else {
                                 if (task.getException() != null)
                                     startToast("로그인에 실패하였습니다.");

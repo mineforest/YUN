@@ -83,8 +83,6 @@ public class LoadingActivity extends Activity {
             }catch (Exception e){
                 e.printStackTrace();
             }
-
-            finish();
             super.onPostExecute(integer);
         }
 
@@ -119,5 +117,6 @@ public class LoadingActivity extends Activity {
         Intent intent = new Intent(getApplicationContext(),c);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        finish();
     }
 }

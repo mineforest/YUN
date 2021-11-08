@@ -50,8 +50,6 @@
         </activity>
         <activity android:name=".MemberInitActivity">
         </activity>
-        <activity android:name=".CheckAllergyActivity">
-        </activity>
         <activity
             android:name=".PreferenceActivity"
             android:screenOrientation="portrait">

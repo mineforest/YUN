@@ -110,6 +110,7 @@ public class PreferenceActivity extends AppCompatActivity implements AllergyFrag
         Intent intent = new Intent(this,c);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        finish();
     }
 
     @Override
