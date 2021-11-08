@@ -58,6 +58,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
         holder.history_date.setText(String.valueOf(historyList.get(position).getDate()));
         holder.history_rate.setRating(Float.parseFloat(String.valueOf(historyList.get(position).getRate())));
 
+        holder.history_rec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(v.getContext(), Recipe_Info.class);
+                intent.putExtra("rcp_id", historyList.get(position).getRcp_id());
+                v.getContext().startActivity(intent);
+            }
+        });
+
         holder.history_image.setOnClickListener(new View.OnClickListener() {
 
             @Override
