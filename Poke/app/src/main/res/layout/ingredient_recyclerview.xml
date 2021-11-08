@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/ingredientTitleView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:inputType="textPersonName"
@@ -34,7 +34,8 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@id/textView13"
         app:layout_constraintStart_toEndOf="@+id/categoryView"
-        app:layout_constraintTop_toTopOf="@id/categoryView" />
+        app:layout_constraintTop_toTopOf="@id/categoryView"
+        app:layout_constraintEnd_toStartOf="@id/dDay"/>
 
     <TextView
         android:id="@+id/dDay"
