@@ -58,6 +58,15 @@ public class DipsAdapter extends RecyclerView.Adapter<DipsAdapter.CustomViewHold
                 .into(holder.dips_image);
         holder.dips_rec.setText(String.valueOf(dipsList.get(position).getDipsTitle()));
 
+        holder.dips_rec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(v.getContext(), Recipe_Info.class);
+                intent.putExtra("rcp_id", dipsList.get(position).getRcp_id());
+                v.getContext().startActivity(intent);
+            }
+        });
+
         holder.dips_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
