@@ -22,6 +22,8 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,6 +55,7 @@ public class FridgeFragment extends Fragment{
     private SearchView searchView;
     private TextInputLayout textInputLayout;
     private ProgressDialog progressDialog;
+    private LottieAnimationView lottieView;
 
     @Nullable
     @Override
@@ -69,21 +72,18 @@ public class FridgeFragment extends Fragment{
         );
         progressDialog.setCancelable(false);
 
+        lottieView = view.findViewById(R.id.lottieView);
+        lottieView.setVisibility(view.INVISIBLE);
+
         tabLayout = view.findViewById(R.id.fridgeTab);
         addButton = view.findViewById(R.id.ingredientAddBtn);
 
         textInputLayout = view.findViewById(R.id.input_box);
         textInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
                 searchFilter(textInputLayout.getEditText().getText().toString());
@@ -108,11 +108,13 @@ public class FridgeFragment extends Fragment{
         recyclerView.setLayoutManager(layoutManager);
 
         ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
+
         for(int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
             View v = slidingTabStrip.getChildAt(i);
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
             params.rightMargin = betweenSpace;
         }
+
         fab.attachToRecyclerView(recyclerView);
 
         class StartRunnable implements Runnable{
@@ -171,6 +173,7 @@ public class FridgeFragment extends Fragment{
             public void onTabSelected(TabLayout.Tab tab) {
                 cate = tab.getText().toString();
                 update(cate, ingredientArrayList, tabArrayList);
+                iLoveLottie(getView());
             }
 
             @Override
@@ -181,6 +184,7 @@ public class FridgeFragment extends Fragment{
             public void onTabReselected(TabLayout.Tab tab) {
                 cate = tab.getText().toString();
                 update(cate, ingredientArrayList, tabArrayList);
+                iLoveLottie(getView());
             }
         });
 
@@ -202,6 +206,7 @@ public class FridgeFragment extends Fragment{
             if ((cate.equals("전체") || userIngredient.getCategory().equals(cate)) && userIngredient.getIngredientTitle().contains(searchText)) tabArrayList.add(userIngredient);
         }
         ingredientAdapter.filterList(tabArrayList);
+        iLoveLottie(getView());
     }
 
     @Override
@@ -236,12 +241,12 @@ public class FridgeFragment extends Fragment{
             UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
 
             ingredientArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
-
             if(cate.equals("전체") || cate.equals(ingredient.getCategory())){
                 tabArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
             }
 
             ingredientAdapter.notifyDataSetChanged();
+            iLoveLottie(getView());
         }
 
         @Override
@@ -260,6 +265,7 @@ public class FridgeFragment extends Fragment{
             }
 
             ingredientAdapter.notifyDataSetChanged();
+            iLoveLottie(getView());
         }
         @Override
         public void onChildRemoved(@NonNull DataSnapshot snapshot) {
@@ -279,6 +285,7 @@ public class FridgeFragment extends Fragment{
                     ingredientArrayList.remove(i);
                 }
             }
+            iLoveLottie(getView());
         }
 
         @Override
@@ -336,5 +343,8 @@ public class FridgeFragment extends Fragment{
     private void startToast(String msg){
         Toast.makeText(getActivity(), msg,Toast.LENGTH_SHORT).show();
     }
-
+    private void iLoveLottie(View view){
+        if(tabArrayList.size()==0) lottieView.setVisibility(view.VISIBLE);
+        else lottieView.setVisibility(view.INVISIBLE);
+    }
 }

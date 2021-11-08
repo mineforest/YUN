@@ -150,6 +150,20 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="?attr/actionBarSize">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:lottie_fileName="doge.json"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            android:layout_marginBottom="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredientRecyclerView"
             android:layout_width="match_parent"
@@ -160,8 +174,7 @@
             android:scrollbarThumbVertical="@android:color/darker_gray"
             android:scrollbars="vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </androidx.recyclerview.widget.RecyclerView>
+            app:layout_constraintTop_toTopOf="parent"></androidx.recyclerview.widget.RecyclerView>
 
         <com.melnykov.fab.FloatingActionButton
             android:id="@+id/ingredientAddBtn"
