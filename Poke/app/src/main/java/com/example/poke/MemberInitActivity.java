@@ -54,6 +54,8 @@ public class MemberInitActivity extends AppCompatActivity {
         mBtn.setOnClickListener(v -> bool = true);
         wBtn.setOnClickListener(v -> bool = false);
 
+
+
         findViewById(R.id.checkButton).setOnClickListener(onClickListener);
     }
 
@@ -83,6 +85,11 @@ public class MemberInitActivity extends AppCompatActivity {
                     pickYear = year;
                 }
             },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE));
+
+            Calendar max = Calendar.getInstance();
+            max.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE));
+            datePickerDialog.getDatePicker().setMaxDate(max.getTime().getTime());
+
             datePickerDialog.show();
         }
     };

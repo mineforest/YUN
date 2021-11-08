@@ -55,7 +55,6 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
     String ingre_item[];
     private ImageView calendar_btn;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -126,9 +125,15 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
                     dateText.setText(String.format("%d-%02d-%02d",year,month+1,dayOfMonth));
                 }
             },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE));
+
+            Calendar min = Calendar.getInstance();
+            min.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE));
+            datePickerDialog.getDatePicker().setMinDate(min.getTime().getTime());
+
             datePickerDialog.show();
         }
     };
+
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

@@ -40,7 +40,7 @@ public class LoadingActivity extends Activity {
         @Override
         protected void onPreExecute() {
             try{
-                Thread.sleep(1000);
+                Thread.sleep(500);
 
             }catch (Exception e){
                 e.printStackTrace();
@@ -67,7 +67,7 @@ public class LoadingActivity extends Activity {
                     uid = user.getUid();
                     nullStartActivity(uid);
                 }
-                Thread.sleep(1000);
+                Thread.sleep(500);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -79,7 +79,7 @@ public class LoadingActivity extends Activity {
         protected void onPostExecute(Integer integer) {
 
             try{
-                Thread.sleep(1000);
+                Thread.sleep(500);
             }catch (Exception e){
                 e.printStackTrace();
             }
