@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:textSize="12sp"
+    android:elevation="5dp"
     app:chipCornerRadius="15dp"
     app:chipBackgroundColor="#89f197">
 

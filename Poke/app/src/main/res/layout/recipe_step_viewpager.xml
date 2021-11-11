@@ -5,7 +5,7 @@
     android:id="@+id/step_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_item_gradient">
+    android:background="@color/deep_lightgray">
 
     <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
         android:id="@+id/dots_indicator"

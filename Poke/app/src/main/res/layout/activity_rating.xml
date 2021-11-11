@@ -21,7 +21,8 @@
         android:textSize="32sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp"
+        android:textColor="@color/main_head"/>
 
     <TextView
         android:id="@+id/dassn_sub_tv"
