@@ -126,6 +126,7 @@ public class RatingActivity extends AppCompatActivity {
 
         adapter = new IngredientListAdapter(dbList, this);
         listView.setAdapter(adapter);
+        listView.bringToFront();
         listView.setOnItemClickListener(itemClickListener);
         doneButton.setOnClickListener(clickListener);
     }

@@ -73,7 +73,17 @@
             app:layout_constraintTop_toTopOf="parent">
 
         </androidx.appcompat.widget.SearchView>
-
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightgray"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="30dp"
+            android:divider="@color/gray"
+            android:dividerHeight="0.5dp"
+            app:layout_constraintTop_toBottomOf="@id/searchView"
+            />
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -139,14 +149,6 @@
                     tools:listitem="@layout/dassn_ingre_item" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-            <ListView
-                android:id="@+id/listView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/gray"
-                android:divider="#FF999999"
-                android:dividerHeight="1dp" />
         </FrameLayout>
 
         <androidx.appcompat.widget.AppCompatButton
