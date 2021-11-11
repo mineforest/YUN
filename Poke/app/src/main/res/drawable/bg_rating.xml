@@ -6,5 +6,5 @@
 <!--        android:startColor="#96e6a1"-->
 <!--        android:endColor="#d4fc79"-->
 <!--        android:type="linear"/>-->
-    <solid android:color="@color/lightgray" />
+    <solid android:color="@color/background" />
 </shape>
