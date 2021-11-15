@@ -78,10 +78,12 @@ public class FridgeFragment extends Fragment{
         setHasOptionsMenu(true);
         ((MainActivity)getActivity()).getSupportActionBar().setElevation(0);
         imm = (InputMethodManager)getContext().getSystemService(INPUT_METHOD_SERVICE);
+
         lottieView = view.findViewById(R.id.lottieView);
         lot_txt = view.findViewById(R.id.lot_txt);
         lottieView.setVisibility(view.INVISIBLE);
         lot_txt.setVisibility(view.INVISIBLE);
+
         tabLayout = view.findViewById(R.id.fridgeTab);
         addButton = view.findViewById(R.id.ingredientAddBtn);
 
@@ -97,6 +99,7 @@ public class FridgeFragment extends Fragment{
             public void afterTextChanged(Editable s) {
                 searchFilter(textInputLayout.getEditText().getText().toString());
             }
+
         });
 
         ingreSearch = view.findViewById(R.id.fridgeIngredientSearch);

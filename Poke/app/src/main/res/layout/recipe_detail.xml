@@ -191,12 +191,12 @@
 
     <ImageView
         android:id="@+id/backButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_margin="20dp"
         android:src="@drawable/ic_arrow_back_ios_new_white_24dp"
         app:layout_constraintStart_toStartOf="@id/thumbnail_layout"
         app:layout_constraintTop_toTopOf="@id/thumbnail_layout"
-        android:layout_margin="10dp"
         android:elevation="5dp"/>
 
     <ImageView
