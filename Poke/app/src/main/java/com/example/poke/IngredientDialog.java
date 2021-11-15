@@ -55,6 +55,7 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
     String ingre_item[];
     private ImageView calendar_btn;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
