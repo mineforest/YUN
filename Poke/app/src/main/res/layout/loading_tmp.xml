@@ -8,7 +8,7 @@
 
         <com.github.jorgecastillo.FillableLoader
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="220dp"
             android:id="@+id/fillableLogo"
             app:fl_originalWidth="1920"
             app:fl_originalHeight="1080"
