@@ -26,13 +26,12 @@
 
         <activity
             android:name=".LoadingActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme">
+            android:theme="@android:style/Theme.Light.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <action android:name="android:windowBackground"/>
+            </intent-filter>mju9km
         </activity>
         <activity android:name=".LoginActivity">
         </activity>

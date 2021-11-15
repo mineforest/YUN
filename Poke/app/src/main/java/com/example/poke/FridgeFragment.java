@@ -119,6 +119,7 @@ public class FridgeFragment extends Fragment{
         }
 
         fab.attachToRecyclerView(recyclerView);
+        iLoveLottie(getView());
 
         class StartRunnable implements Runnable{
             @Override
