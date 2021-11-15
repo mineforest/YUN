@@ -3,32 +3,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_loading"
+    android:background="@color/background"
     xmlns:tools="http://schemas.android.com/tools">
 
-        <TextView
-            android:id="@+id/title_txt"
+        <com.github.jorgecastillo.FillableLoader
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:text="POKE"
-            android:textSize="60dp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
+            android:layout_height="250dp"
+            android:id="@+id/fillableLogo"
+            app:fl_originalWidth="1920"
+            app:fl_originalHeight="1080"
+            app:fl_strokeColor="@color/main_head"
+            app:fl_fillColor="@color/main_head"
+            app:fl_strokeWidth="5dp"
+            app:fl_strokeDrawingDuration="1500"
+            app:fl_fillDuration="200"
+            app:fl_clippingTransform="plain"
+            app:fl_fillPercentage="100"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="60dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/pb"
             />
+        <TextView
+            android:id="@+id/info_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="initiating POKE..."
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/cookie"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textStyle="bold"
+            >
+        </TextView>
         <ProgressBar
-            android:id="@+id/pb"
+            android:id="@+id/cookie"
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:indeterminateDrawable="@drawable/progress_image"
-            android:layout_marginBottom="50dp"
-            app:layout_constraintTop_toBottomOf="@id/title_txt"
+            app:layout_constraintTop_toBottomOf="@id/fillableLogo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="v0.3.8 beta"
+            android:textColor="@color/main_head"
+            app:layout_constraintTop_toBottomOf="@id/tcnk_txt"
+            app:layout_constraintEnd_toEndOf="@id/tcnk_txt">
+        </com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tcnk_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team. TCNK"
+            android:textColor="@color/main_head"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"
+            >
+        </com.google.android.material.textview.MaterialTextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

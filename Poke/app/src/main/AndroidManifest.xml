@@ -26,12 +26,12 @@
 
         <activity
             android:name=".LoadingActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar">
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android:windowBackground"/>
-            </intent-filter>mju9km
+            </intent-filter>
         </activity>
         <activity android:name=".LoginActivity">
         </activity>

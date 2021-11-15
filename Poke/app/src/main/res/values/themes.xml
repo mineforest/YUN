@@ -52,7 +52,7 @@
     </style>
 
     <style name="SplashTheme" parent="@android:style/Theme.Light.NoTitleBar">
-        <item name="android:windowBackground">@drawable/loading_image</item>
+        <item name="android:windowBackground">@null</item>
     </style>
 
     <style name="AlertDialog" parent="Base.Theme.AppCompat.Light.Dialog">
