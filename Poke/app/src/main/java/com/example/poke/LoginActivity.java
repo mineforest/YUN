@@ -92,13 +92,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void showPassword_reset() {
         password_reset.show();
-        Button cancel = password_reset.findViewById(R.id.dialogCancelBtn);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                password_reset.dismiss();
-            }
-        });
         password_reset.findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
