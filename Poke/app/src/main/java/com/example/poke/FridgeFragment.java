@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -22,8 +23,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -41,6 +44,8 @@ import com.melnykov.fab.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class FridgeFragment extends Fragment{
     private FridgeAdapter ingredientAdapter;
@@ -61,6 +66,8 @@ public class FridgeFragment extends Fragment{
     private LottieAnimationView lottieView;
     FloatingActionButton fab;
     View view;
+    EditText ingreSearch;
+    InputMethodManager imm;
 
     @Nullable
     @Override
@@ -68,15 +75,7 @@ public class FridgeFragment extends Fragment{
         view = inflater.inflate(R.layout.fragment_fridge,container,false);
         setHasOptionsMenu(true);
         ((MainActivity)getActivity()).getSupportActionBar().setElevation(0);
-
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.show();
-        progressDialog.setContentView(R.layout.progress_dialog);
-        progressDialog.getWindow().setBackgroundDrawableResource(
-                android.R.color.transparent
-        );
-        progressDialog.setCancelable(false);
-
+        imm = (InputMethodManager)getContext().getSystemService(INPUT_METHOD_SERVICE);
         lottieView = view.findViewById(R.id.lottieView);
         lottieView.setVisibility(view.INVISIBLE);
 
@@ -97,7 +96,7 @@ public class FridgeFragment extends Fragment{
             }
         });
 
-        EditText ingreSearch = view.findViewById(R.id.fridgeIngredientSearch);
+        ingreSearch = view.findViewById(R.id.fridgeIngredientSearch);
         ingreSearch.setImeOptions(EditorInfo.IME_ACTION_DONE);
         tabArrayList = new ArrayList<>();
         ingredientArrayList = new ArrayList<>();
@@ -115,6 +114,7 @@ public class FridgeFragment extends Fragment{
         layoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setOnTouchListener(touchListener);
 
         ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
 
@@ -144,7 +144,6 @@ public class FridgeFragment extends Fragment{
                 }finally {
                     mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
                     recyclerView.setAdapter(ingredientAdapter);
-                    progressDialog.dismiss();
                 }
             }
         }
@@ -160,20 +159,34 @@ public class FridgeFragment extends Fragment{
         }
         stop.interrupt();
 
+//        recyclerView.setOnTouchListener(touchListener);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             int tmp = 1;
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                if(tmp == 0) {
-                    super.onScrolled(recyclerView, dx, dy);
-                    fab.setVisibility(view.GONE);
-                }
+//                if(tmp == 0) {
+//                    super.onScrolled(recyclerView, dx, dy);
+//                    fab.hide();
+//                }
             }
 
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                fab.setVisibility(view.VISIBLE);
+                fab.show();
+
+                int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+                int itemTotalCount = recyclerView.getAdapter().getItemCount() - 1;
+
+                if (lastVisibleItemPosition == itemTotalCount && itemTotalCount != -1 && recyclerView.canScrollVertically(-1)) {
+                    fab.hide();
+                }
+
+                if(newState==0 && lastVisibleItemPosition != itemTotalCount)
+                    fab.show();
+                else if (newState == 1)
+                    fab.hide();
+
                 tmp = 0;
             }
         });
@@ -183,7 +196,9 @@ public class FridgeFragment extends Fragment{
             public void onTabSelected(TabLayout.Tab tab) {
                 cate = tab.getText().toString();
                 update(cate, ingredientArrayList, tabArrayList);
-                fab.setVisibility(view.VISIBLE);
+                fab.show();
+                ingreSearch.clearFocus();
+                imm.hideSoftInputFromWindow(ingreSearch.getWindowToken(), 0);
                 iLoveLottie(getView());
             }
 
@@ -195,13 +210,24 @@ public class FridgeFragment extends Fragment{
             public void onTabReselected(TabLayout.Tab tab) {
                 cate = tab.getText().toString();
                 update(cate, ingredientArrayList, tabArrayList);
-                fab.setVisibility(view.VISIBLE);
+                fab.show();
+                ingreSearch.clearFocus();
+                imm.hideSoftInputFromWindow(ingreSearch.getWindowToken(), 0);
                 iLoveLottie(getView());
             }
         });
 
         return view;
     }
+
+    View.OnTouchListener touchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            ingreSearch.clearFocus();
+            imm.hideSoftInputFromWindow(ingreSearch.getWindowToken(), 0);
+            return false;
+        }
+    };
 
     public void onCreateOptionsMenu(Menu menu,MenuInflater inflater){
         super.onCreateOptionsMenu(menu,inflater);
@@ -279,6 +305,7 @@ public class FridgeFragment extends Fragment{
             ingredientAdapter.notifyDataSetChanged();
             iLoveLottie(getView());
         }
+
         @Override
         public void onChildRemoved(@NonNull DataSnapshot snapshot) {
             UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
@@ -297,7 +324,7 @@ public class FridgeFragment extends Fragment{
                     ingredientArrayList.remove(i);
                 }
             }
-            fab.setVisibility(view.VISIBLE);
+
             iLoveLottie(getView());
         }
 

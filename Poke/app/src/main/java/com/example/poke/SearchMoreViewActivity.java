@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,7 +22,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 
 public class SearchMoreViewActivity extends AppCompatActivity {
-
+    InputMethodManager imm;
     ArrayList<Recipe_get> rcps = new ArrayList<>();
     ArrayList<Recipe_get> filteredList;
     SearchMoreViewAdapter adapter;
@@ -27,6 +30,7 @@ public class SearchMoreViewActivity extends AppCompatActivity {
     TextInputLayout editText;
     TextView tag_name;
     TextView tag_cnt;
+    EditText recipesSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,7 @@ public class SearchMoreViewActivity extends AppCompatActivity {
         else{
             rcps = intent.getParcelableArrayListExtra("t_rcps");
         }
-
+        imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
@@ -66,11 +70,12 @@ public class SearchMoreViewActivity extends AppCompatActivity {
                 searchFilter(editText.getEditText().getText().toString());
             }
         });
-        EditText recipesSearch = findViewById(R.id.recipesSearch);
+        recipesSearch = findViewById(R.id.recipesSearch);
         recipesSearch.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         recyclerView = findViewById(R.id.more_recyclerview_insearch);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setOnTouchListener(onTouchListener);
         adapter = new SearchMoreViewAdapter(rcps);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,false));
         int largePadding = getResources().getDimensionPixelSize(R.dimen.more_view_spacing);
@@ -81,6 +86,15 @@ public class SearchMoreViewActivity extends AppCompatActivity {
         tag_name.setText(intent.getCharSequenceExtra("t_name"));
         tag_cnt.setText(adapter.getItemCount() + "개의 레시피");
     }
+
+    View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            recipesSearch.clearFocus();
+            imm.hideSoftInputFromWindow(recipesSearch.getWindowToken(), 0);
+            return false;
+        }
+    };
 
     @Override
     protected void onResume() {
