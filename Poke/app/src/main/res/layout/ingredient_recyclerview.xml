@@ -43,7 +43,7 @@
         style="@style/strokeGray"
         android:layout_width="100dp"
         android:layout_height="35dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="18dp"
         android:gravity="center"
         android:text="New"
         android:textColor="@color/black"

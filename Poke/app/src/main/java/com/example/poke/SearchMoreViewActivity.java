@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -47,6 +48,7 @@ public class SearchMoreViewActivity extends AppCompatActivity {
         tag_cnt = findViewById(R.id.count_result);
 
         filteredList = new ArrayList<>();
+
         editText = findViewById(R.id.search_edit);
         editText.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
@@ -64,6 +66,8 @@ public class SearchMoreViewActivity extends AppCompatActivity {
                 searchFilter(editText.getEditText().getText().toString());
             }
         });
+        EditText recipesSearch = findViewById(R.id.recipesSearch);
+        recipesSearch.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         recyclerView = findViewById(R.id.more_recyclerview_insearch);
         recyclerView.setHasFixedSize(true);

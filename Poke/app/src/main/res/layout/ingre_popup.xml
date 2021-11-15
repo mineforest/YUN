@@ -19,8 +19,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/ingre_spinner"
         app:srcCompat="@drawable/ic_qr_code_scanner_black_24dp" />
+
     <EditText
         android:id="@+id/prod_name_txt"
+        android:inputType="textPersonName"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_weight="10"

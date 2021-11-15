@@ -63,6 +63,8 @@
             app:startIconDrawable="@drawable/ic_search_black_24dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/recipesSearch"
+                android:inputType="textPersonName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

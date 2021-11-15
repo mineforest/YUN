@@ -6,15 +6,18 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
@@ -55,7 +58,6 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
     String ingre_item[];
     private ImageView calendar_btn;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -82,6 +84,7 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
         calendar_btn.setOnClickListener(calendarListener);
         dateText.setOnClickListener(calendarListener);
         dateText.setFocusableInTouchMode(false);
+        nameText.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         if(args != null) {
             title = args.getString("title");
