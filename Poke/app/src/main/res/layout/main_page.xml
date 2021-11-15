@@ -32,14 +32,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:padding="10dp">
+
                 <TextView
                     android:id="@+id/tv_foryou"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="취향 맞춤 레시피"
-                    android:textSize="24sp"
                     android:layout_centerVertical="true"
-                    android:textColor="@color/main_head"/>
+                    android:text="취향 맞춤 레시피"
+                    android:textColor="@color/ButtonTextColor"
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/moreView1"
@@ -54,7 +55,9 @@
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/sfl">
+                android:id="@+id/sfl"
+                app:shimmer_highlight_alpha="0"
+                app:shimmer_duration="1500">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -94,8 +97,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="재료 충족 레시피"
-                    android:textSize="24sp"
-                    android:textColor="@color/main_head" />
+                    android:textColor="@color/ButtonTextColor"
+                    android:textSize="24sp" />
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -1,10 +1,12 @@
 package com.example.poke;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "LoginActivity";
+    Dialog password_reset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         // Initialize Firebase Auth
         getSupportActionBar().hide();
+
+        password_reset = new Dialog(LoginActivity.this);
+        password_reset.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        password_reset.setContentView(R.layout.activity_password_reset);
+        password_reset.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent
+        );
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -74,11 +84,44 @@ public class LoginActivity extends AppCompatActivity {
                     signIn();
                     break;
                 case R.id.pwResetText:
-                    myStartActivity(PasswordResetActivity.class);
+                    showPassword_reset();
                     break;
             }
         }
     };
+
+    public void showPassword_reset() {
+        password_reset.show();
+        password_reset.findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                send();
+            }
+        });
+
+    }
+
+    private void send(){
+        String email=((EditText)findViewById(R.id.emailEditText)).getText().toString();
+
+        if(email.length() > 0 ) {
+            mAuth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                startToast("이메일을 보냈습니다.");
+                            }
+                            else{
+                                startToast("다시 입력하세요");
+                            }
+                        }
+                    });
+        } else{
+            startToast("이메일을 입력하세요.");
+        }
+    }
+
 
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.arasthel.spannedgridlayoutmanager.SpanSize;
 import com.arasthel.spannedgridlayoutmanager.SpannedGridLayoutManager;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -26,7 +27,8 @@ public class SearchFragment extends Fragment {
     private TagsAdapter adapter;
     private ArrayList<String> tag_names = new ArrayList<>();
     private ArrayList<ArrayList<Recipe_get>> tag_contents = new ArrayList<>();
-    ProgressDialog progressDialog;
+    ShimmerFrameLayout shimmerFrameLayout;
+    RecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,10 +40,11 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.search, container, false);
         tag_names.add("전체");
         tag_contents.add(searchList);
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.show();
-        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        progressDialog.setCancelable(false);
+
+        recyclerView = view.findViewById(R.id.search_rv);
+        shimmerFrameLayout = view.findViewById(R.id.sfl_search);
+        shimmerFrameLayout.startShimmer();
+        recyclerView.setVisibility(View.INVISIBLE);
 
         Singleton_global_recipe singleton_global_recipe = Singleton_global_recipe.getInstance();
 
@@ -83,13 +86,14 @@ public class SearchFragment extends Fragment {
                             }
 
                             adapter.notifyDataSetChanged();
-                            progressDialog.dismiss();
+                            shimmerFrameLayout.stopShimmer();
+                            shimmerFrameLayout.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
                         });
 
             }
         }.start();
 
-        RecyclerView recyclerView = view.findViewById(R.id.search_rv);
         recyclerView.setHasFixedSize(true);
         SpannedGridLayoutManager spannedGridLayoutManager = new SpannedGridLayoutManager(SpannedGridLayoutManager.Orientation.VERTICAL, 4);
         spannedGridLayoutManager.setItemOrderIsStable(true);

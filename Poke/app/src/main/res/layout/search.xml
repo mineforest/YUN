@@ -18,6 +18,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/sfl_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:shimmer_highlight_alpha="0">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:columnCount="2">
+
+                <include layout="@layout/search_list"
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1"
+                    app:layout_gravity="fill"/>
+                <include layout="@layout/search_list"
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1"
+                    app:layout_gravity="fill"/>
+                <include layout="@layout/search_list"
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1"
+                    app:layout_gravity="fill"/>
+                <include layout="@layout/search_list"
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1"
+                    app:layout_gravity="fill"/>
+                <include layout="@layout/search_list"
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1"
+                    app:layout_gravity="fill"/>
+                <include layout="@layout/search_list"
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1"
+                    app:layout_gravity="fill"/>
+                <include layout="@layout/search_list"
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1"
+                    app:layout_gravity="fill"/>
+                <include layout="@layout/search_list"
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1"
+                    app:layout_gravity="fill"/>
+
+            </androidx.gridlayout.widget.GridLayout>
+
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_rv"
             android:layout_width="match_parent"

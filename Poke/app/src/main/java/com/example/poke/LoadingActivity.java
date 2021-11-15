@@ -26,7 +26,7 @@ public class LoadingActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.loading_tmp);
         CallAsyncTask();
     }
 
