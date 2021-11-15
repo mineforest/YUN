@@ -70,10 +70,8 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
         if(user != null)
         uid = user.getUid();
         okBtn.setOnClickListener(onClickListener);
-        Bundle args = getArguments();
         spinner = view.findViewById(R.id.ingre_spinner);
         nameText = view.findViewById(R.id.prod_name_txt);
-        //cateText = view.findViewById(R.id.prod_cat_txt);
         dateText = view.findViewById(R.id.daycnt_txt);
         barcode_btn = view.findViewById(R.id.barcodeButton);
         barcode_btn.setOnClickListener(scanClickListener);
@@ -86,15 +84,6 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
         dateText.setFocusableInTouchMode(false);
         nameText.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
-        if(args != null) {
-            title = args.getString("title");
-            date = args.getString("date");
-            cate = args.getString("category");
-            key = args.getString("key");
-            nameText.setText(title);
-            //cateText.setText(cate);
-            dateText.setText(date);
-        }
         spinner.setOnItemSelectedListener(this);
         ingre_item = new String[]{"두류","견과류","채소류","과일류","육류","알류"
         ,"어패류","해조류","유제품","음료/주류","기타"};
@@ -111,7 +100,6 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
     //@Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long L){
         cate=ingre_item[i];
-        //cateText.setText(ingre_item[i]);
     }
 
     //@Override
@@ -187,7 +175,6 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
             if(barcode_num == null) {
                 Toast.makeText(getContext(), "취소됨",Toast.LENGTH_LONG).show();
             } else {
-                Bundle args = new Bundle();
 
                 BarcodeApiCaller barcodeApiCaller = new BarcodeApiCaller();
                 barcodeApiCaller.getXmlData(barcode_num);
@@ -197,14 +184,10 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
 
                 if(p_name == null || p_cate == null || p_date == null) {
                     Toast.makeText(getContext(), "읽을 수 없습니다.\n다시 시도하거나 수동 입력해주세요.",Toast.LENGTH_LONG).show();
-                } else {
-                    args.putString("title", p_name); // 제품명으로 출력됨
-                    args.putString("category", p_cate); // 우리가 가진 재료 카테고리로의 매핑 알고리즘 필요
-                    args.putString("date", p_date);
                 }
-                IngredientDialog dialog = new IngredientDialog();
-                dialog.setArguments(args);
-                dialog.show(getActivity().getSupportFragmentManager(), "tag");
+                nameText.setText(p_cate);
+                //cateText.setText(cate);
+                dateText.setText(p_date);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
