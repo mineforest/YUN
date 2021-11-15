@@ -18,6 +18,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -64,6 +65,7 @@ public class FridgeFragment extends Fragment{
     private TextInputLayout textInputLayout;
     private ProgressDialog progressDialog;
     private LottieAnimationView lottieView;
+    private TextView lot_txt;
     FloatingActionButton fab;
     View view;
     EditText ingreSearch;
@@ -77,8 +79,9 @@ public class FridgeFragment extends Fragment{
         ((MainActivity)getActivity()).getSupportActionBar().setElevation(0);
         imm = (InputMethodManager)getContext().getSystemService(INPUT_METHOD_SERVICE);
         lottieView = view.findViewById(R.id.lottieView);
+        lot_txt = view.findViewById(R.id.lot_txt);
         lottieView.setVisibility(view.INVISIBLE);
-
+        lot_txt.setVisibility(view.INVISIBLE);
         tabLayout = view.findViewById(R.id.fridgeTab);
         addButton = view.findViewById(R.id.ingredientAddBtn);
 
@@ -384,7 +387,14 @@ public class FridgeFragment extends Fragment{
         Toast.makeText(getActivity(), msg,Toast.LENGTH_SHORT).show();
     }
     private void iLoveLottie(View view){
-        if(tabArrayList.size()==0) lottieView.setVisibility(view.VISIBLE);
-        else lottieView.setVisibility(view.INVISIBLE);
+        if(tabArrayList.size()==0){
+            lottieView.setVisibility(view.VISIBLE);
+            lot_txt.setVisibility(view.VISIBLE);
+        }
+        else{
+            lottieView.setVisibility(view.INVISIBLE);
+            lot_txt.setVisibility(view.INVISIBLE);
+        }
+
     }
 }
