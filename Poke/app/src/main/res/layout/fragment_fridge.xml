@@ -168,13 +168,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginEnd="25dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="15dp"
             android:src="@drawable/ic_add_ingre"
+            app:fab_colorNormal="@color/lightgray"
             app:fab_shadow="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:fab_colorNormal="@color/lightgray"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
