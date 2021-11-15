@@ -46,10 +46,8 @@ public class IngredientListAdapter extends BaseAdapter {
 
         if(convertView == null){
             convertView = inflate.inflate(R.layout.ingre_search_listview,null);
-
             viewHolder = new ViewHolder();
             viewHolder.label = (TextView) convertView.findViewById(R.id.label);
-
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder)convertView.getTag();
@@ -59,7 +57,7 @@ public class IngredientListAdapter extends BaseAdapter {
 
         // 리스트에 있는 데이터를 리스트뷰 셀에 뿌린다.
         viewHolder.label.setText(list.get(position));
-
+        viewHolder.label.bringToFront();
         return convertView;
     }
 
