@@ -98,14 +98,18 @@ public class BarcodeApiCaller {
 
     private String DateInverter(String date) {
         String[] tok = date.split(" ");
-        String tmp = tok[tok.length-1];
-        int howlong = Integer.parseInt(tmp.replaceAll("[^0-9]",""));
+        String tmp = tok[tok.length-1];     //10일
+        String unit=new String(tmp);
+        int howlong = Integer.parseInt(unit.replaceAll("[^0-9]",""));
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         if (tmp.contains("개월") || tmp.contains("달") || tmp.contains("월")) {
             cal.add(Calendar.MONTH, howlong);
+        }
+        else if(tmp.contains("일")){
+            cal.add(Calendar.DATE, howlong-3);
         }
         else {
             cal.add(Calendar.YEAR, 1);
