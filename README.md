@@ -21,8 +21,8 @@ __앱 구성도__
 ![앱구성도](https://user-images.githubusercontent.com/81149946/144421077-35870099-2408-4f80-a65f-d3f76f02ded8.png)
 
 __핵심 기술__   
-> [Beautiful Soup를 이용한 Web Crawling](https://github.com/TechnoHong/POKE/WC)   
-> [Word2vec을 이용한 추천 모델과 Flask를 이용한 RESTful API](https://github.com/TechnoHong/POKE/api)   
+> [Beautiful Soup를 이용한 Web Crawling](https://github.com/TechnoHong/POKE/tree/main/WC)   
+> [Word2vec을 이용한 추천 모델과 Flask를 이용한 RESTful API](https://github.com/TechnoHong/POKE/tree/main/api)   
 > Zxing 라이브러리를 이용한 Barcode Scanner   
 
 __애플리케이션 인터페이스__   
