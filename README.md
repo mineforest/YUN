@@ -6,6 +6,9 @@
 >소요기간 : 2021.03 ~ 2021.11 (약 9개월)   
 >개발툴 : Java, Python, Flask, GCP, Firebase DB, Beautiful Soup, Apache, Zxing 등
 
+__Reauirements:__
+ - Android sdk 24+   
+
 
 __서비스 구성도__   
 
