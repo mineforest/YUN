@@ -6,7 +6,17 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF121212</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="green">#00FF7F</color>
+    <color name="green">#25C575</color>
     <color name="gray">#8C8B8A</color>
+    <color name="lightgray">#F5F5F5</color>
+    <color name="deep_lightgray">#F0F0F0</color>
     <color name="background">#FAFAFA</color>
+    <color name="shimmer_color">#BCBCBC</color>
+    <color name="red">#FF0000</color>
+    <color name="ButtonTextColor">#08300A</color>
+    <color name="emptystar">#909090</color>
+    <color name="filledstar">#29D67E</color>
+    <color name="main_head">#1D9458</color>
+    <color name="sub_head">#719B98</color>
+
 </resources>

@@ -8,6 +8,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -60,7 +61,7 @@ public class BarcodeApiCaller {
 
             XmlPullParserFactory factory= XmlPullParserFactory.newInstance();
             XmlPullParser xpp= factory.newPullParser();
-            xpp.setInput( new InputStreamReader(is, "UTF-8") );
+            xpp.setInput( new InputStreamReader(is, StandardCharsets.UTF_8) );
 
             String tag;
 
@@ -98,14 +99,18 @@ public class BarcodeApiCaller {
 
     private String DateInverter(String date) {
         String[] tok = date.split(" ");
-        String tmp = tok[tok.length-1];
-        int howlong = Integer.parseInt(tmp.replaceAll("[^0-9]",""));
+        String tmp = tok[tok.length-1];     //10일
+        String unit= tmp;
+        int howlong = Integer.parseInt(unit.replaceAll("[^0-9]",""));
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         if (tmp.contains("개월") || tmp.contains("달") || tmp.contains("월")) {
             cal.add(Calendar.MONTH, howlong);
+        }
+        else if(tmp.contains("일")){
+            cal.add(Calendar.DATE, howlong-3);
         }
         else {
             cal.add(Calendar.YEAR, 1);

@@ -1,50 +1,34 @@
 package com.example.poke;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.arasthel.spannedgridlayoutmanager.SpanSize;
+import com.arasthel.spannedgridlayoutmanager.SpannedGridLayoutManager;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class SearchFragment extends Fragment implements TextWatcher {
-    private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
-    private FirebaseDatabase database;
-    private DatabaseReference mDatabase;
-    private ArrayList<Recipe_get> searchList = new ArrayList<>();
-    private ArrayList<Recipe_get> searchedList = new ArrayList<>();
-    private FirebaseAuth mAuth;
-    SearchAdapter adapter;
-    EditText editText;
-    String uid;
-    ImageView clear_btn;
-    ProgressDialog progressDialog;
-    Handler handler = new Handler();
+public class SearchFragment extends Fragment {
+    private final ArrayList<Recipe_get> searchList = new ArrayList<>();
+    private TagsAdapter adapter;
+    private final ArrayList<String> tag_names = new ArrayList<>();
+    private final ArrayList<ArrayList<Recipe_get>> tag_contents = new ArrayList<>();
+    ShimmerFrameLayout shimmerFrameLayout;
+    RecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,113 +38,86 @@ public class SearchFragment extends Fragment implements TextWatcher {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         View view = inflater.inflate(R.layout.search, container, false);
+        tag_names.add("전체");
+        tag_contents.add(searchList);
 
-        progressDialog = new ProgressDialog(getActivity());
+        recyclerView = view.findViewById(R.id.search_rv);
+        shimmerFrameLayout = view.findViewById(R.id.sfl_search);
+        shimmerFrameLayout.startShimmer();
+        recyclerView.setVisibility(View.INVISIBLE);
 
-        progressDialog.show();
-        progressDialog.setContentView(R.layout.progress_dialog);
-        progressDialog.getWindow().setBackgroundDrawableResource(
-                android.R.color.transparent
-        );
-        progressDialog.setCancelable(false);
+        Singleton_global_recipe singleton_global_recipe = Singleton_global_recipe.getInstance();
 
-        Thread thread = new Thread(new Runnable() {
+        new Thread() {
             @Override
             public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        String[] test_ids = {"1011256", "6867464", "6867464","6867464", "6867464", "6867464", "1166652",
-                                "6867464", "6867464", "6867464", "6867464", "6867464", "6867464"};
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        for(int i =0;i<test_ids.length; i++) {
-                            DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
-                            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    String rcp_id = documentSnapshot.getData().get("id").toString();
-                                    String title = documentSnapshot.getData().get("name").toString();
-                                    String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                                    Recipe_get r = new Recipe_get(rcp_id,thumbnail, title);
-                                    searchList.add(r);
-                                    adapter.notifyDataSetChanged();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("recipe")
+                        .addSnapshotListener((value, error) -> {
+                            for (QueryDocumentSnapshot doc : value) {
+                                String rcp_id = doc.getData().get("id").toString();
+                                String title = doc.getData().get("name").toString();
+                                String thumbnail = doc.getData().get("thumbnail").toString();
+                                List<String> tags = (List<String>) doc.get("tag");
+                                Recipe_get r = new Recipe_get(rcp_id, thumbnail, title, tags);
+                                searchList.add(r);
+                                for (String tag : tags.get(0).split(", ")) {
+                                    int idx = tag_names.indexOf(tag);
+                                    if (idx == -1) {
+                                        ArrayList<Recipe_get> rcp = new ArrayList<>();
+                                        rcp.add(r);
+                                        tag_names.add(tag);
+                                        tag_contents.add(rcp);
+                                    } else {
+                                        ArrayList<Recipe_get> rcps = tag_contents.get(idx);
+                                        rcps.add(r);
+                                        tag_contents.set(idx, rcps);
+                                    }
                                 }
-                            });
-                        }
-
-                        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.search_rv);
-                        recyclerView.setHasFixedSize(true);
-                        //원래 위치
-//                        editText = (EditText) view.findViewById(R.id.rec_search);
-//                        editText.addTextChangedListener(this);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        adapter = new SearchAdapter(searchList);
-                        recyclerView.setAdapter(adapter);
-                        clear_btn = (ImageView) view.findViewById(R.id.clear_btn);
-                        clearText();
-
-                        new android.os.Handler().post(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
                             }
+
+                            for (int i = 0; i < tag_contents.size(); i++) {
+                                if (tag_contents.get(i).size() < 100) {
+                                    tag_contents.remove(i);
+                                    tag_names.remove(i);
+                                    i--;
+
+                                }
+                            }
+
+                            adapter.notifyDataSetChanged();
+                            shimmerFrameLayout.stopShimmer();
+                            shimmerFrameLayout.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
                         });
-                    }
-                });
-            }
-        });
-        editText = (EditText) view.findViewById(R.id.rec_search);
-        editText.addTextChangedListener(this);
-        thread.start();
-        ArrayList<Object> filteredList = new ArrayList<>();
 
+            }
+        }.start();
+
+        recyclerView.setHasFixedSize(true);
+        SpannedGridLayoutManager spannedGridLayoutManager = new SpannedGridLayoutManager(SpannedGridLayoutManager.Orientation.VERTICAL, 4);
+        spannedGridLayoutManager.setItemOrderIsStable(true);
+        spannedGridLayoutManager.setSpanSizeLookup(new SpannedGridLayoutManager.SpanSizeLookup(position -> {
+            if (position % 7 == 0) return new SpanSize(2, 2);
+            return new SpanSize(1, 1);
+        }));
+        recyclerView.setLayoutManager(spannedGridLayoutManager);
+        adapter = new TagsAdapter(tag_names, tag_contents);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener((v, position) -> {
+            String tname = tag_names.get(position);
+            ArrayList<Recipe_get> trcps = tag_contents.get(position);
+            Intent intent = new Intent(v.getContext(), SearchMoreViewActivity.class);
+            if (position == 0) {
+                if (singleton_global_recipe.getData() == null)
+                    singleton_global_recipe.setData(trcps);
+            } else {
+                intent.putExtra("t_rcps", trcps);
+            }
+            intent.putExtra("t_name", tname);
+            v.getContext().startActivity(intent);
+        });
         return view;
-
     }
-
-
-    @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable editable) {
-
-        String searchText = editText.getText().toString();
-        searchFilter(searchText);
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    public void searchFilter(String searchText) {
-        searchedList.clear();
-
-        for (int i = 0; i < searchList.size(); i++) {
-            if (searchList.get(i).getName().toLowerCase().contains(searchText.toLowerCase())) {
-                searchedList.add(searchList.get(i));
-            }
-        }
-
-        adapter.filterList(searchedList);
-    }
-    private void clearText() {
-        clear_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editText.setText(null);
-            }
-        });
-    }
-
-
 }

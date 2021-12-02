@@ -1,29 +1,38 @@
 package com.example.poke;
 
-import android.app.ProgressDialog;
+import  android.app.ProgressDialog;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.MenuItemCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -31,13 +40,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
 public class FridgeFragment extends Fragment{
-    private IngredientAdapter ingredientAdapter;
+    private FridgeAdapter ingredientAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<UserIngredient> ingredientArrayList;
@@ -50,131 +62,150 @@ public class FridgeFragment extends Fragment{
     private int pos;
     private ImageButton addButton;
     private SearchView searchView;
-    Handler handler1 = new Handler();
-    ProgressDialog progressDialog;
+    private TextInputLayout textInputLayout;
+    private ProgressDialog progressDialog;
+    private LottieAnimationView lottieView;
+    private TextView lot_txt;
+    FloatingActionButton fab;
+    View view;
+    EditText ingreSearch;
+    InputMethodManager imm;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_fridge,container,false);
+        view = inflater.inflate(R.layout.fragment_fridge,container,false);
         setHasOptionsMenu(true);
         ((MainActivity)getActivity()).getSupportActionBar().setElevation(0);
+        imm = (InputMethodManager)getContext().getSystemService(INPUT_METHOD_SERVICE);
 
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.show();
-        progressDialog.setContentView(R.layout.progress_dialog);
-        progressDialog.getWindow().setBackgroundDrawableResource(
-                android.R.color.transparent
-        );
-        progressDialog.setCancelable(false);
+        lottieView = view.findViewById(R.id.lottieView);
+        lot_txt = view.findViewById(R.id.lot_txt);
+        lottieView.setVisibility(View.INVISIBLE);
+        lot_txt.setVisibility(View.INVISIBLE);
 
         tabLayout = view.findViewById(R.id.fridgeTab);
         addButton = view.findViewById(R.id.ingredientAddBtn);
-        searchView = view.findViewById(R.id.menu_search);
 
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        if(user != null)
-            uid=user.getUid();
+        textInputLayout = view.findViewById(R.id.input_box);
+        textInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                searchFilter(textInputLayout.getEditText().getText().toString());
+            }
+
+        });
+
+        ingreSearch = view.findViewById(R.id.fridgeIngredientSearch);
+        ingreSearch.setImeOptions(EditorInfo.IME_ACTION_DONE);
         tabArrayList = new ArrayList<>();
         ingredientArrayList = new ArrayList<>();
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.fridgeTab);
+        TabLayout tabLayout = view.findViewById(R.id.fridgeTab);
         int betweenSpace = 30;
 
-        recyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
-        ingredientAdapter = new IngredientAdapter(tabArrayList);
+        recyclerView = view.findViewById(R.id.ingredientRecyclerView);
+        fab = view.findViewById(R.id.ingredientAddBtn);
+
+        ingredientAdapter = new FridgeAdapter(tabArrayList);
         ingredientAdapter.setOnItemClickListener(onItemClickListener);
         addButton.setOnClickListener(addClickListener);
 
-        Thread thread = new Thread(new Runnable() {
+        layoutManager = new GridLayoutManager(getActivity(), 1);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setOnTouchListener(touchListener);
+
+        ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
+
+        for(int i = 0; i < slidingTabStrip.getChildCount() - 1; i++) {
+            View v = slidingTabStrip.getChildAt(i);
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            params.rightMargin = betweenSpace;
+        }
+
+        fab.attachToRecyclerView(recyclerView);
+        iLoveLottie(getView());
+
+        class StartRunnable implements Runnable{
             @Override
             public void run() {
-                handler1.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        layoutManager = new GridLayoutManager(getActivity(),1);
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setLayoutManager(layoutManager);
+                try {
+                    while (!Thread.currentThread().isInterrupted()) {
+                        mAuth = FirebaseAuth.getInstance();
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-                        ViewGroup slidingTabStrip = (ViewGroup) tabLayout.getChildAt(0);
-                        for (int i=0; i<slidingTabStrip.getChildCount()-1; i++) {
-                            View v = slidingTabStrip.getChildAt(i);
-                            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-                            params.rightMargin = betweenSpace;
-                        }
-
-                        recyclerView.setAdapter(ingredientAdapter);
-                        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
-
-                        new android.os.Handler().post(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.dismiss();
-                            }
-                        });
+                        if (user != null)
+                            uid = user.getUid();
 
                     }
-                });
+                }catch (Exception e){
+                }finally {
+                    mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
+                    recyclerView.setAdapter(ingredientAdapter);
+                }
+            }
+        }
+        
+        StartRunnable sr = new StartRunnable();
+        Thread stop = new Thread(sr);
+        stop.start();
+
+        try{
+            Thread.sleep(500);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        stop.interrupt();
+
+//        recyclerView.setOnTouchListener(touchListener);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int tmp = 1;
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                if(tmp == 0) {
+//                    super.onScrolled(recyclerView, dx, dy);
+//                    fab.hide();
+//                }
+            }
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                fab.show();
+
+                int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+                int itemTotalCount = recyclerView.getAdapter().getItemCount() - 1;
+
+                if (lastVisibleItemPosition == itemTotalCount && itemTotalCount != -1 && recyclerView.canScrollVertically(-1)) {
+                    fab.hide();
+                }
+
+                if(newState==0 && lastVisibleItemPosition != itemTotalCount)
+                    fab.show();
+                else if (newState == 1)
+                    fab.hide();
+
+                tmp = 0;
             }
         });
-        thread.start();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 1:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 2:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 3:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 4:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 5:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 6:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 7:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 8:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 9:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 10:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 11:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                }
+                cate = tab.getText().toString();
+                update(cate, ingredientArrayList, tabArrayList);
+                fab.show();
+                ingreSearch.clearFocus();
+                imm.hideSoftInputFromWindow(ingreSearch.getWindowToken(), 0);
+                iLoveLottie(getView());
             }
 
             @Override
@@ -183,102 +214,44 @@ public class FridgeFragment extends Fragment{
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-//                        ingredientAdapter = new IngredientAdapter(ingredientArrayList);
-//                        ingredientAdapter.setOnItemClickListener(onItemClickListener);
-//                        recyclerView.setAdapter(ingredientAdapter);
-                        break;
-                    case 1:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 2:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 3:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 4:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 5:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 6:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 7:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 8:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 9:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 10:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                    case 11:
-                        cate = tab.getText().toString();
-                        update(cate, ingredientArrayList, tabArrayList);
-                        break;
-                }
+                cate = tab.getText().toString();
+                update(cate, ingredientArrayList, tabArrayList);
+                fab.show();
+                ingreSearch.clearFocus();
+                imm.hideSoftInputFromWindow(ingreSearch.getWindowToken(), 0);
+                iLoveLottie(getView());
             }
-            });
+        });
+
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.ingredient_sort, menu);
-        MenuItem searchItem = menu.findItem(R.id.menu_search);
-        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setQueryHint("냉장고 속 재료를 찾아보세요.");
-        searchView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_radius));
-        searchView.setIconifiedByDefault(false);
-        searchView.setSubmitButtonEnabled(true);
-        searchView.setOnQueryTextListener(onQueryTextListener);
-        searchView.setQuery(null,false);
-        EditText editText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
-        editText.setTextColor(Color.parseColor("#6E7377"));
-        editText.setHintTextColor(Color.parseColor("#6E7377"));
-    }
-
-    SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
+    View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
-        public boolean onQueryTextSubmit(String query) {
-            return false;
-        }
-
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            tabArrayList.clear();
-            for (int i = 0; i < ingredientArrayList.size(); i++) {
-                String t = ingredientArrayList.get(i).getIngredientTitle();
-                String c = ingredientArrayList.get(i).getCategory();
-                if ((cate.equals("전체") || c.equals(cate)) && t.toLowerCase().contains(newText.toLowerCase())) {
-                    tabArrayList.add(ingredientArrayList.get(i));
-                }
-            }
-
-            ingredientAdapter.notifyDataSetChanged();
+        public boolean onTouch(View v, MotionEvent event) {
+            ingreSearch.clearFocus();
+            imm.hideSoftInputFromWindow(ingreSearch.getWindowToken(), 0);
             return false;
         }
     };
+
+    public void onCreateOptionsMenu(Menu menu,MenuInflater inflater){
+        super.onCreateOptionsMenu(menu,inflater);
+        inflater.inflate(R.menu.ingredient_sort,menu);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+    public void searchFilter(String searchText) {
+        tabArrayList.clear();
+        for (UserIngredient userIngredient : ingredientArrayList) {
+            if ((cate.equals("전체") || userIngredient.getCategory().equals(cate)) && userIngredient.getIngredientTitle().contains(searchText)) tabArrayList.add(userIngredient);
+        }
+        ingredientAdapter.filterList(tabArrayList);
+        iLoveLottie(getView());
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -309,15 +282,15 @@ public class FridgeFragment extends Fragment{
     ChildEventListener childEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
+            UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
 
-                ingredientArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
+            ingredientArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
+            if(cate.equals("전체") || cate.equals(ingredient.getCategory())){
+                tabArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
+            }
 
-                if(cate.equals("전체") || cate.equals(ingredient.getCategory())){
-                    tabArrayList.add(new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(),snapshot.getKey()));
-                }
-
-                ingredientAdapter.notifyDataSetChanged();
+            ingredientAdapter.notifyDataSetChanged();
+            iLoveLottie(getView());
         }
 
         @Override
@@ -325,21 +298,42 @@ public class FridgeFragment extends Fragment{
             UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
             ingredient = new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(), snapshot.getKey());
 
-            if(cate.equals("전체") || cate.equals(ingredient.getCategory())){
+            if (cate.equals("전체") || cate.equals(ingredient.getCategory())) {
                 tabArrayList.set(pos, ingredient);
             }
 
-                for(int i=0; i<ingredientArrayList.size(); i++){
-                    if(snapshot.getKey().equals(ingredientArrayList.get(i).getIngredientKey())){
-                        ingredientArrayList.set(i,ingredient);
-                    }
+            for (int i = 0; i < ingredientArrayList.size(); i++) {
+                if (snapshot.getKey().equals(ingredientArrayList.get(i).getIngredientKey())) {
+                    ingredientArrayList.set(i, ingredient);
                 }
+            }
 
             ingredientAdapter.notifyDataSetChanged();
+            iLoveLottie(getView());
         }
+
         @Override
         public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
+            ingredient = new UserIngredient(ingredient.getIngredientTitle(), ingredient.getExpirationDate(), ingredient.getCategory(), snapshot.getKey());
+
+            if (cate.equals("전체") || cate.equals(ingredient.getCategory())) {
+                for (int i = 0; i < tabArrayList.size(); i++) {
+                    if (snapshot.getKey().equals(tabArrayList.get(i).getIngredientKey())) {
+                        tabArrayList.remove(i);
+                    }
+                }
+            }
+
+            for (int i = 0; i < ingredientArrayList.size(); i++) {
+                if (snapshot.getKey().equals(ingredientArrayList.get(i).getIngredientKey())) {
+                    ingredientArrayList.remove(i);
+                }
+            }
+
+            iLoveLottie(getView());
         }
+
         @Override
         public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)  {}
         @Override
@@ -362,16 +356,16 @@ public class FridgeFragment extends Fragment{
         ingredientAdapter.notifyDataSetChanged();
     }
 
-    IngredientAdapter.OnItemClickListener onItemClickListener =new IngredientAdapter.OnItemClickListener() {
+    FridgeAdapter.OnItemClickListener onItemClickListener =new FridgeAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View v, int position) {
             Bundle args = new Bundle();
             pos = position;
 
-                args.putString("title",tabArrayList.get(position).getIngredientTitle());
-                args.putString("category", tabArrayList.get(position).getCategory());
-                args.putString("date", tabArrayList.get(position).getExpirationDate());
-                args.putString("key", tabArrayList.get(position).getIngredientKey());
+            args.putString("title",tabArrayList.get(position).getIngredientTitle());
+            args.putString("category", tabArrayList.get(position).getCategory());
+            args.putString("date", tabArrayList.get(position).getExpirationDate());
+            args.putString("key", tabArrayList.get(position).getIngredientKey());
 
             IngredientDialog dialog = new IngredientDialog();
             dialog.setArguments(args); // 데이터 전달
@@ -383,10 +377,27 @@ public class FridgeFragment extends Fragment{
         @Override
         public void onClick(View v) {
             Bundle args = new Bundle();
-
             IngredientDialog dialog = new IngredientDialog();
             dialog.setArguments(args); // 데이터 전달
             dialog.show(getActivity().getSupportFragmentManager(),"tag");
+//            dialog.getWindow().setBackgroundDrawableResource(
+//                    android.R.color.transparent
+//            );
         }
     };
+
+    private void startToast(String msg){
+        Toast.makeText(getActivity(), msg,Toast.LENGTH_SHORT).show();
+    }
+    private void iLoveLottie(View view){
+        if(tabArrayList.size()==0){
+            lottieView.setVisibility(View.VISIBLE);
+            lot_txt.setVisibility(View.VISIBLE);
+        }
+        else{
+            lottieView.setVisibility(View.INVISIBLE);
+            lot_txt.setVisibility(View.INVISIBLE);
+        }
+
+    }
 }

@@ -4,6 +4,10 @@
     package="com.example.poke">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"
@@ -14,24 +18,26 @@
         android:theme="@style/Theme.Poke"
         android:usesCleartextTraffic="true"
         android:name = ".MyApplication"
-        android:hardwareAccelerated="true">
+        android:hardwareAccelerated="true"
+        >
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1"/>
 
         <activity
             android:name=".LoadingActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android:windowBackground"/>
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity">
         </activity>
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".RatingActivity">
         </activity>
@@ -39,25 +45,52 @@
         </activity>
         <activity android:name=".PasswordResetActivity">
         </activity>
+        <activity android:name=".SettingActivity">
+        </activity>
         <activity android:name=".MemberInitActivity">
         </activity>
-<!--        <activity android:name=".MyInfoActivity">-->
-<!--        </activity>-->
-        <activity android:name=".CheckAllergyActivity">
-        </activity>
-        <activity android:name=".IngredientAddActivity">
-        </activity>
-        <activity android:name=".PreferenceActivity">
-        </activity>
-        <activity android:name=".Adddips">
+        <activity
+            android:name=".PreferenceActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".Recipe_Info">
+        </activity>
+        <activity android:name=".Recipe_step_Activity">
         </activity>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
         <!-- 팝업 Activity -->
+
+        <service
+            android:name=".FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".FirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <activity android:name=".CrashedActivity">
+        </activity>
+
+        <activity android:name=".MainMoreViewActivity">
+        </activity>
+        <receiver android:name=".AlarmBroadcastReceiver" />
+        <receiver android:name=".rebootReceiver" android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <activity android:name=".SearchMoreViewActivity" />
+
     </application>
+
 
 </manifest>

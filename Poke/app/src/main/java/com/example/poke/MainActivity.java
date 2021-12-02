@@ -8,12 +8,15 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,100 +28,77 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
-    private FragmentManager fragmentManager;
     private BottomNavigationView mBottomNavigationView;
     private ViewPager2 viewPager2;
     private FragmentStateAdapter pagerAdapter;
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
-    private String uid;
-    ProgressDialog progressDialog;
+    private long backKey = 0;
+    public static Context mContext;
+    public static boolean alarm = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.btm_nav);
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
         ActionBar actionbar = getSupportActionBar();
-        //로그인 되어 있지 않으면 로그인 화면으로
+        actionbar.setTitle("POKE");
 
-        if(user == null) {
-            myStartActivity(LoginActivity.class);
-        }
-        //회원정보가 없으면 회원등록 화면 나옴
-        else {
-            mDatabase = FirebaseDatabase.getInstance().getReference();
-            uid = user.getUid();
-            nullStartActivity(uid,"preference");
-            nullStartActivity(uid,"users");
+        Intent alarmintent1 = getIntent();
+        alarm = alarmintent1.getBooleanExtra("flag",false);
+        mContext = this;
 
-            viewPager2 = findViewById(R.id.pager);
-            pagerAdapter = new MainPagerAdapter(this);
-            viewPager2.setAdapter(pagerAdapter);
-            viewPager2.registerOnPageChangeCallback(pageChangeCallback);
-            viewPager2.setUserInputEnabled(false);
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            mBottomNavigationView=findViewById(R.id.bottom_navigation);
+        viewPager2 = findViewById(R.id.pager);
+        pagerAdapter = new MainPagerAdapter(this);
+        viewPager2.setAdapter(pagerAdapter);
+        viewPager2.registerOnPageChangeCallback(pageChangeCallback);
+        viewPager2.setUserInputEnabled(false);
+        mBottomNavigationView=findViewById(R.id.bottom_navigation);
 
-            viewPager2.setCurrentItem(1);
-            //첫 화면 띄우기
-            mBottomNavigationView.setSelectedItemId(R.id.nav_home);
+        viewPager2.setCurrentItem(1);
+        //첫 화면 띄우기
+        mBottomNavigationView.setSelectedItemId(R.id.nav_home);
 
-            //case 함수를 통해 클릭 받을 때마다 화면 변경하기
-            mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    switch (item.getItemId()){
-                        case R.id.nav_info :
-                            actionbar.hide();
-                            viewPager2.setCurrentItem(0);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_info :
+                        viewPager2.setCurrentItem(0);
 
-                            //  fragmentTransaction.replace(R.id.frame_container,new MyInfoActivity()).commit();
-                            break;
-                        case R.id.nav_home:
-                            actionbar.show();
-                            viewPager2.setCurrentItem(1);
-                            // fragmentTransaction.replace(R.id.frame_container,new MainActivity()).commit();
-                            break;
-                        case R.id.nav_ingredient:
-                            actionbar.show();
-                            viewPager2.setCurrentItem(2);
-                            //fragmentTransaction.replace(R.id.frame_container,new FridgeFragment()).commit();
-                            break;
-                        case R.id.nav_search:
-                            actionbar.hide();
-                            viewPager2.setCurrentItem(3);
-                            //fragmentTransaction.replace(R.id.frame_container,new Frag4()).commit();
-                            break;
+                        //  fragmentTransaction.replace(R.id.frame_container,new MyInfoActivity()).commit();
+                        break;
+                    case R.id.nav_home:
+                        viewPager2.setCurrentItem(1);
+                        // fragmentTransaction.replace(R.id.frame_container,new MainActivity()).commit();
+                        break;
+                    case R.id.nav_ingredient:
+                        viewPager2.setCurrentItem(2);
+                        //fragmentTransaction.replace(R.id.frame_container,new FridgeFragment()).commit();
+                        break;
+                    case R.id.nav_search:
+                        viewPager2.setCurrentItem(3);
+                        //fragmentTransaction.replace(R.id.frame_container,new Frag4()).commit();
+                        break;
 
-                    }
-                    return true;
                 }
-            });
-        }
-    }
+                return true;
+            }
+        });
 
-    public void loading() {
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        progressDialog.dismiss();
-                    }
-                }, 100);
     }
 
     @Override
     public void onBackPressed() {
-        if (viewPager2.getCurrentItem() == 0) {
-            super.onBackPressed();
+        if(System.currentTimeMillis() > backKey + 2000) {
+            backKey = System.currentTimeMillis();
+            Toast.makeText(MainActivity.this,"한번 더 눌러 종료합니다.", Toast.LENGTH_SHORT).show();
         } else {
-            viewPager2.setCurrentItem(viewPager2.getCurrentItem() - 1);
+            super.onBackPressed();
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
         }
     }
-
     ViewPager2.OnPageChangeCallback pageChangeCallback = new ViewPager2.OnPageChangeCallback() {
         @Override
         public void onPageSelected(int position) {
@@ -126,33 +106,4 @@ public class MainActivity extends AppCompatActivity {
             mBottomNavigationView.getMenu().getItem(position).setChecked(true);
         }
     };
-
-    private void nullStartActivity(String uid, String child){
-        mDatabase.child(child).child(uid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DataSnapshot dataSnapshot = task.getResult();
-                    if(dataSnapshot != null) {
-                        if (dataSnapshot.exists()) {
-                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                        } else {
-                            if(child.equals("preference")){
-                                myStartActivity(PreferenceActivity.class);
-                            }
-                        }
-                    }
-                }
-                else {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-            }
-        });
-    }
-
-    private void myStartActivity(Class c){
-        Intent intent = new Intent(getApplicationContext(),c);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
 }

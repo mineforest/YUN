@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/step_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/deep_lightgray">
+
+    <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+        android:id="@+id/dots_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:dampingRatio="0.5"
+        app:dotsColor="@color/green"
+        app:dotsCornerRadius="16dp"
+        app:dotsSize="6dp"
+        app:dotsSpacing="5dp"
+        app:dotsStrokeColor="@color/green"
+        app:dotsStrokeWidth="1dp"
+        app:layout_constraintBottom_toTopOf="@id/nextButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:stiffness="300" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/recipe_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toTopOf="@id/dots_indicator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/nextButton"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_margin="30dp"
+        android:background="@drawable/btn_shape"
+        android:text="다음"
+        android:textAlignment="center"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recipe_viewpager" />
+
+    <ImageView
+        android:id="@+id/tts_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/nextButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recipe_viewpager"
+        app:srcCompat="@drawable/ic_volume_up_black_24dp" />
+
+
+    <ImageView
+        android:id="@+id/timer_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/tts_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/nextButton"
+        app:layout_constraintTop_toTopOf="@id/tts_btn"
+        app:srcCompat="@drawable/ic_timer_black_24dp" />
+
+    <TextView
+        android:id="@+id/timer_minimi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="TIMER"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@id/timer_btn"
+        app:layout_constraintStart_toStartOf="@id/timer_btn"
+        app:layout_constraintTop_toBottomOf="@id/timer_btn" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

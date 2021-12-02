@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name"></string>
+    <string name="app_name">POKE</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="favorite">Favorite</string>
-    <string name="search">search</string>
 </resources>

@@ -8,12 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 
-import androidx.annotation.ContentView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.chip.Chip;
@@ -22,7 +20,7 @@ import com.google.android.material.chip.ChipGroup;
 import java.util.ArrayList;
 
 public class AllergyFragment extends Fragment {
-    private ArrayList<String> allergyList = new ArrayList<>();
+    private final ArrayList<String> allergyList = new ArrayList<>();
     private ChipGroup allergyGroup;
     private Chip chip;
     private Button btn5;
@@ -46,8 +44,6 @@ public class AllergyFragment extends Fragment {
         bottomSheetBehavior = view.findViewById(R.id.bottomSheet3);
         behavior = BottomSheetBehavior.from(bottomSheetBehavior);
 
-        ((BottomSheetBehavior) behavior).setBottomSheetCallback(bottomSheetCallback);
-
         for(int i = 0; i < allergyGroup.getChildCount(); i++) {
             int id = allergyGroup.getChildAt(i).getId();
             chip = view.findViewById(id);
@@ -63,9 +59,6 @@ public class AllergyFragment extends Fragment {
             });
         }
         allergyListener.allergyListener(allergyList);
-
-        btn5.setVisibility(View.GONE);
-        btn6.setVisibility(View.GONE);
         btn5.setOnClickListener(onClickListener);
         btn6.setOnClickListener(onClickListener);
 
@@ -77,32 +70,15 @@ public class AllergyFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.button5:
-                    preferenceActivity.pre(1);
+                    preferenceActivity.pre(0);
                     break;
                 case R.id.button6:
-                    preferenceActivity.next(3);
+                    preferenceActivity.next(2);
                     break;
             }
         }
     };
 
-    BottomSheetBehavior.BottomSheetCallback bottomSheetCallback = new BottomSheetBehavior.BottomSheetCallback() {
-        @Override
-        public void onStateChanged(@NonNull View bottomSheet, int newState) {
-            if (newState == 3) {
-                btn5.setVisibility(View.VISIBLE);
-                btn6.setVisibility(View.VISIBLE);
-            } else {
-                btn5.setVisibility(View.GONE);
-                btn6.setVisibility(View.GONE);
-            }
-        }
-
-        @Override
-        public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-        }
-    };
 
 
     public interface AllergyListener {

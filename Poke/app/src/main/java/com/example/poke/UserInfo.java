@@ -6,13 +6,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserInfo {
-    String birthDay;
-    String nickName;
-    String age;
-    String gender;
-
+    private String birthDay;
+    private String nickName;
+    private String age;
+    private String gender;
 
     public UserInfo() {
+    }
+
+
+    public UserInfo(String nickName){
+        this.nickName = nickName;
     }
 
     public UserInfo(String nickName, String age, String birthDay, String gender){

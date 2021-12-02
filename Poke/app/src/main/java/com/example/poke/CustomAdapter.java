@@ -1,39 +1,41 @@
 package com.example.poke;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.poke.CardViewHolder;
+import com.example.poke.R;
+import com.example.poke.Recipe_Info;
+import com.example.poke.Recipe_get;
+import com.example.poke.UserIngredient;
+import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
+import java.util.Map;
 
 public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     private final ArrayList<Recipe_get> mRcplist;
     private Intent intent;
-
-    CustomAdapter(ArrayList<Recipe_get> rcp_list) {
-        this.mRcplist = rcp_list;
-    }
+    CustomAdapter(ArrayList<Recipe_get> rcp_list) {this.mRcplist = rcp_list;}
 
     Context context;
 
@@ -45,7 +47,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
     @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_test, parent, false);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item, parent, false);
         return new CardViewHolder(layoutView);
     }
 
@@ -55,18 +57,26 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
             Recipe_get rcp = mRcplist.get(position);
             holder.rcp_title.setText(rcp.getName());
             holder.rcp_cooktime.setText(rcp.getTime()+"분");
-            holder.rate.setText((rcp.getRate())+"%");
+            holder.rate.setText(rcp.getRate() + "%");
+            holder.score.setText(rcp.getScore() + "점");
 
             Glide.with(holder.itemView)
                     .load(rcp.getThumbnail())
                     .into(holder.rcp_thumbnail);
 
+            holder.rcp_title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    intent = new Intent(v.getContext(), Recipe_Info.class);
+                    intent.putExtra("rcp_id", mRcplist.get(position).getId());
+                    v.getContext().startActivity(intent);
+                }
+            });
             holder.rcp_thumbnail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     intent = new Intent(v.getContext(), Recipe_Info.class);
                     intent.putExtra("rcp_id", mRcplist.get(position).getId());
-                    intent.putExtra("my_rate", mRcplist.get(position).getRate());
                     v.getContext().startActivity(intent);
                 }
             });
@@ -75,6 +85,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     @Override
     public int getItemCount() {
-        return (mRcplist != null ? mRcplist.size() : 0);
+        if (mRcplist.size() >= 8) return 8;
+        else return (mRcplist != null ? mRcplist.size() : 0);
     }
 }

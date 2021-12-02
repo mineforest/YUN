@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="32dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="40dp">
+
+    <TextView
+        android:id="@+id/ratingtitletv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="레시피를 평가하세요."
+        android:textSize="32dp" />
+
+    <TextView
+        android:id="@+id/rating_subtitle_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="평가 결과는 더욱 나은 레시피를 제공합니다." />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        style="@style/Widget.AppCompat.RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="30dp"
+        android:numStars="5"
+        android:stepSize="1"
+        android:theme="@style/CustomRatingBar" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/ratingDoneBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="완료" />
+</LinearLayout>

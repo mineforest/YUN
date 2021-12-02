@@ -1,21 +1,18 @@
 package com.example.poke;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,24 +23,19 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapter.CustomViewHolder> {
 
     private DatabaseReference mDatabase;
     private final List<Map<String, String>> list;
-    private int count = 0;
-    int average = 0;
 
     public RecipeIngre_Adapter(List<Map<String, String>> list) {
         this.list = list;
     }
 
-    public int get_count() {
-        this.notifyDataSetChanged();
-        return count;}
     Context context;
 
     @Override
@@ -67,16 +59,13 @@ public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapte
         mDatabase = FirebaseDatabase.getInstance().getReference();
         String uid = user.getUid();
 
+        if(Pattern.matches("^물*$",list.get(position).get("ingre_name"))) holder.check_icon.setColorFilter(Color.GREEN);
+
         mDatabase.child("ingredient").child(uid).orderByChild("ingredientTitle").equalTo(list.get(position).get("ingre_name")).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if (snapshot != null && snapshot.getChildren() != null && snapshot.getChildren().iterator().hasNext()) {
-                    holder.checkBox.setChecked(true);
-                } else {
-                    holder.checkBox.setChecked(false);
-                    if(holder.checkBox.isChecked()) {
-                        count++;
-                    }
+                    holder.check_icon.setColorFilter(Color.GREEN);
                 }
             }
 
@@ -100,13 +89,13 @@ public class RecipeIngre_Adapter extends RecyclerView.Adapter<RecipeIngre_Adapte
     public static class CustomViewHolder extends RecyclerView.ViewHolder {
         public TextView i_name;
         public TextView i_amount;
-        public CheckBox checkBox;
+        public ImageView check_icon;
 
         public CustomViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             this.i_name = itemView.findViewById(R.id.i_name_txt);
             this.i_amount = itemView.findViewById(R.id.i_amount_txt);
-            this.checkBox = itemView.findViewById(R.id.check);
+            this.check_icon = itemView.findViewById(R.id.check_icon);
         }
     }
 }

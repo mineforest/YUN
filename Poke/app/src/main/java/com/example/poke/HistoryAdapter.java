@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -34,19 +33,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
 
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(View v,int position);
-    }
-
-    private OnItemClickListener mListener = null;
-
-
-
-    // OnItemClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mListener = listener ;
-    }
-
     @Override
     public void onAttachedToRecyclerView(@NonNull @NotNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
@@ -72,6 +58,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
         holder.history_date.setText(String.valueOf(historyList.get(position).getDate()));
         holder.history_rate.setRating(Float.parseFloat(String.valueOf(historyList.get(position).getRate())));
 
+        holder.history_rec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(v.getContext(), Recipe_Info.class);
+                intent.putExtra("rcp_id", historyList.get(position).getRcp_id());
+                v.getContext().startActivity(intent);
+            }
+        });
+
         holder.history_image.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -79,8 +74,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CustomVi
                 intent = new Intent(v.getContext(), Recipe_Info.class);
                 intent.putExtra("rcp_id", historyList.get(position).getRcp_id());
                 v.getContext().startActivity(intent);
-                Toast.makeText(v.getContext(), historyList.get(position).getRcp_id(),Toast.LENGTH_SHORT).show();
-
             }
         });
     }

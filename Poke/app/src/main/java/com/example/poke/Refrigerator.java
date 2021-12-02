@@ -7,7 +7,7 @@ public class Refrigerator {
 
     public void Refrigerator(String users, String ingredient, String fridgeName){
         this.users = users;
-        this.ingredient = ingredient;
+        Refrigerator.ingredient = ingredient;
         this.fridgeName = fridgeName;
     }
 
@@ -30,6 +30,6 @@ public class Refrigerator {
         return ingredient;
     }
     public void setIngredient(String name){
-        this.ingredient = ingredient;
+        ingredient = ingredient;
     }
 }

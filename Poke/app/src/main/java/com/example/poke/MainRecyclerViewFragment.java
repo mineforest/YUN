@@ -1,55 +1,59 @@
 package com.example.poke;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class MainRecyclerViewFragment extends Fragment{
+    ArrayList<Recipe_get> first_rcps = new ArrayList<>();
     ArrayList<Recipe_get> rcps = new ArrayList<>();
-    ArrayList<Recipe_get> rcps_siyeonyong = new ArrayList<>();
+    ArrayList<Recipe_get> sorted_rcps = new ArrayList<>();
     ArrayList<String> myIngreList;
     CustomAdapter adapter;
+    CustomAdapter adapter3;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private String uid;
     FirebaseUser user;
-    private ViewPager2 viewPager;
-    private MainViewpageAdapter adapter2;
-    Handler handler = new Handler();
     ProgressDialog progressDialog;
+    Intent intent;
+    ShimmerFrameLayout shimmerFrameLayout;
+    RecyclerView recyclerView;
+    RecyclerView recyclerView2;
+    SwipeRefreshLayout swipeRefreshLayout;
+    TextView moreView1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,99 +68,90 @@ public class MainRecyclerViewFragment extends Fragment{
         ((MainActivity)getActivity()).getSupportActionBar().setElevation(0);
         myIngreList = new ArrayList<>();
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         user = mAuth.getCurrentUser();
         uid = user.getUid();
+        swipeRefreshLayout = view.findViewById(R.id.swipe_layout);
+        swipeRefreshLayout.setOnRefreshListener(() -> view.postDelayed(() -> {
+            reload();
+            swipeRefreshLayout.setRefreshing(false);
+        },500));
+        moreView1 = view.findViewById(R.id.moreView1);
 
         progressDialog = new ProgressDialog(getActivity());
 
-        progressDialog.show();
-        progressDialog.setContentView(R.layout.progress_dialog);
-        progressDialog.getWindow().setBackgroundDrawableResource(
-                android.R.color.transparent
-        );
-        progressDialog.setCancelable(false);
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
 
-        Thread thread = new Thread(new Runnable() {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child(DataBaseCategory.history.toString()).child(uid).addValueEventListener(historyListener);
+
+        mDatabase.child(DataBaseCategory.ingredient.toString()).child(uid).addValueEventListener(new ValueEventListener() {
             @Override
-            public void run() {
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mDatabase.child("ingredient").child(uid).addChildEventListener(childEventListener);
-                        mDatabase.onDisconnect();
-                        Handler handler1 = new Handler();
-                        handler1.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                //테스트용 레시피 id들
-                                String[] test_ids = {"1011256", "6867464", "6867464","6867464", "6867464", "6867464", "1166652",
-                                        "6867464", "6867464", "6867464", "6867464", "6867464", "6867464"};
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                for(int i =0;i<test_ids.length; i++){
-                                    DocumentReference docRef = db.collection("recipe").document(test_ids[i]);
-                                    docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            int cnt=0;
-                                            String rcp_id = documentSnapshot.getData().get("id").toString();
-                                            String title = documentSnapshot.getData().get("name").toString();
-                                            String thumbnail = documentSnapshot.getData().get("thumbnail").toString();
-                                            String cook_time = documentSnapshot.getData().get("time").toString();
-                                            List<String> tags = (List<String>) documentSnapshot.get("tag");
-//                    int mr = matching_rate((List<Map<String, String>>)documentSnapshot.getData().get("ingre_list"));
-                                            List<Map<String, String>> ingre_list = (List<Map<String, String>>) documentSnapshot.get("ingre_list");
-
-                                            for(int k=0; k<ingre_list.size(); k++){
-                                                if(myIngreList.contains(ingre_list.get(k).get("ingre_name"))){
-                                                    cnt++;
-                                                }
-                                            }
-
-                                            long rate = Math.round((double)cnt/(double)ingre_list.size() * 100.0);
-
-                                            Recipe_get rr = new Recipe_get(rcp_id, title, thumbnail, cook_time, rate, tags);
-                                            Recipe_get r = new Recipe_get(rcp_id, title, thumbnail, cook_time);
-                                            if(rr.getId().equals("1011256")){
-                                                rcps_siyeonyong.add(rr);
-                                            }
-                                            else {
-                                                rcps.add(rr);
-                                            }
-                                            adapter.notifyDataSetChanged();
-                                            adapter2.notifyDataSetChanged();
-                                        }
-                                    });
-                                }
-
-                                RecyclerView recyclerView = view.findViewById(R.id.main_recylerView);
-                                recyclerView.setHasFixedSize(true);
-                                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, RecyclerView.VERTICAL, false));
-                                adapter = new CustomAdapter(rcps);
-                                recyclerView.setAdapter(adapter);
-                                int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
-                                int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
-                                recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
-
-                                viewPager = view.findViewById(R.id.main_pager);
-                                adapter2 = new MainViewpageAdapter(rcps_siyeonyong);
-                                viewPager.setAdapter(adapter2);
-
-                                new android.os.Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        progressDialog.dismiss();
-                                    }
-                                }, 1000);
-
-                            }
-                        });
-
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                myIngreList.clear();
+                if (snapshot.exists()) {
+                    for (DataSnapshot ridSnapshot : snapshot.getChildren()) {
+                        UserIngredient ingres = ridSnapshot.getValue(UserIngredient.class);
+                        myIngreList.add(ingres.getIngredientTitle());
                     }
-                },500);
+                }
+                for (Recipe_get rcp : rcps) {
+                    rcp.setRate(myIngreList);
+                }
+                adapter.notifyDataSetChanged();
+                adapter3.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
-        thread.start();
+
+        mDatabase.onDisconnect();
+
+        shimmerFrameLayout = view.findViewById(R.id.sfl);
+        shimmerFrameLayout.startShimmer();
+
+        moreView1.setVisibility(View.INVISIBLE);
+        recyclerView = view.findViewById(R.id.main_recylerView);
+        recyclerView.setVisibility(View.INVISIBLE);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1, RecyclerView.VERTICAL, false));
+        adapter = new CustomAdapter(rcps);
+        recyclerView.setAdapter(adapter);
+        int largePadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing);
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.shr_product_grid_spacing_small);
+        recyclerView.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
+
+        recyclerView2 = view.findViewById(R.id.main_recylerView2);
+        recyclerView2.setHasFixedSize(true);
+        recyclerView2.setLayoutManager(new GridLayoutManager(getContext(), 1, RecyclerView.VERTICAL, false));
+        adapter3 = new CustomAdapter(sorted_rcps);
+        recyclerView2.setAdapter(adapter3);
+        recyclerView2.addItemDecoration(new MainGridItemDecoration(largePadding, smallPadding));
+
+        TextView tv_foryou = view.findViewById(R.id.tv_foryou);
+        TextView tv_donow = view.findViewById(R.id.tv_donow);
+
+        tv_foryou.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(v.getContext(), MainMoreViewActivity.class);
+                intent.putExtra("rcp",rcps);
+                intent.putExtra("more_title", tv_foryou.getText());
+                v.getContext().startActivity(intent);
+            }
+        });
+
+        tv_donow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(v.getContext(), MainMoreViewActivity.class);
+                intent.putExtra("rcp",sorted_rcps);
+                intent.putExtra("more_title", tv_donow.getText());
+                v.getContext().startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -170,76 +165,93 @@ public class MainRecyclerViewFragment extends Fragment{
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.logout_menu:
-                FirebaseAuth.getInstance().signOut();
-                myStartActivity(LoginActivity.class);
-                break;
-
-            case R.id.passwrod_reset_menu:
-                myStartActivity(PasswordResetActivity.class);
-                break;
-
-            case R.id.revoke_menu:
-                revokeAccess();
-                myStartActivity(LoginActivity.class);
+            case R.id.alarm_menu:
+                myStartActivity(SettingActivity.class);
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-                myIngreList.add(ingredient.getIngredientTitle());
-            }
+    ValueEventListener historyListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            W2vHttpConn w2v = new W2vHttpConn();
+            new Thread(){
+                @Override
+                public void run() {
+                    first_rcps = w2v.getRcp(uid, 1);
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    for (Recipe_get recipe_get : first_rcps) {
+                        String r_id = recipe_get.getId();
+                        DocumentReference docRef = db.collection("recipe").document(r_id);
+                        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                recipe_get.setName(documentSnapshot.getData().get("name").toString());
+                                recipe_get.setThumbnail(documentSnapshot.getData().get("thumbnail").toString());
+                                recipe_get.setTime(documentSnapshot.getData().get("time").toString());
+                                recipe_get.setIngre_list((List<Map<String, String>>) documentSnapshot.get("ingre_list"));
+                                recipe_get.setRate(myIngreList);
+                                rcps.add(recipe_get);
+                                sorted_rcps.add(recipe_get);
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                UserIngredient ingredient = snapshot.getValue(UserIngredient.class);
-                myIngreList.add(ingredient.getIngredientTitle());
-            }
+                                if(rcps.size() == first_rcps.size()) {
+                                    rcps.sort((o1, o2) -> {
+                                        int sc1 = Integer.parseInt(o1.getScore());
+                                        int sc2 = Integer.parseInt(o2.getScore());
+                                        return Integer.compare(sc2, sc1);
+                                    });
+                                    shimmerFrameLayout.stopShimmer();
+                                    shimmerFrameLayout.setVisibility(View.GONE);
+                                    adapter.notifyDataSetChanged();
+                                    recyclerView.setVisibility(View.VISIBLE);
+                                    moreView1.setVisibility(View.VISIBLE);
+                                }
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-            }
+                                if (sorted_rcps.size() == first_rcps.size()) {
+                                    sorted_rcps.sort((o1, o2) -> o2.getRate().compareTo(o1.getRate()));
+                                    adapter3.notifyDataSetChanged();
+                                }
+                            }
+                        });
+                    }
+                }
+            }.start();
+        }
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        };
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mDatabase.removeEventListener(childEventListener);
-    }
+        }
+    };
 
     private void myStartActivity(Class c){
         Intent intent = new Intent(getActivity(),c);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        if(childEventListener != null)
-//            mDatabase.removeEventListener(childEventListener);
-//    }
 
-    private void revokeAccess() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(uid).removeValue();
-
-        mAuth.getCurrentUser().delete();
+    private void startToast(String msg){
+        Toast.makeText(getContext(), msg,Toast.LENGTH_SHORT).show();
     }
+
+    private void reload() {
+        Intent intent = getActivity().getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        getActivity().overridePendingTransition(0,0);
+        getActivity().finish();
+        getActivity().overridePendingTransition(0,0);
+        startActivity(intent);
+    }
+
+    class ExceptionHandler implements Thread.UncaughtExceptionHandler {
+        @Override
+        public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
+            Intent intent = new Intent(getContext(), CrashedActivity.class);
+            startActivity(intent);
+        }
+    }
+
 }

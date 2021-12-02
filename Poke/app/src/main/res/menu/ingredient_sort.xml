@@ -3,16 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:iconTint="@color/black"
-        android:theme="@style/SearchViewStyle"
-        android:title="@string/search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:iconifiedByDefault="true"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/id"
         android:title="이름순"
         android:iconTint="@color/black"
@@ -22,6 +12,5 @@
         android:title="유통기한순"
         android:iconTint="@color/black"
         app:showAsAction="never" />
-
 
 </menu>

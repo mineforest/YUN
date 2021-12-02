@@ -1,9 +1,12 @@
 package com.example.poke;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,18 +25,31 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
+    private DatabaseReference mDatabase;
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "LoginActivity";
+    Dialog password_reset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Initialize Firebase Auth
+        getSupportActionBar().hide();
+
+        password_reset = new Dialog(LoginActivity.this);
+        password_reset.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        password_reset.setContentView(R.layout.activity_password_reset);
+        password_reset.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent
+        );
+
         mAuth = FirebaseAuth.getInstance();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -43,8 +59,10 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         findViewById(R.id.loginButton).setOnClickListener(onClickListener);
-        findViewById(R.id.gotoSignUpButton).setOnClickListener(onClickListener);
+        findViewById(R.id.gotoSignUpText).setOnClickListener(onClickListener);
         findViewById(R.id.googleSignInButton).setOnClickListener(onClickListener);
+        findViewById(R.id.pwResetText).setOnClickListener(onClickListener);
+
     }
 
     @Override
@@ -62,15 +80,51 @@ public class LoginActivity extends AppCompatActivity {
                 case R.id.loginButton:
                     login();
                     break;
-                case R.id.gotoSignUpButton:
+                case R.id.gotoSignUpText:
                     myStartActivity(SignUpActivity.class);
                     break;
                 case R.id.googleSignInButton:
                     signIn();
                     break;
+                case R.id.pwResetText:
+                    showPassword_reset();
+                    break;
             }
         }
     };
+
+    public void showPassword_reset() {
+        password_reset.show();
+        password_reset.findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                send();
+            }
+        });
+
+    }
+
+    private void send(){
+        String email=((EditText)findViewById(R.id.emailEditText)).getText().toString();
+
+        if(email.length() > 0 ) {
+            mAuth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                startToast("이메일을 보냈습니다.");
+                            }
+                            else{
+                                startToast("다시 입력하세요");
+                            }
+                        }
+                    });
+        } else{
+            startToast("이메일을 입력하세요.");
+        }
+    }
+
 
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -107,7 +161,8 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             startToast("로그인에 성공하였습니다.");
-                            myStartActivity(Menu.class);
+                            myStartActivity(MainActivity.class);
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -127,13 +182,23 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startToast("로그인에 성공하였습니다.");
-                                myStartActivity(MainActivity.class);
+                                mDatabase = FirebaseDatabase.getInstance().getReference();
+                                mDatabase.
+                                if(!dataSnapshot.child("users").child(uid).exists()){
+                                    myStartActivity(MemberInitActivity.class);
+                                }
+                                else if(!dataSnapshot.child("preference").child(uid).exists()){
+                                    myStartActivity(PreferenceActivity.class);
+                                }
+                                else{
+                                    myStartActivity(MainActivity.class);
+                                }
+                                finish();
                             } else {
                                 if (task.getException() != null)
-                                    startToast(task.getException().toString());
+                                    startToast("로그인에 실패하였습니다.");
                             }
                         }
                     });

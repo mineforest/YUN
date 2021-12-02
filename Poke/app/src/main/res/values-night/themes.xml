@@ -12,5 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <!--custom font-family 적용-->
+        <item name="fontFamily">@font/pretendard_b</item>
     </style>
 </resources>

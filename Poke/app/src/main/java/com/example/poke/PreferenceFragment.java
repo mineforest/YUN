@@ -1,6 +1,5 @@
 package com.example.poke;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,10 +19,9 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class PreferenceFragment extends Fragment {
-    private ArrayList<String> preList = new ArrayList<>();
+    private final ArrayList<String> preList = new ArrayList<>();
     private ChipGroup preGroup;
     private Chip chip;
     private Button btn1;
@@ -47,8 +45,6 @@ public class PreferenceFragment extends Fragment {
         bottomSheetBehavior = view.findViewById(R.id.bottomSheet1);
         behavior = BottomSheetBehavior.from(bottomSheetBehavior);
 
-        ((BottomSheetBehavior) behavior).setBottomSheetCallback(bottomSheetCallback);
-
         for(int i=0; i < preGroup.getChildCount(); i++) {
             int id = preGroup.getChildAt(i).getId();
             chip = view.findViewById(id);
@@ -64,8 +60,6 @@ public class PreferenceFragment extends Fragment {
             });
         }
         preListener.preListener(preList);
-        btn1.setVisibility(View.GONE);
-        btn2.setVisibility(View.GONE);
         btn1.setOnClickListener(onClickListener);
         btn2.setOnClickListener(onClickListener);
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
@@ -83,25 +77,6 @@ public class PreferenceFragment extends Fragment {
                     preferenceActivity.next(1);
                     break;
             }
-        }
-    };
-
-    BottomSheetBehavior.BottomSheetCallback bottomSheetCallback = new BottomSheetBehavior.BottomSheetCallback() {
-        @Override
-        public void onStateChanged(@NonNull View bottomSheet, int newState) {
-            if(newState==3){
-                btn1.setVisibility(View.VISIBLE);
-                btn2.setVisibility(View.VISIBLE);
-            }
-            else{
-                btn1.setVisibility(View.GONE);
-                btn2.setVisibility(View.GONE);
-            }
-        }
-
-        @Override
-        public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
         }
     };
 

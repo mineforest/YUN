@@ -4,49 +4,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_masked_image"
+    android:background="@drawable/bg_preference"
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/startButton"
-        android:layout_width="205dp"
-        android:layout_height="59dp"
-        android:layout_marginEnd="103dp"
-        android:layout_marginBottom="56dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
         android:background="@drawable/btn_shape"
-        android:text="        START     >"
+        android:backgroundTint="#7DFA8C"
+        android:text="시작하기"
         android:textAlignment="gravity"
-        android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="110dp"
+        android:layout_marginVertical="35dp"/>
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="180dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="236dp"
-        android:layout_marginEnd="116dp"
-        android:fontFamily="@font/noto_sans"
-        android:text="Welcome"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="40sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="처음이시군요!"
+        android:textColor="@color/mdtp_dark_gray"
+        android:textSize="64sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@id/textView5"
+        />
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="276dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="68dp"
-        android:fontFamily="@font/noto_sans"
-        android:text="몇 가지 정보만 입력하면 취향에 맞는 \n요리를 추천받을 수 있어요."
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="몇 가지 정보만 더 입력하시면 \n취향에 맞는 요리를 추천해 줄게요."
+        android:textColor="#08660A"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/textView10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/imageView2"
+        android:layout_width="250dp"
+        android:layout_height="230dp"
+        android:layout_margin="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/textView5"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="food_choose.json"
+        app:lottie_loop="true" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_margin="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintBottom_toTopOf="@id/textView10"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="cooking.json"
+        app:lottie_loop="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
