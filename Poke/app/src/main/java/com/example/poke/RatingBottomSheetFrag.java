@@ -31,7 +31,7 @@ public class RatingBottomSheetFrag extends BottomSheetDialogFragment {
     private Recipe_get rcp = new Recipe_get();
     private RatingBar ratingBar;
     private UserHistory userHistory;
-    private SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
+    private final SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
     private Date date;
     private String now;
     private DatabaseReference mDatabase;

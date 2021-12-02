@@ -21,7 +21,7 @@ import com.google.android.material.chip.ChipGroup;
 import java.util.ArrayList;
 
 public class PreferenceFragment extends Fragment {
-    private ArrayList<String> preList = new ArrayList<>();
+    private final ArrayList<String> preList = new ArrayList<>();
     private ChipGroup preGroup;
     private Chip chip;
     private Button btn1;

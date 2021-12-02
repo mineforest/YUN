@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IngredientListAdapter extends BaseAdapter {
-    private Context context;
-    private List<String> list;
-    private LayoutInflater inflate;
+    private final Context context;
+    private final List<String> list;
+    private final LayoutInflater inflate;
     private ViewHolder viewHolder;
     private int pos;
 
@@ -47,7 +47,7 @@ public class IngredientListAdapter extends BaseAdapter {
         if(convertView == null){
             convertView = inflate.inflate(R.layout.ingre_search_listview,null);
             viewHolder = new ViewHolder();
-            viewHolder.label = (TextView) convertView.findViewById(R.id.label);
+            viewHolder.label = convertView.findViewById(R.id.label);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder)convertView.getTag();

@@ -20,8 +20,8 @@ import java.util.ArrayList;
 
 public class TagsAdapter extends RecyclerView.Adapter<TagsAdapter.SearchViewHolder>  {
 
-    private ArrayList<String> tagset;
-    private ArrayList<ArrayList<Recipe_get>> tag_contents;
+    private final ArrayList<String> tagset;
+    private final ArrayList<ArrayList<Recipe_get>> tag_contents;
 
     public TagsAdapter(ArrayList<String> tagset, ArrayList<ArrayList<Recipe_get>> tag_contents) {
 

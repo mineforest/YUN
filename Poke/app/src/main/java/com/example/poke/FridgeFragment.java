@@ -81,8 +81,8 @@ public class FridgeFragment extends Fragment{
 
         lottieView = view.findViewById(R.id.lottieView);
         lot_txt = view.findViewById(R.id.lot_txt);
-        lottieView.setVisibility(view.INVISIBLE);
-        lot_txt.setVisibility(view.INVISIBLE);
+        lottieView.setVisibility(View.INVISIBLE);
+        lot_txt.setVisibility(View.INVISIBLE);
 
         tabLayout = view.findViewById(R.id.fridgeTab);
         addButton = view.findViewById(R.id.ingredientAddBtn);
@@ -107,11 +107,11 @@ public class FridgeFragment extends Fragment{
         tabArrayList = new ArrayList<>();
         ingredientArrayList = new ArrayList<>();
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.fridgeTab);
+        TabLayout tabLayout = view.findViewById(R.id.fridgeTab);
         int betweenSpace = 30;
 
-        recyclerView = (RecyclerView)view.findViewById(R.id.ingredientRecyclerView);
-        fab = (FloatingActionButton)view.findViewById(R.id.ingredientAddBtn);
+        recyclerView = view.findViewById(R.id.ingredientRecyclerView);
+        fab = view.findViewById(R.id.ingredientAddBtn);
 
         ingredientAdapter = new FridgeAdapter(tabArrayList);
         ingredientAdapter.setOnItemClickListener(onItemClickListener);
@@ -391,12 +391,12 @@ public class FridgeFragment extends Fragment{
     }
     private void iLoveLottie(View view){
         if(tabArrayList.size()==0){
-            lottieView.setVisibility(view.VISIBLE);
-            lot_txt.setVisibility(view.VISIBLE);
+            lottieView.setVisibility(View.VISIBLE);
+            lot_txt.setVisibility(View.VISIBLE);
         }
         else{
-            lottieView.setVisibility(view.INVISIBLE);
-            lot_txt.setVisibility(view.INVISIBLE);
+            lottieView.setVisibility(View.INVISIBLE);
+            lot_txt.setVisibility(View.INVISIBLE);
         }
 
     }

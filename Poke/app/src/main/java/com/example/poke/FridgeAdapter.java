@@ -88,7 +88,7 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String[] dday=ingredientsList.get(position).getExpirationDate().split("-");
-        boolean mainflag =((MainActivity)MainActivity.mContext).alarm;
+        boolean mainflag = MainActivity.alarm;
         SharedPreferences sharedPreferences = context.getSharedPreferences("bibleNotify",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String start =sharedPreferences.getString("start","yes");
@@ -132,11 +132,11 @@ public class FridgeAdapter extends  RecyclerView.Adapter<FridgeAdapter.ViewHolde
         holder.title.setText(String.valueOf(ingredientsList.get(position).getIngredientTitle()));
         holder.reg_date.setText(ingredientsList.get(position).getExpirationDate());
         if(date < 0){
-            holder.day.setText(("D+" + Long.toString(Math.abs(date))));
+            holder.day.setText(("D+" + Math.abs(date)));
             holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_gray));
         }
         else {
-            holder.day.setText(("D-" + Long.toString(date)));
+            holder.day.setText(("D-" + date));
             if(date<=3) holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_red));
             else holder.day.setBackground(ContextCompat.getDrawable(context, R.drawable.border_green));
         }

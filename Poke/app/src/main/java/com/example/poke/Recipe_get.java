@@ -25,7 +25,7 @@ public class Recipe_get implements Parcelable {
     Long rate;
     String score;
 
-    public Recipe_get() {};
+    public Recipe_get() {}
 
     public Recipe_get(String rcp_id, String score) {
         this.id = rcp_id;

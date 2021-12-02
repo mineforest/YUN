@@ -22,7 +22,7 @@ public class MainMoreRecipeAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
-    private ArrayList<Recipe_get> rcp_list;
+    private final ArrayList<Recipe_get> rcp_list;
     private Intent intent;
     Context context;
 

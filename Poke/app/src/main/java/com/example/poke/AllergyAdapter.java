@@ -42,8 +42,8 @@ import java.util.List;
 import java.util.Map;
 
 public class AllergyAdapter extends RecyclerView.Adapter<AllergyAdapter.CustomViewHolder> {
-    private ArrayList<String> allergyArrayList;
-    private ArrayList<Boolean> allergyMapping;
+    private final ArrayList<String> allergyArrayList;
+    private final ArrayList<Boolean> allergyMapping;
 
     public AllergyAdapter(ArrayList<String> allergyArrayList, ArrayList<Boolean> allergyMapping) {
         this.allergyArrayList = allergyArrayList;
@@ -95,7 +95,7 @@ public class AllergyAdapter extends RecyclerView.Adapter<AllergyAdapter.CustomVi
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
-        private TextView allery_tv;
+        private final TextView allery_tv;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);

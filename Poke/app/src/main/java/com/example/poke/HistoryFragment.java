@@ -47,7 +47,7 @@ public class HistoryFragment extends Fragment {
         if(user != null)
             uid = user.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        recyclerView = (RecyclerView) view.findViewById(R.id.history_recycler);
+        recyclerView = view.findViewById(R.id.history_recycler);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager(getContext());

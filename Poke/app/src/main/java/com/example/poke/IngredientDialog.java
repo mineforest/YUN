@@ -55,7 +55,7 @@ public class IngredientDialog extends DialogFragment implements AdapterView.OnIt
     private Button cancelBtn;
     private ImageView barcode_btn;
     Spinner spinner;
-    String ingre_item[];
+    String[] ingre_item;
     private ImageView calendar_btn;
 
     @Nullable
