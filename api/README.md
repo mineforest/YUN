@@ -1,9 +1,43 @@
-머신러닝을 이용한 레시피 추천 서비스 POKE
-======================================
+W2V을 이용한 추천 모델과 FLASK를 이용한 RESTful API
+--------------------------------------------------
 
 ```
-개발목표 : MZ세대를 겨냥해 식사메뉴 의사결정에 도움을 줄 수 있는 Android App 개발   
-개발인원 : 홍석준(팀장), 김동욱, 윤대현, 최재민, 황현성   
-소요기간 : 2021.03 ~ 2021.11 (약 9개월)   
-개발툴 : Java, Python, Flask, GCP, Firebase DB, Beautiful Soup, Apache, Zxing
+개발툴 : Python, Flask, Firebase DB, Apache
+목적 : 사용자 선호도 기반 맞춤 레시피 목록(W2V)을 앱에 제공(API)
 ```
+   
+   
+## 목차
+1. W2V Model 생성
+2. RESTful API 구현
+3. RESTful API로 Firebase에서 데이터 가져오기
+4. RESTful API로 model 호출
+--------------------------------------------------
+   
+   
+   
+
+### W2V Model 생성 - getModel.py
+>
+>
+   
+   
+   
+   
+### RESTful API 구현 - app.py
+> 
+   
+   
+   
+   
+   
+### RESTful API로 Firebase에서 데이터 가져오기 - getData.py
+> 
+   
+   
+   
+   
+### RESTful API로 model 호출 - w2v_poke.py
+> 
+
+   
