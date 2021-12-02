@@ -1,7 +1,7 @@
 import firebase_admin
 from firebase_admin import credentials, db
 
-cred = credentials.Certificate("tcnk-e50ef-firebase-adminsdk-ydhen-a568e6740f.json")
+cred = credentials.Certificate("tcnk-e50ef-firebase-adminsdk-ydhen-7b9c6f2ca1.json")
 firebase_admin.initialize_app(cred,{
     'databaseURL' : "https://tcnk-e50ef-default-rtdb.firebaseio.com",    
     }    

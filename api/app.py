@@ -10,7 +10,7 @@ def hello_world():
 @app.route('/rcp/<rid>', methods = ['GET'])
 def sim_rcp(rid):
     param=rid.split('+')
-    w3v = Word2v(list(map(int, param)))
+    w3v = Word2v(list(map(int, param)),[],[])
     res = w3v.recommendations()
     return res
 
@@ -27,4 +27,4 @@ def user_hist_base(uid):
     return res
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port="5000")
+    app.run(host="127.0.0.1", port="5000")

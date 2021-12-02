@@ -58,15 +58,28 @@ class Word2v:
         
         sim_scores = [i for i in sim_scores if (not i[0] in self.hist) and self.isExcepted((self.df.iloc[i[0]]['cleand']))]
         
+
+
+
+
         sim_scores = sim_scores[0:500]
         
         rcp_indices = [i[0] for i in sim_scores]     
-        rec = rcp.iloc[rcp_indices].reset_index(drop=True)
+        rec = rcp.iloc[rcp_indices].reset_index(drop=True)  
         
+        f = open('C:\\Users\chang\\result.txt', 'w')
+        cnt=0
         for idx, row in rec.iterrows():            
             res['recipe'].append({'id':row['id'],'score':int(sim_scores[idx][1]*100)})
+            if cnt<20:
+                tmp = self.df.id == row['id']
+                f.write(str(row['id'])+' ' + str(self.df[tmp]['name'])+' '+str(sim_scores[idx][1]*100)+'\n')
 
+            cnt+=1
         print("치명적 오류 발생안함")
+        
+        # 파일 닫기
+        f.close()
         return res
 
 

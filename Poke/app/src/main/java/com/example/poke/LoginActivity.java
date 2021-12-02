@@ -25,10 +25,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
+    private DatabaseReference mDatabase;
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "LoginActivity";
     Dialog password_reset;
@@ -181,7 +184,17 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startToast("로그인에 성공하였습니다.");
-                                myStartActivity(MainActivity.class);
+                                mDatabase = FirebaseDatabase.getInstance().getReference();
+                                mDatabase.
+                                if(!dataSnapshot.child("users").child(uid).exists()){
+                                    myStartActivity(MemberInitActivity.class);
+                                }
+                                else if(!dataSnapshot.child("preference").child(uid).exists()){
+                                    myStartActivity(PreferenceActivity.class);
+                                }
+                                else{
+                                    myStartActivity(MainActivity.class);
+                                }
                                 finish();
                             } else {
                                 if (task.getException() != null)
