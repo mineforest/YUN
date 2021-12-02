@@ -30,20 +30,6 @@
         <item name="tabBackground">@drawable/tab_selector</item>
     </style>
 
-    <style name="RatingChipStyle" parent="Widget.MaterialComponents.Chip.Entry">
-        <item name="chipBackgroundColor">@color/chip_background_color</item>
-        <item name="android:textColor">@color/chip_text_color</item>
-    </style>
-
-    <style name="SearchViewStyle" parent="">
-        <item name="android:textColorHint">#000000</item>
-        <item name="searchHintIcon">@drawable/ic_search_black_24dp</item>
-        <item name="searchIcon">@drawable/ic_search_black_24dp</item>
-        <item name="closeIcon">@drawable/ic_search_black_24dp</item>
-        <item name="android:searchHintIcon">@drawable/ic_search_black_24dp</item>
-        <item name="tint">@color/black</item>
-    </style>
-
     <style name="strokeGray">
         <item name="android:layout_marginRight">1dp</item>
         <item name="android:layout_width">wrap_content</item>

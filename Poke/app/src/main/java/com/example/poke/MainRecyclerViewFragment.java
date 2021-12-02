@@ -232,7 +232,6 @@ public class MainRecyclerViewFragment extends Fragment{
         startActivity(intent);
     }
 
-
     private void startToast(String msg){
         Toast.makeText(getContext(), msg,Toast.LENGTH_SHORT).show();
     }
