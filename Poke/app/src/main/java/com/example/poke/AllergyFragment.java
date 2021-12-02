@@ -20,7 +20,7 @@ import com.google.android.material.chip.ChipGroup;
 import java.util.ArrayList;
 
 public class AllergyFragment extends Fragment {
-    private ArrayList<String> allergyList = new ArrayList<>();
+    private final ArrayList<String> allergyList = new ArrayList<>();
     private ChipGroup allergyGroup;
     private Chip chip;
     private Button btn5;

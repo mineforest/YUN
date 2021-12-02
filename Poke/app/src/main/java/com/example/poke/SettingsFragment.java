@@ -98,7 +98,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 });
                 t.start();
                 try{
-                    t.sleep(500);
+                    Thread.sleep(500);
                 }catch(Exception ignored){}
             }
         });

@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 public class DipsAdapter extends RecyclerView.Adapter<DipsAdapter.CustomViewHolder> {
 
-    private ArrayList<UserDibs> dipsList;
+    private final ArrayList<UserDibs> dipsList;
 
     public DipsAdapter(ArrayList<UserDibs> dipsList) {
         this.dipsList = dipsList;

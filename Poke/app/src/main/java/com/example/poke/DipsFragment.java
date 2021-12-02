@@ -46,7 +46,7 @@ public class DipsFragment extends Fragment {
         if(user != null)
           uid = user.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        recyclerView = (RecyclerView) view.findViewById(R.id.dips_rv);
+        recyclerView = view.findViewById(R.id.dips_rv);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         dibsList = new ArrayList<>();

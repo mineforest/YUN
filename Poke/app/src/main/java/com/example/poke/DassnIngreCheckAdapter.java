@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class DassnIngreCheckAdapter extends RecyclerView.Adapter<DassnIngreCheckAdapter.CustomViewHolder> {
 
-    private ArrayList<String> ingres;
+    private final ArrayList<String> ingres;
 
     public DassnIngreCheckAdapter(ArrayList<String> ingres) {
         this.ingres = ingres;

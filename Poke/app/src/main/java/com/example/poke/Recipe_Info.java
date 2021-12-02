@@ -70,7 +70,7 @@ public class Recipe_Info extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.hide();
 
-        chipGroup = (ChipGroup)findViewById(R.id.tagGroup);
+        chipGroup = findViewById(R.id.tagGroup);
         doneButton = findViewById(R.id.doneButton);
         backButton = findViewById(R.id.backButton);
         heartButton = findViewById(R.id.heartButton);

@@ -51,7 +51,7 @@ public class Recipe_step_Activity extends AppCompatActivity {
     private TextView timer_minimi;
     private CountDownTimer timer;
     private long milliLeft;
-    private HashMap<String, String> map = new HashMap<>();
+    private final HashMap<String, String> map = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -20,7 +20,7 @@ import com.google.android.material.chip.ChipGroup;
 import java.util.ArrayList;
 
 public class DietFragment extends Fragment {
-    private ArrayList<String> dietList = new ArrayList<>();
+    private final ArrayList<String> dietList = new ArrayList<>();
     private ChipGroup dietGroup;
     private Chip chip;
     private Button btn3;

@@ -23,10 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
-    private ArrayList<Recipe_get> searchList = new ArrayList<>();
+    private final ArrayList<Recipe_get> searchList = new ArrayList<>();
     private TagsAdapter adapter;
-    private ArrayList<String> tag_names = new ArrayList<>();
-    private ArrayList<ArrayList<Recipe_get>> tag_contents = new ArrayList<>();
+    private final ArrayList<String> tag_names = new ArrayList<>();
+    private final ArrayList<ArrayList<Recipe_get>> tag_contents = new ArrayList<>();
     ShimmerFrameLayout shimmerFrameLayout;
     RecyclerView recyclerView;
 

@@ -44,7 +44,7 @@ public class PreferenceActivity extends AppCompatActivity implements AllergyFrag
         if(user != null)
             uid = user.getUid();
         dotsIndicator = findViewById(R.id.dots_indicator);
-        viewPager2 = (ViewPager2) findViewById(R.id.pager2);
+        viewPager2 = findViewById(R.id.pager2);
         pagerAdapter=new PreferenceFragmentAdapter(this);
         viewPager2.registerOnPageChangeCallback(pageChangeCallback);
         startFragment = new StartFragment();

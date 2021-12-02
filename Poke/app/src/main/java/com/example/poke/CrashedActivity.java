@@ -11,8 +11,8 @@ import com.example.poke.R;
 public class CrashedActivity extends AppCompatActivity {
     private int cnt = 5;
     private TextView textView;
-    private Handler handler = new Handler();;
-    private Runnable runnable = new Runnable() {
+    private final Handler handler = new Handler();
+    private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
             textView.setText(cnt + "");

@@ -6,8 +6,8 @@ import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MainGridItemDecoration extends RecyclerView.ItemDecoration{
-    private int largePadding;
-    private int smallPadding;
+    private final int largePadding;
+    private final int smallPadding;
 
     public MainGridItemDecoration(int largePadding, int smallPadding) {
         this.largePadding = largePadding;
