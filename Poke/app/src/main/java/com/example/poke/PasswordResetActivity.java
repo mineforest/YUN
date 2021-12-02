@@ -22,7 +22,6 @@ public class PasswordResetActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_reset);
-
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
@@ -63,5 +62,4 @@ public class PasswordResetActivity extends AppCompatActivity {
     private void startToast(String msg){
         Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
     }
-
 }

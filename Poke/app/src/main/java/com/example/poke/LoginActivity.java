@@ -184,17 +184,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startToast("로그인에 성공하였습니다.");
-                                mDatabase = FirebaseDatabase.getInstance().getReference();
-                                mDatabase.
-                                if(!dataSnapshot.child("users").child(uid).exists()){
-                                    myStartActivity(MemberInitActivity.class);
-                                }
-                                else if(!dataSnapshot.child("preference").child(uid).exists()){
-                                    myStartActivity(PreferenceActivity.class);
-                                }
-                                else{
-                                    myStartActivity(MainActivity.class);
-                                }
+                                myStartActivity(MainActivity.class);
                                 finish();
                             } else {
                                 if (task.getException() != null)
