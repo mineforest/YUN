@@ -29,5 +29,6 @@ POKE
 
 ## 애플리케이션 인터페이스
 
-
-
+|![TeamTCNK_POKE시연 mp4_20211203_165041](https://user-images.githubusercontent.com/81149946/144565405-94fdaeb9-f009-44ad-914d-b5801c622472.gif)|![TeamTCNK_POKE시연 mp4_20211203_164932](https://user-images.githubusercontent.com/81149946/144565299-d05a47ac-ab16-4194-ad54-379b236bf5d1.gif)|![Screen_Recording_20211116-014724_POKE mp4_20211203_165253](https://user-images.githubusercontent.com/81149946/144565792-e664c437-f448-4cb9-ac3b-4c8b4ab3faba.gif)|
+|---|---|---|
+|AppStart|선호도사전조사|바코드스캔|
