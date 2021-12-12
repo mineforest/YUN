@@ -16,7 +16,7 @@ for i,rcp in enumerate(df['recipe']):
     temp=[]
     for word in tokenlist:
         if word[1] in ["Noun"]: # 명사일 때만
-            temp.append((word[0])) # 해당 단어를 저장함        
+            temp.append((word[0])) 
     temp=temp+df.loc[i,'cleand'].split()    
     result.append(temp) # 결과에 저장
     df.loc[i,'cleand']=str(' '.join(temp))
