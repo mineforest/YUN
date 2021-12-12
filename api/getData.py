@@ -1,9 +1,9 @@
 import firebase_admin
 from firebase_admin import credentials, db
 
-cred = credentials.Certificate("tcnk-e50ef-firebase-adminsdk-ydhen-7b9c6f2ca1.json")
+cred = credentials.Certificate("/경로/생성된 비공개키 파일명.json")
 firebase_admin.initialize_app(cred,{
-    'databaseURL' : "https://tcnk-e50ef-default-rtdb.firebaseio.com",    
+    'databaseURL' : "파이어베이스 Realtime Database 경로.com",    
     }    
 )
 

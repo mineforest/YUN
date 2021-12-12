@@ -1,11 +1,11 @@
 from flask import Flask
-from w2v_new import Word2v
+from w2v_poke import Word2v
 from getData import FirebaseConnect
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello, Everyone. Im TechnoHong, Nice to meet you. I want a piece of Salmon of course, raw fish. but im not bear, im tcnk... P.S. : test recipe id is 6905019 Good LUCK :D'
+    return 'Hello, Everyone. Im TechnoHong, Nice to meet you. Good LUCK :D'
 
 @app.route('/rcp/<rid>', methods = ['GET'])
 def sim_rcp(rid):

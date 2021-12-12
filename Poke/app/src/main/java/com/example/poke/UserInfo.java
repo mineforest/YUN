@@ -14,7 +14,6 @@ public class UserInfo {
     public UserInfo() {
     }
 
-
     public UserInfo(String nickName){
         this.nickName = nickName;
     }
